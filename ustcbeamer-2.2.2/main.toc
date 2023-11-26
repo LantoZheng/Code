@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{研究背景}{3}{0}{1}
+\beamer@sectionintoc {2}{理论模型}{5}{0}{2}
+\beamer@subsectionintoc {2}{1}{模型1}{6}{0}{2}
+\beamer@subsectionintoc {2}{2}{模型2}{9}{0}{2}
+\beamer@sectionintoc {3}{研究方法}{12}{0}{3}
+\beamer@sectionintoc {4}{总结展望}{15}{0}{4}
