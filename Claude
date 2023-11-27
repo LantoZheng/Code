@@ -1,0 +1,14 @@
+from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+
+anthropic = Anthropic(
+    # defaults to os.environ.get("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")
+    api_key="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",
+)
+
+completion = anthropic.completions.create(
+    model="claude-2.1",
+    max_tokens_to_sample=1000,
+    temperature=0,
+    prompt=f"你现在是一位专业物理学家，目的是给一位没有学过量子物理的学生讲解有关光量子自旋霍尔效应的原理以及通过弱测量技术如何实现对光自旋霍尔效应的观察。${HUMAN_PROMPT}${AI_PROMPT}",
+)
+print(completion.completion)
