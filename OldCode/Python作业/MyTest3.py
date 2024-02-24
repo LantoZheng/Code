@@ -1,0 +1,6 @@
+x1=input("请输入整数：")
+x2=input("请输入算术表达式：")
+print("The first ddata is {:8d}".format(int(x1)))
+print("The first data is {:8s}".format(x1))
+print("The first data is {:8d}".format(eval(x1)))
+print("The Second data is {:8d}".format(eval(x2)))
