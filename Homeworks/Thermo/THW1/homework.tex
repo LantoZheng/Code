@@ -144,8 +144,8 @@
 
 \begin{homeworkProblem}
     道尔顿提出一种温标：规定理想气体体积的相对增量正比于温度的增量，在标准大气压下，规定水的冰点温度为零度，沸水温度为100度。试用摄氏度\(t\)来表示道尔顿温标的温度\(\tau\)
-\\
-    \textbf{Solution}
+    \\\\
+    \solution
     \\
     设大气压强为\(P_{atm}\),\(T_0=273.15K\)为摄氏0度，\(T_{100}=373.15K\)为摄氏100度，\(t\)为摄氏度，\(\tau\)为道尔顿温标的温度。\(V_0\)为理想气体在摄氏0度下的体积。
     \\
@@ -175,7 +175,7 @@
 
 
 \end{homeworkProblem}
-\pagebreak
+
 \begin{homeworkProblem}
     国际实用温标（1990年）规定：用于13.803 (平衡氢三相点)到
 961.78°C（银在0.101MPa下的凝固点）的标准测量仪器是铂电阻温
@@ -184,8 +184,8 @@
 在上述测温范围内大致有\(W(t)=1+At+Bt^2\)
 若在0.101MPa下，对应于冰的熔点、水的沸点、硫的沸点（温度为444.67°C）电阻的阻值分别为11.000Ω、15.247Ω、28.887Ω，
 试确定上式中的常数A和B。（正确标注常数A和B的单位）
-\\
-\textbf{Solution}
+\\\\
+\solution
 \\
 由题意可得：
 \begin{align*}
@@ -205,263 +205,167 @@
 \end{align*}
 得到A、B、C的解：
 
-\[\begin{cases}
+    \[\begin{cases}
     A=3.9201 ^\circ C^{-1}\\
     B=-5.9205\times 10^{-7^\circ} C^{-2}
 \end{cases}\]
 \end{homeworkProblem}
-\pagebreak
+\\\\\\
 
 \begin{homeworkProblem}
-    Write part of \alg{Quick-Sort($list, start, end$)}
-
-    \begin{algorithm}[]
-        \begin{algorithmic}[1]
-            \Function{Quick-Sort}{$list, start, end$}
-                \If{$start \geq end$}
-                    \State{} \Return{}
-                \EndIf{}
-                \State{} $mid \gets \Call{Partition}{list, start, end}$
-                \State{} \Call{Quick-Sort}{$list, start, mid - 1$}
-                \State{} \Call{Quick-Sort}{$list, mid + 1, end$}
-            \EndFunction{}
-        \end{algorithmic}
-        \caption{Start of QuickSort}
-    \end{algorithm}
+    求氧气压强为0.1MPa、温度为27°C时的密度
+    \\\\
+    \solution
+    \\
+    由理想气体状态方程：
+    \[
+        PV=\nu RT
+    \]
+    导出：
+    \[
+        \rho = \frac{M_{mol}P}{RT}
+    \]
+    以及氧气的摩尔质量为32g/mol，和标准状态（0℃，101kPA）下每摩尔理想气体体积\\
+    \[V^{\Theta}=22.4L \ \ M_{mol}=32g\]    
+    得到氧气在标准状态下密度：\(\rho^{\Theta}=M_{mol}/V^{\Theta}\)
+    代入氧气压强为0.1MPa、温度为27°C时的密度：
+    \begin{align*}
+    \rho = \frac{M_{mol}P}{RT}&=\frac{M_{mol}P^{\Theta}}{RT^{\Theta}}\frac{T^{\Theta}P}{TP^{\Theta}}=\rho^{\Theta}\frac{T^{\Theta}P}{TP^{\Theta}}\\
+    \rho &= 0.707g/L    
+    \end{align*}
 \end{homeworkProblem}
 
-\pagebreak
+
 
 \begin{homeworkProblem}
-    Suppose we would like to fit a straight line through the origin, i.e.,
-    \(Y_i = \beta_1 x_i + e_i\) with \(i = 1, \ldots, n\), \(\E [e_i] = 0\),
-    and \(\Var [e_i] = \sigma^2_e\) and \(\Cov[e_i, e_j] = 0, \forall i \neq
-    j\).
-    \\
-
-    \part
-
-    Find the least squares esimator for \(\hat{\beta_1}\) for the slope
-    \(\beta_1\).
-    \\
-
+    容积为10L的瓶内贮有氢气，因开关损坏而漏气，在温度为7.0°C时，压
+    强计的读数为50atm 。过了些时候，温度上升为17°C，压强计的读数未变，
+    问漏去了多少质量的氢?
+    \\\\
     \solution
-
-    To find the least squares estimator, we should minimize our Residual Sum
-    of Squares, RSS:
-
-    \[
-        \begin{split}
-            RSS &= \sum_{i = 1}^{n} {(Y_i - \hat{Y_i})}^2
-            \\
-            &= \sum_{i = 1}^{n} {(Y_i - \hat{\beta_1} x_i)}^2
-        \end{split}
-    \]
-
-    By taking the partial derivative in respect to \(\hat{\beta_1}\), we get:
-
-    \[
-        \pderiv{
-            \hat{\beta_1}
-        }{RSS}
-        = -2 \sum_{i = 1}^{n} {x_i (Y_i - \hat{\beta_1} x_i)}
-        = 0
-    \]
-
-    This gives us:
-
-    \[
-        \begin{split}
-            \sum_{i = 1}^{n} {x_i (Y_i - \hat{\beta_1} x_i)}
-            &= \sum_{i = 1}^{n} {x_i Y_i} - \sum_{i = 1}^{n} \hat{\beta_1} x_i^2
-            \\
-            &= \sum_{i = 1}^{n} {x_i Y_i} - \hat{\beta_1}\sum_{i = 1}^{n} x_i^2
-        \end{split}
-    \]
-
-    Solving for \(\hat{\beta_1}\) gives the final estimator for \(\beta_1\):
-
-    \[
-        \begin{split}
-            \hat{\beta_1}
-            &= \frac{
-                \sum {x_i Y_i}
-            }{
-                \sum x_i^2
-            }
-        \end{split}
-    \]
-
-    \pagebreak
-
-    \part
-
-    Calculate the bias and the variance for the estimated slope
-    \(\hat{\beta_1}\).
-    \\
-
-    \solution
-
-    For the bias, we need to calculate the expected value
-    \(\E[\hat{\beta_1}]\):
-
-    \[
-        \begin{split}
-            \E[\hat{\beta_1}]
-            &= \E \left[ \frac{
-                \sum {x_i Y_i}
-            }{
-                \sum x_i^2
-            }\right]
-            \\
-            &= \frac{
-                \sum {x_i \E[Y_i]}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \frac{
-                \sum {x_i (\beta_1 x_i)}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \frac{
-                \sum {x_i^2 \beta_1}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \beta_1 \frac{
-                \sum {x_i^2 \beta_1}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \beta_1
-        \end{split}
-    \]
-
-    Thus since our estimator's expected value is \(\beta_1\), we can conclude
-    that the bias of our estimator is 0.
-    \\
-
-    For the variance:
-
-    \[
-        \begin{split}
-            \Var[\hat{\beta_1}]
-            &= \Var \left[ \frac{
-                \sum {x_i Y_i}
-            }{
-                \sum x_i^2
-            }\right]
-            \\
-            &=
-            \frac{
-                \sum {x_i^2}
-            }{
-                \sum x_i^2 \sum x_i^2
-            } \Var[Y_i]
-            \\
-            &=
-            \frac{
-                \sum {x_i^2}
-            }{
-                \sum x_i^2 \sum x_i^2
-            } \Var[Y_i]
-            \\
-            &=
-            \frac{
-                1
-            }{
-                \sum x_i^2
-            } \Var[Y_i]
-            \\
-            &=
-            \frac{
-                1
-            }{
-                \sum x_i^2
-            } \sigma^2
-            \\
-            &=
-            \frac{
-                \sigma^2
-            }{
-                \sum x_i^2
-            }
-        \end{split}
-    \]
-
-\end{homeworkProblem}
-
-\pagebreak
-
-\begin{homeworkProblem}
-    Prove a polynomial of degree \(k\), \(a_kn^k + a_{k - 1}n^{k - 1} + \hdots
-    + a_1n^1 + a_0n^0\) is a member of \(\Theta(n^k)\) where \(a_k \hdots a_0\)
-    are nonnegative constants.
-
-    \begin{proof}
-        To prove that \(a_kn^k + a_{k - 1}n^{k - 1} + \hdots + a_1n^1 +
-        a_0n^0\), we must show the following:
-
-        \[
-            \exists c_1 \exists c_2 \forall n \geq n_0,\ {c_1 \cdot g(n) \leq
-            f(n) \leq c_2 \cdot g(n)}
-        \]
-
-        For the first inequality, it is easy to see that it holds because no
-        matter what the constants are, \(n^k \leq a_kn^k + a_{k - 1}n^{k - 1} +
-        \hdots + a_1n^1 + a_0n^0\) even if \(c_1 = 1\) and \(n_0 = 1\).  This
-        is because \(n^k \leq c_1 \cdot a_kn^k\) for any nonnegative constant,
-        \(c_1\) and \(a_k\).
+    \\  
+    由理想气体状态方程：
+    \begin{align*}
+        \nu &= \frac{PV}{RT}
         \\
+        m&=\nu M_{mol}=\frac{PV}{RT}M_{mol}
+        \\
+        \Delta m &= \frac{M_{mol}PV}{R}\Delta (\frac{1}{T})\\
+        &= 727.21g
+    \end{align*}    
 
-        Taking the second inequality, we prove it in the following way.
-        By summation, \(\sum\limits_{i=0}^k a_i\) will give us a new constant,
-        \(A\). By taking this value of \(A\), we can then do the following:
-
-        \[
-            \begin{split}
-                a_kn^k + a_{k - 1}n^{k - 1} + \hdots + a_1n^1 + a_0n^0 &=
-                \\
-                &\leq (a_k + a_{k - 1} \hdots a_1 + a_0) \cdot n^k
-                \\
-                &= A \cdot n^k
-                \\
-                &\leq c_2 \cdot n^k
-            \end{split}
-        \]
-
-        where \(n_0 = 1\) and \(c_2 = A\). \(c_2\) is just a constant. Thus the
-        proof is complete.
-    \end{proof}
 \end{homeworkProblem}
 
-\pagebreak
 
-%
-% Non sequential homework problems
-%
 
-% Jump to problem 18
-\begin{homeworkProblem}[18]
-    Evaluate \(\sum_{k=1}^{5} k^2\) and \(\sum_{k=1}^{5} (k - 1)^2\).
-\end{homeworkProblem}
-
-% Continue counting to 19
 \begin{homeworkProblem}
-    Find the derivative of \(f(x) = x^4 + 3x^2 - 2\)
+    现有一气球，体积为\(8.7m^3\)，冲入温度为15°C的氢气。当温度升高到37°C时，维持其气压\(p\)及体积\(V\)不变,气球中多余的氢气跑掉了，而
+使其质量减少了 ，试求氢气在0°C、压强\(p\)下的密度
+\\\\
+\solution
+\\
+由理想气体状态方程：
+\begin{align*}
+    PV&=\nu RT
+    \\
+    \nu &= \frac{VP}{RT}
+    \\
+    \Delta \nu &= \frac{Vp}{R}\Delta \frac{1}{T}
+    \\
+    \frac{Vp}{R}&=\frac{\Delta \nu}{\Delta \frac{1}{T}}
+    \\
+    \rho &= \frac{M_{mol}p}{RT}=\frac{pV}{R}\frac{1}{VT}M_{mol}\\
+    &=\frac{\Delta m}{\Delta \frac{1}{T}}\frac{1}{VT}\\
+    &=0.00889 kg/m^3
+\end{align*}
 \end{homeworkProblem}
+\\\\\\
 
-% Go back to where we left off
-\begin{homeworkProblem}[6]
-    Evaluate the integrals
-    \(\int_0^1 (1 - x^2) \dx\)
-    and
-    \(\int_1^{\infty} \frac{1}{x^2} \dx\).
+\begin{homeworkProblem}
+    一个不漏气的氢气球可以膨胀，保持气球内外压强相等，随着气球不断升高，大气压强不断减少，氢气球就不断膨胀。如果忽略掉大气温度和摩尔质量随高度的变化，假设氢气和大气都是理想气体，试问:
+    \\
+    （A）气球在上升过程中所受的净浮力（浮力-氢气自身重量）是否变化？\\
+    （B）在标准状态下给氢气球充气后，体积\(V=556m^3\)球壳的体积可以忽略不计，球壳的质量\(m=12.5kg\)，在0℃的等温大气中，这个气球还可悬挂多重物体而不坠下？已知\(M_{h_2}^{mol}=2g/mol,M_{air}^{mol}=28.9g/mol\)
+    \\\\
+    \solution 
+    \\\\
+    \part
+    \\
+    由理想气体状态方程：
+    \begin{align*}
+        PV &= \nu RT \\
+        PM_{mol} &= \rho RT
+    \end{align*}
+    计算浮力：
+    \begin{align*}
+        F_b &= \rho_{air}V_{air}g-\rho_{h_2}V_{h_2}g\\
+        &=\frac{PM_{air}^{mol}V}{RT}g-\frac{PM_{h_2}^{mol}V}{RT}g\\
+        &=\nu_{h2}(M_{air}^{mol}-M_{h_2}^{mol})g\\
+    \end{align*}
+    由上式可知，气球在上升过程中所受的净浮力不变。
+    \\\\
+    \part
+    \\
+    受力平衡方程：
+    \begin{align*}
+        F_{\text{浮}}&=Mg+mg+\rho_{h2}gV\\
+        (M_{air}^{mol}-M_{h_2}^{mol})gV&=(M+m)g\\
+        M&=\frac{PV}{RT}(M_{air}^{mol}-M_{h_2}^{mol})V-m\\
+        &=664.6kg
+    \end{align*}
 \end{homeworkProblem}
-
+\\\\\\
+\begin{homeworkProblem}
+    某混合气体由\(H_2,CO_2,CH_4,C_2H_4\)组成，其摩尔质量分别为\(2g\cdot mol^{-1},44g\cdot mol^{-1},16g\cdot mol^{-1},28g\cdot mol^{-1}\)。
+    在20℃时，上述四种气体对应的分压强为\(200mmHg,150mmHg,320mmHg,105mmHg\)\\
+    （A）求混合气体的总压强\\
+    （B）求氢气的质量分数\\
+    \\\\
+    \solution
+    \\
+    \part
+    \\
+    \[
+        P=\Sigma p_i = 775 mmHg
+    \]
+    \part
+    \\
+    \[
+        \eta_{H_2}^m=\frac{M_{H_2}^{mol}p_{H_2}}{\sum_i M_i^{mol}p_i}=\frac{20}{753} 
+    \]
+\end{homeworkProblem}
+\begin{homeworkProblem}
+    所谓某混合理想气体中各组分的体积百分比，是指各组分单独处在与混合理想气体相同压强和温度状态下，其体积在混合理想气体中所占的百分数。
+    空气可当作理想气体，空气中几种主要组分的体积百分比是：氮78\%，氧21\%，氩1\% \\
+    求标准情况下空气的密度\\
+    已知：\(M_{N_2}^{mol}=28.0g/mol,M_{O_2}^{mol}=32.0g/mol,M_{Ar}^{mol}=39.9g/mol\)
+    \\\\
+    \solution
+    \\
+    \begin{align*}
+        \rho &= \frac{M_{N_2}^{mol}p_{N_2}+M_{O_2}^{mol}p_{O_2}+M_{Ar}^{mol}p_{Ar}}{RT}\\
+        &= \frac{P(M_{N_2}^{mol}\eta_{N_2}+M_{O_2}^{mol}p\eta_{O_2}+M_{Ar}^{mol}\eta_{Ar})}{RT}\\
+        &= \frac{M_{N_2}^{mol}\eta_{N_2}+M_{O_2}^{mol}p\eta_{O_2}+M_{Ar}^{mol}\eta_{Ar}}{V_{mol}^{\Theta}}\\
+        &=1.29\ kg/m^3
+    \end{align*}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+    一段开口、横截面积处处相等的长管中冲有压强为p的空气。先对管子加热，使其形成从开口温度1000K均匀变为200K的温度分布，然后把管子开口段密封，再使整体温度降为100K。
+    求管中最终压强。
+    \\\\
+    \solution
+    \\
+    由理想气体状态方程：
+    \begin{align*}
+        \nu &= \int d\nu \\
+        &= \int \frac{P}{RT}dV \\
+        &= \int_0^l \frac{P}{RT}Adx \\
+        &= \int_0^l \frac{PA}{R(T_{200}+x/l(T_{1000}-T_{200}))}dx\\
+        &=\frac{PA}{R}\frac{l}{T_{1000}-T_{200}}\ln\frac{T_{1000}}{T_{200}}
+    \end{align*}
+    将上式代入理想气体状态方程：
+    \[
+        P'=\frac{\nu RT'}{Al}=P\frac{T'}{T_{1000}-T_{200}}\ln{\frac{T_{1000}}{T_{200}}}=\frac{\ln{5}}{8}P
+    \]
+\end{homeworkProblem}
 \end{document}
