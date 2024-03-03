@@ -2,12 +2,13 @@
 
 \usepackage{ctex}
 \usepackage{graphicx}
-%\setCJKmainfont{SimSun}
+\usepackage{amsmath}
+\graphicspath{{image/}}
 
 \title{实验报告}
-\author{郑晓旸
-    \thanks{Funded by China Scholarship Council}
-    }
+\author{
+    郑晓旸\thanks{Funded by China Scholarship Council}
+}
 \date{\today}
 
 \begin{document}
@@ -24,10 +25,76 @@
 \emph{这是强调，可以取决于上下文，给定强调方式}
 \newline
 \textit{在斜体中\emph{它是正体}作为强调}
-\newline
-\begin{center}
-    \includegraphics[width=0.5\textwidth]{image/example.png}    
-\end{center}
-\bibliographystyle{plain}
-\bibliography{references}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{example}
+    \caption{example}
+    \label{fig:example}
+\end{figure}
+
+这就是图 \ref{fig:example}
+\begin{itemize}
+    \item 这个是列表
+    \item 第二行list
+    \item 第三行list
+\end{itemize}
+\begin{enumerate}
+    \item 这是序列1
+    \item 这是序列2
+    \item 这是序列3
+\end{enumerate}
+\begin{description}
+    \item[First] 这是描述
+    \item[Second] 这是描述
+    \item[Third] 这是描述
+\end{description}
+接下来我们来看看数学公式，这是一个行内公式 $a^2 + b^2 = c^2$，这是一个行间公式
+\[
+    a^2 + b^2 = c^2
+\]
+\[
+    \int_0^1 x^2 \, dx
+\]
+
+
+Subscripts in math mode are written as $a_b$ and superscripts are written as $a^b$. These can be combined and nested to write expressions such as
+
+\[ T^{i_1 i_2 \dots i_p}_{j_1 j_2 \dots j_q} = T(x^{i_1},\dots,x^{i_p},e_{j_1},\dots,e_{j_q}) \]
+ 
+We write integrals using $\int$ and fractions using $\frac{a}{b}$. Limits are placed on integrals using superscripts and subscripts:
+
+\[ \int_0^1 \frac{dx}{e^x} =  \frac{e-1}{e} \]
+
+Lower case Greek letters are written as $\omega$ $\delta$ etc. while upper case Greek letters are written as $\Omega$ $\Delta$.
+
+Mathematical operators are prefixed with a backslash as $\sin(\beta)$, $\cos(\alpha)$, $\log(x)$ etc.
+
+
+The well-known Pythagorean theorem \(x^2 + y^2 = z^2\) was proved to be invalid for other exponents, meaning the next equation has no integer solutions for \(n>2\):
+
+\[ x^n + y^n = z^n \]
+
+\section{Second example}
+
+This is a simple math expression \(\sqrt{x^2+1}\) inside text. 
+And this is also the same: 
+\begin{math}
+\sqrt{x^2+1}
+\end{math}
+but by using another command.
+
+This is a simple math expression without numbering
+\[\sqrt{x^2+1}\] 
+separated from text.
+
+This is also the same:
+\begin{displaymath}
+\sqrt{x^2+1}
+\end{displaymath}
+
+\ldots and this:
+\begin{equation*}
+\sqrt{x^2+1}
+\end{equation*}
+
 \end{document}
