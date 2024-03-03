@@ -1,7 +1,33 @@
-\documentclass{ctexart}
+\documentclass{article}
+
+\usepackage{ctex}
+\usepackage{graphicx}
+%\setCJKmainfont{SimSun}
+
+\title{实验报告}
+\author{郑晓旸
+    \thanks{Funded by China Scholarship Council}
+    }
+\date{\today}
 
 \begin{document}
-
-% 这个是注释
-这个是正文
+\maketitle
+这里是一片文档\newline
+\textbf{这是粗体}
+\newline
+\textit{这是斜体}
+\newline
+\underline{这是下划线}
+\newline
+\underline{\textbf{它们可以组合使用}}
+\newline
+\emph{这是强调，可以取决于上下文，给定强调方式}
+\newline
+\textit{在斜体中\emph{它是正体}作为强调}
+\newline
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{image/example.png}    
+\end{center}
+\bibliographystyle{plain}
+\bibliography{references}
 \end{document}
