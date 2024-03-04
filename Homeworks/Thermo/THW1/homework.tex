@@ -175,7 +175,7 @@
 
 
 \end{homeworkProblem}
-\pagebreak
+
 \begin{homeworkProblem}
     国际实用温标（1990年）规定：用于13.803 (平衡氢三相点)到
 961.78°C（银在0.101MPa下的凝固点）的标准测量仪器是铂电阻温
@@ -201,16 +201,16 @@
     \\
     15.247/11&=R_{100}/R_0=1+100^\circ C \cdot A+10000^\circ C^2 \cdot B
     \\
-    28.887/11&=R_{444.67}/R_0=1+444.67^\circ C \cdot A+(444.67^\circ C)^2\cdot B
+    28.887/11&=R_0=1+444.67^\circ C \cdot A+(444.67^\circ C)^2\cdot B
 \end{align*}
 得到A、B、C的解：
 
-\[\begin{cases}
+    \[\begin{cases}
     A=3.9201 ^\circ C^{-1}\\
     B=-5.9205\times 10^{-7^\circ} C^{-2}
 \end{cases}\]
 \end{homeworkProblem}
-\pagebreak
+\\\\\\
 
 \begin{homeworkProblem}
     求氧气压强为0.1MPa、温度为27°C时的密度
@@ -235,7 +235,7 @@
     \end{align*}
 \end{homeworkProblem}
 
-\pagebreak
+
 
 \begin{homeworkProblem}
     容积为10L的瓶内贮有氢气，因开关损坏而漏气，在温度为7.0°C时，压
@@ -256,7 +256,7 @@
 
 \end{homeworkProblem}
 
-\pagebreak
+
 
 \begin{homeworkProblem}
     现有一气球，体积为\(8.7m^3\)，冲入温度为15°C的氢气。当温度升高到37°C时，维持其气压\(p\)及体积\(V\)不变,气球中多余的氢气跑掉了，而
@@ -274,32 +274,98 @@
     \\
     \frac{Vp}{R}&=\frac{\Delta \nu}{\Delta \frac{1}{T}}
     \\
-    \rho &= \frac{M_{mol}p}{RT}
+    \rho &= \frac{M_{mol}p}{RT}=\frac{pV}{R}\frac{1}{VT}M_{mol}\\
+    &=\frac{\Delta m}{\Delta \frac{1}{T}}\frac{1}{VT}\\
+    &=0.00889 kg/m^3
 \end{align*}
 \end{homeworkProblem}
+\\\\\\
 
-\pagebreak
-
-%
-% Non sequential homework problems
-%
-
-% Jump to problem 18
-\begin{homeworkProblem}[18]
-    Evaluate \(\sum_{k=1}^{5} k^2\) and \(\sum_{k=1}^{5} (k - 1)^2\).
-\end{homeworkProblem}
-
-% Continue counting to 19
 \begin{homeworkProblem}
-    Find the derivative of \(f(x) = x^4 + 3x^2 - 2\)
+    一个不漏气的氢气球可以膨胀，保持气球内外压强相等，随着气球不断升高，大气压强不断减少，氢气球就不断膨胀。如果忽略掉大气温度和摩尔质量随高度的变化，假设氢气和大气都是理想气体，试问:
+    \\
+    （A）气球在上升过程中所受的净浮力（浮力-氢气自身重量）是否变化？\\
+    （B）在标准状态下给氢气球充气后，体积\(V=556m^3\)球壳的体积可以忽略不计，球壳的质量\(m=12.5kg\)，在0℃的等温大气中，这个气球还可悬挂多重物体而不坠下？已知\(M_{h_2}^{mol}=2g/mol,M_{air}^{mol}=28.9g/mol\)
+    \\\\
+    \solution 
+    \\\\
+    \part
+    \\
+    由理想气体状态方程：
+    \begin{align*}
+        PV &= \nu RT \\
+        PM_{mol} &= \rho RT
+    \end{align*}
+    计算浮力：
+    \begin{align*}
+        F_b &= \rho_{air}V_{air}g-\rho_{h_2}V_{h_2}g\\
+        &=\frac{PM_{air}^{mol}V}{RT}g-\frac{PM_{h_2}^{mol}V}{RT}g\\
+        &=\nu_{h2}(M_{air}^{mol}-M_{h_2}^{mol})g\\
+    \end{align*}
+    由上式可知，气球在上升过程中所受的净浮力不变。
+    \\\\
+    \part
+    \\
+    受力平衡方程：
+    \begin{align*}
+        F_{\text{浮}}&=Mg+mg+\rho_{h2}gV\\
+        (M_{air}^{mol}-M_{h_2}^{mol})gV&=(M+m)g\\
+        M&=\frac{PV}{RT}(M_{air}^{mol}-M_{h_2}^{mol})V-m\\
+        &=664.6kg
+    \end{align*}
 \end{homeworkProblem}
-
-% Go back to where we left off
-\begin{homeworkProblem}[6]
-    Evaluate the integrals
-    \(\int_0^1 (1 - x^2) \dx\)
-    and
-    \(\int_1^{\infty} \frac{1}{x^2} \dx\).
+\\\\\\
+\begin{homeworkProblem}
+    某混合气体由\(H_2,CO_2,CH_4,C_2H_4\)组成，其摩尔质量分别为\(2g\cdot mol^{-1},44g\cdot mol^{-1},16g\cdot mol^{-1},28g\cdot mol^{-1}\)。
+    在20℃时，上述四种气体对应的分压强为\(200mmHg,150mmHg,320mmHg,105mmHg\)\\
+    （A）求混合气体的总压强\\
+    （B）求氢气的质量分数\\
+    \\\\
+    \solution
+    \\
+    \part
+    \\
+    \[
+        P=\Sigma p_i = 775 mmHg
+    \]
+    \part
+    \\
+    \[
+        \eta_{H_2}^m=\frac{M_{H_2}^{mol}p_{H_2}}{\sum_i M_i^{mol}p_i}=\frac{20}{753} 
+    \]
 \end{homeworkProblem}
-
+\begin{homeworkProblem}
+    所谓某混合理想气体中各组分的体积百分比，是指各组分单独处在与混合理想气体相同压强和温度状态下，其体积在混合理想气体中所占的百分数。
+    空气可当作理想气体，空气中几种主要组分的体积百分比是：氮78\%，氧21\%，氩1\% \\
+    求标准情况下空气的密度\\
+    已知：\(M_{N_2}^{mol}=28.0g/mol,M_{O_2}^{mol}=32.0g/mol,M_{Ar}^{mol}=39.9g/mol\)
+    \\\\
+    \solution
+    \\
+    \begin{align*}
+        \rho &= \frac{M_{N_2}^{mol}p_{N_2}+M_{O_2}^{mol}p_{O_2}+M_{Ar}^{mol}p_{Ar}}{RT}\\
+        &= \frac{P(M_{N_2}^{mol}\eta_{N_2}+M_{O_2}^{mol}p\eta_{O_2}+M_{Ar}^{mol}\eta_{Ar})}{RT}\\
+        &= \frac{M_{N_2}^{mol}\eta_{N_2}+M_{O_2}^{mol}p\eta_{O_2}+M_{Ar}^{mol}\eta_{Ar}}{V_{mol}^{\Theta}}\\
+        &=1.29\ kg/m^3
+    \end{align*}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+    一段开口、横截面积处处相等的长管中冲有压强为p的空气。先对管子加热，使其形成从开口温度1000K均匀变为200K的温度分布，然后把管子开口段密封，再使整体温度降为100K。
+    求管中最终压强。
+    \\\\
+    \solution
+    \\
+    由理想气体状态方程：
+    \begin{align*}
+        \nu &= \int d\nu \\
+        &= \int \frac{P}{RT}dV \\
+        &= \int_0^l \frac{P}{RT}Adx \\
+        &= \int_0^l \frac{PA}{R(T_{200}+x/l(T_{1000}-T_{200}))}dx\\
+        &=\frac{PA}{R}\frac{l}{T_{1000}-T_{200}}\ln\frac{T_{1000}}{T_{200}}
+    \end{align*}
+    将上式代入理想气体状态方程：
+    \[
+        P'=\frac{\nu RT'}{Al}=P\frac{T'}{T_{1000}-T_{200}}\ln{\frac{T_{1000}}{T_{200}}}=\frac{\ln{5}}{8}P
+    \]
+\end{homeworkProblem}
 \end{document}
