@@ -1,0 +1,194 @@
+\documentclass{article}
+
+\usepackage{ctex}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ 2}
+\newcommand{\hmwkDueDate}{March 5, 2024}
+\newcommand{\hmwkClass}{Quantum Physics I}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Prof. Xingye Lu}
+\newcommand{\hmwkAuthorName}{\textbf{郑晓旸} \and \textbf{202111030007}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+   使用普朗克黑体辐射公式推导维恩位移定律。\\
+   普朗克黑体辐射公式为：\(E(\lambda,T)=\frac{8\pi hc}{\lambda^5}\frac{1}{e^{hc/\lambda kT-1}}\)
+    \\\\
+    \solution
+    \\
+    维恩位移定律是指黑体辐射的最大辐射强度对应的波长与温度的关系。\\
+    对黑体辐射公式的波长项求导：
+    \begin{align}
+        \pderiv{\lambda}{E(\lambda,T)} &= \pderiv{\lambda}{\frac{8\pi hc}{\lambda^5}\frac{1}{e^{hc/\lambda kT-1}}}\\
+        &=  \frac{8\pi hc}{e^{hc/kT\lambda}-1}\frac{1}{\lambda ^6}(\frac{hc}{kT\lambda}e^{\frac{hc}{kT\lambda}}\frac{1}{e^{hc/kT\lambda}-1}-5)
+    \end{align}
+    令上式等于0，得到：
+    \begin{align}
+        \frac{hc}{kT\lambda}e^{\frac{hc}{kT\lambda}}\frac{1}{e^{hc/kT\lambda}-1}-5=0
+    \end{align}
+    令\(x=\frac{hc}{kT\lambda}\)，则上式变为：
+    \begin{align}
+        xe^{x}\frac{1}{e^{x}-1}-5&=0\\ \text{即:}(5-x)e^x&=5
+    \end{align}
+    令上式的解为\(x_0\)，则有：
+    \begin{align}
+        \lambda_{T}=\frac{b}{T}\ \ where\ b=\frac{hc}{x_0 k}
+    \end{align}
+    \\
+    此为维恩位移定律。
+\end{homeworkProblem}
+\pagebreak
+\begin{homeworkProblem}
+    已知铯的逸出功为\(1.9ev\)\\(A)求使其产生光电子的最长光波长和最小频率。\\(B)要得到\(1.5ev\)的光电子，光波长至少为多少？\\\\
+    \solution
+    \\
+    \part
+    \\
+    由光电效应的能量守恒公式：\\
+    \begin{align}
+        E_{photon} &= E_{kinetic} + W \\
+        where \ E_{photon} = h\nu \ &and\  E_{kinetic} = 0 \\
+        \nu &= \frac{W}{h}=4.5942\times 10^{14}\ s^{-1} \\
+        \lambda &= \frac{c}{\nu} = 652.5\ nm
+    \end{align}
+    \part
+    \\
+\end{homeworkProblem}
+    由公式（7），以及\(E_{kinetic}=1.5eV\)：
+    \begin{align}
+        \nu &= \frac{W+E_{kinetic}}{h}=8.2212\times 10^{14}\ s^{-1} \\
+        \lambda &= \frac{c}{\nu} = 364.60\ nm
+    \end{align}
+\end{document}
