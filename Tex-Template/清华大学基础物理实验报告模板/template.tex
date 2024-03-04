@@ -1,4 +1,4 @@
-% MIT License
+%This is a experiment example of ZhengXiaoyang's experiment report template
 
 \documentclass[UTF8]{ctexart}
  
@@ -13,6 +13,10 @@
 \pagestyle{fancy}
 \fancyhf{}
 
+\graphicspath{{picture/}}
+
+
+\title{利用分光计测量玻璃的色散曲线实验报告}
 \graphicspath{{picture/}}
 
 
@@ -67,7 +71,7 @@
 由光学知识，假设一束单色光以$i_1$角入射到AB面上，经棱镜两次折射后，从AC面折射出来，出射角为$i_2$。入射光和出射光之间的夹角$\delta$称为偏向角。当棱镜顶角A一定时，偏向角$\delta$的大小会随入射角的变化而变化。由光学知识，当$i_1'=i_2'$时，$\delta$为最小。这时的偏向角为最小偏向角，记作$\delta_{min}$。\\
 由图中看出借助折射关系和上述的最小偏向角条件：
 \begin{align}
-    \delta=\arcsin(\frac{n}{n_0}\sin(i_1')))+\arcsin(\frac{n}{n_0}\sin(i_1')))-A
+    \delta=\arcsin(\frac{n}{n_0}\sin(i_1'))+\arcsin(\frac{n}{n_0}\sin(i_1'))-A
 \end{align}
 \begin{figure}[h]
     \centering
@@ -110,43 +114,76 @@
 分光计调整的关键是\textbf{调好望远镜}，其他的调整可以以望远镜为基准。
 \subsection{测量三棱镜顶角}
 在这里我们使用原理中提到的反射法进行测量，多次测量取平均值，记录数据如下：
-\begin{center}
-    \begin{tabular}{|c|c|c|c|c|}
-     \hline
-    测量序号 & $\theta_1$ & $\theta_1'$ & $\theta_2$ & Vr'(V) & Vo(V)\\
-     \hline
-    线圈1(空气芯) & 123 & 456 & 789 & 012 & 345\\
-     \hline
-    线圈2(空气芯) & 123 & 456 & 789 & 012 & 345\\
-     \hline
-    线圈3(铝芯) & 123 & 456 & 789 & 012 & 345\\
-     \hline
-    线圈4(铝芯) & 123 & 456 & 789 & 012 & 345\\
-     \hline
-    \end{tabular}
+\\
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+           测量序号 & \(\theta_1\) & \(\theta_1'\) & \(\theta_2\) & \(\theta_2'\) & A \\
+            \hline
+           1 & \(108^\circ 7'\) & \(288^\circ 7'\) & \(228^\circ 10'\) & \(48^\circ 10'\) & \(60^\circ 1'30''\) \\
+            \hline
+           2 & \(94^\circ 20'\) & \(274^\circ 19'\) & \(214^\circ 21'\) & \(34^\circ 19'\) & \(60^\circ 0'30''\) \\
+            \hline
+          3 & \(115^\circ 23'\) & \(295^\circ 21'\) & \(235^\circ 25'\) & \(55^\circ 25'\) & \(60^\circ 3'\) \\
+            \hline
+        \end{tabular}
+        \caption{三棱镜顶角测量数据}
+        \label{table:1}
+    \end{center}  
+\end{table}
+
+角度测量的不确定度为：
+\begin{align}
+    \delta_{Aa} &=\sqrt{\frac{\Sigma_i (A_i-A)^2}{n(n-1)}}=43'' \\ \delta_{Ab}&=\frac{1'}{\sqrt3}=34'' \\ \delta_A&=\sqrt{\delta_{Aa}^2+\delta_{Ab}^2}=55''\approx 1'
+\end{align}
+故测得顶角为：
+\[A=60^\circ 1' \pm 1' \]
+\subsection{测量三棱镜的色散曲线}
+使用汞灯作为光源，用上文所述的最小偏向角法测量汞灯各谱线在玻璃中的折射率；\\
+汞灯的发光谱线如下：\\
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|}  
+            \hline    
+            波长（nm）& 404.66 & 435.84 & 496.16 & 546.07 & 576.96 & 578.97 & 623.44 & 690.72 \\
+            \hline
+            颜色 & 紫 & 蓝紫  & 青 & 绿 & 黄 & 黄 & 红 & 深红 \\
+            \hline
+            强度 &强 &很强 & 强 &很强 & 强 & 强 & 中 & 弱 \\
+            \hline
+        \end{tabular}
+        \caption{汞灯发光谱线}
     \end{center}
+\end{table}
+\\
+由于汞灯亮度和实验器材所限，肉眼仅能观察到404nm，435nm，496nm，546nm，576nm五条谱线。
+\\
+以下是它们在三棱镜中的最小偏向角数据：\\
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \(\lambda \ (nm)\)&404.66 & 435.84 & 496.16 & 546.07 & 576.96 \\
+        \hline
+        \(\theta\)&320°12'&320°30'&320°53'&321°13'&321°20'\\
+        \hline
+        \(\theta'\)&140°12'&140°30'&140°52'&141°11'&141°18'\\
+        \hline
+        \(\delta\)&39°48'&39°30'&39°07'&38°45'&38°41'\\
+        \hline
+        \end{tabular}
+        \caption{汞灯谱线最小偏向角数据}
+    \end{center}
+\end{table}\\
+其中，546nm的谱线进行了三次测量，数据记录如下：\\
+
 \subsubsection{$a1. $计算出xx的电阻和电感}
 在xx上将xx的两端串联xx和xx相连，将xx的两端串联进xx，分别将xx接在$L_1$，$L_2$，xx的两端测量xx并记录。
 \subsubsection{$a2. $Complete by yourself!}
 Complete by yourself!
 \subsubsection{$a3. $Complete by yourself!}
 实验得到的数据如下：
-
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|c|}
- \hline
-线圈名称 & R'(Ω) & Va(V) & V(V) & Vr'(V) & Vo(V)\\
- \hline
-线圈1(空气芯) & 123 & 456 & 789 & 012 & 345\\
- \hline
-线圈2(空气芯) & 123 & 456 & 789 & 012 & 345\\
- \hline
-线圈3(铝芯) & 123 & 456 & 789 & 012 & 345\\
- \hline
-线圈4(铝芯) & 123 & 456 & 789 & 012 & 345\\
- \hline
-\end{tabular}
-\end{center}
 
 \subsection{展示一下行间公式}
 \subsubsection{行间公式}
