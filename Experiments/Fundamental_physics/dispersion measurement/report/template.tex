@@ -2,6 +2,7 @@
 
 \documentclass[UTF8]{ctexart}
  
+\usepackage{pythonhighlight}
 \usepackage{amsmath}
 \usepackage{cases}
 \usepackage{cite}
@@ -32,6 +33,7 @@
 \fancyfoot[C]{\thepage}
 
 \maketitle
+\newpage
 \tableofcontents
 \newpage
 
@@ -201,7 +203,7 @@
             \hline
             波长（nm）& 404.66 & 435.84 & 496.16 & 546.07 & 576.96 \\
             \hline
-            折射率 & 1.5295 & 1.5261 & 1.5218 & 1.5177 & 1.5169 \\
+            折射率 & 1.5300 & 1.5266 & 1.5223 & 1.5181 & 1.5174 \\
             \hline
         \end{tabular}
         \caption{汞灯谱线折射率数据}
@@ -210,7 +212,7 @@
 \\
 计算得到的546nm谱线折射率数据如下：\\
 \begin{align}
-    n_\lambda=\frac{n_0}{\sin(A/2)}\sin(\frac{\delta_{min}+A}{2})=1.5197
+    n_\lambda=\frac{n_0}{\sin(A/2)}\sin(\frac{\delta_{min}+A}{2})=1.5223
 \end{align}
 计算不确定度：
 \begin{align}
@@ -222,8 +224,21 @@
     n_{546nm}=1.5197\pm 0.0003
 \end{align}
 \\
-\subsubsection{绘制色散曲线}
-根据表绘制色散曲线，如图所示：
+\subsubsection{绘制色散曲线、拟合Cauchy方程}
+根据表绘制色散曲线，并使用拟合方法拟合Cauchy方程，得到拟合结果如下：
+\\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fit.png}
+    \caption{\(n_\lambda - \lambda\)关系(拟合)}
+    \label{fig:fit}
+\end{figure}
+\\
+其中拟合结果如下所示：
+\begin{center}
+    A=1.504870 (nm), B=4146.749084 (\(nm^2\)), C=1.000000 (\(nm^4\))
+\end{center}
+拟合所用程序见附录。
 \section{分析与讨论}
 
 \subsection{误差分析}
@@ -241,16 +256,55 @@
 
 \newpage
 %图一般很大，建议换页。
-\section{原始数据}
-\begin{center}
-    Change the picture by yourself
+\section{附录}
+\begin{python}
     
+    import pandas as pd
+    import re
+    import math
+    import matplotlib.pyplot as plt
+    from scipy.optimize import curve_fit
+
+    def dms_to_radians(dms_str):
+        parts = re.split(r'[°\'\"]', dms_str)
+        degrees = int(parts[0])
+        minutes = int(parts[1]) if len(parts) > 1 and parts[1] else 0
+        seconds = int(parts[2]) if len(parts) > 2 and parts[2] else 0
     
-    \includegraphics{picture/example.png}
-\end{center}
+        decimal_degrees = degrees + minutes / 60 + seconds / 3600
+        radians = math.radians(decimal_degrees)
+        return radians
 
+    df = pd.read_csv('data.csv')
+    df['n_lambda'] = n_0 / math.sin(A_rad / 2) * df['delta(rad)'].apply(lambda x: math.sin((x + A_rad) / 2))
 
+    def dispersion_equation(wavelength, A, B, C):
+        return A + B / wavelength**2 + C / wavelength**4
 
+    popt, _ = curve_fit(dispersion_equation, df['lambda(nm)'], df['n_lambda'])
+
+    A, B, C = popt
+
+    wavelength_range = pd.Series(range(int(df['lambda(nm)'].min()), int(df['lambda(nm)'].max()) + 1))
+    fitted_n = dispersion_equation(wavelength_range, A, B, C)
+
+    plt.figure(figsize=(8, 6))
+    plt.plot(wavelength_range, fitted_n, label='Fitted Curve')
+    plt.scatter(df['lambda(nm)'], df['n_lambda'], color='red', marker='o', facecolors='none', label='Observed Points')
+
+    for i, row in df.iterrows():
+        plt.annotate(f"({row['lambda (nm)']}, {row['n_lambda']:.6f})", (row['lambda (nm)'], row['n_lambda']), textcoords="offset points", xytext=(0, 10), ha='center')
+
+    plt.xlabel('Wavelength lambda (nm)') 
+    plt.ylabel('Refractive Index n_lambda')
+    plt.title('Refractive Index vs. Wavelength')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    print(f"Fitted Parameters: A={A:.6f}, B={B:.6f}, C={C:.6f}")
+    
+\end{python}
 \bibliographystyle{plain}
 \bibliography{./template}  %bib文件名
 
