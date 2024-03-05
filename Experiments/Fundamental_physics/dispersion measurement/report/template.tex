@@ -33,7 +33,6 @@
 \fancyfoot[C]{\thepage}
 
 \maketitle
-\newpage
 \tableofcontents
 \newpage
 
@@ -221,7 +220,7 @@
 \end{align}
 得到最终实验结果：
 \begin{align}
-    n_{546nm}=1.5197\pm 0.0003
+    n_{546nm}=1.52\pm 0.018
 \end{align}
 \\
 \subsubsection{绘制色散曲线、拟合Cauchy方程}
@@ -244,18 +243,66 @@
 \subsection{误差分析}
 
 \subsubsection{实验中的系统误差}
-来自xxx的精度影响。
+\begin{enumerate}
+    \item 三棱镜顶角测量中，由于测量仪器的精度限制，可能存在一定的系统误差。
+    \item 由于测量时的环境因素，如温度、湿度等，可能会对空气折射率产生一定的影响。
+    \item 由于汞灯亮度和实验器材所限，肉眼仅能观察到404nm，435nm，496nm，546nm，576nm五条谱线，无法为cauchy方程拟合提供足够多数据点。
+    \item 受汞灯温度和稳定性影响，波长可能存在一定的波动。
+\end{enumerate}
 
-受空间内xx与xx的干扰。
+
 
 \subsubsection{实验中的偶然误差}
-接线时可能有xxx情况，导致xxx。xx上的xx在某情况下有xx的问题存在，经反复调整后得以正常测量。
+\begin{enumerate}
+    \item 分光计调整中，由于仪器的精度限制，可能存在一定的偶然误差。
+    \item 使用最小偏向角法测量时，肉眼难以准确观察到最小偏向角，可能存在一定的偶然误差。
+\end{enumerate}
 
-\subsection{实验后的思考}
-可说明自己做本实验的总结、收获和体会，对实验中发现的问题提出自己的建议。
-
+\subsection{复习思考题}
+\begin{enumerate}
+    \item 总结分光计的调整步骤(每一步的目的、方法和达到要求的判据)。
+    \begin{enumerate}
+        \item 调节望远镜
+        \begin{itemize}
+            \item 目的:使望远镜聚焦在无穷远处,光轴与分光计的中心轴垂直,分划板上竖线与中心轴平行。
+            \item 方法:
+            \begin{enumerate}
+                \item 目镜调焦:转动目镜调焦手轮,使分划板刻线成像清晰。
+                \item 望远镜调焦(自准直法):放置双面反射镜,调节望远镜调焦手轮,使反射回来的亮十字像与叉丝无视差。
+                \item 望远镜俯仰调节:采用1/2渐进调节法,使平面镜两面反射的绿十字像均与分划板上部十字叉丝重合。
+                \item 望远镜分划线方向调节:轻微转动载物台,调节目镜筒角度,使反射十字像保持在横向分划线上运动。
+            \end{enumerate}
+            \item 判据:平面镜反射回来的绿十字像与分划板上的双十字叉丝的上十字叉丝重合,且载物台旋转180°时,反射绿十字像的高度不变,仍和上十字叉丝重合。
+        \end{itemize}
+        \item 调节载物台
+        \begin{itemize}
+            \item 目的:使载物台与分光计中心轴垂直。
+            \item 方法:
+            \begin{enumerate}
+                \item 粗调:目测并调节载物台的三个水平调节螺钉,使载物台大致与主轴垂直。
+                \item 精调:在完成望远镜调节后,轻微转动载物台,观察三棱镜光学面反射十字像。若反射十字像偏离横向分划线,则调节载物台调平螺丝,使反射十字像保持在横向分划线上运动。
+            \end{enumerate}
+            \item 判据:转动载物台时,反射十字像应始终沿着横向分划线运动,不偏离横向分划线。
+        \end{itemize}
+        \item 调节平行光管
+        \begin{itemize}
+            \item 目的:平行光管能发出平行光,光轴与分光计的中心轴垂直,狭缝方向与中心轴平行。
+            \item 方法:
+            \begin{enumerate}
+                \item 调节平行光管产生平行光:前后移动狭缝套管,使望远镜中看到清晰的狭缝像,且像与望远镜分划板竖叉丝无视差。
+                \item 调整平行光管光轴与狭缝方向:
+            \end{enumerate}
+            \item 判据:
+            \begin{itemize}
+                \item 望远镜中能看到清晰的狭缝像,狭缝像与望远镜分划板竖叉丝无视差。
+                \item 狭缝像与分划板中心的横向分划线重合,且与竖向分划线平行。
+            \end{itemize}
+        \end{itemize}
+    \end{enumerate}
+    \item 在通过最小偏向角法测量折射率时，由于\(n_0\)非常接近1，在计算中是否可以取\(n_0 = 1\)？(从不确定度的角度考虑)\\ 不可以。因为\(\partial n / \partial n_0\)较大，所以\(n_0\)的不确定度会对\(n_{\lambda}\)的不确定度产生较大影响。\\
+\end{enumerate}
 \newpage
-%图一般很大，建议换页。
+
 \section{附录}
 \begin{python}
     
