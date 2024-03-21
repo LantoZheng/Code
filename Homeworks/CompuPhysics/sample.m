@@ -10,7 +10,7 @@ end
 figure;
 axis equal;
 hold on
-for k=1:length(S);%画图
+for k=1:length(S)
     switch S(k);
         case 'F'
             plot([z,z+n*exp(i*A)],'linewidth',2);
