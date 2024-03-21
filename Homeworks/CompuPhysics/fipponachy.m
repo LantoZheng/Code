@@ -1,9 +1,11 @@
 %test code
-%k=[];
-%for i = 1:10
-%    k(i)=fippo(i);
-%end
-%k
+
+k=[];
+for i = 1:10
+    k(i)=fippo(i);
+end
+k
+
 function y = fippo(n)
     switch n
         case 1
@@ -14,3 +16,5 @@ function y = fippo(n)
             y = fippo(n-1)+fippo(n-2);
     end
 end
+
+
