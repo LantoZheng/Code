@@ -16,5 +16,4 @@ function y = fippo(n)
             y = fippo(n-1)+fippo(n-2);
     end
 end
-
-
+%Computational Physics Homework 2 By 郑晓旸 202111030007
