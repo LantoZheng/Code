@@ -1,16 +1,16 @@
 a = 2/3*pi;
-A = eps;
-hold on
+A = 0;
 
-draw(2,1,0)
-r=1
-function draw(n,l,loc)
+lines = draw(2,1,0)
+
+function plot_list=draw(n,l,loc)
     if n == 1 
         str="F+F+F+";
-        for i = 1:length(str)
-            switch str(i)
+        for k = 1:length(str)
+            switch str(k)
                 case 'F'
-                    plot([loc,loc+l*exp(i*A)])
+                    add = [loc,loc+l*exp(i*A)]
+                    plot_list = [plot_list;add]
                     loc=loc+l*exp(i*A);
                 case '+'
                     A=A+a;
