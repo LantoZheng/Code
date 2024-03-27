@@ -1,0 +1,180 @@
+%This is a experiment example of ZhengXiaoyang's experiment report template
+
+\documentclass[UTF8]{ctexart}
+ 
+\usepackage{amsmath}
+\usepackage{cases}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\geometry{a4paper}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\graphicspath{{picture/}}
+
+
+\title{密里根油滴实验}
+\graphicspath{{picture/}}
+
+
+\title{密里根油滴实验预习报告}
+\author{郑晓旸}
+\date{\today}
+\pagenumbering{arabic}
+
+\begin{document}
+%这里是文件的开头
+\fancyhead[L]{郑晓旸}
+\fancyhead[C]{密里根油滴实验}
+\fancyfoot[C]{\thepage}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{实验目的}
+\begin{itemize}
+    \item 掌握密立根油滴实验的原理，学习一种微观量的宏观测量方法。
+    \item 学习用平衡法和非平衡法测量电子电量的实验方法。
+    \item 验证电荷的分立性并测量基本电荷量。
+\end{itemize}
+
+\section{实验仪器}
+\begin{enumerate}
+    \item DH0605型油滴仪
+    \item 实验油
+    \item 喷雾器
+    \item 其他实验器材
+\end{enumerate}
+
+
+\section{实验原理}
+
+密里根油滴实验是通过测量带电油滴在重力和电场力作用下的运动速度,来计算油滴所带电荷,进而研究电荷的分立性和测量基本电荷量。
+
+\subsection{受力分析}
+在实验中,带电油滴会受到重力$G$、电场力$F_E$和空气阻力$f_r$的作用。
+
+设油滴的质量为$m$,所带电荷量为$q$,重力加速度为$g$,则油滴所受重力为
+\begin{equation}
+    G = mg
+\end{equation}
+
+油滴在电场强度为$E$的匀强电场中所受的电场力为
+\begin{equation}
+    F_E = qE = q\frac{U}{d}
+\end{equation}
+其中$U$为上下极板间的电压,$d$为极板间距。
+
+油滴在运动时还会受到空气的阻力,根据斯托克斯公式,
+\begin{equation}
+    f_r = 6\pi \eta av
+\end{equation}
+其中$\eta$为空气的粘滞系数,$a$为油滴半径,$v$为油滴运动速度。
+
+\subsection{速度与电荷的关系}
+当油滴达到受力平衡时,有
+\begin{equation}
+    mg = q\frac{U}{d} - 6\pi \eta av
+\end{equation}
+
+在平衡电压$U_0$下,油滴静止不动,此时$v=0$,
+\begin{equation}
+    mg = q\frac{U_0}{d}
+\end{equation}
+
+在电压为零时,油滴在重力作用下做匀速下落运动,速度为$v_g$,此时
+\begin{equation}
+    mg = 6\pi \eta av_g
+\end{equation}
+
+联立以上两式,可得
+\begin{equation}
+    q = \frac{mgd}{U_0} = \frac{mgd(v_g+v_e)}{Uv_g}
+\end{equation}
+其中$v_e$为施加电压$U$时油滴的上升速度。这就建立了油滴速度与其所带电荷之间的关系。
+
+\subsection{电荷量的计算}
+由于油滴的半径$a$与其下落速度$v_g$有关,
+\begin{equation}
+    a = \sqrt{\frac{9\eta v_g}{2\rho g}}
+\end{equation}
+其中$\rho$为油滴密度。
+
+考虑到油滴半径与空气分子平均自由程相近,需要对空气粘滞系数进行修正,
+\begin{equation}
+    \eta^* = \frac{\eta}{1+\frac{b}{pa}}
+\end{equation}
+其中$b$为修正常数,$p$为大气压强。
+
+最终,通过测量油滴在重力和电场力作用下的运动速度,结合已知参数,就可以计算出油滴所带电荷量
+\begin{equation}
+    q = \frac{4}{3}\pi a^3 \rho g \frac{d}{U_0}
+\end{equation}
+
+\subsection{电荷分立性的验证}
+通过测量多个油滴的电荷量,如果发现其电荷量总是某个最小电荷量$e$的整数倍,即
+\begin{equation}
+    q = ne, \quad n=0,\pm1,\pm2,\cdots
+\end{equation}
+就可以证实电荷的分立性。
+
+作$q\textup{-}n$关系图,如果数据点在一条通过原点的直线上,则斜率就对应最小电荷量$e$,即基本电荷量。
+
+
+\section{实验过程}
+\begin{enumerate}
+    \item 调整仪器:将油滴仪放平稳,调节底部调平螺丝,使水平泡指示水平,平行极板处于水平位置。开机预热10分钟。
+    \item 练习油滴控制和选择:
+    \begin{enumerate}
+      \item 将油从喷雾口喷入,微调显微镜调焦手轮,看到清晰的油滴。
+      \item 选择合适的油滴。按下"平衡"按钮,调节电压至~200V,驱走不需要的油滴,直到剩下几颗缓慢运动的为止。油滴大小要适中,带电量不宜过多。
+    \end{enumerate}
+    \item 油滴电荷量测量:利用平衡法和/或非平衡法测量不同(不少于10颗)油滴的带电量,验证电荷的分立性,测量基本电荷量。实验中要及时计算电荷量,保证油滴带电荷数不超过6。
+    \item 数据处理:
+    \begin{enumerate} 
+      \item 计算每颗油滴的带电量q。
+      \item 验证电荷的分立性,确定每颗油滴所带基本电荷的个数n。
+      \item 做q-n关系图,求解电子电荷量(即q-n曲线的斜率)和相对不确定度。
+    \end{enumerate}
+  \end{enumerate}
+\section{预习思考题}
+\begin{enumerate}
+    \item 密立根最初使用水滴做实验。与油滴相比,用水滴做实验有什么问题?
+    
+    水滴与油滴相比,有以下问题:
+    \begin{itemize}
+      \item 水滴蒸发较快,实验过程中滴的质量会发生明显变化,引入误差。
+      \item 水的导电性可能会影响实验结果。
+      \item 水滴与空气的表面张力系数比油滴小,更容易变形,不利于精确测量。
+    \end{itemize}
+  
+    \item 平衡法和动态法测量油滴带电量各有什么优缺点?
+    \begin{itemize}
+      \item 平衡法优点是直接测量平衡电压,计算简单;缺点是要反复调节电压使油滴保持平衡,操作相对麻烦,且油滴的布朗运动会影响判断。
+      \item 动态法优点是只需测量油滴匀速运动的时间,操作方便;缺点是需要测量上升和下降两个时间,且计算平衡电压时还要考虑两个速度的差异。
+    \end{itemize}
+  
+    \item 本实验为什么要选择带电量较小的油滴?
+    \begin{itemize}
+      \item 带电量小的油滴所带基本电荷数少,更容易分辨出电荷的分立性。
+      \item 带电量小的油滴受电场力小,运动速度慢,测量时间更准确。
+      \item 实验要求测量电荷的相对不确定度小于 50\%,因此电荷数不宜超过 10。
+    \end{itemize}
+     
+    \item 选择测量油滴有哪些考虑因素?
+    \begin{itemize}  
+      \item 油滴大小要适中,直径在 1-10 $\mu m$ 量级,既不能太大(带电量多)也不能太小(布朗运动明显)。
+      \item 油滴的运动要平稳,没有明显的漂移或跳动。
+      \item 油滴在视野中的位置合适,运动轨迹与刻度线重合或平行。
+      \item 同一时间视野中油滴不宜太多,以免相互干扰。
+    \end{itemize}
+  \end{enumerate}
+
+\bibliographystyle{plain}
+\bibliography{./template}  %bib文件名
+
+\end{document}
