@@ -151,7 +151,7 @@ RLC电路是二阶动态电路,其暂态过程可以用二阶微分方程描述�
 通过测量相邻峰值之间的时间间隔,计算得到振荡周期$T = \SI{0.202}{\milli\second}$,对应的固有频率$f_0 = \SI{4.90}{\kilo\hertz}$。根据电路元件的标称值$L = \SI{10}{\milli\henry}$和$C = \SI{0.1}{\micro\farad}$,计算得到理论固有频率$f_{\text{theory}} = \SI{5.03}{\kilo\hertz}$,与测量值相对误差为$2.58\%$,误差较小，该误差可能由电路中串联产生的寄生电容以及并联示波器产生的电感产生。
 
 通过对相邻峰值幅度的指数拟合,得到衰减系数$\alpha = 0.722$,由此计算品质因数$Q = \pi/\alpha = 4.352$。根据电路元件的单独测量值$L=\SI{10}{\milli\henry},C=\SI{0.1}{\micro\farad},R=\SI{1}{\ohm},R_{gen}=\SI{50}{ohm}，R_{L}=\SI{14.3}{\ohm}$,计算得到理论品质因数$Q_{\text{theory}} = 4.86$,与测量值较为接近，误差为$10.85\%$。误差可能来自电阻值的不确定性和以及电感在高频震荡下的磁滞损耗所产生的等效电阻，这一点可以在进一步的测量中使用LC测试仪检测。
-\\ 通过对波形数据进行截取、滤波、拟合和数据取点结果，如图\ref{fig:rlc_oscillation_processed}所示。
+\\ 通过对波形数据进行截取、滤波、数据取点并拟合得出结果，如图\ref{fig:rlc_oscillation_processed}所示。
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\textwidth]{rlc_oscillation_processed.png}
@@ -173,9 +173,8 @@ RLC电路是二阶动态电路,其暂态过程可以用二阶微分方程描述�
     \caption{RLC电路在不同阻尼状态下的电容电压波形}
     \label{fig:rlc_damping}
 \end{figure}
-\section{分析与讨论}
 
-\subsection{误差分析}
+
 \section{实验误差和分析}
 
 在本实验中,测量结果与理论值存在一定的误差。误差主要来源于随机误差和系统误差两个方面。
