@@ -180,7 +180,6 @@
     \item 设置图表,y轴为力,x轴为角度。
     \item 将细线缠绕在扭摆上,逐步增大拉力,测量3次力与角度的关系,记录数据如表\ref{tab:3}所示。要求拟合直线的相关系数达到0.9999以上。
     \item 计算3次测量的扭力系数$k_i$和平均值$\bar{k}$。
-    \item (选做)测量扭丝的长度$L$和直径$d$,代入公式(\ref{eq:2})计算扭丝材料的剪切模量$\mu$。
     \end{enumerate}
     
     \begin{table}[htbp]
@@ -225,9 +224,47 @@
     \item 将测得的$T_\mu$与转动定律法中拟合得到的$T_\mu$比较。
     \end{enumerate}
     
+    \section{预习思考题}
+\subsection{圆环转动惯量公式的推导}
+假设圆环的质量为$m$,内径为$d$,外径为$D$。取圆环的微元$\mathrm{d}m$,其到转轴的距离为$r$,则其转动惯量为
+\begin{equation}
+\mathrm{d}I=r^2\mathrm{d}m \label{eq:17}
+\end{equation}
 
-\newpage
-%图一般很大，建议换页。
+假设圆环的密度均匀,则微元的质量与其所占的体积成正比,有
+\begin{equation}
+\mathrm{d}m=\frac{m}{V}\mathrm{d}V=\frac{m}{\pi(R^2-r^2)}\cdot 2\pi r\mathrm{d}r \label{eq:18}
+\end{equation}
+其中$R=D/2$是圆环的外半径,$r=d/2$是圆环的内半径。
+将公式(\ref{eq:18})代入公式(\ref{eq:17})并积分,得到
+\begin{align}
+I &= \int_{r}^{R} r^2\mathrm{d}m = \int_{r}^{R} \frac{2mr^3}{R^2-r^2}\mathrm{d}r \notag\
+\\&= \frac{m}{2}\left[(R^2+r^2)-\frac{(R^2-r^2)^2}{R^2+r^2}\right] \notag\
+\\&= \frac{m}{2}\left(R^2+r^2-\frac{R^4+r^4-2R^2r^2}{R^2+r^2}\right) \notag\
+\\&= \frac{m}{2}\cdot\frac{2R^2r^2}{R^2+r^2} = \frac{mR^2r^2}{R^2+r^2} \label{eq:19}
+\end{align}
+将$R=D/2$,$r=d/2$代入,得到
+\begin{equation}
+I=\frac{1}{8}m(D^2+d^2) \label{eq:20}
+\end{equation}
+这就是圆环绕对称轴转动的转动惯量公式。
+\subsection{消除摩擦力矩影响的方法}
+在转动定律法和扭摆法测量转动惯量时,都需要考虑摩擦力矩$T_\mu$的影响。$T_\mu$会使测量结果偏大,因此需要想办法消除其影响。
+在转动定律法中,假设$T_\mu$是常值,则有
+\begin{equation}
+T-T_\mu=I\beta \label{eq:21}
+\end{equation}
+其中$T$为外力矩,$I$为待测物体与转盘的总转动惯量,$\beta$为角加速度。
+通过改变外力矩$T$的大小,测量一系列$T_i$和对应的$\beta_i$(i=1,2,3...),然后作$T_i$-$\beta_i$图,如图\ref{fig:3}所示。图像应为一条斜率为$I$,截距为$-T_\mu$的直线。用最小二乘法拟合数据点,可以得到$I$和$T_\mu$的值。由于$T_\mu$被当作拟合直线的一个参数处理,其影响可以被消除。
+需要注意的是,上述方法假设$T_\mu$为常值。如果$T_\mu$与转速有关,则拟合结果会有一定误差。为了尽量减小误差,应控制转速在较小的范围内变化。
+在扭摆法中,由于扭摆做简谐振动,摩擦力矩主要影响振幅的衰减,对振动周期的影响很小。因此,在测量扭摆周期时,只要振幅足够小,就可以近似认为周期不受摩擦力矩的影响。
+此外,在计算转动惯量时,分别测量空载和负载两种情况下的扭摆周期,然后计算对应的转动惯量$I_1$和$I_2$,由
+\begin{equation}
+I=I_2-I_1 \label{eq:22}
+\end{equation}
+得到待测物体的转动惯量。由于空载和负载两种情况下摩擦力矩的大小近似相等,因此在式(\ref{eq:22})中相互抵消了。这也是一种消除摩擦力矩影响的方法。
+当然,为了进一步减小误差,应尽量使扭摆的振幅小,周期长,以减小空气阻力等因素的影响。
+
 
 
 
