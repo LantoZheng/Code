@@ -1,7 +1,8 @@
 %This is a experiment example of ZhengXiaoyang's experiment report template
 
 \documentclass[UTF8]{ctexart}
- 
+\usepackage{subfigure}
+\usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{cases}
 \usepackage{cite}
@@ -137,26 +138,87 @@ g = \frac{hQ \omega_0^2}{\sqrt{(\omega_0^2 - \omega^2)^2 + (\frac{\omega \omega_
 \subsubsection{稳态振动测量}
 \begin{enumerate}
     \item 固定阻尼线圈电压为8V和10V，测量幅-频特性和相频特性曲线。
-    \item 选择适当测量点，记录振动达到稳定后的数据,如下图所示。
-    \item 改变阻尼线圈电压，重复测量，比较不同 $Q$ 值的频率特性曲线。
+    \item 选择适当测量点，记录振动达到稳定后的数据,如下表所示。
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{lllll}
+    \toprule
+    \(\bar{\omega}/\omega_0\)&幅值（8V）&幅值（10V）&相位差（8V）&相位差（10V）\\
+    \midrule
+    -5&0.171&0.128&-0.13&-0.125\\
+    -2&0.403&0.29&-0.25&-0.27\\
+    -1&0.754&0.534&-0.48&-0.47\\
+    -0.5&1.19&0.848&-0.78&-0.81\\
+    0.5&1.06&0.74&-2.42&-2.41\\
+    1&0.649&0.461&-2.63&-2.716\\
+    2&0.346&0.246&-2.919&-2.93\\
+    5&0.137&0.095&-3.04&-3.03\\
+    \bottomrule
+    \end{tabular}
+    \end{table}
+
+    \item 改变阻尼线圈电压，重复测量，比较不同 $Q$ 值的频率特性曲线,如下图所示。
+
 \end{enumerate}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{amplitude.png}
+        \caption{不同阻尼下幅频特性曲线}
+    \end{subfigure}
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{phase.png}
+        \caption{不同阻尼下相频特性曲线}    
+    \end{subfigure}
+\end{figure}
+\newpage
+\section{复习思考题解答}
 
-\section{数据处理}
-\begin{enumerate}
-    \item 利用曲线拟合方法，从衰减振动曲线中提取参数，计算固有频率 $\omega_0$ 和品质因数 $Q$。
-    \item 通过测量不同驱动频率下的稳态振幅，绘制幅频特性曲线和相频特性曲线，分析共振现象。
-\end{enumerate}
+\subsection{振子的品质因数对振子运动特性的影响}
+振子的品质因数 \( Q \) 在以下几个方面决定了振子的运动特性：
 
-\section{注意事项}
-\begin{enumerate}
-    \item 测量前确保传感器连接正常。
-    \item 步进电动机通电前确认驱动电压的极性正确。
-    \item 做受迫振动实验时必须加合适的阻尼，保证共振时摆轮的振幅不超过180度。
-    \item 每次改变频率后，必须等足够长时间，达到稳态后再测量。
-    \item 注意识别实验装置中存在的非线性因素。
-\end{enumerate}
+1. 阻尼大小：品质因数 \( Q \) 越大，阻尼越小。阻尼小意味着系统耗散的能量较少，振子能够维持振动的时间越长。阻尼振动方程为：
+   \[
+   \frac{d^2 x}{dt^2} + \frac{\omega_0}{Q} \frac{dx}{dt} + \omega_0^2 x = 0
+   \]
+   其中，无量纲的正数 \( Q \) 表示品质因数。
 
+2. 共振峰的高度和宽度：在共振时，振幅最大，共振峰的高度与品质因数成正比，而宽度与品质因数成反比。即 \( Q \) 越大，共振峰越高且越窄。
+   \[
+   g = \frac{hQ \omega_0^2}{\sqrt{(\omega^2 - \omega_0^2)^2 + \left(\frac{\omega \omega_0}{Q}\right)^2}}
+   \]
+   当 \( \omega = \omega_0 \) 时， \( g = Qh \)。
 
+3. 稳态振动的相频特性：相频特性曲线在 \( \omega = \omega_0 \) 时， \( \varphi = -\frac{\pi}{2} \)，即驱动力与振子速度同相，能量传递效率最高。 \( Q \) 越大，相位差在共振附近变化越快。
+   \[
+   \varphi = \cot^{-1} \left[Q \left( \frac{\omega}{\omega_0} - \frac{\omega_0}{\omega} \right)\right]
+   \]
+   当 \( \omega \rightarrow 0 \) 时， \( \varphi \rightarrow 0 \)，当 \( \omega \rightarrow \infty \) 时， \( \varphi \rightarrow -\pi \)。
+
+4. 系统的响应速度：品质因数 \( Q \) 越大，系统对外界驱动的响应越快，达到稳态振动所需的时间越短。
+
+\subsection{实验结果与理论模型的符合及差异分析}
+在实验中，我们观察到了以下结果与理论模型的符合与差异：
+
+1. 符合部分：
+   - 衰减振动曲线的拟合效果较好，说明摩擦力矩与速度成正比的假设合理。
+   - 在共振频率附近，振幅达到最大值，验证了共振现象与理论模型的预期一致。
+
+2. 差异部分：
+   - 在频率特性曲线测量中，不同 \( Q \) 值下，频率特性曲线在 \( \omega_0 \) 附近的变化未完全如理论预期，存在实验误差。
+   - 实际测量过程中，由于实验装置的非线性因素（如传感器误差、驱动不稳定性等），导致测量值与理论值存在偏差。
+
+\subsection{差异原因分析}
+1. 实验装置的非线性因素：实验装置如波耳共振仪的机械结构及电子元件的非线性特性可能导致测量值偏差。
+
+2. 实验误差：在测量过程中，数据采集的精度、实验环境的扰动等都会引入误差。
+
+3. 系统稳定性：在共振频率附近，由于系统对频率变化极其敏感，稍有波动就可能引起较大误差。
+
+通过分析，我们认识到在进行物理实验时，除了理论计算外，还需要充分考虑实验装置的实际特性及各种可能的误差来源，以提高实验数据的准确性和可靠性。
 
 
 \bibliographystyle{plain}
