@@ -1,0 +1,290 @@
+%This is a experiment example of ZhengXiaoyang's experiment report template
+
+\documentclass[UTF8]{ctexart}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{cases}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{SIunits}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage[margin=1in]{geometry}
+\geometry{a4paper}
+\pagestyle{fancy}
+\fancyhf{}
+
+\graphicspath{{picture/}}
+
+
+\title{下落法测粘性系数}
+\graphicspath{{picture/}}
+
+
+\title{下落法测粘性系数实验报告}
+\author{郑晓旸}
+\date{\today}
+\pagenumbering{arabic}
+
+\begin{document}
+%这里是文件的开头
+\fancyhead[L]{郑晓旸202111030007}
+\fancyhead[C]{粘性系数}
+\fancyfoot[C]{\thepage}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{实验仪器}
+\begin{itemize}
+    \item DH4606落球法液体粘滞系数测定仪
+    \item 钢尺
+    \item 螺旋测微器
+    \item 电子天平
+    \item 数字温度计
+\end{itemize}
+
+\section{实验目的}
+\begin{enumerate}
+    \item 学习一些基本物理量的测量方法
+    \item 学习用落球法测量蓖麻油的黏性系数
+\end{enumerate}
+
+\section{实验原理}
+在流体（包括气体和液体）中，惯性和黏性是影响运动的两个主要因素。气体黏性的微观机制是不同速度的分子在相邻区域之间扩散，而在液体中，分子之间的作用力是产生黏性的主要原因。
+
+斯托克斯定律（Stokes' Law）用于描述小球在流体中匀速运动时所受的黏性阻力。对于半径为 \(r\) 的球体在黏性系数为 \(\eta\) 的无限大流体中以速度 \(v\) 运动时，黏性阻力 \(F_D\) 为：
+\[
+F_D = 6 \pi \eta r v
+\]
+当雷诺数 \(Re\) 很小时，斯托克斯定律适用。雷诺数的计算公式为：
+\[
+Re = \frac{\rho d v}{\eta}
+\]
+其中 \(\rho\) 为流体密度，\(d\) 为系统的特征尺度。
+
+在落球法测量液体黏性系数实验中，小球在液体中下落时达到稳定速度 \(v_0\)，此时重力、浮力和黏性阻力平衡。由此可得黏性系数 \(\eta\) 的计算公式为：
+\[
+\eta = \frac{(\rho_0 - \rho) d^2 g - \frac{27}{8} \rho d v_0^2}{18 v_0}
+\]
+考虑容器尺寸的修正后，公式为：
+\[
+\eta = \frac{(\rho_0 - \rho) d^2 g - \frac{27}{8} \rho d v_0^2}{18 v_0 (1 + 2.4 \frac{d}{D}) (1 + 1.6 \frac{d}{H})}=
+\]
+其中 \(D\) 为容器内径，\(H\) 为液柱高度。
+
+\section{实验过程}
+
+\subsection{测量小球的直径与密度}
+使用螺旋测微器测量不少于10个小球的直径，计算平均直径并剔除异常值。使用电子天平测量小球的总质量，计算其平均密度。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 使用螺旋测微器测量10个小球的直径，记录每个小球的直径值，剔除异常值后求取平均值。
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|llllllllll}
+        \toprule
+        编号&1&2&3&4&5&6&7&8&9&10\\
+        \midrule
+        直径（mm）&3.012&2.991&2.993&2.995&3.010&2.995&3.005&2.990&2.991&3.009\\
+        \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \item 使用电子天平测量这10个小球的总质量，计算平均质量，进而计算小球的平均密度。
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{llll}
+        \toprule
+        总质量（$g$）&平均质量（$g$）&平均直径（$mm$）&平均密度（$kg/m^3$）\\
+        \midrule
+        1.07&0.107&2.999&7.573E3\\
+        \bottomrule
+        \end{tabular}
+    \end{table}
+\end{enumerate}
+
+\subsection{调整测试架}
+使用线锤调整测试架水平，使线锤对准底盘中心圆点。调节两个光电门发射端，使两激光束照在线锤线上，然后调节接收端，使激光正入射到接收器。用钢板尺测量上下激光束的距离 \(s\) 和液体深度 \(H\)，用游标卡尺测量量筒内径 \(D\)。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 将线锤装在支撑横梁中间部位，调整测试架上的三个水平调节螺钉，使线锤对准底盘中心圆点。
+    \item 调节光电门发射端，使激光束照在线锤线上，然后收起线锤，调节接收端，使激光正入射到接收器。
+    \item 用钢尺测量上、下激光束之间的距离 \(s\) 以及液体的深度 \(H\)。
+    \item 用游标卡尺测量量筒的内径 \(D\)。
+\end{enumerate}
+得到数据如下：
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lll}
+    \toprule
+    距离s(mm)&深度H(mm)&内径D(mm)\\
+    \midrule
+    154.3&583.2&64.74\\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{测量液体温度}
+使用数字温度计测量液体的初始温度和实验结束时的温度，取平均值作为实验温度。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 在实验开始时，用数字温度计测量液体的初始温度，并记录。
+    \item 实验结束后，再次测量液体的温度，并记录。
+    \item 取两次测量值的平均值作为实验过程中液体的温度。
+\end{enumerate}
+采得实验温度如下：
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lll}
+    \toprule
+    开始时温度$T_1(℃)$&结束时温度$T_2(℃)$&平均温度$T(℃)$\\
+    \midrule
+    25.7&26.0&15.9\\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{测量小球的收尾速度}
+多次测量（不少于10次）小球下落时间，计算平均时间 \(t\) 和收尾速度 \(v_0 = \frac{s}{t}\)。若小球下落路径偏离中线，用磁铁吸出小球并重新测量。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 将小球从导管顶部释放，使其自由下落。
+    \item 使用计时器记录小球通过上下两个光电门的时间差。
+    \item 重复步骤1和2，不少于10次，记录每次的时间差。
+    \item 计算这些时间差的平均值 \(t\)。
+    \item 计算小球的收尾速度 \(v_0 = \frac{s}{t}\)。
+    \item 若小球下落路径偏离中线，导致光电门无法记录时间，用磁铁将小球吸出，擦拭干净后重新测量。
+\end{enumerate}
+测得数据如下：
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|llllllllll}
+    \toprule
+    编号&1&2&3&4&5&6&7&8&9&10\\
+    \midrule
+    时间$t(s)$&3.4972&3.4886&3.4725&3.4752&3.4427&3.3974&3.4095&3.3653&3.3713&3.3204\\
+    速度$v(cm/s)$&4.412&4.422&4.443&4.440&4.481&4.541&4.525&4.585&4.576&4.647\\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+平均速度为：$45.336\ mm/s$
+
+\subsection{计算黏性系数}
+利用公式计算雷诺数 \(Re\) 和液体的黏性系数 \(\eta\)，并与参考值比较。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 根据实验测量数据和公式计算雷诺数 \(Re = \frac{\rho d v_0}{\eta}\)。
+    \item 根据公式计算液体的黏性系数 \(\eta\)：
+    \[
+    \eta = \frac{(\rho_0 - \rho) d^2 g - \frac{27}{8} \rho d v_0^2}{18 v_0 \left(1 + 2.4 \frac{d}{D}\right) \left(1 + 1.6 \frac{d}{H}\right)} = 0.6153\ Pa\cdot s
+    \]
+    \item 计算液体的雷诺数：
+    \[
+        Re = \frac{\rho d v}{\eta}=0.2142
+        \]
+\end{enumerate}
+
+\section{复习思考题解答}
+
+\subsection{1. 斯托克斯定律的高阶修正项}
+
+斯托克斯定律更高阶的雷诺数修正为：
+\[
+F_D = 6 \pi \eta r v \left(1 + \frac{3}{16}Re + \frac{9}{160}Re^2 \ln\left(\frac{Re}{2}\right)\right)
+\]
+根据本次实验得到的雷诺数代入计算，可得高阶修正项的大小为：
+\[
+\frac{3}{16}Re + \frac{9}{160}Re^2 \ln\left(\frac{Re}{2}\right) = 0.0344
+\]
+
+相较于零阶项 1，高阶修正项的大小为 0.0344，可以认为是一个较小的修正，斯托克斯定律在本次实验中是适用的。
+
+\subsection{2. 匀速假设的合理性}
+
+根据题目给定的微分方程：
+\[
+\dot{v}(t) = \bar{g} - kv(t) = \bar{g} \left(1 - \frac{v}{v_\infty}\right)
+\]
+其中 \( \bar{g} \) 为修正后的等效重力加速度，\( k \) 为阻尼系数，\( v_\infty = \frac{\bar{g}}{k} \) 为收尾速度。
+
+解该微分方程得到：
+\[
+v(t) = v_\infty + (v_0 - v_\infty) e^{-\bar{g}t/v_\infty}
+\]
+
+假定小球速度与收尾速度相差 0.01\% 时视为达到匀速，则达到匀速所需时间 \( T \) 为：
+\[
+T = \frac{v_\infty}{\bar{g}} \log\left[10^4 \left(\frac{v_0}{v_\infty} - 1\right)\right] \equiv \lambda \frac{v_\infty}{\bar{g}}
+\]
+
+相应经过的距离 \( L \) 为：
+\[
+L = \int_0^T v(t) \, dt < v_\infty T + \frac{(v_0 - v_\infty) v_\infty}{\bar{g}} = \frac{v_\infty [v_0 + (\lambda - 1) v_\infty]}{\bar{g}}
+\]
+
+根据实验数据：
+\begin{itemize}
+    \item 修正后的等效重力加速度 \( \bar{g} \approx 9.8 \text{ m/s}^2 \)
+    \item 初始速度 \( v_0 \approx 45.336 \times 10^{-3} \text{ m/s} \)
+    \item 收尾速度 \( v_\infty \approx 45.336 \times 10^{-3} \text{ m/s} \)
+\end{itemize}
+
+假设 \( \lambda = 1 \) 时（简化计算），经过的距离 \( L \) 为：
+\[
+L = \frac{v_\infty [v_0 + (\lambda - 1) v_\infty]}{\bar{g}} = \frac{45.336 \times 10^{-3} \times 45.336 \times 10^{-3}}{9.8} \approx 0.21 \text{ mm}
+\]
+
+该距离相对于测量路径较短，可以认为小球在经过光电门时已经达到匀速。因此，匀速假设是合理的。
+
+\subsection{3. 实验误差来源及重要性}
+
+实验误差来源及其重要性如下：
+
+\begin{enumerate}
+    \item \textbf{小球直径和密度的测量误差}
+    \begin{itemize}
+        \item 使用螺旋测微器和电子天平测量小球的直径和质量，存在一定的测量误差。
+        \item 这种误差会影响小球的体积和密度计算，从而影响最终的粘性系数计算。
+        \item 重要性：高。
+    \end{itemize}
+
+    \item \textbf{光电门测量时间的误差}
+    \begin{itemize}
+        \item 光电门测量小球通过的时间，时间测量误差会直接影响小球速度的计算。
+        \item 重要性：中。
+    \end{itemize}
+
+    \item \textbf{温度测量误差}
+    \begin{itemize}
+        \item 液体温度的变化会影响液体的粘滞系数，温度测量误差会引入系统误差。
+        \item 重要性：中。
+    \end{itemize}
+
+    \item \textbf{小球是否达到匀速的误差}
+    \begin{itemize}
+        \item 如果小球在经过光电门时未达到匀速，会导致系统误差。
+        \item 重要性：高。
+    \end{itemize}
+
+    \item \textbf{液体密度和粘滞系数的标准值误差}
+    \begin{itemize}
+        \item 液体密度和粘滞系数的标准值可能存在误差，影响计算结果。
+        \item 重要性：中。
+    \end{itemize}
+\end{enumerate}
+
+小球直径和密度的测量误差以及小球是否达到匀速是影响实验结果的主要误差来源，需要特别注意和控制。
+
+
+
+\end{document}

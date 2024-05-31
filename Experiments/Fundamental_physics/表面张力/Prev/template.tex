@@ -1,0 +1,160 @@
+%This is a experiment example of ZhengXiaoyang's experiment report template
+
+\documentclass[UTF8]{ctexart}
+ 
+\usepackage{amsmath}
+\usepackage{cases}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{SIunits}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage[margin=1in]{geometry}
+\geometry{a4paper}
+\pagestyle{fancy}
+\fancyhf{}
+
+\graphicspath{{picture/}}
+
+
+\title{拉脱法测量液体的表面张力系数}
+\graphicspath{{picture/}}
+
+
+\title{拉脱法测量液体的表面张力系数预习报告}
+\author{郑晓旸}
+\date{\today}
+\pagenumbering{arabic}
+
+\begin{document}
+%这里是文件的开头
+\fancyhead[L]{郑晓旸202111030007}
+\fancyhead[C]{粘性系数}
+\fancyfoot[C]{\thepage}
+
+\maketitle
+\tableofcontents
+\newpage
+
+
+\section{实验目的}
+
+\begin{enumerate}
+    \item 掌握拉脱法测量液体表面张力系数的原理和方法。
+    \item 学习微力传感器的标定方法。
+\end{enumerate}
+
+\section{实验仪器}
+
+\begin{itemize}
+    \item 液体表面张力系数测量实验仪
+    \item 数字示波器
+    \item 试样品（去离子水）
+    \item 微力传感器及标定设备
+\end{itemize}
+
+\section{实验原理}
+
+液体分子存在短程的相互吸引力。在液体内部，分子所受吸引力来自不同方向，平均值为零。但在液体表面，分子所受吸引力只来自液体内部，导致表面有向内收缩的趋势，宏观上造成表面张力现象。定义表面张力系数为：
+
+\begin{equation}
+\sigma = \frac{f}{L}
+\end{equation}
+
+其中，\(\sigma\) 的量纲为 \(\text{N/m}\)，物理意义为液体增加单位表面积所需的能量。
+
+实验采用拉脱法测量液体的表面张力系数。将金属吊环浸没于液体中并缓慢拉起，记录环上的拉力。在液膜破裂瞬间，拉力突然减小，差值 \(\Delta f\) 为液膜的拉力，即：
+
+\begin{equation}
+\Delta f = \sigma \pi (D_1 + D_2)
+\end{equation}
+
+式中 \(D_1\)、\(D_2\) 分别为吊环的外径和内径。液体表面张力系数为：
+
+\begin{equation}
+\sigma = \frac{\Delta f}{\pi (D_1 + D_2)}
+\end{equation}
+
+实际操作中，使用微力传感器测量拉力，输出电压与拉力的关系为线性关系：
+
+\begin{equation}
+U_k = a + b f_k
+\end{equation}
+
+标定后，液体表面张力系数可通过电压变化 \(\Delta U\) 计算得出：
+
+\begin{equation}
+\sigma = \frac{\Delta U}{\pi (D_1 + D_2) b}
+\end{equation}
+
+\section{实验过程}
+
+\subsection{准备工作}
+
+\begin{enumerate}
+    \item 连接各部件，测量吊环内外直径，清洗玻璃盘和吊环。
+    \item 给水箱装置加水，验证水量足够。
+\end{enumerate}
+
+\subsection{标定力传感器}
+
+\begin{enumerate}
+    \item 将吊环挂在力传感器钩上，转至容器外部，减少晃动后传感器输出电压逐渐平稳。
+    \item 用镊子安放砝码对传感器进行定标，记录数据并作直线拟合，得到传感器的灵敏度 \(b\)。
+\end{enumerate}
+
+\subsection{测量表面张力系数}
+
+\begin{enumerate}
+    \item 将待测液体倒入玻璃盘中，小心放入塑料容盘中，并一起放入水箱上室。
+    \item 将力传感器转至容器内，挂上吊环，轻触吊环减小晃动。
+    \item 关闭阀门，反复挤压气囊使上室内水面上升，当吊环下沿均与待测液体接触时，松开阀门，使水面缓慢下降。
+    \item 观察吊环从液体中拉起的物理过程，示波器观察传感器输出的变化趋势。
+    \item 在液膜破裂，传感器输出发生突变后，按下示波器“STOP”按钮，测量突变前后的电压值 \(U_1, U_2\)，计算电压差 \(\Delta U\)，根据标定系数换算拉力。
+\end{enumerate}
+
+\subsection{重复测量}
+
+\begin{enumerate}
+    \item 为提高测量结果准确度，至少测量3次，估算结果的不确定度。
+    \item 验证力传感器的稳定性，实验结束前再测量一次传感器的灵敏度。
+\end{enumerate}
+
+\section{注意事项}
+
+\begin{enumerate}
+    \item 实验前吊环需严格处理干净。
+    \item 仪器开机预热5分钟。
+    \item 手指不要接触被测液体。
+    \item 力敏传感器使用时用力不宜大于0.1N。
+    \item 液体上升有一定惯性，打气速度不可过快，以免产生测量误差。
+\end{enumerate}
+
+\section{预习思考题}
+
+\subsection{举出生活中一些由表面张力引起的物理现象}
+
+\begin{itemize}
+    \item 水珠在荷叶上形成滚动的小球。
+    \item 昆虫（如水黾）在水面上行走。
+    \item 肥皂泡的形成和保持形状。
+    \item 毛细现象，如毛细管中液体的上升或下降。
+\end{itemize}
+
+\subsection{查阅资料，说明一种有别于拉脱法的测量表面张力系数的方法的原理}
+
+另一种测量表面张力的方法是毛细管上升法。该方法基于毛细现象，将细管插入液体中，液体在管中上升，直到液体的表面张力与重力达到平衡。通过测量液柱的高度 \(h\) 和毛细管的半径 \(r\)，表面张力 \(\sigma\) 可通过以下公式计算：
+
+\begin{equation}
+\sigma = \frac{h \rho g r}{2}
+\end{equation}
+
+其中，\(\rho\) 是液体密度，\(g\) 是重力加速度。
+
+\section{拓展问题}
+
+在液膜拉断之前，如果测出吊环在不同上升高度的变化曲线，可以用来计算液体的表面张力系数。具体来说，吊环在不同高度时的拉力变化可以反映液膜的形变和受力情况，通过对这些数据进行分析，可以间接计算表面张力。
+
+\end{document}
