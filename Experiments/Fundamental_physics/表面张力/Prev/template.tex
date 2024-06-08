@@ -1,7 +1,8 @@
 %This is a experiment example of ZhengXiaoyang's experiment report template
 
 \documentclass[UTF8]{ctexart}
- 
+
+\usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{cases}
 \usepackage{cite}
@@ -23,7 +24,7 @@
 \graphicspath{{picture/}}
 
 
-\title{拉脱法测量液体的表面张力系数预习报告}
+\title{拉脱法测量液体的表面张力系数实验报告}
 \author{郑晓旸}
 \date{\today}
 \pagenumbering{arabic}
@@ -95,6 +96,20 @@ U_k = a + b f_k
 
 \begin{enumerate}
     \item 连接各部件，测量吊环内外直径，清洗玻璃盘和吊环。
+    测量吊环内外直径结果为：$D_1 = 0.03290(m) \ D_2 = 0.03492(m)$
+    \begin{table}
+        \centering
+        \begin{tabular}{ll}
+        \toprule
+        $D_1$(mm)&$D_2$(mm)\\
+        \midrule
+        32.92&34.94\\
+        32.88&34.92\\
+        32.9&34.92\\
+        \bottomrule
+    \end{tabular}
+    \end{table}
+
     \item 给水箱装置加水，验证水量足够。
 \end{enumerate}
 
@@ -102,7 +117,36 @@ U_k = a + b f_k
 
 \begin{enumerate}
     \item 将吊环挂在力传感器钩上，转至容器外部，减少晃动后传感器输出电压逐渐平稳。
-    \item 用镊子安放砝码对传感器进行定标，记录数据并作直线拟合，得到传感器的灵敏度 \(b\)。
+    \item 用镊子安放砝码对传感器进行定标，记录数据
+    记录得到的原始数据如下：
+    \\
+    \begin{table}[H]
+        \centering
+\begin{tabular}{lllll}
+\toprule
+n&U(v)&m(g)&g($m/s^2$)&f(N)\\
+\midrule
+0&1.122&0.5&9.8&0\\
+1&1.383&0.5&9.8&0.0049\\
+2&1.64&0.5&9.8&0.0098\\
+3&1.903&0.5&9.8&0.0147\\
+4&2.166&0.5&9.8&0.0196\\
+5&2.424&0.5&9.8&0.0245\\
+6&2.686&0.5&9.8&0.0294\\
+7&2.949&0.5&9.8&0.0343\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+    \item 根据记录得到的数据对$U = a+b \cdot f$直线拟合，得到传感器的灵敏度 \(b\)。
+    \item 拟合结果为：$a = 1.121(V);b = 53.207(V/N);r^2 > 0.999$
+    
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.5\textwidth]{picture1.png}
+        \caption{力传感器标定曲线}
+    \end{figure}
+
 \end{enumerate}
 
 \subsection{测量表面张力系数}
@@ -113,48 +157,14 @@ U_k = a + b f_k
     \item 关闭阀门，反复挤压气囊使上室内水面上升，当吊环下沿均与待测液体接触时，松开阀门，使水面缓慢下降。
     \item 观察吊环从液体中拉起的物理过程，示波器观察传感器输出的变化趋势。
     \item 在液膜破裂，传感器输出发生突变后，按下示波器“STOP”按钮，测量突变前后的电压值 \(U_1, U_2\)，计算电压差 \(\Delta U\)，根据标定系数换算拉力。
+    \item 多次测量得到$\Delta U = 0.8231(V)$
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.5\textwidth]{fig.jpg}
+        \caption{拉脱法测量表面张力系数电压曲线}
+    \end{figure}
+    \item 计算得到表面张力系数 $\sigma = 0.0725(N/m)$
 \end{enumerate}
 
-\subsection{重复测量}
-
-\begin{enumerate}
-    \item 为提高测量结果准确度，至少测量3次，估算结果的不确定度。
-    \item 验证力传感器的稳定性，实验结束前再测量一次传感器的灵敏度。
-\end{enumerate}
-
-\section{注意事项}
-
-\begin{enumerate}
-    \item 实验前吊环需严格处理干净。
-    \item 仪器开机预热5分钟。
-    \item 手指不要接触被测液体。
-    \item 力敏传感器使用时用力不宜大于0.1N。
-    \item 液体上升有一定惯性，打气速度不可过快，以免产生测量误差。
-\end{enumerate}
-
-\section{预习思考题}
-
-\subsection{举出生活中一些由表面张力引起的物理现象}
-
-\begin{itemize}
-    \item 水珠在荷叶上形成滚动的小球。
-    \item 昆虫（如水黾）在水面上行走。
-    \item 肥皂泡的形成和保持形状。
-    \item 毛细现象，如毛细管中液体的上升或下降。
-\end{itemize}
-
-\subsection{查阅资料，说明一种有别于拉脱法的测量表面张力系数的方法的原理}
-
-另一种测量表面张力的方法是毛细管上升法。该方法基于毛细现象，将细管插入液体中，液体在管中上升，直到液体的表面张力与重力达到平衡。通过测量液柱的高度 \(h\) 和毛细管的半径 \(r\)，表面张力 \(\sigma\) 可通过以下公式计算：
-
-\begin{equation}
-\sigma = \frac{h \rho g r}{2}
-\end{equation}
-
-其中，\(\rho\) 是液体密度，\(g\) 是重力加速度。
-
-\section{拓展问题}
-
-在液膜拉断之前，如果测出吊环在不同上升高度的变化曲线，可以用来计算液体的表面张力系数。具体来说，吊环在不同高度时的拉力变化可以反映液膜的形变和受力情况，通过对这些数据进行分析，可以间接计算表面张力。
 
 \end{document}
