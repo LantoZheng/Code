@@ -88,10 +88,7 @@ BoldFont=ProGB18030 DemiBold.otf,
 \begin{document}
 
 \pagenumbering{gobble} % suppress displaying page number
-%%%% 利用tikz来定位照片，部分招聘单位可能需要“以貌取人”
-\begin{tikzpicture}[remember picture, overlay]
-	\node[anchor = north east] at ($(current page.north east)+(-1cm,-1.2cm)$) {\includegraphics[height=2.8cm]{img/avatar.jpg}};
-\end{tikzpicture}%
+
 %%%% 利用tikz来定位学校Logo，这里只在第一页显示，如果需要每页都有，可以考虑在页眉、页脚或者background中加入，不过简历也就一两页，无所谓了
 \begin{tikzpicture}[remember picture, overlay]
 	\node[anchor = north west] at ($(current page.north west)+(0.2cm,-0.2cm)$) {\includegraphics[height=1.5cm]{img/bnu.pdf}};
@@ -105,16 +102,15 @@ BoldFont=ProGB18030 DemiBold.otf,
 
 %tikzpicture环境很敏感，注释周围的空格、空行都会引起水平距离或垂直距离的变化，
 %
-\centerline{\LARGE\bfseries{木小铎}}
+\centerline{\LARGE\bfseries{Zheng Xiaoyang}}
 
-%\centerline{\normalsize{专业：数学与应用数学（公费师范）}}
-%\centerline{\normalsize{专业：汉语言文学（公费师范）}}
+\centerline{\normalsize{Major：Physics}}
 
-\centerline{\normalsize{意向岗位：高中数学教师 \quad 专业：学科教学（数学）}}
+\centerline{\normalsize{Seeking for 2024-2025 Academic Year Undergraduate Programs in Physics and Astronomy}}
 
 \centerline{\normalsize{
-		\faPhone \ 13X XXXX XXXX \quad
-		\faEnvelopeO \ \href{mailto:mxd@mail.bnu.edu.cn}{mxd@mail.bnu.edu.cn}}}
+		\faPhone \ +86 139 5519 0184 \quad
+		\faEnvelopeO \ \href{mailto:xiaoyangzheng@mail.bnu.edu.cn}{xiaoyangzheng@mail.bnu.edu.cn}}}
 %%最好用你的edu邮箱
 
 %\centerline{\normalsize{ 
@@ -123,7 +119,7 @@ BoldFont=ProGB18030 DemiBold.otf,
 %  }}
 %  \vspace{1.5ex}
 
-\section{\makebox[\widthof{\faGraduationCap}][c]{\color{CVBlue}\faGraduationCap}\  教育背景}
+\section{\makebox[\widthof{\faGraduationCap}][c]{\color{CVBlue}\faGraduationCap}\  EDUCATION }
 
 \textbf{北京师范大学}（202X年9月至今）
 
