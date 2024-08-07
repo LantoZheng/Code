@@ -2,7 +2,7 @@
 *.sw[po]
 *.py[co]
 *.out
-
+*.ini
 # Bah, LaTeX junk
 *.aux
 *.log
