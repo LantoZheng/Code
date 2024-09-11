@@ -13,4 +13,11 @@
 *.toc
 *.bbl
 *.blg
+# Videos
+*.mp4
+*.mov
+*.avi
+*.flv
+*.wmv
+*.mp3
 E_norm.csv
