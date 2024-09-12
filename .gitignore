@@ -20,4 +20,6 @@
 *.flv
 *.wmv
 *.mp3
+# Local env
+desktop.ini
 E_norm.csv
