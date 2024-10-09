@@ -1,0 +1,127 @@
+\documentclass{assignment}
+\ProjectInfos{电动力学A}{1410100401}{2024-2025学年第一学期}{第4次作业}{截止时间：2024. 10. 08（周二）}{郑晓旸}[https://github.com/LantoZheng]{202111030007}
+\begin{document}
+    \begin{prob}
+    设$T^{ab}=T^{[a,b]}$,证明：$T^{ab}\omega_{a}\omega_b = 0$.
+    \end{prob}
+    \begin{sol}
+    \begin{equation}
+        T^{ab}\omega_{a}\omega_b = T^{ab}\omega_{[a}\omega_{b]} = \frac{T^{ab}\omega_{a}\omega_{b} - T^{ab}\omega_{b}\omega_{a}}{2} = 0
+    \end{equation}
+    \end{sol}
+    \begin{prob}
+        已知惯性系$S$和$S'$满足洛伦兹变换，其中$\gamma = \frac{1}{\sqrt{1-v^2}}$质点在$S'$系的四速度为$v^a = (\frac{\partial}{\partial t'})^a$,求证其在$S$系的四速度为：$v^a = \gamma (\frac{\partial}{\partial t})^a + \gamma v (\frac{\partial}{\partial x})^a$
+        \begin{equation}
+            \left\{
+            \begin{aligned}
+                x' &= \gamma (x - vt) \\
+                y' &= y \\
+                z' &= z \\
+                t' &= \gamma (t - vx)
+            \end{aligned}
+            \right.
+        \end{equation}
+    \end{prob}
+    \begin{sol}
+        本题中使用$c=1$,因此$\beta = -v$,由$S'$到$S$的洛伦茨变换参数形式为：
+        \begin{equation}
+            \Lambda^\mu_{\ \nu} = \left(
+            \begin{array}{cccc}
+                \gamma & \gamma v & 0 & 0 \\
+                \gamma v & \gamma & 0 & 0 \\
+                0 & 0 & 1 & 0 \\
+                0 & 0 & 0 & 1
+            \end{array}
+            \right)
+        \end{equation}
+        在$S'$系下，四速度的分量为：
+        \begin{equation}
+            v'^\nu = \left( 
+                \begin{array}{c}
+                    1\\
+                    0\\
+                    0\\
+                    0
+                \end{array}
+            \right)
+        \end{equation}
+        因此在$S$系下的四速度为：
+        \begin{equation}
+            v^\mu = \Lambda^\mu_{\ \nu}v^\nu = \left(
+                \begin{array}{c}
+                    \gamma\\
+                    \gamma v\\
+                    0\\
+                    0
+                \end{array}
+            \right)
+        \end{equation}
+        因此有：
+        \begin{equation}
+            v^a =  \gamma (\frac{\partial}{\partial t})^a + \gamma v (\frac{\partial}{\partial x})^a
+        \end{equation}
+    \end{sol}
+    \begin{prob}
+        在地面系，静止的物体$A$在$x$方向受到恒力$\overrightarrow{F}$ ,求地面系中物体的运动轨迹；\\
+        设物体$B$与物体$A$同时开始运动，$B$沿着$y$方向匀速直线运动，以$B$为参考系，求$B$参考系中$A$的速度和运动轨迹。
+    \end{prob}
+    \begin{sol}
+        在地面系中，物体$A$受到的恒力为$\overrightarrow{F} = F\hat{i}$，因此有：
+        \begin{equation}
+            \frac{dp^x}{dt} = \frac{d \gamma m u^x}{dt} = F
+        \end{equation}
+    \end{sol}
+    其中，$\gamma = \frac{1}{\sqrt{1-u^2}}$,这里取$c = 1$.
+    我们得到参数方程：
+    \begin{equation}
+        \gamma m u^x = Ft
+    \end{equation}
+    展开得到：
+    \begin{equation}
+        \frac{dx}{dt} = u^x = \frac{Ft}{\sqrt{m^2 + F^2t^2}} = \frac{t}{\sqrt{t^2 + \frac{m^2}{F^2}}}
+    \end{equation}
+    积分得到：
+    \begin{equation}
+        x = \sqrt{t^2 + \frac{m^2}{F^2}} - \frac{m}{F}
+    \end{equation}
+    我们可以写出$A$的四位置：
+    \begin{equation}
+        x^\mu = \left(
+            \begin{array}{c}
+                t\\
+                \sqrt{t^2 + \frac{m^2}{F^2}} - \frac{m}{F}\\
+                0\\
+                0
+            \end{array}
+        \right)
+    \end{equation}
+    在$B$参考系中，使用从地面系到$B$系的参数形式洛伦兹变换，其中$\gamma = \frac{1}{\sqrt{1-v^2}}$：
+    \begin{equation}
+        \Lambda^\nu_{\ \mu} = \left(
+            \begin{array}{cccc}
+                \gamma & 0 & -\gamma v & 0\\
+                0 & 1 & 0 & 0\\
+                -\gamma v & 0 & \gamma & 0\\
+                0 & 0 & 0 & 0
+            \end{array}
+        \right)
+    \end{equation}
+    得到$A$在$B$参考系中的四位置：
+    \begin{equation}
+        x'^\mu = \Lambda^\mu_{\ \nu}x^\nu = \left(
+            \begin{array}{c}
+                \gamma t\\
+                \sqrt{t^2 + \frac{m^2}{F^2}} - \frac{m}{F}\\
+                -\gamma vt\\
+                0
+            \end{array}
+        \right)
+    \end{equation}
+    因此$A$在$B$参考系中的速度为：
+    \begin{equation}
+        \begin{aligned}
+        v'^x &= \frac{dx'}{dt'} = \frac{t'}{\sqrt{\gamma^2 t'^2 + \gamma^4 \frac{m^2}{F^2}}}\\
+        v'^y &= -v
+        \end{aligned}
+    \end{equation}
+\end{document}
