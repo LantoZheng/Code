@@ -1,7 +1,7 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[UTF8]{ctex}
 \usepackage[backend=bibtex]{biblatex}
-\usepackage{amsmath,amsthm,amssymb,graphicx,multirow,float,caption}
+\usepackage{amsmath,amsthm,amssymb,graphicx,multirow,float,caption,biblatex}
 \usepackage{geometry}
 \geometry{left=2.54cm, right=2.54cm, top=3.18cm, bottom=3.18cm}
 \usepackage{enumitem}
@@ -13,7 +13,8 @@
 \usepackage[graphicx]{realboxes}
 \usepackage{rotating}
 \usepackage{titlesec}
-\usepackage{cite}
+
+\addbibresource{report.bib}
 
 \newcommand{\be}[1]{
     \begin{equation}
@@ -57,7 +58,7 @@
 “偏振”是激光器输出光束的特性之一, 当腔内有双折射元件时, 激光器必是线偏振输出。并且由
 于不同偏振态的光在腔内的光程不同, 对应的谐振频率也不同, 此时等效于把激光器的一个频率“分
 裂”成两个, 这又称为激光的模分裂。由于利用激光的模分裂性质, 能得到单色性, 偏振态更为一致
-的激光, 所以观察与研究激光的模分裂现象是很有意义的。
+的激光, 所以观察与研究激光的模分裂现象是很有意义的。 \cite{textbook}
 
 \section{原理}
 \subsection{氦氖激光器的纵模、横模及其对应的频率间隔}
