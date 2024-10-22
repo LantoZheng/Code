@@ -1,6 +1,9 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[UTF8]{ctex}
-\usepackage[backend=biber,style=caspervector,utf8,sorting=cenyt]{biblatex}
+\usepackage[backend=bibtex]{biblatex}
+\DefineBibliographyStrings{english}{%
+  references = {参考文献},
+}
 \usepackage{amsmath,amsthm,amssymb,graphicx,multirow,float,caption}
 \usepackage{geometry}
 \geometry{left=2.54cm, right=2.54cm, top=3.18cm, bottom=3.18cm}
@@ -73,7 +76,7 @@
 做一种横模。横向分布加上纵向分布, 可以用三个个符号 m, n, q 来标记, 记作 $TEM_{m,n,q}$ 模。
 实验室采取的谐振腔为非共焦腔, 其横模频率差为
 \be{\Delta \nu=\frac{c(\Delta m+\Delta n)}{2\mu L \pi}\arccos{\sqrt{(1-\frac{L}{R_1})(1-\frac{L}{R_2})}}}
-其中$R_1$和$R_2$为两反射镜的曲率半径。
+其中$R_1$和$R_2$为两反射镜的曲率半径。\cite{siegman1986lasers,saleh1991fundamentals}
 
 \subsection{氦氖激光器纵模分裂及模竞争}
 \subsubsection{石英晶体双折射效应}
@@ -81,7 +84,7 @@
 具有光程差$\delta$, 在不考虑旋光性时, 有
 \be{\delta=\left[\left(\frac{\sin ^{2} \theta}{n_{e}^{2}}+\frac{\cos ^{2} \theta}{n_{o}^{2}}\right)^{-\frac{1}{2}}-n_{o}\right] h}
 其中 h 是晶片的厚度,$n_o$ 和 $n_e$ 分别是石英晶体的两个主折射率 (对于 632.8nm,$n_o$ = 1.54263 ,$n_e$ =
-1.55169), $\theta$是石英晶体的晶轴和光线之间的夹角。
+1.55169), $\theta$是石英晶体的晶轴和光线之间的夹角。\cite{zhao2006optics}
 \subsubsection{腔内双折射效应产生激光频率分裂原理}
 激光腔长 L 与纵模频率 $\nu_q$ 的关系为
 \be{\nu_q=\frac{c}{2 L}q}
@@ -95,7 +98,7 @@ $\Delta L=-\delta$, 对上式两边取微分可得
 泰勒展开取一级近似可得
 \be{\Delta \nu=-\frac{K c}{4 L_{0}^{2}} \Delta L}
 说明$\nu$的变化与腔长的变化量成正比, 也就是与加在压电陶瓷环上的电压成正比, 由于示波器
-的横向扫描采用与干涉仪的腔长扫描同步, 则加在压电陶瓷环上的电压与时间成正比, 所以$\nu$的变
+的横向扫描采用与干涉仪的腔长扫描同步, 则加在压电陶瓷环上的电压与时间成正比\cite{thorlabs2020confocal}, 所以$\nu$的变
 化与示波器上的时间成正比, 则存在
 \be{\Delta \nu=\alpha t+\beta}
 其中t为示波器上的时间，$\alpha$和$\beta$为参数。
