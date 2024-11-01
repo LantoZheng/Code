@@ -7692,7 +7692,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">genetic_algorithm</span><span class="p">(</span><span class="n">Print</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot_falg</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">genetic_algorithm</span><span class="p">(</span><span class="n">Print</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="c1"># 生成初始种群</span>
     <span class="n">population</span> <span class="o">=</span> <span class="n">generate_population</span><span class="p">(</span><span class="n">population_size</span><span class="p">,</span> <span class="n">num_items</span><span class="p">)</span>
     <span class="n">fitness_record</span> <span class="o">=</span> <span class="p">[]</span>
@@ -7727,7 +7727,7 @@ a.anchor-link {
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"第 </span><span class="si">{</span><span class="n">generation</span><span class="si">}</span><span class="s2"> 代, 最优适应度: </span><span class="si">{</span><span class="n">best_fitness</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     
     <span class="c1"># 如果需要绘图，绘制适应度随代数变化的曲线</span>
-    <span class="k">if</span> <span class="n">plot_falg</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">plot_flag</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fitness_record</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Generation'</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Fitness'</span><span class="p">)</span>
@@ -7779,7 +7779,7 @@ a.anchor-link {
 <span class="sd">- time_stable (float): 算法的总执行时间。</span>
 <span class="sd">- selected_items (list): 根据最佳解决方案选择的物品。</span>
 <span class="sd">"""</span>
-<span class="n">best_solution</span><span class="p">,</span> <span class="n">best_value</span> <span class="o">=</span> <span class="n">genetic_algorithm</span><span class="p">(</span><span class="n">Print</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span><span class="n">plot_falg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">best_solution</span><span class="p">,</span> <span class="n">best_value</span> <span class="o">=</span> <span class="n">genetic_algorithm</span><span class="p">(</span><span class="n">Print</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span><span class="n">plot_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="n">time_stable</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
 <span class="n">selected_items</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">'j'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_items</span><span class="p">)</span> <span class="k">if</span> <span class="n">best_solution</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
