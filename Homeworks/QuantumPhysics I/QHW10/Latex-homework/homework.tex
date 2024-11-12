@@ -1,0 +1,315 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{braket}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ 10}
+\newcommand{\hmwkDueDate}{November 13,2024}
+\newcommand{\hmwkClass}{Quantum Mechanics}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Professor Hui Shao}
+\newcommand{\hmwkAuthorName}{\textbf{郑晓旸 202111030007}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 3:10pm}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+    考虑正交完备基$\ket{1},\ket{2},\ket{3}$,且有$\ket{\alpha}=i\Ket{1}-2\Ket{2}-i\Ket{3;\Ket{\beta}=i\Ket{1}+2\Ket{3}}$,在该表象下，哈密顿算符的矩阵形式写为：\\
+        $$\hat{H}=\begin{pmatrix}
+            0 & 1 & 0 \\
+            1 & 0 & 0 \\
+            0 & 0 & 2
+        \end{pmatrix}$$
+    写出到能量表象的变换矩阵，并计算能量表象下的量子态  $\Ket{\alpha}$和算符$\hat{B}\equiv \ket{\beta}\bra{\beta}$.\\
+    \textbf{Solution}
+
+    首先我们求解能量算符的本征值和本征态,其本征方程为：$|\hat{H}-H_nI|=0$，得到本征值为：$H_1=2;H_2=1,H_3=-1$单位为$\lambda_E$，其本征态为：
+    $$
+    \begin{aligned}
+        \Ket{H_1} &= \Ket{3}\\
+        \Ket{H_2} &= \Ket{1} + \Ket{2}\\
+        \Ket{H_3} &= -\Ket{1} + \Ket{2}
+    \end{aligned}
+    $$
+    因此可以讲表象转换矩阵写为：
+    $$
+    \ket{H_n}\bra{n}=\begin{pmatrix}
+        0 & 0 & 1 \\
+        1 & 1 & 0 \\
+        -1 & 1 & 0
+    \end{pmatrix}
+    $$
+我们从而可以写出哈密顿表象下的$\ket{\alpha}$态：$\ket{H_n} \braket{n|\alpha} = -i\ket{H_1} + (-2+i)\ket{H_2} - (2+i)\ket{H_3} $\\
+同样的，写出哈密顿表象下的算符$$
+\hat{B}_H=\ket{H_n}\braket{n|\hat{B}|n}\ket{H_n}=\ket{H_n}\braket{n|\beta}\braket{\beta|n}\bra{H_n}
+$$
+$$
+\hat{B}_H=\begin{pmatrix}
+    4 & -2i & 2i \\
+    2i & 1 & -1 \\
+    -2i & -1 & 1
+\end{pmatrix}
+$$
+
+\end{homeworkProblem}
+
+\pagebreak
+\begin{homeworkProblem}
+    对于角动量，选择一个合适的表象，写出$l= 1$ 的子空间中，算符$l^2,l_x,l_y,l_z$的矩阵表示。\\
+    提示：$l\pm  = l_x ± il_y$ ，且：$$\begin{aligned} l_+ \ket{l,m}&= \sqrt{(l-m)(l+m+1)}\ket{l,m+ 1}\\
+l_-\ket{l,m} &= \sqrt{(l+ m)(l- m+ 1)}\ket{l,m-1}\end{aligned}$$
+\textbf{Solution}\\
+    我们选择角动量表象，即$l^2l_z$的共同本征态为$\ket{l,m}$，其中$l=1$，$m=-1,0,1$。我们可以写出$l^2$的矩阵表示：
+    $$
+    \hat{l}^2=\begin{pmatrix}
+        2 & 0 & 0 \\
+        0 & 2 & 0 \\
+        0 & 0 & 2
+    \end{pmatrix}
+    $$
+    同样的，我们可以写出$l_z$的矩阵表示：
+    $$
+    \hat{l}_z=\begin{pmatrix}
+        -1 & 0 & 0 \\
+        0 & 0 & 0 \\
+        0 & 0 & 1
+    \end{pmatrix}
+    $$
+    由于$l_x$和$l_y$的矩阵表示不是对角矩阵，我们可以通过$l_+$和$l_-$的定义来求解$l_x$和$l_y$的矩阵表示：
+    $$
+    \begin{aligned}
+        l_+\ket{l,m}&= \sqrt{(l-m)(l+m+1)}\ket{l,m+ 1}\\
+        l_-\ket{l,m} &= \sqrt{(l+ m)(l- m+ 1)}\ket{l,m-1}
+    \end{aligned}
+    $$
+    由此我们可以得到$l_x$和$l_y$的矩阵表示：
+    $$
+    \hat{l}_x=\frac{1}{2}\begin{pmatrix}
+        0 & \sqrt{2} & 0 \\
+        \sqrt{2} & 0 & \sqrt{2} \\
+        0 & \sqrt{2} & 0
+    \end{pmatrix}
+    $$
+    $$
+    \hat{l}_y=\frac{1}{2}\begin{pmatrix}
+        0 & -i\sqrt{2} & 0 \\
+        i\sqrt{2} & 0 & -i\sqrt{2} \\
+        0 & i\sqrt{2} & 0
+    \end{pmatrix}
+    $$
+
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    写出动量表象下，动量算符和坐标算符的矩阵元 (要求有推导过程)。\\
+    \textbf{Solution}\\
+    在动量表象下，粒子的状态 \( |\psi\rangle \) 可以表示为动量本征态 \( |p\rangle \) 的线性组合，即：
+\[
+|\psi\rangle = \int \psi(p) |p\rangle \, dp
+\]
+动量算符 \( \hat{p} \) 作用在动量本征态 \( |p\rangle \) 上时满足：
+\[
+\hat{p} |p\rangle = p |p\rangle
+\]
+因此，动量算符在动量表象下的矩阵元为：
+\[
+\langle p' | \hat{p} | p \rangle = p \delta(p' - p)
+\]
+其中，\( \delta(p' - p) \) 是狄拉克δ函数，表示动量本征态的正交性。
+
+接下来，坐标算符 \( \hat{x} \) 在动量表象下通过与动量算符的对易关系 \( [\hat{x}, \hat{p}] = i \hbar \) 定义为：
+\[
+\hat{x} = i \hbar \frac{\partial}{\partial p}
+\]
+因此，坐标算符的矩阵元为：
+\[
+\langle p' | \hat{x} | p \rangle = i \hbar \frac{\partial}{\partial p} \delta(p' - p)
+\]
+
+即动量算符和坐标算符在动量表象下的矩阵元为：
+\[
+\langle p' | \hat{p} | p \rangle = p \delta(p' - p), \quad \langle p' | \hat{x} | p \rangle = i \hbar \frac{\partial}{\partial p} \delta(p' - p)
+\]
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    利用完备性关系，写出一维谐振子坐标表象下的波函数$\psi (x)$，坐标算符$\hat{x}$和动量算符$\hat{p}$变换到能量表象的过程和结果。\\
+    \textbf{Solution}\\
+    一维谐振子的波函数可以表示为能量本征态 \( |n\rangle \) 的线性组合，即：
+\[
+|\psi\rangle = \sum_n \psi_n |n\rangle
+\]
+其中， \( \psi_n \) 是波函数的展开系数。利用完备性关系，波函数 \( \psi(x) \) 可以表示为：
+\[
+\psi(x) = \sum_n \psi_n \langle x | n \rangle
+\]
+坐标算符 \( \hat{x} \) 和动量算符 \( \hat{p} \) 在能量表象下的矩阵元为：
+\[
+\langle n | \hat{x} | n' \rangle = \sqrt{\frac{\hbar}{2m\omega}} \left( \sqrt{n} \delta_{n', n-1} + \sqrt{n+1} \delta_{n', n+1} \right)
+\]
+\[ \langle n | \hat{p} | n' \rangle = -i \sqrt{\frac{\hbar m \omega}{2}} \left( \sqrt{n} \delta_{n', n-1} - \sqrt{n+1} \delta_{n', n+1} \right) \]
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    设体系有两个彼此不对易的守恒量 $F$ 和 $G$, 即$[\hat{F},\hat{H}]=0,[\hat{G},\hat{H}]=0$, 但$[\hat{F},\hat{G}] \neq 0$，证明体系能级一般是简并的，并说明何种情况无简并。\\
+    \textbf{Solution}\\
+1. 守恒量与哈密顿量的对易关系：\\
+   \[
+   [\hat{F}, \hat{H}] = 0 \quad \text{和} \quad [\hat{G}, \hat{H}] = 0
+   \]
+   这意味着，\( \hat{F} \) 和 \( \hat{G} \) 都是哈密顿量的守恒量，因此它们可以在同一个本征基底下对角化。换句话说，体系的本征态可以同时是 \( \hat{F} \) 和 \( \hat{G} \) 的本征态。
+
+2. 系统本征态的重叠：\\
+   假设 \( |E\rangle \) 是哈密顿量 \( \hat{H} \) 的本征态，即：
+   \[
+   \hat{H} |E\rangle = E |E\rangle
+   \]
+   因为 \( \hat{F} \) 和 \( \hat{G} \) 与 \( \hat{H} \) 对易，\( |E\rangle \) 也可以同时是 \( \hat{F} \) 和 \( \hat{G} \) 的本征态。如果 \( \hat{F} \) 和 \( \hat{G} \) 的本征值不完全不同，系统的能级 \( E \) 会有简并性。
+
+3. 关于 \( [\hat{F}, \hat{G}] \neq 0 \) 的影响：\\
+   由于 \( \hat{F} \) 和 \( \hat{G} \) 不对易，即 \( [\hat{F}, \hat{G}] \neq 0 \)，我们知道它们不能同时对角化。因此，虽然 \( \hat{F} \) 和 \( \hat{G} \) 可以在同一个能量本征态下存在共同本征值，但它们的本征值会依赖于彼此，因此产生简并。换句话说，能量本征态可能会有多个不同的本征态，这些本征态对应相同的能量 \( E \)，因此系统的能级会是简并的。
+
+4. 简并的具体情况：\\
+   如果 \( [\hat{F}, \hat{G}] \neq 0 \)，那么 \( \hat{F} \) 和 \( \hat{G} \) 在某些本征态上不会有共同本征值。因此，尽管这些本征态仍然是哈密顿量 \( \hat{H} \) 的本征态，但它们可能在 \( \hat{F} \) 或 \( \hat{G} \) 上的本征值不同，从而导致能级的简并。
+\\
+能级没有简并的情况发生在 \( \hat{F} \) 和 \( \hat{G} \) 完全交换的情况下，即：
+\[
+[\hat{F}, \hat{G}] = 0
+\]
+在这种情况下，\( \hat{F} \) 和 \( \hat{G} \) 可以同时对角化，因此它们可以在相同的基底中完全对角化。在此情况下，系统的能级不会简并，因为每个本征态对应的能量都是唯一的。
+综上：\\
+当 \( [\hat{F}, \hat{G}] \neq 0 \) 时，体系的能级一般是简并的。
+当 \( [\hat{F}, \hat{G}] = 0 \) 时，体系的能级没有简并。
+\end{homeworkProblem}
+
+
+\end{document}
