@@ -1,0 +1,128 @@
+\documentclass{assignment}
+\ProjectInfos{电动力学A}{1410100401}{2024-2025学年第一学期}{第10次作业}{截止时间：2024. 11. 12（周二）}{郑晓旸}[https://github.com/LantoZheng]{202111030007}
+\begin{document}
+    \begin{prob}
+    证明：$A \times (\nabla \times A) = \frac{1}{2} \nabla A^2 -(A \dot \nabla)A$
+    \end{prob}
+    \begin{sol}
+    \begin{equation}
+        A \times (\nabla \times A) = \epsilon_{ijk}A_j(\nabla \times A)_k = \epsilon_{ijk}A_j\epsilon_{klm}\partial_l A_m
+    \end{equation}
+    交换求和顺序得到：
+    \begin{equation}
+        A \times (\nabla \times A) = \epsilon_{jik}\epsilon_{klm}A_j\partial_l A_m = (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})A_j\partial_l A_m
+    \end{equation}
+    展开得到：
+    \begin{equation}
+        A \times (\nabla \times A) = A_i\partial_j A_j - A_j\partial_j A_i
+    \end{equation}
+    由于$A_i\partial_j A_j = \nabla \cdot (A A)$，因此有：
+    \begin{equation}
+        A \times (\nabla \times A) = \nabla \cdot (A A) - (A \cdot \nabla)A
+    \end{equation}
+    由于$\nabla \cdot (A A) = \nabla \cdot \left(\frac{1}{2}A^2\right)$，因此有：
+    \begin{equation}
+        A \times (\nabla \times A) = \frac{1}{2}\nabla A^2 - (A \cdot \nabla)A
+    \end{equation}
+
+    \end{sol}
+    \begin{prob}
+        设$r = \sqrt{(x-x')^2+(y-y')^2+(z-z')^2}$, $\mathbf{r}$ 为源点到场点的矢量，证明：
+        \[
+            \begin{aligned}
+            \nabla r = -\nabla ' r &= \frac{\mathbf{r}}{r}\\
+            \nabla \frac{1}{r} = -\nabla ' \frac{1}{r} &= -\frac{\mathbf{r}}{r^3}\\
+            \nabla \times \frac{\mathbf{r}}{r^3} &= 0 \\
+            \nabla \cdot \frac{\mathbf{r}}{r^3} = \nabla ' \cdot \frac{\mathbf{r}}{r^3} &= 0
+            \end{aligned}
+        \]
+        求 $\nabla \mathbf{r}$, $\nabla \times \mathbf{r}$, $\mathbf{a} \cdot \nabla \mathbf{r}$, $\nabla \mathbf{a} \cdot \mathbf{r}$, $\nabla \cdot [ \mathbf{E}_0 \sin{(\mathbf{k_0} \cdot \mathbf{r})}]$,$\nabla \times [ \mathbf{E}_0 \sin{(\mathbf{k_0} \cdot \mathbf{r})}]$
+    \end{prob}
+    \begin{sol}
+        由于$r = \sqrt{(x-x')^2+(y-y')^2+(z-z')^2}$，因此有：
+        \begin{equation}
+            \begin{aligned}
+            \nabla r &= \left(
+                \begin{array}{c}
+                    \frac{\partial r}{\partial x}\\
+                    \frac{\partial r}{\partial y}\\
+                    \frac{\partial r}{\partial z}
+                \end{array}
+            \right) = \left(
+                \begin{array}{c}
+                    \frac{x-x'}{r}\\
+                    \frac{y-y'}{r}\\
+                    \frac{z-z'}{r}
+                \end{array}
+            \right) = -\nabla ' r = \frac{\mathbf{r}}{r}\\
+            \nabla \frac{1}{r} &= -\nabla ' \frac{1}{r} = -\frac{\mathbf{r}}{r^3}\\
+            \nabla \times \frac{\mathbf{r}}{r^3} &= 0 \\
+            \nabla \cdot \frac{\mathbf{r}}{r^3} = \nabla ' \cdot \frac{\mathbf{r}}{r^3} &= 0
+            \end{aligned}
+        \end{equation}
+        由于
+    \end{sol}
+    \begin{prob}
+        在地面系，静止的物体$A$在$x$方向受到恒力$\overrightarrow{F}$ ,求地面系中物体的运动轨迹；\\
+        设物体$B$与物体$A$同时开始运动，$B$沿着$y$方向匀速直线运动，以$B$为参考系，求$B$参考系中$A$的速度和运动轨迹。
+    \end{prob}
+    \begin{sol}
+        在地面系中，物体$A$受到的恒力为$\overrightarrow{F} = F\hat{i}$，因此有：
+        \begin{equation}
+            \frac{dp^x}{dt} = \frac{d \gamma m u^x}{dt} = F
+        \end{equation}
+    \end{sol}
+    其中，$\gamma = \frac{1}{\sqrt{1-u^2}}$,这里取$c = 1$.
+    我们得到参数方程：
+    \begin{equation}
+        \gamma m u^x = Ft
+    \end{equation}
+    展开得到：
+    \begin{equation}
+        \frac{dx}{dt} = u^x = \frac{Ft}{\sqrt{m^2 + F^2t^2}} = \frac{t}{\sqrt{t^2 + \frac{m^2}{F^2}}}
+    \end{equation}
+    积分得到：
+    \begin{equation}
+        x = \sqrt{t^2 + \frac{m^2}{F^2}} - \frac{m}{F}
+    \end{equation}
+    我们可以写出$A$的四位置：
+    \begin{equation}
+        x^\mu = \left(
+            \begin{array}{c}
+                t\\
+                \sqrt{t^2 + \frac{m^2}{F^2}} - \frac{m}{F}\\
+                0\\
+                0
+            \end{array}
+        \right)
+    \end{equation}
+    在$B$参考系中，使用从地面系到$B$系的参数形式洛伦兹变换，其中$\gamma = \frac{1}{\sqrt{1-v^2}}$：
+    \begin{equation}
+        \Lambda^\nu_{\ \mu} = \left(
+            \begin{array}{cccc}
+                \gamma & 0 & -\gamma v & 0\\
+                0 & 1 & 0 & 0\\
+                -\gamma v & 0 & \gamma & 0\\
+                0 & 0 & 0 & 0
+            \end{array}
+        \right)
+    \end{equation}
+    得到$A$在$B$参考系中的四位置：
+    \begin{equation}
+        x'^\mu = \Lambda^\mu_{\ \nu}x^\nu = \left(
+            \begin{array}{c}
+                \gamma t\\
+                \sqrt{t^2 + \frac{m^2}{F^2}} - \frac{m}{F}\\
+                -\gamma vt\\
+                0
+            \end{array}
+        \right)
+    \end{equation}
+    因此$A$在$B$参考系中的速度为：
+    \begin{equation}
+        \begin{aligned}
+        v'^x &= \frac{dx'}{dt'} = \frac{t'}{\sqrt{\gamma^2 t'^2 + \gamma^4 \frac{m^2}{F^2}}}\\
+        v'^y &= -v
+        \end{aligned}
+    \end{equation}
+\end{document}
