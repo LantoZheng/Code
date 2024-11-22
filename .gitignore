@@ -25,3 +25,5 @@ desktop.ini
 E_norm.csv
 #Not my Work
 /Papers
+#Compresed files
+*.zip
