@@ -1,57 +1,129 @@
-# δ函数讲义
 
-# $\delta$函数讲义
+\documentclass[lang=cn,10pt,newtx,bibend=biber,device=pad]{elegantbook}
 
-## 引言
+\title{电动力学}
 
-在学习电磁学的过程中，我们常常提到各种点源，比如说点电荷、质点这类有确定的总量，但是体积视作无限小的对象；如今我们在处理这类有关场的问题时更倾向使用场的方程来求解这类问题，但是这样的点源在以麦克斯韦方程组为代表的一系列方程中却很难描述：他们既有确定的总量，但同时也在空间中没有确定的密度——要么是 0，要么是无穷大。如何使用一种合适的数学结构去描述这种特殊的结构就成了急需要解决的任务，为了描述这类对象，物理学家狄拉克发明了δ函数。
+\setcounter{tocdepth}{3}
 
-## δ函数的定义
+\logo{logo-blue.png}
+\cover{cover.jpg}
 
-δ函数可以描述这样的一类物理对象：它具有确定的总量，但是其在某种空间中分布在一个确定的点上，比如说一个位于原点的点电荷$Q$，在空间中除原点以外的任何一点都找不到电荷的分布，但是空间中确实有大小为$Q $的电荷总量存在。
+% 本文档命令
+\usepackage{array}
+\usepackage{ulem}
+\usepackage{amssymb}
+\usepackage{cases}
+\usepackage{booktabs}
+\newcommand{\ccr}[1]{\makecell{{\color{#1}\rule{1cm}{1cm}}}}
 
-为了从简单的情况入手，将我们上面的描述转换为一维数学表达<sup>[[注]](siyuan://blocks/20241127151127-bdpzeg0)</sup>：
+\def\bea{\begin{eqnarray}}
+\def\eea{\end{eqnarray}}
+\def\nn{\nonumber}
 
-$$
+
+
+\usepackage{tensor}
+\usepackage{physics}
+
+
+
+
+
+
+\newcolumntype{P}[1]{>{\Centering\hspace{0pt}}p{#1}}
+\newcolumntype{Z}{>{\centering\arraybackslash}X} %Z单元格居中
+
+\newcommand{\ds}{{S}}
+\newcommand{\xs}{{s}}
+
+\newcommand{\codename}{\textbf{Coport}}
+
+\newcommand{\br}[1]{\left[#1\right]}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\Mc}[1]{\mathcal{#1}}
+\newcommand{\mJ}{\mathcal{J}}
+\newcommand{\mA}{\mathcal{A}}
+\newcommand{\mR}{\mathcal{R}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\mD}{\mathcal{D}}
+\newcommand{\mX}{\mathcal{X}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\mQ}{\mathcal{Q}}
+\newcommand{\mE}{\mathcal{E}}
+\newcommand{\mY}{\mathcal{Y}}
+\newcommand{\mT}{\mathcal{T}}
+\newcommand{\df}{\mathrm{d}}   %微分符号
+\newcommand{\dif}{\mathrm{d}}   %微分符号
+\newcommand{\qpar}{\quad\par}   
+\newcommand{\deri}[3]{\dfrac{\mathrm{d}^{#1}#2}{\mathrm{d}#3^{#1}}}%莱布尼茨导数记号
+\newcommand{\pderi}[3]{\dfrac{\partial^{#1}#2}{\partial {#3}^{#1}}}%偏导数导数记号
+\newcommand{\lrg}[1]{\langle #1\rangle }
+\newcommand{\pa}[1]{\left(#1\right)}
+\newcommand{\yf}[1]{\textcolor[RGB]{0,0,255}{ #1-yf}}
+\newcommand{\cb}[1]{\textcolor[RGB]{255,0,0}{ #1 }}
+\newcommand{\mg}[1]{\textcolor[RGB]{155,25,0}{ #1-mg}}
+\newcommand{\er}[1]{\textcolor[RGB]{0,225,0}{#1-old}}
+
+
+
+
+% 修改标题页的橙色带
+\definecolor{customcolor}{RGB}{32,178,170}
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect}
+
+\addbibresource[location=local]{reference.bib} % 参考文献，不要删除
+\begin{document}
+
+
+\section{$\delta$函数}
+
+\subsection{引言}
+
+在学习电磁学的过程中，我们常常提到各种点源，比如说点电荷、质点这类有确定的总量，但是体积视作无限小的对象；如今我们在处理这类有关场的问题时更倾向使用场的方程来求解这类问题，但是这样的点源在以麦克斯韦方程组为代表的一系列方程中却很难描述：他们既有确定的总量，但同时也在空间中没有确定的密度——要么是 0，要么是无穷大。如何使用一种合适的数学结构去描述这种特殊的结构就成了急需要解决的任务，为了描述这类对象，物理学家狄拉克发明了$\delta$函数。
+
+\subsection{$\delta$函数的定义}
+
+$\delta$函数可以描述这样的一类物理对象：它具有确定的总量，但是其在某种空间中分布在一个确定的点上，比如说一个位于原点的点电荷$Q$，在空间中除原点以外的任何一点都找不到电荷的分布，但是空间中确实有大小为$Q $的电荷总量存在。
+
+为了从简单的情况入手，将我们上面的描述转换为一维数学表达\cite{Robert1994}:
+
+\begin{equation}
 \begin{align}
 
 \int_{\mathbb{R}}\rho(x)dx&=Q \\\rho(x)=0&;x\in\mathbb{R}/\{0\}
 
 \end{align}
-$$
+\end{equation}\label{eq:delta_ini}
 
-δ函数作为一种新的函数形式，它与我们之前见到的函数形式都不相同。回忆我们之前见到的黎曼积分和黎曼可积函数的定义：
+$\delta$函数作为一种新的函数形式，它与我们之前见到的函数形式都不相同。回忆我们之前见到的黎曼积分和黎曼可积函数的定义：
 
-> **可积函数**
->
-> 定义：在闭区间$[a,b]$上有分法$\{x_i|i\in {0,1,...,n};x_{i+1}>x_i;x_0 =a;x_n=b\}$,$\xi_i \in [x_{i},x_{i+1}],\Delta x_i = x_{i+1} - x_i$,$\lambda = max \{ \Delta x_i \}$。当$\lambda \rightarrow0$ 时，若$\sigma = \sum_{i=0}^{n-1}f(\xi_i)\Delta x_i$ 有限，且存在极限为$I$ 则称$f(x)$在$[a,b]$上可积.
+\begin{definition}[可积函数]\label{def:int}
+    在闭区间$[a,b]$上有分法$\{x_i|i\in {0,1,...,n};x_{i+1}>x_i;x_0 =a;x_n=b\}$,$\xi_i \in [x_{i},x_{i+1}],\Delta x_i = x_{i+1} - x_i$,$\lambda = max \{ \Delta x_i \}$。当$\lambda \rightarrow0$ 时，若$\sigma = \sum_{i=0}^{n-1}f(\xi_i)\Delta x_i$ 有限，且存在极限为$I$ 则称$f(x)$在$[a,b]$上可积.
+\end{definition}
+从定义~\ref{def:int} 出发，我们很容易找到$\delta$函数不可积的证据：
 
-从该定义出发，我们很容易找到δ函数不可积的证据：
-
-> 考虑积分区域$\Omega' = \mathbb{R}/U(0,\delta)$，$\delta$为非负小量，显然的，$\int_{\Omega'}\rho(x)dx= 0$;若$\rho(x)$在$\mathbb{R}$上可积，则有：任意$\delta>0$,$\int_{U(0,\delta)}\rho(x)dx=Q$,这至少要求存在一点$p\in U(0,\delta)$,任意$A \in \mathbb{R},\rho(p)>A$，即$\rho(p)= \infin$。同时还要求$\int_{\{p\}} dx > 0$。
-
-所以这样的函数在$\Omega$上不可积。
-
+\begin{lemma}[不可积性]
+    $\delta$函数在$\mathbb{R}$上不可积。
+    考虑积分区域$\Omega' = \mathbb{R}/U(0,\delta)$，$\delta$为非负小量，显然的，$\int_{\Omega'}\rho(x)dx= 0$;若$\rho(x)$在$\mathbb{R}$上可积，则有：任意$\delta>0$,$\int_{U(0,\delta)}\rho(x)dx=Q$,这至少要求存在一点$p\in U(0,\delta)$,任意$A \in \mathbb{R},\rho(p)>A$，即$\rho(p)= \infin$。同时还要求$\int_{\{p\}} dx > 0$。
+    所以这样的函数在$\Omega$上不可积。
+\end{lemma}
 但是我们知道，可积函数列的极限不一定是可积函数。
-
-所以我们不妨使用一列积分值为常数，同时函数列极限满足式 xx 的函数列来作为这种函数的定义。
-
-比如说，我们构建以下函数列使之满足上面的条件：
-
-> $f_n(x) =  \begin{cases} 0 &\text{other}\\ nQ &\text{$|x|<\frac{1}{n}$}  \end{cases}$
+所以我们不妨使用一列积分值为常数，同时函数列极限满足式~\ref{eq:delta_ini}的函数列来作为这种函数的定义。
+比如说，我们构建以下函数列使之满足上面的条件：$f_n(x) =  \begin{cases} 0 &\text{other}\\ nQ &\text{$|x|<\frac{1}{n}$}  \end{cases}$
 
 这列函数关于$i\rightarrow \infin$的各种极限满足我们上面的要求：
 
-> $$
-> \begin{cases}
-> \lim_{i\rightarrow\infin}f_i(x)=0;x\neq0\\
-> \lim_{i\rightarrow\infin}\int_{\mathbb{R}}f_i(x)dx = Q
-> \end{cases}
-> $$
+\begin{equation}
+\begin{cases}
+\lim_{i\rightarrow\infin}f_i(x)=0;x\neq0\\
+\lim_{i\rightarrow\infin}\int_{\mathbb{R}}f_i(x)dx = Q
+\end{cases}
+\end{equation}
 
-更进一步的，为了是这样的函数一般化，我们不妨定义所有有这样趋近行为的函数为一个等价类，并且定义其积分值为 1构建一类新的函数，称为δ函数：
+更进一步的，为了是这样的函数一般化，我们不妨定义所有有这样趋近行为的函数为一个等价类，并且定义其积分值为 1构建一类新的函数，称为$\delta$函数：
 
-> 定义：**δ函数**​<sup>[[注]](siyuan://blocks/20241127151041-44eqiwk)</sup>
+> 定义：**$\delta$函数**​<sup>[[注]](siyuan://blocks/20241127151041-44eqiwk)</sup>
 >
 > ${f_i(x)}$为$\mathbb{R}$上黎曼可积函数列，满足：
 >
@@ -78,21 +150,21 @@ $$
 > * $$
 >   \int_{\Omega}f(x)\delta(x)dx=\begin{cases}0 & \Omega\not\owns0\\f(0)&\Omega\owns 0\end{cases}
 >   $$
-> * 值得注意的是，这里我们定义δ函数时使用了其积分作为定义的一部分，并且没有使用常见的定义：
+> * 值得注意的是，这里我们定义$\delta$函数时使用了其积分作为定义的一部分，并且没有使用常见的定义：
 > * $$
 >   \int_{0^-}^{0^+}\delta(x)dx=1
 >   $$
-> * 这里是要强调δ函数并非是我们常见的函数，其本身的积分并没有意义，上面的式 xx 应当看作$f(x)=1$的特殊情形。
+> * 这里是要强调$\delta$函数并非是我们常见的函数，其本身的积分并没有意义，上面的式 xx 应当看作$f(x)=1$的特殊情形。
 
-## δ函数的性质
+## $\delta$函数的性质
 
 ### 作为独立的函数
 
-这样的函数列定义使得δ函数满足一般的函数的求导和积分的定律：
+这样的函数列定义使得$\delta$函数满足一般的函数的求导和积分的定律：
 
 #### 缩放和对称性<sup>[[注]](siyuan://blocks/20241127150923-9omwy9o)</sup>
 
-对于非零标量$\alpha$,δ函数满足以下缩放特性：
+对于非零标量$\alpha$,$\delta$函数满足以下缩放特性：
 
 $$
 \int_{-\infin}^{\infin}\delta(\alpha x)dx \overset{let \ u=\alpha x}{=} \int_{-\infin}^{\infin}\delta(u)\frac{du}{|\alpha|} = \frac{1}{|\alpha|}
@@ -124,25 +196,25 @@ $$
 > \delta(\alpha x) = \frac{\delta(x)}{|\alpha|}
 > $$
 
-同样的，δ函数还有关于$x=0$ 的镜像对称性：
+同样的，$\delta$函数还有关于$x=0$ 的镜像对称性：
 
 > $$
 > \delta(x) = \delta(-x)
 > $$
 
-根据k 阶齐次函数定义：$f(ax) = a^k f(x)$，我们将δ函数视作-1 阶齐次函数，对于$\delta(x)$,其具有$[\frac{1}{x}]$的量纲,b比如说常见的点源表达：$Q\delta(x-x_0)$这里有和（一维）电荷密度相同的量纲。
+根据k 阶齐次函数定义：$f(ax) = a^k f(x)$，我们将$\delta$函数视作-1 阶齐次函数，对于$\delta(x)$,其具有$[\frac{1}{x}]$的量纲,b比如说常见的点源表达：$Q\delta(x-x_0)$这里有和（一维）电荷密度相同的量纲。
 
 #### 在平移作用下的性质
 
-在平移作用$x\rightarrow x-T$作用下，如何函数$f(x)$与时间延迟的狄拉克函数进行积分，则该积分挑选出函数在$x=T$时的值。该性质也被称之为：挑选性<sup>[[注]](siyuan://blocks/20241128200845-q42505a)</sup>，挑选是直接从δ函数的积分定义看出来的，对于积分：
+在平移作用$x\rightarrow x-T$作用下，如何函数$f(x)$与时间延迟的狄拉克函数进行积分，则该积分挑选出函数在$x=T$时的值。该性质也被称之为：挑选性<sup>[[注]](siyuan://blocks/20241128200845-q42505a)</sup>，挑选是直接从$\delta$函数的积分定义看出来的，对于积分：
 
 $$
 \int_{-\infin}^\infin f(x)\delta(x-T)dx=\int_{-\infin}^\infin f(x'+T)\delta(x')dx' = f(x'+T)|_{x'=0}=f(T)
 $$
 
-该结果直接使用δ函数积分的定义可以得到。
+该结果直接使用$\delta$函数积分的定义可以得到。
 
-那么这样的δ函数引入参数 T 后与任意函数$f$积分给出$f$ 在$T$ 处的值的性质让我们想到其另一种用法，也就是卷积：
+那么这样的$\delta$函数引入参数 T 后与任意函数$f$积分给出$f$ 在$T$ 处的值的性质让我们想到其另一种用法，也就是卷积：
 
 $$
 （f\ast\delta_T)(t) = \int_{-\infin}^\infin f(\tau）\delta（t-T-\tau)d\tau = f(t-T)
@@ -150,15 +222,15 @@ $$
 
 可见,$\delta(t-T)$的卷积可以作为函数平移的一种工具。这点将在我们之后的讨论中派上用场。
 
-### 高维的δ函数
+### 高维的$\delta$函数
 
-我们上面将δ函数定义在了$\mathbb{R}$上，但是我们知道，在处理实际问题中，点源往往位于三维空间或者二维空间中，而且有时候我们还会选取如球坐标系等度规在空间各处不完全相同的坐标，在这种情况下，我们如何定义 δ 函数呢？
+我们上面将$\delta$函数定义在了$\mathbb{R}$上，但是我们知道，在处理实际问题中，点源往往位于三维空间或者二维空间中，而且有时候我们还会选取如球坐标系等度规在空间各处不完全相同的坐标，在这种情况下，我们如何定义 $\delta$ 函数呢？
 
-首先，我们要明确，我们期待的在高维空间中的δ函数定义能赋予δ函数的良好的性质有哪些？
+首先，我们要明确，我们期待的在高维空间中的$\delta$函数定义能赋予$\delta$函数的良好的性质有哪些？
 
 在这里我们罗列出以下几点：
 
-1. 在形式上，比如说：函数值、积分定义的意义上与$\mathbb{R}$上的 δ函数类似，这样我们才可以说它是δ函数在高维空间中的推广。用数学语言这么书写：
+1. 在形式上，比如说：函数值、积分定义的意义上与$\mathbb{R}$上的 $\delta$函数类似，这样我们才可以说它是$\delta$函数在高维空间中的推广。用数学语言这么书写：
 
     > 设$\Omega$ 为$n$维空间，$0 \in\Omega $，$\Omega$上定义了函数$f:\Omega\to\mathbb{R}$，以及对应的积分$\int d\mathbf{x}$.
     >
@@ -168,7 +240,7 @@ $$
     >
     > $\int \delta(\mathbf{x})f(\mathbf{x})d\mathbf{x} = f(0)$  
     >
-2. 在空间中的坐标经历变换$\mathbf{x} \mapsto \mathbf{y} = \mathbf{y}(\mathbf{x})$后，与同一函数$f$ 相乘后全空间积分结果不变。这样的性质保证了δ函数是在坐标变换下不变的，能够描述一个实在的物理实体。
+2. 在空间中的坐标经历变换$\mathbf{x} \mapsto \mathbf{y} = \mathbf{y}(\mathbf{x})$后，与同一函数$f$ 相乘后全空间积分结果不变。这样的性质保证了$\delta$函数是在坐标变换下不变的，能够描述一个实在的物理实体。
 
     > 对于空间$\Omega$上有坐标系$\mathbf{x}$,定义有函数$f(\mathbf{x}):\{x_i\}\to\mathbb{R}$，以及该坐标系下的度规$g_{ij}$；在坐标变换：$\mathbf{x} \mapsto \mathbf{y} = \mathbf{y}(\mathbf{x})$下：
     >
@@ -177,34 +249,34 @@ $$
     > $\int \delta(\mathbf{x})f(\mathbf{x})d\mathbf{x} = \int \delta(\mathbf{y})f(\mathbf{y})d\mathbf{y} = f(0)$  
     >
 
-根据上面的要求，我们可以这么定义高维空间中的δ函数：
+根据上面的要求，我们可以这么定义高维空间中的$\delta$函数：
 
 > 靠考虑 n 维空间$(\mathcal{M}, g)$,其中：
 >
 > * $\mathcal{M}$为一个连续的高维空间。
 > * $g = g_{\mu\nu} dx^\mu \otimes dx^\nu$ 是度规张量。
 >
-> 定义δ-函数与测试函数$f$的积分为：
+> 定义$\delta$-函数与测试函数$f$的积分为：
 >
 > $ \int_{\mathbb{R}^n} f(x) \delta^{(n)}(x - x_0) \sqrt{|g|} \, d^n x = f(x_0)$
 >
 > 其中：
 >
 > * $x = (x^1, x^2, \ldots, x^n)$ 是 $n$-维坐标向量，
-> * $x_0 = (x_0^1, x_0^2, \ldots, x_0^n)$是 δ-函数的中心，
+> * $x_0 = (x_0^1, x_0^2, \ldots, x_0^n)$是 $\delta$-函数的中心，
 > * $\sqrt{|g|}$ 是度规 $g_{ij}$ 的行列式的平方根，用于引入体积元。
 >
-> 在这里，我们可以说，δ函数有以下的形式：
+> 在这里，我们可以说，$\delta$函数有以下的形式：
 >
 > $ \delta^{(n)}(x - x_0) = \frac{\delta(x^1 - x_0^1) \delta(x^2 - x_0^2) \cdots \delta(x^n - x_0^n)}{\sqrt{|g(x)|}}. $
 
-这样的高维定义可以定义出类似于三维空间中的点电荷的分布，并且保证了在类似直角坐标和球坐标的变换下，δ函数积分值保持不变。
+这样的高维定义可以定义出类似于三维空间中的点电荷的分布，并且保证了在类似直角坐标和球坐标的变换下，$\delta$函数积分值保持不变。
 
 > 例：
 >
 > 假设二维 $\delta$-函数中心在 $(x_0, y_0)$，定义为：
 >
-> $δ(2)(x−x_0,y−y_0)=δ(x−x_0)δ(y−y_0)$  
+> $$\delta$(2)(x−x_0,y−y_0)=$\delta$(x−x_0)$\delta$(y−y_0)$  
 >
 > 测试函数 $f(x, y)$ 的积分为：
 >
@@ -252,7 +324,7 @@ $$
 >
 > 因此在直角坐标系和极坐标系中的积分结果相同。这验证了高维 \\delta-函数的积分在坐标变换下保持不变。
 
-但是我们这里只关心了在 $n$ 维空间中的 $n$ 阶$δ$函数，能够描述例如空间中的点电荷这样的模型，但是我们还知道，有类似于三维中的面电荷、线电荷这种模型，他们在阶数上来看可以使用 $n-k$ 阶的δ函数描述，我们也在这里给出他们的定<sup>[[注]](siyuan://blocks/20241130221824-jtryhwg)</sup>义：
+但是我们这里只关心了在 $n$ 维空间中的 $n$ 阶$$\delta$$函数，能够描述例如空间中的点电荷这样的模型，但是我们还知道，有类似于三维中的面电荷、线电荷这种模型，他们在阶数上来看可以使用 $n-k$ 阶的$\delta$函数描述，我们也在这里给出他们的定<sup>[[注]](siyuan://blocks/20241130221824-jtryhwg)</sup>义：
 
 > 考虑 $n$维伪黎曼流形$(\mathcal{M}, g)$，其中：  
 > 	•	$\mathcal{M}$ 是流形；  
@@ -300,13 +372,13 @@ $$
 
 ‍
 
-### δ函数与其他函数复合
+### $\delta$函数与其他函数复合
 
-δ函数的不可积性质使得其与其他函数的复合后的积分变得困难，因为对可积函数$f(x)$而言，不管是与δ函数复合产生的$f\circ\delta(x)$，还是δ函数与之复合产生的$\delta\circ f(x)$都在函数意义上不可积、不可微，甚至可能不是良定义的函数。
+$\delta$函数的不可积性质使得其与其他函数的复合后的积分变得困难，因为对可积函数$f(x)$而言，不管是与$\delta$函数复合产生的$f\circ\delta(x)$，还是$\delta$函数与之复合产生的$\delta\circ f(x)$都在函数意义上不可积、不可微，甚至可能不是良定义的函数。
 
-但是我们依然能够依据其函数列的定义给出δ函数与其他函数复合产生的$\delta\circ f(x)$的值，积分的表示，至于其他的形式以及他们的微分性质我们现在没有办法直接从定义出发得到，到后面的部分，我们拥有了将δ函数展开的能力时，我们才可以讨论这些内容
+但是我们依然能够依据其函数列的定义给出$\delta$函数与其他函数复合产生的$\delta\circ f(x)$的值，积分的表示，至于其他的形式以及他们的微分性质我们现在没有办法直接从定义出发得到，到后面的部分，我们拥有了将$\delta$函数展开的能力时，我们才可以讨论这些内容
 
-让我们先从δ函数与其他函数的复合函数的值入手：
+让我们先从$\delta$函数与其他函数的复合函数的值入手：
 
 > **定义：**​**$\delta\circ f(x)$**​**的值**
 >
@@ -316,12 +388,12 @@ $$
 > \delta\circ f(x_0) \overset{def}{=} \lim_{n\rightarrow\infin} g_n\circ f(x_0)
 > $$
 
-根据δ函数定义中，函数列的连续性以及$f(x)$的好的性质，我们很容易得到以下事实：
+根据$\delta$函数定义中，函数列的连续性以及$f(x)$的好的性质，我们很容易得到以下事实：
 
 1. 函数$\delta\circ f(x)$在$\mathbb{R}\rightarrow\{\mathbb{R},\infin,-\infin\}$上是存在且唯一的。
 2. 函数$\delta\circ f(x) =  \begin{cases} 0&f(x)\neq 0\\ \infin &f(x)=0 \end{cases}$
 
-类似的，我们当然也可以定义其他函数和δ函数复合的值：
+类似的，我们当然也可以定义其他函数和$\delta$函数复合的值：
 
 > **定义：**​**$f\circ \delta(x)$**​**的值**
 >
@@ -338,7 +410,7 @@ $$
 
 所以我们往往不认为$f\circ \delta(x)$有良好的定义<sup>[[注]](siyuan://blocks/20241128224944-cj9n93j)</sup>
 
-其实从这一点，我们就能想到类似的这种作用与函数的算子的定义域应当有的性质了，比如说：光滑、在无穷远处光滑的收敛到零等等。这类函数叫做速降函数，是类似δ函数这类奇异广义函数的积分泛函的定义域。<sup>[[注]](siyuan://blocks/20241129204526-l0u7c5u)</sup>
+其实从这一点，我们就能想到类似的这种作用与函数的算子的定义域应当有的性质了，比如说：光滑、在无穷远处光滑的收敛到零等等。这类函数叫做速降函数，是类似$\delta$函数这类奇异广义函数的积分泛函的定义域。<sup>[[注]](siyuan://blocks/20241129204526-l0u7c5u)</sup>
 
 现在，我们再来关心一下形如$\delta\circ f(x)$的函数的积分性质:
 
@@ -376,7 +448,7 @@ $$
 
 进一步的，我们考虑$|\{x_i\}|=\infin$的情况，可以预见，这就要取决于$\sum_i\frac{1}{|f'(x_i)|}$是否收敛了。如果收敛，那么上面积分的结果形式依然不变。
 
-在这种意义上，我们可以将这种复合函数也写作一系列δ函数平移后的线性组合，这样的结果在数值和积分上与该复合函数在行为上没有差别：
+在这种意义上，我们可以将这种复合函数也写作一系列$\delta$函数平移后的线性组合，这样的结果在数值和积分上与该复合函数在行为上没有差别：
 
 > $$
 > \delta\circ f(x) = \sum_i \frac{\delta(x-x_i)}{|f'(x_i)|}
@@ -388,7 +460,7 @@ $$
 
 1. 光滑函数正则化方法
 
-    既然在$x_i$附近直接使用 δ函数的性质无法得到良好的积分结果，我们不妨直接给定一个 δ函数的趋近方法，比如说：给定函数$\rho_\epsilon(x) = \exp(-\epsilon|x|)$，然后直接对给定的积分区域$\Omega \owns x_i$，计算：$\lim_{\epsilon\rightarrow \infin} \int_{\Omega} \rho_\epsilon(f(x)) dx$。这样我们往往有可能得到一个合理的值。当然，在物理学的计算中计算结果往往对$\rho_\epsilon$ 的选取不敏感。<sup>[[注]](siyuan://blocks/20241129224544-3q620ym)</sup>
+    既然在$x_i$附近直接使用 $\delta$函数的性质无法得到良好的积分结果，我们不妨直接给定一个 $\delta$函数的趋近方法，比如说：给定函数$\rho_\epsilon(x) = \exp(-\epsilon|x|)$，然后直接对给定的积分区域$\Omega \owns x_i$，计算：$\lim_{\epsilon\rightarrow \infin} \int_{\Omega} \rho_\epsilon(f(x)) dx$。这样我们往往有可能得到一个合理的值。当然，在物理学的计算中计算结果往往对$\rho_\epsilon$ 的选取不敏感。<sup>[[注]](siyuan://blocks/20241129224544-3q620ym)</sup>
 2. 维数正则化
 
     1. 将问题推广到$d$维空间。$x_0$ 是$f(x) = 0$的一个重根，因此在$x_0$ 附近泰勒展开的领头阶$f(x) \approx  A(x-x_0)^n$ ，零点附近的积分可表示为：$\int \delta(f(x)) dx \sim \int \delta(u) |J| du$其中  $u = f(x)$ ，而  $J$  是雅可比行列式， $J = |df/du|$ 。在  $f{\prime}(x_0) = 0$  时，积分在  $d=1$  维下发散，但在  $d \to d-\epsilon$  维中可以重新定义。
@@ -402,7 +474,7 @@ $$
         >
         > 考虑积分：$ I = \int \delta((x - x_0)^n) dx $，当  $n > 1$  时， $f{\prime}(x_0) = 0$，此积分需要正则化以确保其意义。
         >
-        > δ函数性质：
+        > $\delta$函数性质：
         >
         > $\delta((x - x_0)^n) = \frac{\delta(x - x_0)}{|f{\prime}(x_0)|}.$
         >
@@ -418,7 +490,7 @@ $$
         >
         > $\int \delta((x - x_0)^n) dx = \frac{1}{|f^{(n)}(x_0)|} \int_{-\infty}^\infty |x - x_0|^{-\epsilon} \delta(x - x_0) dx$\.
         >
-        > 利用 δ函数的筛选性质，仅保留  $x = x_0$  处的值：
+        > 利用 $\delta$函数的筛选性质，仅保留  $x = x_0$  处的值：
         >
         > $\int \delta((x - x_0)^n) dx = \frac{1}{|f^{(n)}(x_0)|} \cdot \lim_{\epsilon \to 0} |x_0 - x_0|^{-\epsilon}$\.
         >
@@ -447,13 +519,13 @@ $$
         > 这么做的物理背景是：我们在处理实际问题时，可以将发散项$\frac{1}{\epsilon}$视为多余的独立项，并且使用全空间归一化条件将其消除。
         >
 
-### δ函数的微分性质
+### $\delta$函数的微分性质
 
-由于 δ 函数不是一个在$\mathbb{R}$上有良好定义的函数，我们很难直接使用常见的$\delta - \epsilon$语言分析其微分性质。我们可以尝试将其类比于一般的函数然后通过其积分性质得到它的微分结果：
+由于 $\delta$ 函数不是一个在$\mathbb{R}$上有良好定义的函数，我们很难直接使用常见的$\delta - \epsilon$语言分析其微分性质。我们可以尝试将其类比于一般的函数然后通过其积分性质得到它的微分结果：
 
 > $\int\delta'(x)\varphi(x)dx=\delta(x)\varphi(x)-\int \delta(x)\varphi'(x)dx = -\varphi'(0)$
 
-考虑到δ函数的值并没有具体意义，我们也可以形式化的将其写成：
+考虑到$\delta$函数的值并没有具体意义，我们也可以形式化的将其写成：
 
 $\delta'(x) = \lim_{h\to0}\frac{\delta(x+h)-\delta(x-h)}{2h}$
 
@@ -461,9 +533,9 @@ $\delta'(x) = \lim_{h\to0}\frac{\delta(x+h)-\delta(x-h)}{2h}$
 
 $\delta'(-x) = -\delta'(x)\\x\delta'(x) = -\delta(x)$  
 
-## δ函数在偏微分方程中
+## $\delta$函数在偏微分方程中
 
-在偏微分方程中出现 δ函数显然很难处理特别是在处理点源这样的问题时，泊松方程中出现δ函数作为场源，其奇异性使得传统的解法无法分析这样的函数。在这里我们也许可以使用泊松方程的特征函数对δ函数进行展开。
+在偏微分方程中出现 $\delta$函数显然很难处理特别是在处理点源这样的问题时，泊松方程中出现$\delta$函数作为场源，其奇异性使得传统的解法无法分析这样的函数。在这里我们也许可以使用泊松方程的特征函数对$\delta$函数进行展开。
 
 考虑拉普拉斯方程：$\nabla^2\varphi = \rho(\mathbf{x})$
 
@@ -475,13 +547,13 @@ $\delta'(-x) = -\delta'(x)\\x\delta'(x) = -\delta(x)$
 
 对于$\rho=\delta(\mathbf{x})$的拉普拉斯方程，我们也才用这样的思路求解点源产生的场分布。
 
-所以，我们需要求解δ函数对$e^{\pm i kx}$的展开，这正是我们熟悉的傅里叶展开。
+所以，我们需要求解$\delta$函数对$e^{\pm i kx}$的展开，这正是我们熟悉的傅里叶展开。
 
-### δ函数的傅里叶展开
+### $\delta$函数的傅里叶展开
 
 #### 高维空间中的傅里叶展开
 
-要解决δ函数的傅里叶展开，我们首先要给出高维空间中，傅里叶变换的形式。回顾一维的傅里叶变换及其逆变换：
+要解决$\delta$函数的傅里叶展开，我们首先要给出高维空间中，傅里叶变换的形式。回顾一维的傅里叶变换及其逆变换：
 
 > 一维傅里叶变换：
 >
@@ -515,7 +587,7 @@ $\delta'(-x) = -\delta'(x)\\x\delta'(x) = -\delta(x)$
 > \mathcal{F}^{-1}[F(\mathbf{k})] = f(\mathbf{r}) =\frac{1}{\sqrt{2\pi}^{d}} \int_{\mathbb{R}^d} F(\mathbf{k}) e^{i \mathbf{k} \cdot \mathbf{r}} d\mathbf{k}
 > $$
 
-#### 计算δ函数展开
+#### 计算$\delta$函数展开
 
 利用以上定义，计算定义在$\mathbb{R}^d$上的 $\delta^{(n)}(\mathbf{r})$的傅里叶展开：
 
@@ -523,11 +595,11 @@ $$
 \mathcal{F}[\delta^{(n)}(\mathbf{r})]  =\frac{1}{\sqrt{2\pi}^{d}} \int_{\mathbb{R}^d} \delta^{(n)}(\mathbf{r}) e^{-i \mathbf{k} \cdot \mathbf{r}} d\mathbf{r} = \frac{1}{\sqrt{2\pi}^{d}}
 $$
 
-可见δ函数的傅里叶展开结果是一个常数，这非常符合我们对δ函数的一般想象，因为这个常数函数的积分性质几乎和 δ 函数一样差——它在全空间也是不可积的。
+可见$\delta$函数的傅里叶展开结果是一个常数，这非常符合我们对$\delta$函数的一般想象，因为这个常数函数的积分性质几乎和 $\delta$ 函数一样差——它在全空间也是不可积的。
 
-#### 利用δ函数的傅里叶展开求解拉普拉斯方程
+#### 利用$\delta$函数的傅里叶展开求解拉普拉斯方程
 
-现在我们开始求解场源为δ函数的拉普拉斯方程的解：
+现在我们开始求解场源为$\delta$函数的拉普拉斯方程的解：
 
 $$
 \nabla^2 \varphi(\mathbf{r}) = \delta^{(3)}(\mathbf{r}-\mathbf{r'})
@@ -559,7 +631,7 @@ $$
 
 ​
 
-> δ函数 [[↩️]](siyuan://blocks/20241124112317-up7j2at)​[Strichartz, R.](https://en.wikipedia.org/wiki/Robert_Strichartz "Robert Strichartz") (1994), *[A Guide to Distribution Theory and Fourier Transforms](https://books.google.com/books?id=T7vEOGGDCh4C)*, CRC Press, [ISBN](https://en.wikipedia.org/wiki/ISBN_(identifier) "ISBN (identifier)") [978-0-8493-8273-4](https://en.wikipedia.org/wiki/Special:BookSources/978-0-8493-8273-4 "Special:BookSources/978-0-8493-8273-4"). Chapter 2.2
+> $\delta$函数 [[↩️]](siyuan://blocks/20241124112317-up7j2at)​[Strichartz, R.](https://en.wikipedia.org/wiki/Robert_Strichartz "Robert Strichartz") (1994), *[A Guide to Distribution Theory and Fourier Transforms](https://books.google.com/books?id=T7vEOGGDCh4C)*, CRC Press, [ISBN](https://en.wikipedia.org/wiki/ISBN_(identifier) "ISBN (identifier)") [978-0-8493-8273-4](https://en.wikipedia.org/wiki/Special:BookSources/978-0-8493-8273-4 "Special:BookSources/978-0-8493-8273-4"). Chapter 2.2
 
 ​
 
@@ -585,7 +657,7 @@ $$
 > 不认为$f\circ \delta(x)$</span></span>﻿</span>有良好的定义 [[↩️]](siyuan://blocks/20241128224546-sce3z1l)NIcholas Wheeler,1987,Simplified production of Dirac Delta Function identities,Reed Colledge Physics Department
 ‍
 
-> 这类函数叫做速降函数，是类似δ函数这类奇异广义函数定义的积分泛函的定义域。 [[↩️]](siyuan://blocks/20241129204112-rzmvfrp)这类积分泛函的更多详细讨论可以参见：程建春，2004，科学出版社，数学物理方程及其近似方法，Ch 3.1
+> 这类函数叫做速降函数，是类似$\delta$函数这类奇异广义函数定义的积分泛函的定义域。 [[↩️]](siyuan://blocks/20241129204112-rzmvfrp)这类积分泛函的更多详细讨论可以参见：程建春，2004，科学出版社，数学物理方程及其近似方法，Ch 3.1
 
 ​
 
@@ -614,3 +686,4 @@ $$
 ​
 
 ‍
+\end{document}
