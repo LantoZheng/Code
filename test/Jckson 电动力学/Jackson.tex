@@ -1,0 +1,170 @@
+\documentclass[lang=cn,10pt,newtx,bibend=biber,device=pad]{elegantbook}
+
+\title{经典电动力学（第三版）}
+
+\setcounter{tocdepth}{3}
+
+\logo{logo-blue.png}
+\cover{cover.jpg}
+
+% 本文档命令
+\usepackage{array}
+\usepackage{ulem}
+\usepackage{amssymb}
+\usepackage{cases}
+\usepackage{booktabs}
+\newcommand{\ccr}[1]{\makecell{{\color{#1}\rule{1cm}{1cm}}}}
+
+\def\bea{\begin{eqnarray}}
+\def\eea{\end{eqnarray}}
+\def\nn{\nonumber}
+
+
+
+\usepackage{tensor}
+\usepackage{physics}
+
+
+
+
+
+
+\newcolumntype{P}[1]{>{\Centering\hspace{0pt}}p{#1}}
+\newcolumntype{Z}{>{\centering\arraybackslash}X} %Z单元格居中
+
+\newcommand{\ds}{{S}}
+\newcommand{\xs}{{s}}
+
+\newcommand{\codename}{\textbf{Coport}}
+
+\newcommand{\br}[1]{\left[#1\right]}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\Mc}[1]{\mathcal{#1}}
+\newcommand{\mJ}{\mathcal{J}}
+\newcommand{\mA}{\mathcal{A}}
+\newcommand{\mR}{\mathcal{R}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\mD}{\mathcal{D}}
+\newcommand{\mX}{\mathcal{X}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\mQ}{\mathcal{Q}}
+\newcommand{\mE}{\mathcal{E}}
+\newcommand{\mY}{\mathcal{Y}}
+\newcommand{\mT}{\mathcal{T}}
+\newcommand{\df}{\mathrm{d}}   %微分符号
+\newcommand{\dif}{\mathrm{d}}   %微分符号
+\newcommand{\qpar}{\quad\par}   
+\newcommand{\deri}[3]{\dfrac{\mathrm{d}^{#1}#2}{\mathrm{d}#3^{#1}}}%莱布尼茨导数记号
+\newcommand{\pderi}[3]{\dfrac{\partial^{#1}#2}{\partial {#3}^{#1}}}%偏导数导数记号
+\newcommand{\lrg}[1]{\langle #1\rangle }
+\newcommand{\pa}[1]{\left(#1\right)}
+\newcommand{\yf}[1]{\textcolor[RGB]{0,0,255}{ #1-yf}}
+\newcommand{\cb}[1]{\textcolor[RGB]{255,0,0}{ #1 }}
+\newcommand{\mg}[1]{\textcolor[RGB]{155,25,0}{ #1-mg}}
+\newcommand{\er}[1]{\textcolor[RGB]{0,225,0}{#1-old}}
+
+
+
+
+% 修改标题页的橙色带
+\definecolor{customcolor}{RGB}{32,178,170}
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect}
+
+\addbibresource[location=local]{reference.bib} % 参考文献，不要删除
+
+\begin{document}
+	
+\maketitle
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{静电学边值问题II}
+\section{球协函数的补充定理}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figure/SphericalAdd.png}
+    \caption{}
+    \label{fig:fig1}
+\end{figure}
+为了计算这个系数，我们注意到，根据公式\ref{eq:3.60}，它可以看作是函数 $\sqrt{4\pi/(2l + 1)} Y_l^m(\theta, \phi)$ 在以式\ref{eq:3.64} 中的参考轴（即带撇号的坐标轴）上的球谐函数 $Y_l^m(\gamma, \beta)$ 展开中 $m{\prime} = 0$ 的系数。由式\ref{eq:3.59} 可以发现，由于只有一个 $l$ 值存在，系数\ref{eq:3.66}表达为：
+\begin{equation}\label{eq:3.67}
+    A_m(\theta',\phi')=\frac{4\pi}{2l+1}\{Y_{lm}^{*}[\theta(\gamma,\beta),\phi(\gamma,\beta)]\}_{\gamma=0}
+\end{equation}
+当 $\gamma \to 0$ 时，角 $(\theta, \phi)$ 作为 $(\gamma, \beta)$ 的函数，将趋近于 $(\theta{\prime}, \phi{\prime})$。由此，附加定理 \ref{eq:3.62} 得证。有时该定理会使用 $\mathrm{P}l^m(\cos \theta)$ 的形式而不是 $Y_l^m$ 的形式来表示。此时，其形式为：
+\begin{equation}\label{eq:3.68}
+P_l(\cos \gamma) = P_l(\cos \theta) P_l(\cos \theta{\prime}) + 2 \sum{m=1}^l \frac{(l - m)!}{(l + m)!} \mathrm{P}_l^m(\cos \theta) \mathrm{P}_l^m(\cos \theta{\prime}) \cos[m(\phi - \phi{\prime})] \tag{3.68}
+\end{equation}
+
+若角度 $\gamma$ 趋于零，也可以推导出球协函数平方的“求和规则”：
+\begin{equation}\label{eq:3.69}
+    \sum_{m=-l}^l |Y_l^m(\theta, \phi)|^2 = \frac{2l + 1}{4\pi} \tag{3.69}    
+\end{equation}
+
+附加定理还可以用于将位于 $\mathbf{x}{\prime}$ 的单位电荷在 $\mathbf{x}$ 处产生的势的展开式\ref{eq:3.38}以最简洁的形式写出。
+
+将式\ref{eq:3.62} 代入 $P_l(\cos \gamma)$，得到：
+\begin{equation}\label{eq:3.70}
+\frac{1}{|\mathbf{x} - \mathbf{x}{\prime}|} = 4\pi \sum_{l=0}^\infty \sum_{m=-l}^l \frac{1}{2l + 1} \left(\frac{r_<^l}{r_>^{l+1}}\right) Y_l^{m*}(\theta{\prime}, \phi{\prime}) Y_l^m(\theta, \phi) \tag{3.70}
+\end{equation}
+
+式 \ref{eq:3.70} 给出了坐标 $\mathbf{x}$ 和 $\mathbf{x}{\prime}$ 中因式分解的势形式。这对于涉及电荷密度积分的情况非常有用，其中一个变量是积分变量，另一个是观测点的坐标。然而，这样做的代价是用双重求和代替了单次求和。
+\section{柱坐标系下的拉普拉斯方程；贝塞尔方程}
+如图\ref{fig:cylin_coor}所示，在柱坐标系$(\rho,\phi,z)$下，拉普拉斯方程为如下的形式：
+\begin{equation}\label{eq:3.71}
+    \pderi{2}{\Phi}{\rho} + \frac{1}{\rho} \pderi{}{\Phi}{\rho} + \frac{1}{\rho^2} \pderi{2}{\Phi}{\phi} + \pderi{2}{\Phi}{z} = 0 
+\end{equation}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figure/clyin_coor.png}
+    \caption{}
+    \label{fig:cylin_coor}
+\end{figure}
+
+变量分离由如下的变换给出：
+\begin{equation}\label{eq:3.72}
+    \Phi(\rho,\phi,z) = R(\rho) Q(\phi) Z(z)
+\end{equation}
+一般情况下，这将把上面的偏微分方程化为三个常微分方程：
+\begin{equation}\label{eq:3.73}
+    \begin{aligned}
+        \deri{2}{Z}{z}-k^2Z &= 0 \\
+        \deri{2}{Q}{\phi}+\nu^2Q &= 0 \\
+        \deri{2}{R}{\rho}+\frac{1}{\rho}\deri{R}{\rho}+\left(k^2-\frac{\nu^2}{\rho^2}\right)R &= 0
+    \end{aligned}
+\end{equation}
+前两个常微分方程的解是基本的：
+\begin{equation}\label{eq:3.74}
+    \begin{aligned}
+        Z(z)&=\ee^{\pm ikz} \\
+        Q(\phi)&=\ee^{\pm i\nu\phi}
+    \end{aligned}
+\end{equation}
+为了使势函数在整个方位角范围内是单值的，$\nu$ 必须是一个整数。但如果在 $z$ 方向没有任何边界条件的限制，参数 $k$ 是任意的。目前，我们假设 k 是实数且为正值。
+
+径向的方程可以在变换$x=k\rho$下变为标准形式：
+\begin{equation}\label{eq:3.75}
+    \deri{2}{R}{x}+\frac{1}{x}\deri{R}{x}+\left(1-\frac{\nu^2}{x^2}\right)R=0
+\end{equation}
+这是贝塞尔方程的标准形式,该方程的解被称为$\nu$阶的贝塞尔函数。
+假设解的形式为幂级数展开的形式：
+\begin{equation}\label{eq:3.76}
+    R(x)=x^\alpha\sum_{j=0}^{\infty}a_jx^J
+\end{equation}
+可以发现：
+\begin{equation}\label{eq:3.77}
+    \alpha = \pm \nu
+\end{equation}
+且对所有$j=1,2,3,\cdots$有：
+\begin{equation}\label{eq:3.78}
+    a_{2j}=-\frac{1}{4j(j+\alpha)}a_{2j-2}
+\end{equation}
+所有奇次项的系数都为零。这样，我们就可以通过递推法给出所有的系数：
+\begin{equation}
+    a_{2j}=\frac{(-1)^j\Gamma(\alpha+1)}{2^{2j}j!\Gamma(j+\alpha+1)}a_0
+\end{equation}
+\end{document}
+
