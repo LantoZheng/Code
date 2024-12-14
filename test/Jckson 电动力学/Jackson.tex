@@ -129,13 +129,13 @@ P_l(\cos \gamma) = P_l(\cos \theta) P_l(\cos \theta{\prime}) + 2 \sum{m=1}^l \fr
     \Phi(\rho,\phi,z) = R(\rho) Q(\phi) Z(z)
 \end{equation}
 一般情况下，这将把上面的偏微分方程化为三个常微分方程：
-\begin{equation}\label{eq:3.73}
-    \begin{aligned}
+
+    \begin{align}
         \deri{2}{Z}{z}-k^2Z &= 0 \\
         \deri{2}{Q}{\phi}+\nu^2Q &= 0 \\
         \deri{2}{R}{\rho}+\frac{1}{\rho}\deri{R}{\rho}+\left(k^2-\frac{\nu^2}{\rho^2}\right)R &= 0
-    \end{aligned}
-\end{equation}
+    \end{align}
+
 前两个常微分方程的解是基本的：
 \begin{equation}\label{eq:3.74}
     \begin{aligned}
@@ -166,5 +166,83 @@ P_l(\cos \gamma) = P_l(\cos \theta) P_l(\cos \theta{\prime}) + 2 \sum{m=1}^l \fr
 \begin{equation}
     a_{2j}=\frac{(-1)^j\Gamma(\alpha+1)}{2^{2j}j!\Gamma(j+\alpha+1)}a_0
 \end{equation}
+传统上，我们取常数$a_0 = [2^\alpha \Gamma(\alpha+1)]^{-1}$,这样两个解就可以写成：
+
+\begin{align}
+    J_\nu (x) &= (\frac{x}{2})^\nu \sum_{j=0}^{\infty}\frac{(-1)^j}{j!\Gamma(j+\nu+1)}(\frac{x}{2})^{2j} \label{eq:3.82}\\
+    J_{-\nu}(x) &= (\frac{x}{2})^{-\nu}\sum_{j=0}^{\infty}\frac{(-1)^j}{j!\Gamma(j-\nu+1)}(\frac{x}{2})^{2j}√\label{eq:3.83}
+\end{align}
+
+这两个解被称为$\pm\nu$阶的第一类贝塞尔函数。这个函数级数在任意的$x$都是收敛的。当$\nu$非整数时，这两个解$J_{\pm\nu}(x)$构成一组与二阶贝塞尔函数线性无关的解。然而，当$\nu$为整数时，非常显然这些解是线性相关的。
+事实上,对于$\nu=m$（$m$为整数）从级数的表达式可以看出：
+\begin{equation}\label{eq:3.84}
+    J_{-m}(x) = (-1)^m J_m(x)
+\end{equation}
+因此，当$\nu$为整数时，需要寻找另一个线性无关的解。即使$\nu$不是整数，通常也会用$J_\nu(x)$ 和 $N_\nu(x)$ 来替换 $J_{\pm\nu}(x)$，其中 $N_\nu(x)$ 是纽曼函数（或第二类贝塞尔函数）：
+\begin{equation}\label{eq:3.85}
+    N_\nu(x) = \frac{J_\nu(x)\cos \nu\pi - J_{-\nu}(x)}{\sin \nu\pi}
+\end{equation}
+对于非整数的$\nu$，$N_\nu(x)$ 显然与 $J_\nu(x)$ 线性无关。在极限$\nu \to integer$时，可以证明 $N_\nu(x)$ 仍然与 $J_\nu(x)$ 线性无关。正如预期的那样，它与$\log{x}$有关。其级数表示在参考书中给出。
+
+第三类贝塞尔函数，也成为汉克尔函数，是第一类贝塞尔函数$J_\nu(x)$和第二类贝塞尔函数$N_\nu(x)$的线性组合：
+\begin{equation}\label{eq:3.86}
+    \begin{cases}
+        H_\nu^{(1)}(x) &= J_\nu(x) + iN_\nu(x) \\
+        H_\nu^{(2)}(x) &= J_\nu(x) - iN_\nu(x)
+    \end{cases}
+\end{equation}
+和 $J_\nu(x)$ 和 $N_\nu(x)$ 一样,汉克尔函数构成了贝塞尔方程的一组基本解。
+
+函数 $J_\nu$、$N_\nu$、$H_\nu$，均满足递推公式:
+\begin{align}\label{eq:3.88}
+    \Omega_{\nu-1}(x) + \Omega_{\nu+1}(x) &= \frac{2\nu}{x} \Omega_{\nu}(x) \\
+    \Omega_{\nu-1}(x) - \Omega_{\nu+1}(x) &= 2 \frac{d\Omega_{\nu}(x)}{dx}
+\end{align}
+其中 $\Omega_\nu(x)$ 是任意一个阶数为$\nu$的柱函数。这可以直接从级数表示\ref{eq:3.82}中验证。
+
+为了方便参考，这里给出了各种贝塞尔函数在其参数取小量和较大值时的极限形式。为简便起见，我们仅展示领头阶项：
+\begin{equation}
+    \begin{aligned}
+    x \ll 1 \quad J_\nu(x) &\to \frac{1}{\Gamma(\nu + 1)} \left( \frac{x}{2} \right)^\nu \\
+    N_\nu(x) &\to
+\begin{cases}
+\frac{2}{\pi} \left[ \ln \left( \frac{x}{2} \right) + 0.5772 \cdots \right], & \nu = 0, \\
+-\frac{\Gamma(\nu)}{\pi} \left( \frac{2}{x} \right)^\nu, & \nu \neq 0.
+\end{cases}
+\end{aligned}
+\end{equation}
+当$\nu$为非负实数。
+\begin{equation}\label{eq:3.91}
+    \begin{aligned}
+    x \gg 1,\nu \quad J_\nu(x) &\to \sqrt{\frac{2}{\pi x}} \cos \left( x - \frac{\nu\pi}{2} - \frac{\pi}{4} \right)\\
+    N_\nu(x) &\to \sqrt{\frac{2}{\pi x}} \cos \left( x - \frac{\nu\pi}{2} - \frac{\pi}{4} \right)
+    \end{aligned}
+\end{equation}
+从$x$小量形式到$x$为较大量的渐近形式的过渡发生在$x \sim  \nu$的区域。
+
+从渐近形式\ref{eq:3.91}可以清楚地看出，每个贝塞尔函数都有无限多个根。我们将主要关注$ J_\nu(x) $的根：
+\begin{equation}\label{eq:3.92}
+    J_\nu(x_{\nu,n}) = 0 \quad n = 1,2,3,\cdots
+\end{equation}
+$x_{\nu,n}$是$J_\nu(x)$的第 n 个根。对于前几个$\nu$取整数时，这里分别给出他们前几个根：
+\[
+\begin{aligned}
+\nu = 0, \quad & x_{0n} = 2.405, \, 5.520, \, 8.654, \, \dots \\
+\nu = 1, \quad & x_{1n} = 3.832, \, 7.016, \, 10.173, \, \dots \\
+\nu = 2, \quad & x_{2n} = 5.136, \, 8.417, \, 11.620, \, \dots
+\end{aligned}
+\]
+对于更高阶的根，它们的近似形式为:
+\[
+    x_{\nu,n} \approx \left( n + \frac{\nu}{2} - \frac{1}{4} \right) \pi
+\]
+该近似式提供了足够的精度（至少三位数字）。根的表格见于Jahnke,Emde and Losch（p.194）以及Abramowitz and Stegun（p.409）。
+
+找到拉普拉斯方程径向部分的解并用贝塞尔函数表示后，我们可以进一步探讨贝塞尔函数在何种意义上构成一个正交且完备的函数集。
+在这里，我们仅考虑第一类贝塞尔函数，并证明当$\nu > 0$固定且$n = 1,2,3,\dots$时，函数$\sqrt{\rho}J_\nu(x_{\nu,n}\rho/a)$在区间$0<\rho<a$上构成一个正交集。先从$J_\nu(x_{\nu,n}\frac{\rho}{a})$满足的微分方程开始:
+\begin{equation}
+    \frac{1}{\rho} \frac{d}{d\rho} \left[ \rho \frac{dJ_\nu\left( x_{\nu n} \frac{\rho}{a} \right)}{d\rho} \right] + \left( \frac{x_{\nu n}^2}{a^2} - \frac{\nu^2}{\rho^2} \right) J_\nu\left( x_{\nu n} \frac{\rho}{a} \right) = 0
+\end{equation}
+
 \end{document}
 
