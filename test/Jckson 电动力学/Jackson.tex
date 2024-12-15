@@ -243,6 +243,79 @@ $x_{\nu,n}$是$J_\nu(x)$的第 n 个根。对于前几个$\nu$取整数时，这
 \begin{equation}
     \frac{1}{\rho} \frac{d}{d\rho} \left[ \rho \frac{dJ_\nu\left( x_{\nu n} \frac{\rho}{a} \right)}{d\rho} \right] + \left( \frac{x_{\nu n}^2}{a^2} - \frac{\nu^2}{\rho^2} \right) J_\nu\left( x_{\nu n} \frac{\rho}{a} \right) = 0
 \end{equation}
+如果我们将该微分方程乘上$\rho J_\nu(x_{\nu n'}\rho/a)$并从 0 积分到 $a$，我们可以得到：
+\[
+\int_0^a J_\nu\left(x_{\nu n'} \frac{\rho}{a}\right) \frac{d}{d\rho} 
+\left[
+\frac{dJ_\nu\left(x_{\nu n} \frac{\rho}{a}\right)}{\rho \, d\rho}
+\right] d\rho
++ \int_0^a \left( \frac{x_{\nu n}^2}{a^2} - \frac{\nu^2}{\rho^2} \right) \rho J_\nu\left(x_{\nu n'} \frac{\rho}{a}\right) J_\nu\left(x_{\nu n} \frac{\rho}{a}\right) d\rho = 0
+\]
+使用分部积分法，并应用$(\rho J_\nu J'_\nu)$在$\rho = 0$和$a$处为0，得到以下的结果：
+\[
+- \int_0^a \rho \frac{dJ_\nu\left(x_{\nu n'} \frac{\rho}{a}\right)}{d\rho}
+\frac{dJ_\nu\left(x_{\nu n} \frac{\rho}{a}\right)}{d\rho} \, d\rho
++ \int_0^a \left( \frac{x_{\nu n}^2}{a^2} - \frac{\nu^2}{\rho^2} \right)
+\rho J_\nu\left(x_{\nu n'} \frac{\rho}{a}\right) J_\nu\left(x_{\nu n} \frac{\rho}{a}\right) \, d\rho = 0
+\]
+交换$n$和$n'$的标记，并与上式相加减，我们就得到正交性条件：
+\begin{equation}\label{eq:3.94}
+    (x_{\nu n}^2 - x_{\nu n'}^2)\int_0^a \rho J_\nu(x_{\nu n'},\frac{\rho}{a})J_\nu(x_{\nu n},\frac{\rho}{a})\ d\rho = 0
+\end{equation}
+巧妙地使用微分方程以及递归公式\ref{eq:3.88} 可以得到归一化积分：
+\begin{equation}\label{eq:3.95}
+    \int_0^a \rho J_\nu(x_{\nu n'},\frac{\rho}{a})J_\nu(x_{\nu n},\frac{\rho}{a})\ d\rho = \frac{a^2}{2} \left[ J_{\nu+1}(x_{\nu n}) \right]^2 \delta_{nn'}
+\end{equation}
+假设贝塞尔函数的集合是完备的，我们可以在区间$0<\rho<a$上将任意关于$\rho$函数展开为傅里叶-贝塞尔级数：
+\begin{equation}\label{eq:3.96}
+    f(\rho) = \sum_{n=1}^{\infty} A_{\nu n}  J_\nu(x_{\nu n}\frac{\rho}{a})
+\end{equation}
+其中系数$A_{\nu n}$由下式给出：
+\begin{equation}\label{eq:3.97}
+    A_{\nu n} = \frac{2}{a^2 J_{\nu+1}^2(x_{\nu n})} \int_0^a \rho f(\rho) J_\nu(x_{\nu n}\frac{\rho}{a})\ d\rho
+\end{equation}
+我们对\ref{eq:3.96}的推导涉及了限制条件$\nu > 0$。实际上，可以证明它对所有$\nu \geq  -1$都成立。
 
+展开式\ref{eq:3.96}和\ref{eq:3.97}是常规的傅里叶-贝塞尔级数，特别适用于在$\rho =a$时为 0 的函数（例如，圆柱体上的齐次狄利克雷边界条件；见下节）。
+但需要注意的是，也可以用函数系$\sqrt{\rho}J_\nu y_{\nu n}\rho /a$进行展开，其中 $y_{\nu n}$ 是方程 $[dJ_\nu(x)]/dx = 0$ 的第 n 个根。原因在于，在证明这些函数的正交性时，只需满足量 $[\rho J_\nu(k\rho)(d/d\rho)J_\nu(k\rho)-\rho J_\nu(k'\rho)(d/d\rho)J_\nu(k\rho)]$ 在端点 $\rho = 0$ 和 $\rho = a$ 时为 0。
+这个要求可以通过$\lambda = x_{\nu n}/a$或 $\lambda = y_{\nu n}/a$ 来满足，其中 $J_\nu(x_{\nu n}) = 0;J'_\nu (y_{\nu n})=0$。更一般地，通过在端点处满足 $\rho(d/d\rho)J_\nu(k\rho) + \lambda J_\nu(k\rho) = 0$，其中 $\lambda$ 是一个与 $k$ 无关的常数。以 $\sqrt{\rho}J_\nu (y_{\nu n}\rho/a)$ 为基础的展开对于在 $\rho = a$ 时斜率为零的函数尤其有用。（见问题 3.11。）
+
+傅里叶-贝塞尔级数只是涉及贝塞尔函数的一种展开形式。其他的形式包括：
+
+纽曼级数：$\sum_{n=0}^\infty a_n J_{\nu + n}(z)$
+
+Kepteyn级数：$\sum_{n=0}^\infty a_n J_{\nu +n}((\nu + n)z)$
+
+Schl\"{o}milch级数：$\sum_{n=0}^\infty a_n J_{\nu}(nx)$
+
+读者可以参考Watson（第十六至十九章）以获取关于这些级数性质的详细讨论。Kapteyn 级数出现在行星开普勒运动和快速移动电荷辐射的讨论中（见问题 14.14 和 14.15）。
+
+在结束贝塞尔函数性质的讨论前，我们注意到，如果在拉普拉斯方程的分离变量过程中，将\ref{eq:3.74}中的分离常数 $k^2$ 取为 $-k^2$，那么 $Z(z)$ 将会是 $\sin(kz)$ 或 $\cos (kz)$，而 $R(\rho)$ 的方程将会是：
+\begin{equation}
+    \deri{2}{R}{\rho}+\frac{1}{\rho}\deri{}{R}{\rho}-\left(k^2+\frac{\nu^2}{\rho^2}\right)R=0
+\end{equation}\label{eq:3.98}
+在代换$k\rho = x$下：
+\begin{equation}\label{eq:3.99}
+    \deri{2}{R}{x}+\frac{1}{x}\deri{}{R}{x}-\left(1+\frac{\nu^2}{x^2}\right)R=0
+\end{equation}
+这个方程的解称为修正贝塞尔函数。显然，它们只是纯虚数参数的贝塞尔函数。通常选择该方程的两个线性独立解：$I_\nu(x)$ 和 $K_\nu(x)$ 表示。它们的定义为:
+\begin{equation}\label{eq:3.100}
+    \begin{aligned}
+    I_\nu(x) &= i^{-\nu} J_\nu(ix) \\
+    K_\nu(x) &= \frac{\pi}{2} i^{\nu+1} H_\nu^{(1)}(ix)
+    \end{aligned}
+\end{equation}
+它们对于实数$x$和$\nu$是实函数。假设 $\nu \geq 0$，它们在$x$ 为小量和极大的极限形式为：
+\begin{align}
+    x &\ll 1 \\
+    I_\nu(x) &\to \frac{1}{\Gamma(\nu + 1)}\left(\frac{x}{2}\right)^\nu \left[-\ln\left(\frac{x}{2}\right) + 0.5772 \dots\right] \\
+    K_\nu(x) &\to \left\{\begin{array}{ll}
+    \frac{1}{\Gamma(\nu)}\left(\frac{2}{x}\right)^\nu & \text{if } \nu = 0 \\
+    \frac{1}{\Gamma(\nu)}\left(\frac{2}{x}\right)^\nu & \text{if } \nu \neq 0
+    \end{array}\right. \\
+    x &\gg 1, \nu \\
+    I_\nu(x) &\to \frac{1}{\sqrt{2\pi x}}\mathrm{e}^{x}\left[1 + \mathcal{O}\left(\frac{1}{x}\right)\right] \\
+    K_\nu(x) &\to \sqrt{\frac{\pi}{2x}}\mathrm{e}^{-x}\left[1 + \mathcal{O}\left(\frac{1}{x}\right)\right]
+\end{align}
 \end{document}
 
