@@ -13,6 +13,7 @@
 \usepackage{amssymb}
 \usepackage{cases}
 \usepackage{booktabs}
+
 \newcommand{\ccr}[1]{\makecell{{\color{#1}\rule{1cm}{1cm}}}}
 
 \def\bea{\begin{eqnarray}}
@@ -20,9 +21,10 @@
 \def\nn{\nonumber}
 
 
-
+\usepackage{amsmath}
 \usepackage{tensor}
 \usepackage{physics}
+\usepackage{extarrows}
 
 
 
@@ -125,8 +127,8 @@ $\delta$函数作为一种新的函数形式，它与我们之前见到的函数
 
 \begin{equation}
 \begin{cases}
-\lim_{i\rightarrow\infty}f_i(x)=0;x\neq0\\
-\lim_{i\rightarrow\infty}\int_{\mathbb{R}}f_i(x)dx = Q
+    \lim\limits_{i\rightarrow\infty}f_i(x)=0;x\neq0\\
+\lim\limits_{i\rightarrow\infty}\int_{\mathbb{R}}f_i(x)dx = Q
 \end{cases}
 \end{equation}
 
@@ -135,8 +137,8 @@ $\delta$函数作为一种新的函数形式，它与我们之前见到的函数
 ${f_i(x)}$为$\mathbb{R}$上黎曼可积函数列，满足：
 \begin{equation}
     \begin{cases}
-        \lim_{i\rightarrow\infty}f_i(x)=0;x\neq0\\
-        \lim_{i\rightarrow\infty}\int_{\mathbb{R}}f_i(x)dx = 1
+        \lim\limits_{i\rightarrow\infty}f_i(x)=0;x\neq0\\
+        \lim\limits_{i\rightarrow\infty}\int_{\mathbb{R}}f_i(x)dx = 1
     \end{cases}
 \end{equation}
 称所有这样的函数列${f_i(x)}$的极限为：$\delta(x)$
@@ -177,8 +179,12 @@ $\delta$函数具有许多重要的性质，这些性质使得它在物理学和
 对于非零标量$\alpha$,$\delta$函数满足以下缩放特性：
 \begin{property}
 \begin{equation}
-    \int_{-\infty}^{\infty}\delta(\alpha x)dx \overset{let \ u=\alpha x}{=} \int_{-\infty}^{\infty}\delta(u)\frac{du}{|\alpha|} = \frac{1}{|\alpha|}    
+    \int_{-\infty}^{\infty} \delta(\alpha x) \, dx 
+    \xlongequal{let\ u = \alpha x}
+    \int_{-\infty}^{\infty} \delta(u) \frac{du}{|\alpha|} 
+    = \frac{1}{|\alpha|}
 \end{equation}
+%注意加入\usepackage{extarrows}才能使用\xlongequal
 
 也即：
 
@@ -512,11 +518,11 @@ f\circ \delta(x) \overset{def}{=} \lim_{n\rightarrow\infty} f\circ g_n(x_0)
 \begin{enumerate}
     \item 光滑函数正则化方法
 
-    既然在$x_i$附近直接使用 $\delta$函数的性质无法得到良好的积分结果，我们不妨直接给定一个 $\delta$函数的趋近方法，比如说：给定函数$\rho_\epsilon(x) = \exp(-\epsilon|x|)$，然后直接对给定的积分区域$\Omega \owns x_i$，计算：$\lim_{\epsilon\rightarrow \infty} \int_{\Omega} \rho_\epsilon(f(x)) dx$。这样我们往往有可能得到一个合理的值。当然，在物理学的计算中计算结果往往对$\rho_\epsilon$ 的选取不敏感。\footnote{Nyeo, Su-Long. "Regularization methods for delta-function potential in two-dimensional quantum mechanics." American Journal of Physics 68.6 (2000): 571-575.}
+    既然在$x_i$附近直接使用 $\delta$函数的性质无法得到良好的积分结果，我们不妨直接给定一个 $\delta$函数的趋近方法，比如说：给定函数$\rho_\epsilon(x) = \exp(-\epsilon|x|)$，然后直接对给定的积分区域$\Omega \owns x_i$，计算：$\lim\limits_{\epsilon\rightarrow \infty} \int_{\Omega} \rho_\epsilon(f(x)) dx$。这样我们往往有可能得到一个合理的值。当然，在物理学的计算中计算结果往往对$\rho_\epsilon$ 的选取不敏感。\footnote{Nyeo, Su-Long. "Regularization methods for delta-function potential in two-dimensional quantum mechanics." American Journal of Physics 68.6 (2000): 571-575.}
     \item 维数正则化
 
     \begin{enumerate}
-        \item 将问题推广到$d$维空间。$x_0$ 是$f(x) = 0$的一个重根，因此在$x_0$ 附近泰勒展开的领头阶$f(x) \approx  A(x-x_0)^n$ ，零点附近的积分可表示为：$\int \delta(f(x)) dx \sim \int \delta(u) |J| du$其中  $u = f(x)$ ，而  $J$  是雅可比行列式， $J = |df/du|$ 。在  $f{\prime}(x_0) = 0$  时，积分在  $d=1$  维下发散，但在  $d \to d-\epsilon$  维中可以重新定义。
+        \item 将问题推广到$d$维空间。$x_0$ 是$f(x) = 0$的一个重根，因此在$x_0$ 附近泰勒展开的领头阶$f(x) \approx  A(x-x_0)^n$ ，零点附近的积分可表示为：$\int \delta(f(x)) dx \sim \int \delta(u) |J| du$其中  $u = f(x)$ ，而  $J$  是雅可比行列式， $J = |df/du|$ 。在  $f'(x_0) = 0$  时，积分在  $d=1$  维下发散，但在  $d \to d-\epsilon$  维中可以重新定义。
         \item 在非整数维数下，使用高斯积分和 Gamma 函数近似：$\int \delta(f(x)) dx \to \int \delta(u) |u|^{-\epsilon} du$。通过 Gamma 函数的解析延拓，将发散部分隔离。例如：$\Gamma(-\epsilon) = \frac{1}{\epsilon} + \text{有限项}$。
         \item 将发散部分作为“正则化常数”吸收到物理量的重整化过程中，得到一个有限值。最终结果依赖于：$\int \delta(f(x)) dx = \frac{1}{|f^{(n)}(x_0)|} \cdot \text{校正因子}$,
 
