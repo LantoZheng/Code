@@ -1,5 +1,8 @@
 \documentclass[lang=cn,10pt,newtx,bibend=biber,device=pad]{elegantbook}
-
+\setcounter{chapter}{2}% 让章节从第3章开始编号
+\setcounter{section}{6}% 将小节从3.9开始
+\setcounter{figure}{9} % 设置图号为当前章节的第 9 幅
+\setcounter{equation}{66}
 \title{经典电动力学（第三版）}
 
 \setcounter{tocdepth}{3}
@@ -96,19 +99,19 @@
 \end{equation}
 当 $\gamma \to 0$ 时，角 $(\theta, \phi)$ 作为 $(\gamma, \beta)$ 的函数，将趋近于 $(\theta{\prime}, \phi{\prime})$。由此，附加定理 \ref{eq:3.62} 得证。有时该定理会使用 $\mathrm{P}l^m(\cos \theta)$ 的形式而不是 $Y_l^m$ 的形式来表示。此时，其形式为：
 \begin{equation}\label{eq:3.68}
-P_l(\cos \gamma) = P_l(\cos \theta) P_l(\cos \theta{\prime}) + 2 \sum{m=1}^l \frac{(l - m)!}{(l + m)!} \mathrm{P}_l^m(\cos \theta) \mathrm{P}_l^m(\cos \theta{\prime}) \cos[m(\phi - \phi{\prime})] \tag{3.68}
+P_l(\cos \gamma) = P_l(\cos \theta) P_l(\cos \theta{\prime}) + 2 \sum{m=1}^l \frac{(l - m)!}{(l + m)!} \mathrm{P}_l^m(\cos \theta) \mathrm{P}_l^m(\cos \theta{\prime}) \cos[m(\phi - \phi{\prime})] 
 \end{equation}
 
 若角度 $\gamma$ 趋于零，也可以推导出球协函数平方的“求和规则”：
 \begin{equation}\label{eq:3.69}
-    \sum_{m=-l}^l |Y_l^m(\theta, \phi)|^2 = \frac{2l + 1}{4\pi} \tag{3.69}    
+    \sum_{m=-l}^l |Y_l^m(\theta, \phi)|^2 = \frac{2l + 1}{4\pi}     
 \end{equation}
 
 附加定理还可以用于将位于 $\mathbf{x}{\prime}$ 的单位电荷在 $\mathbf{x}$ 处产生的势的展开式\ref{eq:3.38}以最简洁的形式写出。
 
 将式\ref{eq:3.62} 代入 $P_l(\cos \gamma)$，得到：
 \begin{equation}\label{eq:3.70}
-\frac{1}{|\mathbf{x} - \mathbf{x}{\prime}|} = 4\pi \sum_{l=0}^\infty \sum_{m=-l}^l \frac{1}{2l + 1} \left(\frac{r_<^l}{r_>^{l+1}}\right) Y_l^{m*}(\theta{\prime}, \phi{\prime}) Y_l^m(\theta, \phi) \tag{3.70}
+\frac{1}{|\mathbf{x} - \mathbf{x}{\prime}|} = 4\pi \sum_{l=0}^\infty \sum_{m=-l}^l \frac{1}{2l + 1} \left(\frac{r_<^l}{r_>^{l+1}}\right) Y_l^{m*}(\theta{\prime}, \phi{\prime}) Y_l^m(\theta, \phi) 
 \end{equation}
 
 式 \ref{eq:3.70} 给出了坐标 $\mathbf{x}$ 和 $\mathbf{x}{\prime}$ 中因式分解的势形式。这对于涉及电荷密度积分的情况非常有用，其中一个变量是积分变量，另一个是观测点的坐标。然而，这样做的代价是用双重求和代替了单次求和。
@@ -317,5 +320,6 @@ Schl\"{o}milch级数：$\sum_{n=0}^\infty a_n J_{\nu}(nx)$
     I_\nu(x) &\to \frac{1}{\sqrt{2\pi x}}\mathrm{e}^{x}\left[1 + \mathcal{O}\left(\frac{1}{x}\right)\right] \\
     K_\nu(x) &\to \sqrt{\frac{\pi}{2x}}\mathrm{e}^{-x}\left[1 + \mathcal{O}\left(\frac{1}{x}\right)\right]
 \end{align}
+
 \end{document}
 
