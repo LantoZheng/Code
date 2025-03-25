@@ -1,6 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[UTF8]{ctex}
-\usepackage[backend=bibtex]{biblatex}
+\usepackage[backend=biber]{biblatex}
 \usepackage{amsmath,amsthm,amssymb,graphicx,multirow,float,caption}
 \usepackage{geometry}
 \geometry{left=2.54cm, right=2.54cm, top=3.18cm, bottom=3.18cm}
@@ -14,7 +14,7 @@
 \usepackage{rotating}
 
 \usepackage{titlesec}
-
+\addbibresource{reference.bib} 
 \newcommand{\be}[1]{
     \begin{equation}
         #1
@@ -59,20 +59,22 @@ $d = 2.2645\mathrm{mm} $相对偏差相对误差$ \alpha = 1.12\%$,
 \end{abstract}
 
 \section{引言}
-1995 年, Y.Shih 等人利用自发参量下转换产生的纠缠光子对实现了鬼成像。将纠缠的两个光子分别送
+1995 年, Y.Shih 等人利用自发参量下转换产生的纠缠光子对实现了鬼成像\cite{shih1995quantum}。将纠缠的两个光子分别送
 到两个分别被称为取样臂和参考臂的光学线性传输系统中。光在取样臂中照亮一个待成像的物体, 产生的
 物光由一个桶探测器进行探测, 并在参考臂的探测平面上探测空间各点的光强, 通过合理安排这两个光学
 系统, 并在它们的输出平面进行符合测量, 就可以得到物体的像, 这种成像技术被称为鬼成像, 也被称为纠
 缠光的符合成像或关联成像。
 
-2002 年, Bennink 等人利用转动的激光模拟热光, 实现了关联成像。随着研究的深入, 人们逐渐认识到
+2002 年, Bennink 等人利用转动的激光模拟热光, 实现了关联成像\cite{bennink2002two}
+。随着研究的深入, 人们逐渐认识到
 利用经典热光源可以模拟量子纠缠光的部分性质, 实现关联成像。北京师范大学物理系汪凯戈小组从理论
 上证明, 经典热光源发出的光束在远场和近场中都存在空间关联, 满足关联成像的要求, 他们还预言用经
 典热光源和量子纠缠源来做关联成像会得到相似的结果, 而且从理论上推导出了经典热光关联成像所满
-足的成像公式, 为热光关联成像实验的实现做了充分的理论铺垫。
+足的成像公式, 为热光关联成像实验的实现做了充分的理论铺垫\cite{wang2004far,wang2005near}
+。
 
 本实验主要目的是了解热光关联成像的原理, 并且采用激光器和毛玻璃模拟单色多模热光, 研究测量
-热光的关联时间并验证热光关联成像公式。
+热光的关联时间并验证热光关联成像公式\cite{gatti2008ghost,scarcelli2006can}。
 
 
 \section{原理}
@@ -81,14 +83,14 @@ $d = 2.2645\mathrm{mm} $相对偏差相对误差$ \alpha = 1.12\%$,
 \be{E(\vec{r}, t)=\sum_{k} E_{k} \exp \left[i\left(\vec{k} \cdot \vec{r}-\omega_{k} t\right)\right]}
 其中 $\vec k$ 为模的波矢,$\omega_k$ 为对应的频率。
 
-定义两个时空点光场分布 $E(\vec{r_1}, t_1)$ 和 $E(\vec{r_2}, t_2)$ 的一阶相关函数 $G^{(1)}(\vec{r_1},\vec{r_2}, \tau)$ 和相应的归一化函数
+定义两个时空点光场分布 $E(\vec{r_1}, t_1)$ 和 $E(\vec{r_2}, t_2)$ 的一阶相关函数 $G^{(1)}(\vec{r_1},\vec{r_2}, \tau)$ 和相应的归一化函数\cite{mandel1995optical}
 $g^{(1)}(\vec{r_1},\vec{r_2}, \tau)$ 为 (记 $\tau = t_2 − t_1$):
 \be{G^{(1)}\left(\overrightarrow{r_{1}}, \overrightarrow{r_{2}}, \tau\right)=\left\langle E^{*}\left(\overrightarrow{r_{1}}, t\right) E\left(\overrightarrow{r_{2}}, t+\tau\right)\right\rangle}
 \be{g^{(1)}\left(\overrightarrow{r_{1}}, \overrightarrow{r_{2}}, \tau\right)=\frac{\left\langle E^{*}\left(\overrightarrow{r_{1}}, t\right) E\left(\overrightarrow{r_{2}}, t+\tau\right)\right\rangle}{\sqrt{\left\langle\left|E\left(\overrightarrow{r_{1}}\right)\right|^{2}\right\rangle\left\langle\left|E\left(\overrightarrow{r_{2}}\right)\right|^{2}\right\rangle}}}
 定义光场的二阶相关函数$ G^{(2)} $和相应的归一化函数$ g(2) $为:
 \be{G^{(2)}\left(\overrightarrow{r_{1}}, \overrightarrow{r_{2}}, \tau\right)=\left\langle E^{*}\left(\overrightarrow{r_{1}}, t_{1}\right) E\left(\overrightarrow{r_{1}}, t_{1}\right) E^{*}\left(\overrightarrow{r_{2}}, t_{2}\right) E\left(\overrightarrow{r_{2}}, t_{2}\right)\right\rangle}
 \be{g^{(2)}\left(\overrightarrow{r_{1}}, \overrightarrow{r_{2}}, \tau\right)=\frac{G^{(2)}\left(\overrightarrow{r_{1}}, \overrightarrow{r_{2}}, \tau\right)}{\left\langle\left|E\left(\overrightarrow{r_{1}}, t_{1}\right)\right|^{2}\right\rangle\left\langle\left|E\left(\overrightarrow{r_{2}}, t_{2}\right)\right|^{2}\right\rangle}}
-定义 $g^{(2)}$ 取值下降到最大值的 10\% 对应的延迟时间为光源的关联时间 $\tau_0$, 即:
+定义 $g^{(2)}$ 取值下降到最大值的 10\% 对应的延迟时间为光源的关联时间 $\tau_0$\cite{loudon2000quantum}, 即:
 \be{g^{(2)}\left(\tau_{0}\right)=1+0.1\left(g_{\max }^{(2)}-1\right)}
 下面公式涉及的物理量定义如下:
 \begin{itemize}
@@ -108,7 +110,8 @@ $g^{(1)}(\vec{r_1},\vec{r_2}, \tau)$ 为 (记 $\tau = t_2 − t_1$):
 \be{f\left(x_{1}, x_{2}\right) \propto \sqrt{\frac{\left|z_{2}-z_{1}\right|}{z_{3}}} \exp (i \phi) T\left(x_{2}\right) \delta\left(x_{1}-x_{2} \frac{z_{2}-z_{1}}{z_{3}}\right)}
 其中 $\phi$ 为相位项,$T(x_2) $为透明物体的分布函数。
 \be{\phi=\arg \left(\sqrt{\frac{z_{3}}{z_{1}-z_{2}}}\right)+k\left(z_{2}-z_{1}+z_{3}-\frac{x_{1}^{2}}{2 z_{1}}+\frac{x_{2}^{2}}{2 z_{1}} \frac{f-z_{2}}{f-z_{3}}\right)}
-像相对于物的放大倍数:
+像相对于物的放大倍数\cite{cao2005geometrical}
+:
 \be{\beta=\frac{z_{2}-z_{1}}{z_{3}}}
 \subsection{实验装置}
 实验装置和光路图如下所示:
@@ -206,4 +209,6 @@ $z_3 = 9cm$, 分光镜到成像透镜的距离为 $z_2 = 26\mathrm{cm}$, 分光�
 $d = 2.2645\mathrm{mm} $相对偏差相对误差$ \alpha = 1.12\%$, 
 在实验误差允许的范围内, 验证了
 热光联成像公式。
+
+\printbibliography % 添加这一行，生成参考文献列表
 \end{document}
