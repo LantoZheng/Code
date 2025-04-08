@@ -1,0 +1,87 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{physics}{article}{}{}
+      \name{editor}{1}{}{%
+        {{hash=62cea74981b60712a7cd869a9a021869}{%
+           family={作者},
+           familyi={作\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {出版地点}%
+      }
+      \list{publisher}{1}{%
+        {出版社}%
+      }
+      \strng{namehash}{62cea74981b60712a7cd869a9a021869}
+      \strng{fullhash}{62cea74981b60712a7cd869a9a021869}
+      \strng{fullhashraw}{62cea74981b60712a7cd869a9a021869}
+      \strng{bibnamehash}{62cea74981b60712a7cd869a9a021869}
+      \strng{editorbibnamehash}{62cea74981b60712a7cd869a9a021869}
+      \strng{editornamehash}{62cea74981b60712a7cd869a9a021869}
+      \strng{editorfullhash}{62cea74981b60712a7cd869a9a021869}
+      \strng{editorfullhashraw}{62cea74981b60712a7cd869a9a021869}
+      \field{extraname}{1}
+      \field{sortinit}{作}
+      \field{sortinithash}{3cb1e0e2c78ec4d7d862afb8733c18cd}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{isbn}{文献编号}
+      \field{title}{文献题名}
+      \field{pages}{起始页码\bibrangedash 结束页码}
+      \range{pages}{-1}
+      \warn{\item article entry 'physics' (article.bib): Invalid format '出版年月' of date field 'date' - ignoring}
+    \endentry
+    \entry{math}{article}{}{}
+      \name{editor}{1}{}{%
+        {{hash=62cea74981b60712a7cd869a9a021869}{%
+           family={作者},
+           familyi={作\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {出版地点}%
+      }
+      \list{publisher}{1}{%
+        {出版社}%
+      }
+      \strng{namehash}{62cea74981b60712a7cd869a9a021869}
+      \strng{fullhash}{62cea74981b60712a7cd869a9a021869}
+      \strng{fullhashraw}{62cea74981b60712a7cd869a9a021869}
+      \strng{bibnamehash}{62cea74981b60712a7cd869a9a021869}
+      \strng{editorbibnamehash}{62cea74981b60712a7cd869a9a021869}
+      \strng{editornamehash}{62cea74981b60712a7cd869a9a021869}
+      \strng{editorfullhash}{62cea74981b60712a7cd869a9a021869}
+      \strng{editorfullhashraw}{62cea74981b60712a7cd869a9a021869}
+      \field{extraname}{2}
+      \field{sortinit}{作}
+      \field{sortinithash}{3cb1e0e2c78ec4d7d862afb8733c18cd}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{isbn}{文献编号}
+      \field{title}{文献题名}
+      \field{pages}{起始页码\bibrangedash 结束页码}
+      \range{pages}{-1}
+      \warn{\item article entry 'math' (article.bib): Invalid format '出版年月' of date field 'date' - ignoring}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
