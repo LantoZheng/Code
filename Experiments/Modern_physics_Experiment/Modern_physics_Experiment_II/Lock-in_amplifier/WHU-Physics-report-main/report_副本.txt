@@ -10,7 +10,7 @@
 \usepackage{caption}
 \usepackage{makecell}
 \usepackage{siunitx} % For \SI command
-\usepackage[backend=biber,sorting = none]{biblatex}
+\usepackage[backend=biber]{biblatex}
 \addbibresource{article.bib}
 \usepackage[breaklinks,colorlinks,linkcolor=black,
 citecolor=black,urlcolor=black]{hyperref}
@@ -93,13 +93,13 @@ citecolor=black,urlcolor=black]{hyperref}
 \zihao{5}\textbf{Keywords: }Lock-in Amplifier; Reference Signal; Correlator; Noise; Signal-to-Noise Ratio Improvement
 
 \begin{multicols}{2}
-	锁相放大器是检测淹没在噪声中微弱信号的常用仪器，它利用待测信号和参考信号的互相关检测原理实现对信号的窄带化处理，能够有效地抑制噪声，从而实现对信号的检测和跟踪。锁相放大器广泛应用于物理、化学、生物、电讯、医学等领域，并且能测量宽范围的光强度，相应技术的掌握与应用具有重要的显示意义。 而本实验则将通过测量锁相放大器的工作参数和特性，掌握相关检测原理以及锁相放大器的正确使用方法\cite{book}。
+	锁相放大器是检测淹没在噪声中微弱信号的常用仪器，它利用待测信号和参考信号的互相关检测原理实现对信号的窄带化处理，能够有效地抑制噪声，从而实现对信号的检测和跟踪。锁相放大器广泛应用于物理、化学、生物、电讯、医学等领域，并且能测量宽范围的光强度，相应技术的掌握与应用具有重要的显示意义。 而本实验则将通过测量锁相放大器的工作参数和特性，掌握相关检测原理以及锁相放大器的正确使用方法。
 
 	\section{实验原理}
 	\subsection{相关接收}
 	微弱信号检测的基础是被测信号在时间上具有前后相关性的特点，即两个函数间有一
 定的关系。相关函数则是表征线性相关的度量。设信号 $f_1(t)$ 为被检信号 $V_s(t)$ 和噪声 $V_n(t)$ 的
-叠加，$f_2(t)$ 为与被检信号同步的参考信号 $V_r(t)$，则而这相关函数\cite{Lyons2011}为: 
+叠加，$f_2(t)$ 为与被检信号同步的参考信号 $V_r(t)$，则而这相关函数为: 
 \begin{align*}
     R_{12}(\tau) &= \lim_{T \to \infty} \frac{1}{2T} \int_{-T}^{T} f_1(t) \cdot f_2(t - \tau) dt \\
                   &= \lim_{T \to \infty} \frac{1}{2T} \int_{-T}^{T} [V_s(t) + V_n(t)] \cdot V_r(t - \tau) dt  \tag{1} \\
@@ -107,12 +107,12 @@ citecolor=black,urlcolor=black]{hyperref}
 \end{align*}
 由于噪声和参考信号不相关，所以 $R_{nr}(\tau) = 0$，故 $R_{12}(\tau) = R_{sr}(\tau)$。因此利用参考信号与有
 用信号的相关性，而参考信号与噪声互不相关的性质，通过互相关运算削弱噪声的影响，
-把深埋在任意大噪声里面的微弱信号检测出来\cite{HorowitzHill2015, Meade1983}。
+把深埋在任意大噪声里面的微弱信号检测出来。
 \subsection{相干检测的实现}
-相干检测器是实现求参考信号和被测信号相关函数的电子线路，由乘法器和积分器组成\cite{HorowitzHill2015, Meade1983}。
+相干检测器是实现求参考信号和被测信号相关函数的电子线路，由乘法器和积分器组成。
 乘法器实验时用相敏检波器 (PSD)，常用方波作参考信号。积分器常用 $RC$ 低通滤波器组成。
 
-设被测信号为 $u_i = U_i \sin{(w_i t + \varphi)}$，方波参考信号 $u_r$ 幅度为 1，用傅里叶级数展开\cite{HorowitzHill2015}，则：
+设被测信号为 $u_i = U_i \sin{(w_i t + \varphi)}$，方波参考信号 $u_r$ 幅度为 1，用傅里叶级数展开，则：
 \begin{equation}
     u_r = \frac{4}{\pi} \sum_{n=0}^{\infty} \frac{1}{2n+1} \sin{[(2n + 1)w_r t]}. \qquad (n = 0, 1, 2 ...)
 \end{equation}
@@ -125,7 +125,7 @@ citecolor=black,urlcolor=black]{hyperref}
 \end{align}
 
 从式(5)可以看到，输出信号中包括 $(2n + 1)w_r \pm w_i$ 频率分量。在正常工作下，参考信号的
-基波频率与被测信号频率相等，因此 PSD 输出信号中含有直流成分\cite{Meade1983}：
+基波频率与被测信号频率相等，因此 PSD 输出信号中含有直流成分：
 \begin{equation}
     u_{dc} = \frac{2}{\pi} U_i cos\varphi
 \end{equation}
@@ -556,7 +556,7 @@ C. 调节交流放大倍数$K_{AC}$=10，则 PSD 输出信号的幅度变为原�
 本实验使用锁相放大器研究了参考信号通道特性，得到参考信号与信号源频率相等，幅度为固定值，与信号源无关；研究了相敏检波器 $PSD$ 输出波形和电压与信号源和参考信号的关系，得出其在实验误差允许范围内满足公式（5）；研究了相关器对谐波的响应情况，得出当输入信号为参考信号的奇次谐波时，直流输出信号$U_{dc}$的幅度最大值与倍数$n$成反比；研究了干扰信号对$PSD$直流输出电压的影响，结论如图\ref{fig:ndc2}所示；研究了相关器对噪声的抑制情况，计算得出时间常数为$1\unit{s}$时，性躁比改善为$348.2$，信噪比改善受到输入端信号、输入噪声以及时间常数影响。
 
 \printbibliography
-\newpage
+
 \section{附录}
 \subsection{实验数据}
 \begin{figure}[H]
