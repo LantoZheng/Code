@@ -1,0 +1,183 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{ctex}
+\usepackage{bm} % For bold math symbols
+\geometry{margin=1in}
+\usepackage{braket} % For easy bra-ket notation
+\newcommand{\otimesop}{\otimes}
+
+\begin{document}
+\title{量子力学 II 作业 6}
+\author{姓名: 郑晓旸 \\ 学号: 202111030007}
+\date{ \today}
+\maketitle
+\section*{问题 1}
+
+\subsection*{初始状态与纯化}
+系统 A 处于混合态，其密度算符为：
+\[ \rho_A = \frac{1}{3}\ket{0}_A\bra{0} + \frac{2}{3}\ket{1}_A\bra{1} \]
+引入维度为 3 的辅助系统 F（基矢为 \(\ket{0}_F, \ket{1}_F, \ket{2}_F\)），构造复合系统 AF 的纯态 \(|\alpha\rangle_{AF}\) 作为 \(\rho_A\) 的纯化：
+\[ \ket{\alpha}_{AF} = \sqrt{\frac{1}{3}}\ket{0}_A \ket{0}_F + \sqrt{\frac{2}{3}}\ket{1}_A \ket{1}_F \]
+我们可以验证 \(\text{Tr}_F(\ket{\alpha}_{AF}\bra{\alpha}) = \rho_A\)。
+
+\subsection*{测量算符 Q 及其本征态}
+在系统 F 上测量力学量 Q，其归一化的本征态为：
+\begin{align*}
+\ket{q_1} &= \frac{1}{\sqrt{2}}(\ket{0}_F + \ket{2}_F) \\
+\ket{q_2} &= \frac{1}{\sqrt{3}}(\ket{0}_F + \ket{1}_F - \ket{2}_F) \\
+\ket{q_3} &= \frac{1}{\sqrt{6}}(\ket{0}_F - 2\ket{1}_F - \ket{2}_F)
+\end{align*}
+这些构成了系统 F 的一组新的标准正交基。
+
+\subsection*{测量过程与状态塌缩}
+根据投影测量假设，将复合系统状态 \(\ket{\alpha}_{AF}\) 投影到 Q 的各个本征态所张成的子空间上。
+
+\subsubsection*{投影到 \(\ket{q_1}\)}
+投影算符 \(\Pi_1 = I_A \otimes \ket{q_1}_F\bra{q_1}\)。
+投影后的（未归一化）状态：
+\[ \ket{\psi'_1} = \Pi_1 \ket{\alpha}_{AF} = \ket{q_1}_F \left( \sqrt{\frac{1}{3}}\ket{0}_A \braket{q_1|0}_F + \sqrt{\frac{2}{3}}\ket{1}_A \braket{q_1|1}_F \right) \]
+计算内积：
+\[ \braket{q_1|0}_F = \frac{1}{\sqrt{2}}, \quad \braket{q_1|1}_F = 0 \]
+因此：
+\[ \ket{\psi'_1} = \ket{q_1}_F \left( \sqrt{\frac{1}{3}}\ket{0}_A \cdot \frac{1}{\sqrt{2}} \right) = \sqrt{\frac{1}{6}} \ket{0}_A \ket{q_1}_F \]
+测得 \(q_1\) 的概率：
+\[ P_1 = \braket{\psi'_1|\psi'_1} = \left(\sqrt{\frac{1}{6}}\right)^2 = \frac{1}{6} \]
+测量后系统 A 的状态（归一化后）： \(\ket{0}_A\)。
+
+\subsubsection*{投影到 \(\ket{q_2}\)}
+投影算符 \(\Pi_2 = I_A \otimes \ket{q_2}_F\bra{q_2}\)。
+投影后的（未归一化）状态：
+\[ \ket{\psi'_2} = \ket{q_2}_F \left( \sqrt{\frac{1}{3}}\ket{0}_A \braket{q_2|0}_F + \sqrt{\frac{2}{3}}\ket{1}_A \braket{q_2|1}_F \right) \]
+计算内积：
+\[ \braket{q_2|0}_F = \frac{1}{\sqrt{3}}, \quad \braket{q_2|1}_F = \frac{1}{\sqrt{3}} \]
+因此：
+\[ \ket{\psi'_2} = \ket{q_2}_F \left( \sqrt{\frac{1}{3}}\ket{0}_A \cdot \frac{1}{\sqrt{3}} + \sqrt{\frac{2}{3}}\ket{1}_A \cdot \frac{1}{\sqrt{3}} \right) = \frac{1}{3} (\ket{0}_A + \sqrt{2}\ket{1}_A) \ket{q_2}_F \]
+测得 \(q_2\) 的概率：
+\[ P_2 = \braket{\psi'_2|\psi'_2} = \left(\frac{1}{3}\right)^2 || \ket{0}_A + \sqrt{2}\ket{1}_A ||^2 = \frac{1}{9} (1^2 + (\sqrt{2})^2) = \frac{3}{9} = \frac{1}{3} \]
+测量后系统 A 的状态（归一化后）： \(\frac{1}{\sqrt{3}}(\ket{0}_A + \sqrt{2}\ket{1}_A)\)。
+
+\subsubsection*{投影到 \(\ket{q_3}\)}
+投影算符 \(\Pi_3 = I_A \otimes \ket{q_3}_F\bra{q_3}\)。
+投影后的（未归一化）状态：
+\[ \ket{\psi'_3} = \ket{q_3}_F \left( \sqrt{\frac{1}{3}}\ket{0}_A \braket{q_3|0}_F + \sqrt{\frac{2}{3}}\ket{1}_A \braket{q_3|1}_F \right) \]
+计算内积：
+\[ \braket{q_3|0}_F = \frac{1}{\sqrt{6}}, \quad \braket{q_3|1}_F = -\frac{2}{\sqrt{6}} \]
+因此：
+\[ \ket{\psi'_3} = \ket{q_3}_F \left( \sqrt{\frac{1}{3}}\ket{0}_A \cdot \frac{1}{\sqrt{6}} + \sqrt{\frac{2}{3}}\ket{1}_A \cdot \left(-\frac{2}{\sqrt{6}}\right) \right) = \frac{1}{3\sqrt{2}} (\ket{0}_A - 2\sqrt{2}\ket{1}_A) \ket{q_3}_F \]
+测得 \(q_3\) 的概率：
+\[ P_3 = \braket{\psi'_3|\psi'_3} = \left(\frac{1}{3\sqrt{2}}\right)^2 || \ket{0}_A - 2\sqrt{2}\ket{1}_A ||^2 = \frac{1}{18} (1^2 + (-2\sqrt{2})^2) = \frac{1}{18} (1 + 8) = \frac{9}{18} = \frac{1}{2} \]
+测量后系统 A 的状态（归一化后）： \(\frac{1}{3}(\ket{0}_A - 2\sqrt{2}\ket{1}_A)\)。
+
+\subsection*{结果}
+测量力学量 Q 后，系统 A 可能塌缩到的状态及其概率如下：
+\begin{itemize}
+    \item 状态 1: \(\ket{0}_A\) \\
+          概率: \(P_1 = \frac{1}{6}\)
+    \item 状态 2: \(\frac{1}{\sqrt{3}}(\ket{0}_A + \sqrt{2}\ket{1}_A)\) \\
+          概率: \(P_2 = \frac{1}{3}\)
+    \item 状态 3: \(\frac{1}{3}(\ket{0}_A - 2\sqrt{2}\ket{1}_A)\) \\
+          概率: \(P_3 = \frac{1}{2}\)
+\end{itemize}
+总概率 \(P_1 + P_2 + P_3 = \frac{1}{6} + \frac{1}{3} + \frac{1}{2} = 1\)，结果自洽。
+
+
+\section*{问题 2}
+\subsection*{系统哈密顿量及其本征态}
+系统由两个自旋 1/2 粒子构成，哈密顿量为海森堡相互作用形式：
+\[ H = \bm{S}_1 \cdot \bm{S}_2 = S_{1x}S_{2x} + S_{1y}S_{2y} + S_{1z}S_{2z} \]
+其中 \(\bm{S}_1\) 和 \(\bm{S}_2\) 分别是两个粒子的自旋算符。引入总自旋算符 \(\bm{S} = \bm{S}_1 + \bm{S}_2\)。其平方为：
+\[ \bm{S}^2 = (\bm{S}_1 + \bm{S}_2)^2 = \bm{S}_1^2 + \bm{S}_2^2 + 2\bm{S}_1 \cdot \bm{S}_2 \]
+对于自旋 1/2 粒子，\(\bm{S}_i^2 = s_i(s_i+1)\hbar^2\)。本题取 \(\hbar = 1\)，所以 \(s_i = 1/2\)，\(\bm{S}_i^2 = \frac{1}{2}(\frac{1}{2}+1) = \frac{3}{4}\)。
+因此，哈密顿量可以表示为：
+\[ H = \bm{S}_1 \cdot \bm{S}_2 = \frac{1}{2}(\bm{S}^2 - \bm{S}_1^2 - \bm{S}_2^2) = \frac{1}{2}\left(\bm{S}^2 - \frac{3}{4} - \frac{3}{4}\right) = \frac{1}{2}\left(\bm{S}^2 - \frac{3}{2}\right) \]
+总自旋量子数 \(S\) 可以取 \(1\) (三重态) 或 \(0\) (单重态)。
+\begin{itemize}
+    \item \textbf{单重态 (Singlet state):} \(S=0\)，\(\bm{S}^2 = 0\)。能量本征值为：
+        \[ E_s = \frac{1}{2}\left(0 - \frac{3}{2}\right) = -\frac{3}{4} \]
+        该态用 \(\ket{s}\) 或 \(\ket{0, 0}\) 表示。
+    \item \textbf{三重态 (Triplet states):} \(S=1\)，\(\bm{S}^2 = 2\)。能量本征值为：
+        \[ E_t = \frac{1}{2}\left(2 - \frac{3}{2}\right) = \frac{1}{4} \]
+        该能级是三重简并的，对应磁量子数 \(M = 1, 0, -1\)，用 \(\ket{t_M}\) 或 \(\ket{1, M}\) 表示。
+\end{itemize}
+\subsection*{热平衡态密度矩阵}
+系统处于温度为 \(T\) 的热平衡状态，其密度矩阵由正则系综给出：
+\[ \rho = \frac{e^{-\beta H}}{Z} \]
+其中 \(\beta = 1/(k_B T)\)（这里令玻尔兹曼常数 \(k_B = 1\)）是逆温度，\(Z\) 是配分函数。
+配分函数为：
+\[ Z = \text{Tr}(e^{-\beta H}) = \sum_i e^{-\beta E_i} = e^{-\beta E_s} + 3e^{-\beta E_t} = e^{3\beta/4} + 3e^{-\beta/4} \]
+在总自旋基 \(\{\ket{s}, \ket{t_1}, \ket{t_0}, \ket{t_{-1}}\}\) 下，密度矩阵是对角的：
+\[ \rho = \frac{1}{Z} \left( e^{-\beta E_s} \ket{s}\bra{s} + e^{-\beta E_t} \sum_{M=-1}^{1} \ket{t_M}\bra{t_M} \right) \]
+\[ \rho = \frac{1}{Z} \left( e^{3\beta/4} \ket{s}\bra{s} + e^{-\beta/4} (\ket{t_1}\bra{t_1} + \ket{t_0}\bra{t_0} + \ket{t_{-1}}\bra{t_{-1}}) \right) \]
+\subsection*{约化密度矩阵 \(\rho_1\)}
+计算粒子 1 的约化密度矩阵 \(\rho_1 = \text{Tr}_2(\rho)\)。
+由于哈密顿量 \(H\) 和热平衡态 \(\rho\) 具有旋转对称性，约化密度矩阵 \(\rho_1\) 也必然具有旋转不变性。对于自旋 1/2 系统，唯一具有旋转不变性的密度矩阵是单位矩阵 \(I_1\) 的倍数。
+\[ \rho_1 = C \cdot I_1 \]
+根据归一化条件 \(\text{Tr}(\rho_1) = 1\)，有 \(\text{Tr}(C \cdot I_1) = C \cdot \text{Tr}(I_1) = C \cdot 2 = 1\)，因此 \(C = 1/2\)。
+最终得到粒子 1 的约化密度矩阵为：
+\[ \rho_1 = \frac{1}{2} I_1 = \frac{1}{2} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \]
+这表示粒子 1 处于完全无极化的混合态。
+\subsection*{计算自旋分量的期望值}
+利用 \(\rho_1\) 计算粒子 1 自旋各分量的期望值 \(\langle O_1 \rangle = \text{Tr}_1(\rho_1 O_1)\)。使用 \(\hbar = 1\) 时的自旋算符 \(S_x = \frac{1}{2}\sigma_x, S_y = \frac{1}{2}\sigma_y, S_z = \frac{1}{2}\sigma_z\)，其中 \(\sigma_i\) 是泡利矩阵。
+\begin{itemize}
+    \item \(\langle S_x(1) \rangle = \text{Tr}_1(\rho_1 S_{1x}) = \text{Tr}_1\left(\frac{1}{2} I_1 \cdot \frac{1}{2} \sigma_x\right) = \frac{1}{4} \text{Tr}(\sigma_x) = \frac{1}{4} \text{Tr}\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} = 0\)
+    \item \(\langle S_y(1) \rangle = \text{Tr}_1(\rho_1 S_{1y}) = \text{Tr}_1\left(\frac{1}{2} I_1 \cdot \frac{1}{2} \sigma_y\right) = \frac{1}{4} \text{Tr}(\sigma_y) = \frac{1}{4} \text{Tr}\begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix} = 0\)
+    \item \(\langle S_z(1) \rangle = \text{Tr}_1(\rho_1 S_{1z}) = \text{Tr}_1\left(\frac{1}{2} I_1 \cdot \frac{1}{2} \sigma_z\right) = \frac{1}{4} \text{Tr}(\sigma_z) = \frac{1}{4} \text{Tr}\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} = 0\)
+\end{itemize}
+\subsection*{结果}
+\begin{enumerate}
+    \item 粒子 1 的约化密度矩阵为 \(\rho_1 = \frac{1}{2} I_1\)，表示粒子 1 处于完全无极化的混合态。
+    \item 粒子 1 自旋各分量的期望值均为零：\(\langle S_x(1) \rangle = 0\), \(\langle S_y(1) \rangle = 0\), \(\langle S_z(1) \rangle = 0\)。
+\end{enumerate}
+
+\section*{问题 3}
+问题：计算纠缠熵证明态 \(|\alpha\rangle = (|0\rangle_A|1\rangle_B + |1\rangle_A|1\rangle_B + |0\rangle_A|0\rangle_B + |1\rangle_A|0\rangle_B)/2\) 不是纠缠态。
+\subsection*{定义与判据}
+一个纯的双体量子态 \(|\psi\rangle_{AB}\) 是 \textbf{纠缠态 (entangled state)}，当且仅当它不能被写成两个子系统态的直积形式，即 \(|\psi\rangle_{AB} \neq |\phi\rangle_A \otimesop |\chi\rangle_B\)。如果可以写成直积形式，则称其为 \textbf{可分离态 (separable state)} 或 \textbf{乘积态 (product state)}。
+对于纯态 \(|\psi\rangle_{AB}\)，其纠缠度可以通过计算任一子系统（例如 A）的 \textbf{约化密度矩阵 (reduced density matrix)} \(\rho_A = \text{Tr}_B(|\psi\rangle_{AB}\langle\psi|_{AB})\) 的 \textbf{冯诺依曼熵 (Von Neumann entropy)} \(S(\rho_A)\) 来衡量：
+\[ S(\rho_A) = -\text{Tr}(\rho_A \log_2 \rho_A) = -\sum_i \lambda_i \log_2 \lambda_i \]
+其中 \(\lambda_i\) 是 \(\rho_A\) 的本征值。
+\textbf{关键判据：} 纯态 \(|\psi\rangle_{AB}\) 是非纠缠态（乘积态）当且仅当其纠缠熵为零，即 \(S(\rho_A) = 0\)。这等价于说约化密度矩阵 \(\rho_A\) 是一个纯态的密度矩阵（其秩为 1，或者说 \(\text{Tr}(\rho_A^2) = 1\)），或者说 \(\rho_A\) 只有一个非零本征值且该值为 1。
+\subsection*{分析给定的态 \(|\alpha\rangle\)}
+给定的态是：
+\[ |\alpha\rangle = \frac{1}{2} (|0\rangle_A|1\rangle_B + |1\rangle_A|1\rangle_B + |0\rangle_A|0\rangle_B + |1\rangle_A|0\rangle_B) \]
+我们可以尝试将其因子分解：
+\begin{align*} |\alpha\rangle &= \frac{1}{2} [ |0\rangle_A(|1\rangle_B + |0\rangle_B) + |1\rangle_A(|1\rangle_B + |0\rangle_B) ] \\ &= \frac{1}{2} [ (|0\rangle_A + |1\rangle_A) \otimesop (|0\rangle_B + |1\rangle_B) ] \end{align*}
+为了得到归一化的态，每个括号内的态需要乘以 \(1/\sqrt{2}\)：
+\[ |\alpha\rangle = \left[ \frac{1}{\sqrt{2}}(|0\rangle_A + |1\rangle_A) \right] \otimesop \left[ \frac{1}{\sqrt{2}}(|0\rangle_B + |1\rangle_B) \right] \]
+令 \(|+\rangle_A = \frac{1}{\sqrt{2}}(|0\rangle_A + |1\rangle_A)\) 和 \(|+\rangle_B = \frac{1}{\sqrt{2}}(|0\rangle_B + |1\rangle_B)\)。这两个态是在计算基 \(\{|0\rangle, |1\rangle\}\) 下，对应于 X 基（或 Hadamard 基）的正本征态。
+于是，给定的态可以写成：
+\[ |\alpha\rangle = |+\rangle_A \otimesop |+\rangle_B \]
+这直接表明 \(|\alpha\rangle\) 是一个乘积态，根据定义，它不是纠缠态。
+\subsection*{计算纠缠熵}
+虽然因子分解已经证明了结论，我们仍然按照题目要求计算纠缠熵。
+首先，系统的总密度矩阵是：
+\[ \rho_{AB} = |\alpha\rangle\langle\alpha| = (|+\rangle_A \otimesop |+\rangle_B)(\langle+|_A \otimesop \langle+|_B) = (|+\rangle_A\langle+|_A) \otimesop (|+\rangle_B\langle+|_B) \]
+令 \(\rho_A^{pure} = |+\rangle_A\langle+|_A\) 和 \(\rho_B^{pure} = |+\rangle_B\langle+|_B\)。则 \(\rho_{AB} = \rho_A^{pure} \otimesop \rho_B^{pure}\)。
+计算子系统 A 的约化密度矩阵 \(\rho_A\):
+\[ \rho_A = \text{Tr}_B(\rho_{AB}) = \text{Tr}_B(\rho_A^{pure} \otimesop \rho_B^{pure}) \]
+利用偏迹的性质 \(\text{Tr}_B(O_A \otimesop O_B) = O_A \cdot \text{Tr}(O_B)\)，我们得到：
+\[ \rho_A = \rho_A^{pure} \cdot \text{Tr}(\rho_B^{pure}) \]
+由于 \(|+\rangle_B\) 是归一化的纯态，其对应的密度矩阵 \(\rho_B^{pure}\) 的迹为 \(\text{Tr}(\rho_B^{pure}) = \braket{+|+}_B = 1\)。
+因此：
+\[ \rho_A = \rho_A^{pure} = |+\rangle_A\langle+|_A \]
+在计算基 \(\{|0\rangle_A, |1\rangle_A\}\) 下，态向量 \(|+\rangle_A\) 为 \(\frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}\)。所以 \(\rho_A\) 的矩阵形式为：
+\[ \rho_A = \left( \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix} \right) \left( \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \end{pmatrix} \right) = \frac{1}{2} \begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix} \]
+接下来计算 \(\rho_A\) 的冯诺依曼熵。我们需要找到 \(\rho_A\) 的本征值。求解特征方程 \(\det(\rho_A - \lambda I) = 0\):
+\[ \det \begin{pmatrix} 1/2 - \lambda & 1/2 \\ 1/2 & 1/2 - \lambda \end{pmatrix} = (1/2 - \lambda)^2 - (1/2)^2 = 0 \]
+\[ (1/2 - \lambda - 1/2)(1/2 - \lambda + 1/2) = 0 \]
+\[ (-\lambda)(1 - \lambda) = 0 \]
+解得本征值为 \(\lambda_1 = 1\) 和 \(\lambda_2 = 0\)。
+现在计算冯诺依曼熵：
+\[ S(\rho_A) = -\sum_{i=1}^2 \lambda_i \log_2 \lambda_i = -(\lambda_1 \log_2 \lambda_1 + \lambda_2 \log_2 \lambda_2) \]
+根据约定 \(x \log_2 x \to 0\) 当 \(x \to 0\)，并且 \(\log_2 1 = 0\)。
+\[ S(\rho_A) = -(1 \cdot \log_2 1 + 0 \cdot \log_2 0) = -(1 \cdot 0 + 0) = 0 \]
+\subsection*{结论}
+计算得到的纠缠熵 \(S(\rho_A) = 0\)。根据纯态纠缠的判据，纠缠熵为零意味着该态是可分离的（非纠缠的）。因此，我们通过计算纠缠熵证明了态
+\[ |\alpha\rangle = \frac{1}{2} (|0\rangle_A|1\rangle_B + |1\rangle_A|1\rangle_B + |0\rangle_A|0\rangle_B + |1\rangle_A|0\rangle_B) \]
+不是纠缠态，而是一个乘积态 \(|+\rangle_A \otimesop |+\rangle_B\)。
+
+
+\end{document}
