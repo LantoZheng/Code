@@ -1,0 +1,82 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{physics}  
+\usepackage{ctex}
+\usepackage{bm} % For bold math symbols
+\geometry{margin=1in}
+\usepackage{braket} % For easy bra-ket notation
+\newcommand{\otimesop}{\otimes}
+
+\begin{document}
+\title{量子力学 II 作业 7}
+\author{姓名: 郑晓旸 \\ 学号: 202111030007}
+\date{ \today}
+\maketitle % Display title
+\section*{问题}
+证明量子力学中的传播子 \(U(x', t'; x, t) = \langle x' | e^{-iH(t'-t)/\hbar} | x \rangle\) 具有以下性质（假设哈密顿量 \(H\) 不显含时间）：
+\begin{enumerate}
+    \item 传播子可以写为能量本征态的展开形式：
+    \[ U(x', t'; x, t) = \sum_a \langle x'|a\rangle\langle a|x\rangle e^{-iE_a(t'-t)/\hbar} \]
+    其中 \(H|a\rangle = E_a|a\rangle\)，且 \(|a\rangle\) 构成完备正交基。
+    \item 传播子 \(U(x', t'; x, t)\) 作为 \(x', t'\) 的函数（固定 \(x, t\)）满足含时薛定谔方程：
+    \[ i\hbar \frac{\partial}{\partial t'} U(x', t'; x, t) = H_{x'} U(x', t'; x, t) \]
+    其中 \(H_{x'}\) 是作用在 \(x'\) 坐标上的哈密顿量算符。
+    \item 传播子满足初始条件：
+    \[ \lim_{t' \to t} U(x', t'; x, t) = \delta(x' - x) \]
+\end{enumerate}
+\section*{证明}
+\subsection*{1. 传播子的能谱展开}
+我们从传播子的定义开始：
+\[ U(x', t'; x, t) = \langle x' | e^{-iH(t'-t)/\hbar} | x \rangle \]
+在算符和末态 \(\langle x'|\) 之间插入能量本征态的完备性关系 \(I = \sum_a |a\rangle\langle a|\)：
+\[ U(x', t'; x, t) = \langle x' | \left( \sum_a |a\rangle\langle a| \right) e^{-iH(t'-t)/\hbar} | x \rangle \]
+由于 \(H\) 与其自身的函数对易，即 \([H, e^{-iH(t'-t)/\hbar}] = 0\)，我们可以将演化算符作用在插入的基矢上：
+\[ U(x', t'; x, t) = \sum_a \langle x' | a\rangle\langle a| e^{-iH(t'-t)/\hbar} | x \rangle \]
+现在在算符和初态 \(|x\rangle\) 之间再次插入完备性关系 \(I = \sum_b |b\rangle\langle b|\)（使用不同下标以示区分）：
+\[ U(x', t'; x, t) = \sum_a \langle x' | a\rangle\langle a| e^{-iH(t'-t)/\hbar} \left( \sum_b |b\rangle\langle b| \right) | x \rangle \]
+\[ U(x', t'; x, t) = \sum_{a, b} \langle x' | a\rangle\langle a| e^{-iH(t'-t)/\hbar} |b\rangle\langle b | x \rangle \]
+演化算符作用在能量本征态 \(|b\rangle\) 上：
+\[ e^{-iH(t'-t)/\hbar} |b\rangle = e^{-iE_b(t'-t)/\hbar} |b\rangle \]
+代入上式：
+\[ U(x', t'; x, t) = \sum_{a, b} \langle x' | a\rangle\langle a| \left( e^{-iE_b(t'-t)/\hbar} |b\rangle \right) \langle b | x \rangle \]
+\[ U(x', t'; x, t) = \sum_{a, b} e^{-iE_b(t'-t)/\hbar} \langle x' | a\rangle\langle a|b\rangle\langle b | x \rangle \]
+利用能量本征态的正交归一性 \(\langle a|b\rangle = \delta_{ab}\)：
+\[ U(x', t'; x, t) = \sum_{a, b} e^{-iE_b(t'-t)/\hbar} \langle x' | a\rangle \delta_{ab} \langle b | x \rangle \]
+求和中只有 \(b=a\) 的项不为零：
+\[ U(x', t'; x, t) = \sum_a e^{-iE_a(t'-t)/\hbar} \langle x' | a\rangle \langle a | x \rangle \]
+这即是所要证明的表达式。通常也写作波函数形式：
+\[ U(x', t'; x, t) = \sum_a \psi_a(x') \psi_a^*(x) e^{-iE_a(t'-t)/\hbar} \]
+\textit{证明完毕。}
+\subsection*{2. 传播子满足薛定谔方程}
+考虑传播子对末态时间 \(t'\) 的偏导数：
+\[ \frac{\partial}{\partial t'} U(x', t'; x, t) = \frac{\partial}{\partial t'} \langle x' | e^{-iH(t'-t)/\hbar} | x \rangle \]
+导数作用在时间演化算符上：
+\[ \frac{\partial}{\partial t'} e^{-iH(t'-t)/\hbar} = e^{-iH(t'-t)/\hbar} \left( \frac{-iH}{\hbar} \right) \]
+因此：
+\[ \frac{\partial}{\partial t'} U(x', t'; x, t) = \langle x' | e^{-iH(t'-t)/\hbar} \left( \frac{-iH}{\hbar} \right) | x \rangle \]
+两边乘以 \(i\hbar\)：
+\[ i\hbar \frac{\partial}{\partial t'} U(x', t'; x, t) = \langle x' | e^{-iH(t'-t)/\hbar} H | x \rangle \]
+由于 \([H, e^{-iH(t'-t)/\hbar}] = 0\)，我们可以将 \(H\) 移到左边作用在 \(\langle x'|\) 上：
+\[ i\hbar \frac{\partial}{\partial t'} U(x', t'; x, t) = \langle x' | H e^{-iH(t'-t)/\hbar} | x \rangle \]
+在位置表象中，算符 \(H\) 作用在左矢 \(\langle x'|\) 上，等价于坐标表示下的哈密顿量算符 \(H_{x'}\) （例如 \(H_{x'} = -\frac{\hbar^2}{2m}\nabla_{x'}^2 + V(x')\)）作用在 \(\langle x'|\) 后面的态函数上。即对于任意态 \(|\psi\rangle\)，有 \(\langle x'|H|\psi\rangle = H_{x'} \langle x'|\psi\rangle\)。
+令 \(|\psi(t', t)\rangle = e^{-iH(t'-t)/\hbar} |x\rangle\)，则：
+\[ i\hbar \frac{\partial}{\partial t'} U(x', t'; x, t) = H_{x'} \langle x' | e^{-iH(t'-t)/\hbar} | x \rangle \]
+右边的矩阵元正是传播子 \(U(x', t'; x, t)\) 的定义：
+\[ i\hbar \frac{\partial}{\partial t'} U(x', t'; x, t) = H_{x'} U(x', t'; x, t) \]
+\textit{证明完毕。}
+\subsection*{3. 传播子的初始条件}
+考察极限 \(t' \to t\)：
+\[ \lim_{t' \to t} U(x', t'; x, t) = \lim_{t' \to t} \langle x' | e^{-iH(t'-t)/\hbar} | x \rangle \]
+当 \(t' \to t\) 时，指数 \( -iH(t'-t)/\hbar \to 0 \)。因此，时间演化算符趋于单位算符 \(I\)：
+\[ e^{-iH(t'-t)/\hbar} \xrightarrow{t' \to t} e^0 = I \]
+所以：
+\[ \lim_{t' \to t} U(x', t'; x, t) = \langle x' | I | x \rangle = \langle x' | x \rangle \]
+根据位置本征态的正交归一性，其内积为狄拉克 \(\delta\) 函数：
+\[ \langle x' | x \rangle = \delta(x' - x) \]
+因此：
+\[ \lim_{t' \to t} U(x', t'; x, t) = \delta(x' - x) \]
+\textit{证明完毕。}
+\end{document}
