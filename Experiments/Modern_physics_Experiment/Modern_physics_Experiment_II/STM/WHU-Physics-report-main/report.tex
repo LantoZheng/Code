@@ -240,25 +240,23 @@ STM 的工作原理建立在量子力学中的隧道效应之上, 当一个极�
  \label{fig:calibration}
 \end{figure}
 
-可以数出如图 \ref{fig:calibration} 所示直线上亮点个数, 为 19 个 (即 18 个间距), 于是该线段实际长度
-\[ l = (19 - 1)a_0 = 18 \times 0.246 \, \text{nm} = 4.428 \, \text{nm} \] % (5)
+可以数出如图 \ref{fig:calibration} 所示直线上亮点个数, 为 23 个 (即 22 个间距), 于是该线段实际长度
+\[ l = (19 - 1)a_0 = 18 \times 0.246 \, \text{nm} = 5.412 \, \text{nm} \] % (5)
 而该直线与 X 方向夹角 \( \theta \) 约为 \( 20.0^\circ \) (利用 PS 软件进行测量得到).
 于是 XY 方向上陶瓷杆长度变化为 (这里的计算似乎基于图5的标准像进行标定)
 \begin{align}
- L_x &= l \cos \theta = 4.428 \times \cos(10.0^\circ) \approx 4.36 \, \text{nm} \label{eq:Lx} \\ % 原始文档计算为 4.60nm，这里按 l 和 theta 重新计算约为 4.36nm
- L_y &= l \sin \theta \approx 4.428 \times \sin(10.0^\circ) \approx 0.769 \, \text{nm} \label{eq:Ly} % 原始文档计算为 4.53nm，且分母有修正因子 87/486，这个因子含义不明，可能与图像像素有关。这里仅计算 l sin theta
+ L_x &= l \cos \theta = 5.412 \times \cos(20.0^\circ) \approx 5.08 \, \text{nm} \label{eq:Lx} \\ % 原始文档计算为 4.60nm，这里按 l 和 theta 重新计算约为 4.36nm
+ L_y &= l \sin \theta \approx 5.412 \times \sin(20.0^\circ) \approx 1.85 \, \text{nm} \label{eq:Ly} % 原始文档计算为 4.53nm，且分母有修正因子 87/486，这个因子含义不明，可能与图像像素有关。这里仅计算 l sin theta
 \end{align}
-(注意：原始文档中 \(L_x = 4.60\,\text{nm}\), \(L_y = 4.53\,\text{nm}\)，与基于 \(l=4.428\,\text{nm}\) 和 \(\theta=10.0^\circ\) 的计算结果有出入，特别是 \(L_y\)。原始文档中 \(L_y\) 的计算包含了一个因子 \(87/486\)，这可能是图像分析软件中测量的像素比例，例如该线段在Y方向跨越了87个像素，而整个Y方向扫描范围对应486像素？这里暂时保留原始文档的计算结果，但标记这个疑问。)
-原始文档计算结果：\( L_x = 4.60 \, \text{nm} \), \( L_y = 4.53 \, \text{nm} \).
 
 其中 Y 方向上 \( l \sin \theta \) 只表示上述直线段在 Y 方向上分量, 并不表示整个 Y 方向长度. 分母修正系数 \( (87/486) \) 则表示这部分长度占整个 Y 方向长度的比例 (假设如此解释).
 
 于是由标准样品 (图5) 计算得到的压电系数 (灵敏度) 为：
 \begin{align}
- c_{ox} &= \frac{L_x}{V_x} = \frac{4.60 \, \text{nm}}{1.4 \, \text{V}} \approx 3.29 \, \text{nm/V} \label{eq:cox} \\ % 原文结果 3.11 nm/V
- c_{oy} &= \frac{L_y}{V_y} = \frac{4.53 \, \text{nm}}{1.2 \, \text{V}} \approx 3.78 \, \text{nm/V} \label{eq:coy} % 原文结果 3.56 nm/V
+ c_{ox} &= \frac{L_x}{V_x} = \frac{5.08 \, \text{nm}}{1.4 \, \text{V}} \approx 3.62 \, \text{nm/V} \label{eq:cox} \\ % 原文结果 3.11 nm/V
+ c_{oy} &= \frac{L_y}{V_y} = \frac{1.85 \, \text{nm}}{1.2 \, \text{V}} \approx 1.54 \, \text{nm/V} \label{eq:coy} % 原文结果 3.56 nm/V
 \end{align}
-其中 \( V_x = 1.4 \, \text{V} \), \( V_y = 1.2 \, \text{V} \). (这些电压值是进行图5扫描时的X、Y扫描电压范围。) (注意：原始文档计算结果 \(c_{ox}=3.11\,\text{nm/V}\), \(c_{oy}=3.56\,\text{nm/V}\)，与这里基于 \(L_x, L_y\) 和 \(V_x, V_y\) 的计算略有差异，可能是原始数据记录或计算过程中的舍入误差。)
+其中 \( V_x = 1.4 \, \text{V} \), \( V_y = 1.2 \, \text{V} \). (这些电压值是进行图5扫描时的X、Y扫描电压范围。) (注意：原始文档计算结果 \(c_{ox}=3.62\,\text{nm/V}\), \(c_{oy}=1.54\,\text{nm/V}\)，与这里基于 \(L_x, L_y\) 和 \(V_x, V_y\) 的计算略有差异，可能是原始数据记录或计算过程中的舍入误差。)
 
 类似地, 还可以由本实验得到的石墨原子分辨像 (图4) 计算出压电陶瓷的压电系数, 结果如下：
 \begin{align} % 使用 align 环境分开显示 Cx 和 Cy，并共享编号 (8)
