@@ -1,0 +1,7 @@
+# Draft requirements for BNUPT/ (auto-generated)
+pandas
+numpy
+matplotlib
+scipy
+
+# Notes: Many notebooks read CSV files from the same folder; keep relative paths.

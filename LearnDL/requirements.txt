@@ -1,0 +1,6 @@
+# Draft requirements for LearnDL/ (auto-generated)
+torch
+numpy
+matplotlib
+
+# Notes: This repository uses a notebook `PyTorch.ipynb`. Pin versions before sharing.

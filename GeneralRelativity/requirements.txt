@@ -1,0 +1,7 @@
+# Draft requirements for GeneralRelativity/ (auto-generated)
+# Inspect files: EinsteinTensor.py, covariant_derivative.py, sphericalstatic.py, TTproj.py, etc.
+numpy
+sympy
+matplotlib
+
+# Notes: run `python3 <script>.py` in this folder after creating a venv and installing these.
