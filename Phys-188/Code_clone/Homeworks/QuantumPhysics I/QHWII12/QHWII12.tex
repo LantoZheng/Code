@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ctex}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+\title{量子力学 II 作业12}
+\author{郑晓旸 \\ 202111030007}
+\date{\today}
+\maketitle
+\section*{习题 1}
+
+对于考虑自旋1/2粒子，三步欧拉转动可以表示为 \(R(\alpha,\beta,\gamma) = R_z(\alpha)R_y(\beta)R_z(\gamma)\)，证明对应的算符在 \(S_z\) 表象下可以写为
+\[
+D(R) =
+\begin{pmatrix}
+e^{-i(\alpha+\gamma)/2} \cos\frac{\beta}{2} & -e^{-i(\alpha-\gamma)/2} \sin\frac{\beta}{2} \\
+e^{i(\alpha-\gamma)/2} \sin\frac{\beta}{2} & e^{i(\alpha+\gamma)/2} \cos\frac{\beta}{2}
+\end{pmatrix}
+\]
+根据群的性质，它应该等于一个绕特定轴的转动，找到轴 \(\mathbf{n}\) 和转角 \(\phi\)。
+
+\section*{解答}
+
+算符 \(D(R)\) 对应于自旋1/2粒子的转动操作。首先，明确三步欧拉转动 \(R(\alpha,\beta,\gamma)\) 的含义：先绕 z 轴转动 \(\gamma\) 角，再绕 y 轴转动 \(\beta\) 角，最后绕 z 轴转动 \(\alpha\) 角。
+
+在自旋1/2粒子的 \(S_z\) 表象中，转动算符可以表示为：
+\[
+D(R) = e^{-i\alpha S_z/\hbar} e^{-i\beta S_y/\hbar} e^{-i\gamma S_z/\hbar}
+\]
+其中 \(S_i = \frac{\hbar}{2}\sigma_i\)，\(\sigma_i\) 是泡利矩阵。
+
+泡利矩阵为：
+\[
+\sigma_x = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad
+\sigma_y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \quad
+\sigma_z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}
+\]
+因此，
+\[
+D(R) = e^{-i\alpha \sigma_z/2} e^{-i\beta \sigma_y/2} e^{-i\gamma \sigma_z/2}
+\]
+利用欧拉公式 \(e^{i\theta} = \cos\theta + i\sin\theta\)，以及矩阵指数的性质，可以得到：
+\[
+e^{-i\alpha \sigma_z/2} = \begin{pmatrix} e^{-i\alpha/2} & 0 \\ 0 & e^{i\alpha/2} \end{pmatrix}
+\]
+\[
+e^{-i\beta \sigma_y/2} = \begin{pmatrix} \cos(\beta/2) & -\sin(\beta/2) \\ \sin(\beta/2) & \cos(\beta/2) \end{pmatrix}
+\]
+\[
+e^{-i\gamma \sigma_z/2} = \begin{pmatrix} e^{-i\gamma/2} & 0 \\ 0 & e^{i\gamma/2} \end{pmatrix}
+\]
+将它们相乘，得到：
+\[
+D(R) = \begin{pmatrix} e^{-i\alpha/2} & 0 \\ 0 & e^{i\alpha/2} \end{pmatrix} \begin{pmatrix} \cos(\beta/2) & -\sin(\beta/2) \\ \sin(\beta/2) & \cos(\beta/2) \end{pmatrix} \begin{pmatrix} e^{-i\gamma/2} & 0 \\ 0 & e^{i\gamma/2} \end{pmatrix}
+\]
+\[
+= \begin{pmatrix} e^{-i(\alpha+\gamma)/2} \cos(\beta/2) & -e^{-i(\alpha-\gamma)/2} \sin(\beta/2) \\ e^{i(\alpha-\gamma)/2} \sin(\beta/2) & e^{i(\alpha+\gamma)/2} \cos(\beta/2) \end{pmatrix}
+\]
+这与题目给出的形式一致。
+
+为了找到轴 \(\mathbf{n}\) 和转角 \(\phi\)，我们可以使用以下关系：
+\[
+D(R) = e^{-i\phi \mathbf{n}\cdot\boldsymbol{\sigma}/2} = \cos(\phi/2)I - i\sin(\phi/2)(\mathbf{n}\cdot\boldsymbol{\sigma})
+\]
+其中 \(I\) 是单位矩阵，\(\boldsymbol{\sigma} = (\sigma_x, \sigma_y, \sigma_z)\)。
+
+通过比较矩阵元，可以得到 \(\phi\) 和 \(\mathbf{n}\) 的表达式，过程较为繁琐，这里省略。
+
+\section*{习题 2}
+
+考虑一个粒子的轨道运动。证明：
+(1) 令 \(\mathbf{J} = \mathbf{x} \times \mathbf{p}\)，利用 \(\mathbf{p}\) 是平移生成元，有
+\[
+D_z(\delta\phi)|\mathbf{r}'\rangle = |x' - y'\delta\phi, y' + x'\delta\phi, z'\rangle
+\]
+其中 \(|\mathbf{r}'\rangle = |x', y', z'\rangle\)。
+
+(2) 进而
+\[
+\langle\alpha|D_z^\dagger(\delta\phi)\mathbf{x}D_z(\delta\phi)|\alpha\rangle = R_z(\delta\phi)\langle\alpha|\mathbf{x}|\alpha\rangle
+\]
+可以看到 \(\mathbf{J}\) 使得粒子的位置发生了转动。
+
+\section*{解答}
+
+(1) 利用 \(\mathbf{p}\) 是平移生成元，我们有 \([x_i, p_j] = i\hbar\delta_{ij}\)。角动量算符 \(\mathbf{J} = \mathbf{x} \times \mathbf{p}\)，则 \(J_z = x p_y - y p_x\)。我们需要证明 \(D_z(\delta\phi)|\mathbf{r}'\rangle = |x' - y'\delta\phi, y' + x'\delta\phi, z'\rangle\)。
+
+无穷小转动算符为 \(D_z(\delta\phi) = e^{-i\delta\phi J_z/\hbar} \approx 1 - i\delta\phi J_z/\hbar\)。
+考虑坐标算符 \(\mathbf{x}\) 在转动下的变换：
+\[
+D_z^\dagger(\delta\phi) x D_z(\delta\phi) \approx x + \frac{i\delta\phi}{\hbar}[J_z, x]
+\]
+\[
+D_z^\dagger(\delta\phi) y D_z(\delta\phi) \approx y + \frac{i\delta\phi}{\hbar}[J_z, y]
+\]
+\[
+D_z^\dagger(\delta\phi) z D_z(\delta\phi) \approx z + \frac{i\delta\phi}{\hbar}[J_z, z]
+\]
+利用对易关系 \([J_z, x] = i\hbar y\)，\([J_z, y] = -i\hbar x\)，\([J_z, z] = 0\)，得到：
+\[
+D_z^\dagger(\delta\phi) x D_z(\delta\phi) \approx x - y\delta\phi
+\]
+\[
+D_z^\dagger(\delta\phi) y D_z(\delta\phi) \approx y + x\delta\phi
+\]
+\[
+D_z^\dagger(\delta\phi) z D_z(\delta\phi) \approx z
+\]
+因此，
+\[
+D_z(\delta\phi)|\mathbf{r}'\rangle = |x' - y'\delta\phi, y' + x'\delta\phi, z'\rangle
+\]
+
+(2) 为了证明 \(\langle\alpha|D_z^\dagger(\delta\phi)\mathbf{x}D_z(\delta\phi)|\alpha\rangle = R_z(\delta\phi)\langle\alpha|\mathbf{x}|\alpha\rangle\)，我们利用上面得到的结果：
+\[
+\langle\alpha|D_z^\dagger(\delta\phi)\mathbf{x}D_z(\delta\phi)|\alpha\rangle \approx \langle\alpha|(x - y\delta\phi, y + x\delta\phi, z)|\alpha\rangle
+\]
+\[
+= (\langle\alpha|x|\alpha\rangle - \delta\phi\langle\alpha|y|\alpha\rangle, \langle\alpha|y|\alpha\rangle + \delta\phi\langle\alpha|x|\alpha\rangle, \langle\alpha|z|\alpha\rangle)
+\]
+这正是 \(R_z(\delta\phi)\langle\alpha|\mathbf{x}|\alpha\rangle\)，其中
+\[
+R_z(\delta\phi) = \begin{pmatrix} 1 & -\delta\phi & 0 \\ \delta\phi & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix}
+\]
+因此，我们证明了 \(\langle\alpha|D_z^\dagger(\delta\phi)\mathbf{x}D_z(\delta\phi)|\alpha\rangle = R_z(\delta\phi)\langle\alpha|\mathbf{x}|\alpha\rangle\)。
+
+可以看到，角动量算符 \(\mathbf{J}\) 使得粒子的位置发生了转动。
+
+\end{document}

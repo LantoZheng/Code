@@ -1,0 +1,280 @@
+\documentclass[10pt]{beamer}
+\usepackage[utf8x]{inputenc}
+\usepackage{hyperref}
+\usepackage{fontawesome}
+\usepackage{graphicx}
+\usepackage[english,ngerman]{babel}
+
+% ------------------------------------------------------------------------------
+% Use the beautiful metropolis beamer template
+% ------------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage{fontawesome}
+\usepackage{FiraSans} 
+\mode<presentation>
+{
+  \usetheme[progressbar=foot,numbering=fraction,background=light]{metropolis} 
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+  %\setbeamertemplate{frame footer}{My custom footer}
+} 
+
+% ------------------------------------------------------------------------------
+% beamer doesn't have texttt defined, but I usually want it anyway
+% ------------------------------------------------------------------------------
+\let\textttorig\texttt
+\renewcommand<>{\texttt}[1]{%
+  \only#2{\textttorig{#1}}%
+}
+
+% ------------------------------------------------------------------------------
+% minted
+% ------------------------------------------------------------------------------
+\usepackage{minted}
+
+
+% ------------------------------------------------------------------------------
+% tcolorbox / tcblisting
+% ------------------------------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{codecolor}{HTML}{FFC300}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{most,listingsutf8,minted}
+
+\tcbset{tcbox width=auto,left=1mm,top=1mm,bottom=1mm,
+right=1mm,boxsep=1mm,middle=1pt}
+
+\newtcblisting{myr}[1]{colback=codecolor!5,colframe=codecolor!80!black,listing only, 
+minted options={numbers=left, style=tcblatex,fontsize=\tiny,breaklines,autogobble,linenos,numbersep=3mm},
+left=5mm,enhanced,
+title=#1, fonttitle=\bfseries,
+listing engine=minted,minted language=r}
+
+
+% ------------------------------------------------------------------------------
+% Listings
+% ------------------------------------------------------------------------------
+\definecolor{mygreen}{HTML}{37980D}
+\definecolor{myblue}{HTML}{0D089F}
+\definecolor{myred}{HTML}{98290D}
+
+\usepackage{listings}
+
+% the following is optional to configure custom highlighting
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morecomment=[s]{<!--}{-->},
+  morestring=[s]{>}{<},
+  morekeywords={ref,xmlns,version,type,canonicalRef,metr,real,target}% list your attributes here
+}
+
+\lstdefinestyle{myxml}{
+language=XML,
+showspaces=false,
+showtabs=false,
+basicstyle=\ttfamily,
+columns=fullflexible,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+basicstyle=\color{mygreen}\ttfamily,%\footnotesize,
+stringstyle=\color{myred},
+commentstyle=\color{myblue}\upshape,
+keywordstyle=\color{myblue}\bfseries,
+}
+
+
+% ------------------------------------------------------------------------------
+% The Document
+% ------------------------------------------------------------------------------
+\title{Code-Presentations}
+\author{\LaTeX{} Ninja}
+\date{June 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\begin{frame}[fragile,allowframebreaks]{Intro}
+When I thought about it, I realized there are actually so many ways of displaying code using LaTeX packages. So I'll start with the most basic and then go on to the more advanced ones ;)
+\framebreak
+
+\begin{columns}[T,onlytextwidth]
+\column{0.25\textwidth}
+\metroset{block=fill}
+\begin{exampleblock}{texttt}
+\begin{verbatim}
+\texttt{}
+\end{verbatim}
+\end{exampleblock}
+\column{0.7\textwidth}
+\footnotesize
+This one isn't a verbatim way to express code, but it will change the font to typewriter, so it 'looks like code'. However, in these short bits of code, you will have to use escape sequences for reserved characters.
+
+I make massive use of \texttt{} when 'talking' about code or, you know, writing explanatory text sequences. It is especially useful for bits of code where there is no excessive (or none at all) use of escape sequences. Then it is a really handy way to quickly typeset code. Once you have lots of reserved characters, you might be better of just using this next one.
+\end{columns}
+\framebreak
+
+\begin{columns}[T,onlytextwidth]
+\column{0.35\textwidth}
+\metroset{block=fill}
+\begin{exampleblock}{The verbatim environment}
+\texttt{\\begin\{verbatim\}}
+    code goes here
+\texttt{\\end\{verbatim\}}
+\end{exampleblock}
+\column{0.6\textwidth}
+\footnotesize
+\alert{This one really is a staple} and pretty failsafe, but also doesn't have code highlighting which you might want in most cases, apart from very short bits of code where highlighting isn't important.
+
+You can use verbatim as an environment for multiple lines of code which appear like a quote as a separate block in your text. In other cases, where you just want \texttt{} but without having to escape reserved characters, you might want to use the \verb|some code| command. You can use any characters as delimiters to denote beginng and end of code. So it can also be \verb+test+. The idea is that you can choose one which you will not need inside the code, as not to 'confuse' the enviroment.
+\end{columns}
+\end{frame}
+
+\begin{frame}{Bugs}
+\begin{enumerate}
+    \item listing all the bugs
+    \item oops, this already is one of the main bugs:
+    \begin{itemize}
+        \item If you were to use the \texttt{enumitem} package
+        \item you would get a fatal error
+        \item but no output
+        \item due to package conflicts
+    \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\section{Tcblisting}
+
+\begin{frame}[fragile]{Tcblisting}
+The code is quite tiny because I set the font size to very small in the definition of the little \texttt{myr} 
+\begin{myr}{Load files}
+# text <- readLines(file.choose())
+filePath <- "http://www.link.com/a_text.txt"
+text <- readLines(filePath)
+\end{myr}
+\end{frame}
+
+\section{lstlisting}
+
+\begin{frame}[fragile]{Using Code Listings}
+\begin{lstlisting}[language=R]
+my_vector <- c("testing","vectors")
+my_vector # a test
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Using Code Listings II}
+This time with caption but without code highlighting.
+\begin{lstlisting}[caption={Hello World! in C}]
+int main()
+{
+    printf("Hello World!");
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Code highlighting with listings}
+\begin{lstlisting}[language=Python, caption={A demonstration}]
+import numpy as np
+\end{lstlisting}
+
+You can also use the inline shorthand for small snippets: \lstinline[language=C]!while{$a || $b}!
+
+\end{frame}
+
+\begin{frame}{List of listings}
+    %\lstlistoflistings
+    
+    Well, this is how it's supposed to be, but sadly, using sections inside frames will add up to this result. -- So you can't use this list of listings here.
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Importing listing from file}
+\lstset{style=myxml} % now we activate the custom style
+\lstinputlisting[language=XML]{my_test.xml}
+
+This will only be in colour if you use the settings.
+\end{frame}
+
+\begin{frame}[fragile]{Using Knitr}
+<<>>=
+# Create sequence
+my_sequence = 1:5
+ 
+# use summary function to display stats
+summary(my_sequence)
+ 
+@
+
+Then output values inside the text: \Sexpr{my_sequence}.
+\end{frame}
+
+\begin{frame}[fragile]{Using Knitr with options}
+<<eval=FALSE>>=
+# This package (gutenbergr) is not available 
+# on Overleaf
+# So we set KnitR with eval=FALSE
+# so it will not evaluate
+# and litter our slides with error messages
+library(gutenbergr)
+
+# echo=FALSE hides the code but displays the results
+# echo=1:3 only displays first three lines
+# background=#FFFFFF
+@
+
+\end{frame}
+
+\begin{frame}[fragile]{Using \texttt{minted}}
+ %set the langauge in these brackets after {minted}{LANGUAGE SHORTHAND}
+\begin{minted}{c}
+int main() {
+  printf("hello, world");
+  return 0;
+}
+\end{minted}
+\mintinline{latex}{Can also typeset $code$ inline. Yay to \LaTeX{}!}
+\end{frame}
+
+\begin{frame}[fragile]{Using \texttt{minted}}
+There also is the option to include math mode stuff in the comments.
+\begin{minted}[mathescape,gobble=2]{cpp}
+  /*
+  $\pi=\lim_{n\to\infty}\frac{P_n}{d}$ 
+  */
+  const double pi = 3.1415926535;
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Using \texttt{minted} with options}
+\begin{minted}
+[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=myblue!20,
+fontsize=\footnotesize,
+linenos
+]
+{python}
+import numpy as np
+
+test = 5
+\end{minted}
+\end{frame}
+
+\begin{frame}[standout]
+    This is it ~\alert{\faSmileO}~
+\end{frame}
+
+\end{document}

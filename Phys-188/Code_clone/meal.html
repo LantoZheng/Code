@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交互式法式午餐烹饪指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A task-oriented, multi-panel dashboard. The central element is an interactive Gantt chart timeline visualizing the entire cooking process. Clicking a task on the timeline populates a left panel with detailed step-by-step instructions and a right panel with necessary tools, ingredients for that step, and interactive guides (like the steak doneness test). This structure is chosen because cooking is a real-time, multi-threaded process. It allows the user to see the overall plan (timeline) while focusing on the current task's details, preventing the cognitive overload of scrolling through a long document. A separate, interactive shopping list is available as a modal for pre-cooking preparation. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Cooking Timeline (Table 2) -> Goal: Visualize time management & parallel tasks -> Viz/Method: Interactive Gantt Chart -> Interaction: Click task to update detail panels -> Justification: More intuitive for time planning than a static table -> Library: Chart.js.
+        - Report Info: Shopping List (Table 1) -> Goal: Aid ingredient procurement -> Viz/Method: Interactive Checklist -> Interaction: Click to mark items as purchased -> Justification: More functional for a shopping task -> Library: HTML/CSS/JS.
+        - Report Info: Steak Doneness Guide (Table 3) -> Goal: Teach a key technique without tools -> Viz/Method: Interactive Hand Diagram -> Interaction: Hover/click on hand positions to see details -> Justification: A visual, interactive guide is faster and more memorable than a table during active cooking -> Library: HTML/CSS/JS.
+        - Report Info: Cooking Techniques (Roux, Maillard) -> Goal: Provide deeper knowledge without cluttering the main flow -> Viz/Method: "Pro Tip" callouts within recipe steps -> Interaction: Expandable sections or tooltips -> Justification: Keeps the primary workflow clean while making knowledge accessible -> Library: HTML/CSS/JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            max-height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 300px;
+                max-height: 350px;
+            }
+        }
+        .hand-diagram-zone {
+            transition: all 0.2s ease-in-out;
+        }
+        .hand-diagram-zone:hover {
+            transform: scale(1.2);
+            background-color: rgba(239, 68, 68, 0.2);
+        }
+        .task-card {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+        .task-card.active {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-left-color: #F59E0B;
+        }
+        .sidebar-content {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1C4B3;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #BFB3A2;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="app" class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-20 shadow-sm">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-amber-800">法式经典双人午餐</h1>
+                    <p class="text-sm text-gray-500">您的交互式烹饪助手</p>
+                </div>
+                <button id="shopping-list-btn" class="bg-amber-600 text-white px-4 py-2 rounded-lg shadow hover:bg-amber-700 transition-colors">
+                    🛒 购物清单
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto p-4 mt-4">
+            <!-- Intro Section -->
+            <section class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">开启您的烹饪首秀</h2>
+                <p class="text-gray-600 mb-4">欢迎！本应用将指导您在2.5小时内完成一顿令人惊艳的法式午餐。下方是整个烹饪流程的可视化时间图。点击图表中的任意任务，即可在左侧面板查看详细步骤，在右侧面板获取所需工具与技巧。让我们开始吧！</p>
+                <div class="chart-container mx-auto">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Left Panel: Task Details -->
+                <div id="task-details-panel" class="lg:col-span-4 bg-white rounded-xl shadow-md p-6 order-2 lg:order-1">
+                    <div class="sidebar-content">
+                        <h3 id="task-title" class="text-xl font-bold text-gray-800 mb-4">任务详情</h3>
+                        <div id="task-content" class="prose max-w-none text-gray-700">
+                            <p>请从上方的时间线图表中选择一个任务开始。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Panel: Timeline Tasks -->
+                <div class="lg:col-span-4 bg-white rounded-xl shadow-md p-6 order-1 lg:order-2">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">烹饪行动总览</h3>
+                    <div id="task-list" class="space-y-3">
+                        <!-- Task cards will be generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Right Panel: Tools & Tips -->
+                <div id="tools-tips-panel" class="lg:col-span-4 bg-white rounded-xl shadow-md p-6 order-3 lg:order-3">
+                    <div class="sidebar-content">
+                        <h3 id="tools-title" class="text-xl font-bold text-gray-800 mb-4">工具与技巧</h3>
+                        <div id="tools-content" class="text-gray-700">
+                            <p>此处将显示当前任务所需的工具、食材和实用技巧。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Shopping List Modal -->
+    <div id="shopping-list-modal" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden flex justify-center items-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b sticky top-0 bg-white">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800">食材采购清单 (两人份)</h2>
+                    <button id="close-modal-btn" class="text-gray-500 hover:text-red-500 text-2xl">&times;</button>
+                </div>
+                 <p class="text-sm text-gray-500 mt-1">点击食材即可标记为已购买。</p>
+            </div>
+            <div id="shopping-list-content" class="p-6">
+                <!-- Shopping list will be generated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const appData = {
+                shoppingList: [
+                    { category: '肉类专柜', items: [{ name: '西冷牛排', spec: '2块, 每块约200-250克, 厚度约1.5-2厘米', note: '选择肉色鲜红、脂肪洁白的牛排' }] },
+                    { category: '生鲜蔬菜区', items: [
+                        { name: '口蘑', spec: '约250克' }, { name: '洋葱', spec: '1个 (中等大小)' },
+                        { name: '大蒜', spec: '1整头' }, { name: '胡萝卜', spec: '1根' },
+                        { name: '土豆', spec: '1个 (中等大小)' }, { name: '彩椒', spec: '1个 (红色或黄色为佳)' },
+                        { name: '西兰花', spec: '半颗' }, { name: '欧芹', spec: '1小束', note: '用于装饰，可选' }
+                    ]},
+                    { category: '乳制品与冷藏区', items: [
+                        { name: '无盐黄油', spec: '1小块 (约50-60克)' }, { name: '纯牛奶', spec: '500毫升' },
+                        { name: '淡奶油', spec: '1小盒 (约150-200毫升)', note: '脂肪含量35%左右为佳' }
+                    ]},
+                    { category: '干货与调味品区', items: [
+                        { name: '中筋或低筋面粉', spec: '约30克' }, { name: '橄榄油', spec: '1瓶' },
+                        { name: '黑胡椒粒', spec: '1小瓶 (强烈推荐现磨)' }, { name: '海盐', spec: '1小瓶' },
+                        { name: '干红葡萄酒', spec: '1小瓶', note: '用于制作酱汁，可选但推荐' },
+                        { name: '鸡汤块或浓缩鸡汤', spec: '1块或1小罐' }, { name: '香叶', spec: '几片' }
+                    ]}
+                ],
+                timeline: [
+                    { id: 'prep', name: '准备工作 (Mise en Place)', start: 0, end: 15, details: `<h4>核心任务：</h4><p>从冰箱取出牛排，使其恢复室温。预热烤箱至210°C。准备所有烤蔬菜（切块）。</p><h4>操作详解：</h4><ol class="list-decimal list-inside space-y-2"><li><strong>牛排回温：</strong>这是保证牛排内外受热均匀的关键第一步。提前15-30分钟取出，让它在室温下“休息”。</li><li><strong>预热烤箱：</strong>高温是烤出焦香蔬菜的秘诀。将烤箱设置为上下火210°C。</li><li><strong>蔬菜切块：</strong>将土豆、胡萝卜切滚刀块，彩椒切块，西兰花掰成小朵。尽量大小均匀。</li></ol>`, tools: `<h5>工具:</h5><ul class="list-disc list-inside"><li>烤箱</li><li>刀、砧板</li></ul><h5>食材:</h5><ul class="list-disc list-inside"><li>西冷牛排</li><li>土豆, 胡萝卜, 彩椒, 西兰花</li></ul>` },
+                    { id: 'roast', name: '烤制蔬菜', start: 15, end: 45, details: `<h4>核心任务：</h4><p>将蔬菜与橄榄油、盐、黑胡椒混合均匀，平铺在烤盘上送入烤箱。设定30-40分钟的计时。</p><h4>操作详解：</h4><ol class="list-decimal list-inside space-y-2"><li><strong>调味：</strong>在大碗中放入所有切好的蔬菜，淋上足量橄榄油，撒上海盐和现磨黑胡椒，用手或工具翻拌均匀。</li><li><strong>平铺：</strong>将蔬菜均匀平铺在烤盘上，<strong>保证不重叠</strong>，给予它们足够的空间。这是烤出焦香而非蒸熟的关键！</li><li><strong>入炉：</strong>送入预热好的烤箱中层。</li></ol>`, tools: `<h5>工具:</h5><ul class="list-disc list-inside"><li>烤盘</li><li>大碗</li></ul><h5>食材:</h5><ul class="list-disc list-inside"><li>切好的蔬菜</li><li>橄榄油, 盐, 黑胡椒</li></ul><div class="mt-4 p-3 bg-amber-50 rounded-lg"><h5 class="font-bold text-amber-800">💡 焦香的黄金法则</h5><p>蔬菜之间必须有空隙，让热空气循环，带走蒸汽。拥挤=蒸蔬菜，分散=烤蔬菜。</p></div>` },
+                    { id: 'soup_prep', name: '浓汤备料', start: 45, end: 75, details: `<h4>核心任务：</h4><p>在蔬菜烤制期间，准备浓汤的全部食材：洋葱切丁，蘑菇切片。</p><h4>操作详解：</h4><ol class="list-decimal list-inside space-y-2"><li><strong>洋葱切丁：</strong>将洋葱切成细小的丁。</li><li><strong>蘑菇切片：</strong>将口蘑清理干净后切成约2-3毫米厚的片。</li></ol>`, tools: `<h5>工具:</h5><ul class="list-disc list-inside"><li>刀、砧板</li></ul><h5>食材:</h5><ul class="list-disc list-inside"><li>洋葱</li><li>口蘑</li></ul>` },
+                    { id: 'cook_soup', name: '熬煮浓汤', start: 75, end: 105, details: `<h4>核心任务：</h4><p>用汤锅开始制作浓汤。炒香洋葱和蘑菇，制作法式油面糊(Roux)，加入液体，开始煨煮。</p><h4>操作详解：</h4><ol class="list-decimal list-inside space-y-2"><li><strong>炒香基底：</strong>在汤锅中融化一半黄油，中小火炒香洋葱丁至半透明。加入蘑菇片炒至金黄，预留一小部分炒好的蘑菇做装饰。</li><li><strong>制作油面糊(Roux)：</strong>在锅中融化剩余黄油，加入面粉，用打蛋器小火慢炒4-5分钟，散发出坚果香气。</li><li><strong>加入液体：</strong>一边快速搅拌，一边缓慢倒入<strong>冰凉的</strong>牛奶，然后加入鸡高汤和香叶，搅拌至顺滑。</li><li><strong>煨煮：</strong>转中火煮开，然后转最小火，加盖慢煮约15-20分钟。</li></ol>`, tools: `<h5>工具:</h5><ul class="list-disc list-inside"><li>汤锅</li><li>打蛋器</li></ul><h5>食材:</h5><ul class="list-disc list-inside"><li>黄油, 面粉, 牛奶, 鸡高汤, 香叶</li></ul><div class="mt-4 p-3 bg-amber-50 rounded-lg"><h5 class="font-bold text-amber-800">💡 丝滑的秘密：Roux</h5><p>将<strong>冰凉</strong>液体加入热油面糊中，可以防止面粉结块，是制作顺滑浓汤的关键技巧。</p></div>` },
+                    { id: 'finish_soup', name: '完成浓汤 & 检查蔬菜', start: 105, end: 120, details: `<h4>核心任务：</h4><p>检查烤蔬菜，完成浓汤调味并保温。</p><h4>操作详解：</h4><ol class="list-decimal list-inside space-y-2"><li><strong>检查蔬菜：</strong>查看烤蔬菜是否边缘焦糖化、质地变软。如果完成，从烤箱中取出。可翻动一次使其受热更均。</li><li><strong>打磨浓汤：</strong>关火，取出香叶。用料理棒将汤打至顺滑。或稍放凉后用搅拌机操作。</li><li><strong>最后调味：</strong>倒回锅中，加入淡奶油、盐、胡椒调味，小火煮至微沸即可关火，盖上盖子保温。</li></ol>`, tools: `<h5>工具:</h5><ul class="list-disc list-inside"><li>料理棒或搅拌机</li></ul><h5>食材:</h5><ul class="list-disc list-inside"><li>淡奶油, 盐, 胡椒</li></ul>` },
+                    { id: 'sear_steak', name: '煎制牛排', start: 120, end: 135, details: `<h4>核心任务：</h4><p>将平底锅加热至冒烟，放入牛排，根据期望的熟度进行煎制。</p><h4>操作详解：</h4><ol class="list-decimal list-inside space-y-2"><li><strong>吸干水分：</strong>用厨房纸巾彻底吸干牛排表面水分，这是形成焦脆外壳的关键。</li><li><strong>调味：</strong>两面均匀撒上海盐和现磨黑胡椒。</li><li><strong>热锅热油：</strong>平底锅大火加热至冒白烟，倒入少许橄榄油。</li><li><strong>下锅煎制：</strong>放入牛排，发出强烈的“滋滋”声。根据熟度指南煎制，中途可加入黄油、大蒜增加风味。</li></ol>`, tools: `<h5>工具:</h5><ul class="list-disc list-inside"><li>平底锅</li><li>厨房纸巾</li></ul><h5>食材:</h5><ul class="list-disc list-inside"><li>回温好的牛排</li><li>橄榄油, 黄油, 大蒜</li></ul><div class="mt-4 p-3 bg-amber-50 rounded-lg"><h5 class="font-bold text-amber-800">💡 完美熟度指南</h5><p>无需温度计！通过按压虎口肌肉硬度来判断牛排熟度。将鼠标悬停在下方示意图上查看详情。</p><div id="hand-test-diagram" class="relative w-48 h-48 mx-auto mt-2"> <img src="https://placehold.co/200x200/FDFBF8/4A4A4A?text=手掌示意图" alt="手掌示意图" class="w-full h-full object-cover rounded-full"> <div data-doneness="medium" class="hand-diagram-zone absolute top-[35%] left-[60%] w-8 h-8 rounded-full cursor-pointer border-2 border-dashed border-red-400" title="五分熟"></div> <div data-doneness="medium-well" class="hand-diagram-zone absolute top-[45%] left-[70%] w-8 h-8 rounded-full cursor-pointer border-2 border-dashed border-blue-400" title="七分熟"></div> </div><div id="doneness-info" class="text-center mt-2 h-16"></div></div>` },
+                    { id: 'rest_steak', name: '牛排静置 & 制酱', start: 135, end: 145, details: `<h4>核心任务：</h4><p>将煎好的牛排移至盘中静置，利用锅中底油制作黑椒酱汁。</p><h4>操作详解：</h4><ol class="list-decimal list-inside space-y-2"><li><strong>静置：</strong>将牛排从锅中取出，放在盘子或架子上，静置5-8分钟。这是锁住肉汁、保证多汁口感的<strong>最重要</strong>一步。</li><li><strong>制作酱汁(Deglazing)：</strong>利用锅中底油，加入红酒刮起锅底焦香物。待酒精挥发后，加入鸡高汤和大量黑胡椒，煮至浓缩即可。</li></ol>`, tools: `<h5>工具:</h5><ul class="list-disc list-inside"><li>煎牛排的平底锅</li><li>木勺或硅胶铲</li></ul><h5>食材:</h5><ul class="list-disc list-inside"><li>干红葡萄酒, 鸡高汤, 黑胡椒</li></ul><div class="mt-4 p-3 bg-amber-50 rounded-lg"><h5 class="font-bold text-amber-800">💡 静置的科学</h5><p>静置让紧绷的肌肉纤维放松，将汁水重新吸收回整块牛排中，防止切开时汁水流失。</p></div>` },
+                    { id: 'plate', name: '最终摆盘', start: 145, end: 150, details: `<h4>核心任务：</h4><p>组合所有元素，精美地呈现在餐盘上。</p><h4>操作详解：</h4><ol class="list-decimal list-inside space-y-2"><li><strong>预热餐盘：</strong>可用烤箱余温或热水加热餐盘，保持食物温度。</li><li><strong>浓汤：</strong>盛入碗中，用预留的蘑菇和欧芹碎装饰。</li><li><strong>牛排：</strong>逆着纹理切成1厘米厚的片，扇形摆放。</li><li><strong>组合：</strong>将牛排、烤蔬菜摆好，最后淋上温热的黑椒汁。</li></ol><p class="font-bold mt-4">恭喜！您的第一份杰作完成了，请尽情享用吧！</p>`, tools: `<h5>工具:</h5><ul class="list-disc list-inside"><li>预热好的餐盘</li><li>刀、砧板</li></ul><h5>食材:</h5><ul class="list-disc list-inside"><li>所有完成的菜品</li></ul>` }
+                ],
+                donenessGuide: {
+                    'medium': { title: '五分熟 (Medium)', hand: '拇指与中指捏合', description: '内部大部分为粉红色，中心温热。', time: '每面约1.5-2分钟' },
+                    'medium-well': { title: '七分熟 (Medium-Well)', hand: '拇指与无名指捏合', description: '内部浅灰褐色，中心保留细微粉红。', time: '每面约2-2.5分钟' }
+                }
+            };
+
+            const taskListEl = document.getElementById('task-list');
+            const taskTitleEl = document.getElementById('task-title');
+            const taskContentEl = document.getElementById('task-content');
+            const toolsTitleEl = document.getElementById('tools-title');
+            const toolsContentEl = document.getElementById('tools-content');
+            
+            let activeTaskId = null;
+
+            function updateUI(taskId) {
+                if (activeTaskId === taskId) return;
+                activeTaskId = taskId;
+
+                const task = appData.timeline.find(t => t.id === taskId);
+                if (!task) return;
+
+                document.querySelectorAll('.task-card').forEach(card => {
+                    card.classList.toggle('active', card.dataset.taskId === taskId);
+                });
+                
+                const taskDetailsPanel = document.getElementById('task-details-panel');
+                const toolsTipsPanel = document.getElementById('tools-tips-panel');
+                
+                taskDetailsPanel.innerHTML = `<div class="sidebar-content"><h3 class="text-xl font-bold text-gray-800 mb-4">${task.name}</h3><div class="prose max-w-none text-gray-700">${task.details}</div></div>`;
+                toolsTipsPanel.innerHTML = `<div class="sidebar-content"><h3 class="text-xl font-bold text-gray-800 mb-4">工具、食材与技巧</h3><div class="text-gray-700">${task.tools}</div></div>`;
+
+                if (taskId === 'sear_steak') {
+                    setupHandTestInteraction();
+                }
+            }
+            
+            function setupHandTestInteraction() {
+                const donenessInfoEl = document.getElementById('doneness-info');
+                document.querySelectorAll('.hand-diagram-zone').forEach(zone => {
+                    zone.addEventListener('mouseover', (e) => {
+                        const donenessKey = e.target.dataset.doneness;
+                        const info = appData.donenessGuide[donenessKey];
+                        if (info) {
+                            donenessInfoEl.innerHTML = `<p class="font-bold">${info.title}</p><p>手感: ${info.hand}</p><p>时间: ${info.time}</p>`;
+                        }
+                    });
+                    zone.addEventListener('mouseleave', () => {
+                        donenessInfoEl.innerHTML = '';
+                    });
+                });
+            }
+
+            // Render Task List
+            appData.timeline.forEach(task => {
+                const card = document.createElement('div');
+                card.className = 'task-card bg-gray-50 border-l-4 border-gray-200 p-4 rounded-lg shadow-sm hover:shadow-md hover:border-amber-400';
+                card.dataset.taskId = task.id;
+                card.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-gray-800">${task.name}</h4>
+                        <span class="text-sm font-mono text-gray-500">${task.start}-${task.end} min</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => updateUI(task.id));
+                taskListEl.appendChild(card);
+            });
+
+            // Render Shopping List
+            const shoppingListContentEl = document.getElementById('shopping-list-content');
+            appData.shoppingList.forEach(category => {
+                const categoryEl = document.createElement('div');
+                categoryEl.className = 'mb-6';
+                let itemsHtml = `<h4 class="text-lg font-bold text-amber-700 border-b-2 border-amber-200 pb-2 mb-3">${category.category}</h4><ul class="space-y-2">`;
+                category.items.forEach(item => {
+                    itemsHtml += `
+                        <li class="flex items-center cursor-pointer group" onclick="this.classList.toggle('line-through'); this.classList.toggle('text-gray-400');">
+                            <span class="mr-3 text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity">✓</span>
+                            <div>
+                                <strong class="group-hover:text-amber-800">${item.name}</strong> - ${item.spec}
+                                ${item.note ? `<span class="text-sm text-gray-500 block">${item.note}</span>` : ''}
+                            </div>
+                        </li>`;
+                });
+                itemsHtml += '</ul>';
+                categoryEl.innerHTML = itemsHtml;
+                shoppingListContentEl.appendChild(categoryEl);
+            });
+
+            // Modal Logic
+            const modal = document.getElementById('shopping-list-modal');
+            document.getElementById('shopping-list-btn').addEventListener('click', () => modal.classList.remove('hidden'));
+            document.getElementById('close-modal-btn').addEventListener('click', () => modal.classList.add('hidden'));
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+
+            // Chart.js Timeline
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+            const timelineData = {
+                labels: appData.timeline.map(t => t.name.split('(')[0].trim()),
+                datasets: [{
+                    label: '烹饪任务 (分钟)',
+                    data: appData.timeline.map(t => [t.start, t.end]),
+                    backgroundColor: [
+                        'rgba(217, 119, 6, 0.6)', 'rgba(217, 119, 6, 0.8)',
+                        'rgba(202, 138, 4, 0.6)', 'rgba(202, 138, 4, 0.8)',
+                        'rgba(161, 98, 7, 0.7)', 'rgba(120, 53, 15, 0.6)',
+                        'rgba(120, 53, 15, 0.8)', 'rgba(77, 42, 14, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(217, 119, 6, 1)', 'rgba(217, 119, 6, 1)',
+                        'rgba(202, 138, 4, 1)', 'rgba(202, 138, 4, 1)',
+                        'rgba(161, 98, 7, 1)', 'rgba(120, 53, 15, 1)',
+                        'rgba(120, 53, 15, 1)', 'rgba(77, 42, 14, 1)'
+                    ],
+                    borderWidth: 1,
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.7,
+                    borderSkipped: false,
+                    borderRadius: 5,
+                }]
+            };
+            const timelineChart = new Chart(ctx, {
+                type: 'bar',
+                data: timelineData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const elementIndex = elements[0].index;
+                            const taskId = appData.timeline[elementIndex].id;
+                            updateUI(taskId);
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const task = appData.timeline[context.dataIndex];
+                                    return `${task.name}: ${task.start} - ${task.end} 分钟 (持续 ${task.end - task.start} 分钟)`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            min: 0,
+                            max: 150,
+                            title: {
+                                display: true,
+                                text: '时间 (分钟)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                autoSkip: false,
+                                callback: function(value, index, values) {
+                                    const label = this.getLabelForValue(value);
+                                    return label.length > 16 ? label.substring(0, 16) + '...' : label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Select first task by default
+            if (appData.timeline.length > 0) {
+                updateUI(appData.timeline[0].id);
+            }
+        });
+    </script>
+</body>
+</html>

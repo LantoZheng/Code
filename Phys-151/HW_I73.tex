@@ -1,0 +1,49 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{tikz-feynman}
+\tikzfeynmanset{compat=1.1.0}
+
+\begin{document}
+
+\section*{I.7.3}
+
+\subsection*{1. Lowest Order Contribution}
+The interaction Lagrangian is $\mathcal{L}_{\text{int}} = -\frac{\lambda}{4!} \phi^4$. The scattering process is $\phi(p_1) + \phi(p_2) \rightarrow \phi(k_1) + \phi(k_2) + \phi(k_3) + \phi(k_4)$. The lowest order contribution is at $\mathcal{O}(\lambda^2)$, which involves two vertices ($V=2$) connected by one internal propagator ($I=1$). The total number of distinct diagrams is 10.
+
+\subsection*{2. Diagram Classes}
+The 10 diagrams fall into two topological classes.
+
+\subsubsection*{Class A (4 diagrams)}
+Both initial particles ($p_1, p_2$) attach to the same vertex.
+\begin{center}
+    \feynmandiagram [horizontal=a to b] {
+      p1 [particle=\(p_1\)] -- a,
+      p2 [particle=\(p_2\)] -- a,
+      a -- [scalar, momentum=\(q\)] b,
+      k1 [particle=\(k_1\)] -- a,
+      b -- k2 [particle=\(k_2\)],
+      b -- k3 [particle=\(k_3\)],
+      b -- k4 [particle=\(k_4\)],
+    };
+\end{center}
+
+\subsubsection*{Class B (6 diagrams)}
+The initial particles attach to different vertices.
+\begin{center}
+    \feynmandiagram [horizontal=a to b] {
+      p1 [particle=\(p_1\)] -- a,
+      k1 [particle=\(k_1\)] -- a,
+      k2 [particle=\(k_2\)] -- a,
+      a -- [scalar, momentum'=\(q\)] b,
+      p2 [particle=\(p_2\)] -- b,
+      b -- k3 [particle=\(k_3\)],
+      b -- k4 [particle=\(k_4\)],
+    };
+\end{center}
+
+\subsection*{3. Feynman Amplitudes}
+The total invariant amplitude $\mathcal{M}$ is the sum over all 10 diagrams.
+$$ \mathcal{M} = -\lambda^2 \left[ \sum_{i=1}^4 \frac{1}{(p_1 + p_2 - k_i)^2 - m^2} + \sum_{1 \le i < j \le 4} \frac{1}{(p_1 - k_i - k_j)^2 - m^2} \right] $$
+
+\end{document}

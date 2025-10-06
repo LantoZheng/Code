@@ -1,0 +1,270 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{ctex}
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+\usepackage{physics} % For \bra{}, \ket{}, \braket{}, \expval{}
+\usepackage{bm}
+
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{conclusion}{Conclusion}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+% 定义常用物理常量符号
+\newcommand{\kb}{k_{\mathrm{B}}} % 玻尔兹曼常数
+\newcommand{\mub}{\mu_{\mathrm{B}}} % 玻尔磁子
+
+\begin{document}
+
+\title{量子力学 II 作业 5}
+\author{姓名: 郑晓旸 \\ 学号: 202111030007}
+\date{ \today}
+\maketitle
+
+\section*{问题1}
+
+考虑一个由自旋 1/2 粒子构成的纯态系综。如果我们已知该纯态下泡利算符 \(\sigma_x\) 和 \(\sigma_z\) 的期望值 \(\expval{\sigma_x}\) 和 \(\expval{\sigma_z}\)，以及 \(\sigma_y\) 的期望值 \(\expval{\sigma_y}\) 的符号（即 \(\text{sgn}(\expval{\sigma_y})\)），我们能否唯一地确定这个纯态（除去一个整体相位因子）？
+
+\subsection*{解答}
+
+\subsubsection*{自旋1/2纯态的参数化}
+一个任意的自旋 1/2 纯态 \(\ket{\psi}\) 可以表示为自旋向上 \(\ket{+}_z = \begin{pmatrix} 1 \\ 0 \end{pmatrix}\) 和自旋向下 \(\ket{-}_z = \begin{pmatrix} 0 \\ 1 \end{pmatrix}\) （\(\sigma_z\) 的本征态）的线性叠加：
+\[
+\ket{\psi} = a \ket{+}_z + b \ket{-}_z = \begin{pmatrix} a \\ b \end{pmatrix}
+\]
+其中 \(a, b \in \mathbb{C}\) 且满足归一化条件 \(|a|^2 + |b|^2 = 1\)。
+由于整体相位不影响物理状态，我们可以选择 \(a\) 为实数且非负。因此，可以将状态参数化为：
+\[
+\ket{\psi(\theta, \phi)} = \cos(\theta/2) \ket{+}_z + e^{i\phi} \sin(\theta/2) \ket{-}_z = \begin{pmatrix} \cos(\theta/2) \\ e^{i\phi} \sin(\theta/2) \end{pmatrix}
+\]
+其中 \(0 \le \theta \le \pi\) 是极角，\(0 \le \phi < 2\pi\) 是方位角。这对应于布洛赫球面上的一个点。我们的目标是利用给定信息确定 \(\theta\) 和 \(\phi\)。
+
+\subsubsection*{泡利算符的期望值}
+泡利算符为：
+\[
+\sigma_x = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad
+\sigma_y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \quad
+\sigma_z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}
+\]
+在态 \(\ket{\psi(\theta, \phi)}\) 下的期望值 \(\expval{\sigma_i} = \bra{\psi} \sigma_i \ket{\psi}\) 计算如下：
+\begin{align*}
+\expval{\sigma_x} &= \bra{\psi} \sigma_x \ket{\psi} = \begin{pmatrix} \cos(\theta/2) & e^{-i\phi} \sin(\theta/2) \end{pmatrix} \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} \cos(\theta/2) \\ e^{i\phi} \sin(\theta/2) \end{pmatrix} \\
+&= \cos(\theta/2) (e^{i\phi} \sin(\theta/2)) + (e^{-i\phi} \sin(\theta/2)) \cos(\theta/2) \\
+&= \sin(\theta/2)\cos(\theta/2) (e^{i\phi} + e^{-i\phi}) = \frac{1}{2} \sin(\theta) (2\cos(\phi)) \\
+&= \sin(\theta) \cos(\phi)
+\end{align*}
+\begin{align*}
+\expval{\sigma_y} &= \bra{\psi} \sigma_y \ket{\psi} = \begin{pmatrix} \cos(\theta/2) & e^{-i\phi} \sin(\theta/2) \end{pmatrix} \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix} \begin{pmatrix} \cos(\theta/2) \\ e^{i\phi} \sin(\theta/2) \end{pmatrix} \\
+&= \cos(\theta/2) (-i e^{i\phi} \sin(\theta/2)) + (e^{-i\phi} \sin(\theta/2)) (i \cos(\theta/2)) \\
+&= \sin(\theta/2)\cos(\theta/2) (-i e^{i\phi} + i e^{-i\phi}) = \frac{1}{2} \sin(\theta) i(e^{-i\phi} - e^{i\phi}) \\
+&= \frac{1}{2} \sin(\theta) i(-2i \sin(\phi)) \\
+&= \sin(\theta) \sin(\phi)
+\end{align*}
+\begin{align*}
+\expval{\sigma_z} &= \bra{\psi} \sigma_z \ket{\psi} = \begin{pmatrix} \cos(\theta/2) & e^{-i\phi} \sin(\theta/2) \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \begin{pmatrix} \cos(\theta/2) \\ e^{i\phi} \sin(\theta/2) \end{pmatrix} \\
+&= \cos^2(\theta/2) - \sin^2(\theta/2) \\
+&= \cos(\theta)
+\end{align*}
+总结得到布洛赫向量 \(\mathbf{S} = (\expval{\sigma_x}, \expval{\sigma_y}, \expval{\sigma_z}) = (\sin\theta \cos\phi, \sin\theta \sin\phi, \cos\theta)\)。对于纯态，其模长 \(|\mathbf{S}|=1\)。
+
+\subsubsection*{利用给定信息确定 \(\theta\) 和 \(\phi\)}
+我们已知 \(\expval{\sigma_x}\), \(\expval{\sigma_z}\) 的值和 \(\text{sgn}(\expval{\sigma_y})\)。
+
+\paragraph{确定 \(\theta\):}
+由 \(\expval{\sigma_z} = \cos(\theta)\) 和 \(0 \le \theta \le \pi\)，\(\cos(\theta)\) 的值唯一确定了 \(\theta\):
+\[
+\theta = \arccos(\expval{\sigma_z})
+\]
+确定 \(\theta\) 后，\(\sin(\theta)\) 的值也随之确定，且 \(\sin(\theta) = \sqrt{1 - \cos^2(\theta)} = \sqrt{1 - \expval{\sigma_z}^2} \ge 0\)。
+
+\paragraph{确定 \(\phi\):}
+我们需要分情况讨论：
+
+\subparagraph{情况 1: \(\sin(\theta) \neq 0\) (即 \(\theta \neq 0\) 且 \(\theta \neq \pi\)，对应 \(\expval{\sigma_z} \neq \pm 1\))}
+在这种情况下，我们可以从 \(\expval{\sigma_x} = \sin(\theta) \cos(\phi)\) 计算 \(\cos(\phi)\)：
+\[
+\cos(\phi) = \frac{\expval{\sigma_x}}{\sin(\theta)} = \frac{\expval{\sigma_x}}{\sqrt{1 - \expval{\sigma_z}^2}}
+\]
+知道 \(\cos(\phi)\) 的值通常会给出两个可能的 \(\phi\) 值，记为 \(\phi_0\) 和 \(2\pi - \phi_0\)（或 \(\phi_0\) 和 \(-\phi_0\) 模 \(2\pi\)）。
+此时，我们利用 \(\expval{\sigma_y}\) 的符号信息。我们有 \(\expval{\sigma_y} = \sin(\theta) \sin(\phi)\)。因为我们已确定 \(\sin(\theta) > 0\)，所以 \(\expval{\sigma_y}\) 的符号与 \(\sin(\phi)\) 的符号完全相同：
+\[
+\text{sgn}(\expval{\sigma_y}) = \text{sgn}(\sin(\phi))
+\]
+结合 \(\cos(\phi)\) 的值和 \(\sin(\phi)\) 的符号，可以唯一地确定角 \(\phi\) 在 \([0, 2\pi)\) 区间内的值。例如：
+\begin{itemize}
+    \item 如果 \(\cos(\phi) > 0\) 且 \(\text{sgn}(\expval{\sigma_y}) > 0\) (\(\sin(\phi) > 0\))，则 \(\phi\) 在第一象限。
+    \item 如果 \(\cos(\phi) < 0\) 且 \(\text{sgn}(\expval{\sigma_y}) > 0\) (\(\sin(\phi) > 0\))，则 \(\phi\) 在第二象限。
+    \item 如果 \(\cos(\phi) < 0\) 且 \(\text{sgn}(\expval{\sigma_y}) < 0\) (\(\sin(\phi) < 0\))，则 \(\phi\) 在第三象限。
+    \item 如果 \(\cos(\phi) > 0\) 且 \(\text{sgn}(\expval{\sigma_y}) < 0\) (\(\sin(\phi) < 0\))，则 \(\phi\) 在第四象限。
+    \item 如果 \(\text{sgn}(\expval{\sigma_y}) = 0\) (\(\sin(\phi) = 0\))，则 \(\phi = 0\) 或 \(\pi\)。由 \(\cos(\phi) = \expval{\sigma_x}/\sin(\theta)\) 的值 (\(\pm 1\)) 可以确定是哪一个。
+    \item 如果 \(\expval{\sigma_x} = 0\) (\(\cos(\phi) = 0\))，则 \(\phi = \pi/2\) 或 \(3\pi/2\)。由 \(\text{sgn}(\expval{\sigma_y})\) 的符号 (\(\pm 1\)) 可以确定是哪一个。
+\end{itemize}
+
+\subparagraph{情况 2: \(\sin(\theta) = 0\) (即 \(\theta = 0\) 或 \(\theta = \pi\)，对应 \(\expval{\sigma_z} = \pm 1\))}
+\begin{itemize}
+    \item 如果 \(\theta = 0\)，则 \(\expval{\sigma_z} = 1\)。此时必然有 \(\expval{\sigma_x} = 0 \times \cos(\phi) = 0\) 和 \(\expval{\sigma_y} = 0 \times \sin(\phi) = 0\)。给定的信息 \(\expval{\sigma_x} = 0\)，\(\expval{\sigma_z} = 1\)，\(\text{sgn}(\expval{\sigma_y}) = 0\) 唯一确定了状态为 \(\ket{+}_z\)。此时 \(\phi\) 无定义，但这不影响状态的唯一性。
+    \item 如果 \(\theta = \pi\)，则 \(\expval{\sigma_z} = -1\)。此时必然有 \(\expval{\sigma_x} = 0\) 和 \(\expval{\sigma_y} = 0\)。给定的信息 \(\expval{\sigma_x} = 0\)，\(\expval{\sigma_z} = -1\)，\(\text{sgn}(\expval{\sigma_y}) = 0\) 唯一确定了状态为 \(\ket{-}_z\)。此时 \(\phi\) 也无定义。
+\end{itemize}
+
+\subsubsection*{结论}
+在所有情况下，给定的信息 \(\expval{\sigma_x}\)，\(\expval{\sigma_z}\) 和 \(\text{sgn}(\expval{\sigma_y})\) 都足以唯一地确定参数 \(\theta\) 和 \(\phi\)（或者在 \(\theta=0, \pi\) 的情况下直接确定状态）。由于纯态 \(\ket{\psi}\) 由 \(\theta\) 和 \(\phi\) 唯一确定（除去整体相位），因此该纯态可以被唯一确定。
+\section*{问题 2.1}
+
+设一个量子系统的密度算符在时刻 \(t_0\) 为 \(\rho(t_0)\)。在幺正演化下，系统在时刻 \(t\) 的密度算符 \(\rho(t)\) 由下式给出：
+\[
+\rho(t) = U(t, t_0) \rho(t_0) U^\dagger(t, t_0)
+\]
+其中 \(U(t, t_0)\) 是从时刻 \(t_0\) 到 \(t\) 的时间演化算符，满足 \(U^\dagger(t, t_0) U(t, t_0) = I\) 且 \(U(t_0, t_0) = I\)。
+
+\begin{proof}
+考虑一个在时刻 \(t_0\) 由系综 \(\{ p_i, |\psi_i(t_0)\rangle \}\) 描述的量子系统，其中 \(p_i\) 是处于归一化纯态 \(|\psi_i(t_0)\rangle\) 的概率，且 \(\sum_i p_i = 1\)。
+根据定义，时刻 \(t_0\) 的密度算符为：
+\[
+\rho(t_0) = \sum_i p_i |\psi_i(t_0)\rangle \langle \psi_i(t_0)|
+\]
+根据量子力学的时间演化原理，状态向量从 \(t_0\) 到 \(t\) 的演化为：
+\[
+|\psi_i(t)\rangle = U(t, t_0) |\psi_i(t_0)\rangle
+\]
+其对应的右矢 (bra) 演化为：
+\[
+\langle \psi_i(t)| = \langle \psi_i(t_0)| U^\dagger(t, t_0)
+\]
+在幺正演化过程中，概率 \(p_i\) 保持不变。因此，在时刻 \(t\)，系统由系综 \(\{ p_i, |\psi_i(t)\rangle \}\) 描述。
+时刻 \(t\) 的密度算符 \(\rho(t)\) 为：
+\[
+\rho(t) = \sum_i p_i |\psi_i(t)\rangle \langle \psi_i(t)|
+\]
+将 \(|\psi_i(t)\rangle\) 和 \(\langle \psi_i(t)|\) 的表达式代入：
+\begin{align*}
+\rho(t) &= \sum_i p_i \left( U(t, t_0) |\psi_i(t_0)\rangle \right) \left( \langle \psi_i(t_0)| U^\dagger(t, t_0) \right) \\
+&= U(t, t_0) \left( \sum_i p_i |\psi_i(t_0)\rangle \langle \psi_i(t_0)| \right) U^\dagger(t, t_0) \quad \text{(因为 \(U\) 和 \(U^\dagger\) 与 \(i\) 无关)} \\
+&= U(t, t_0) \rho(t_0) U^\dagger(t, t_0)
+\end{align*}
+证毕。
+\end{proof}
+
+\section*{问题 2.2}
+
+如果一个量子系统在时刻 \(t_0\) 处于一个纯态，那么在幺正时间演化下，它在任意时刻 \(t\) 仍然处于一个纯态。换言之，纯态系综不可能通过幺正演化变成混合态系综。
+
+\begin{proof}
+我们利用密度算符的纯度 (Purity) \(\mathcal{P} = \Tr(\rho^2)\) 来判别状态的类型。
+\begin{itemize}
+    \item 系统处于纯态 \(\iff \rho = |\psi\rangle\langle\psi| \iff \rho^2 = \rho \iff \Tr(\rho^2) = 1\)。
+    \item 系统处于混合态 \(\iff \rho = \sum_i p_i |\psi_i\rangle\langle\psi_i|\) (至少两个 \(p_i > 0\)) \(\iff \rho^2 \neq \rho \iff \Tr(\rho^2) < 1\)。
+\end{itemize}
+（注意：对于所有密度算符，\(\Tr(\rho) = 1\) 且 \(0 < \Tr(\rho^2) \le 1\)）。
+假设系统在时刻 \(t_0\) 处于纯态。这意味着 \(\rho(t_0)\) 描述一个纯态，因此：
+\[
+\Tr(\rho(t_0)^2) = 1
+\]
+系统在时刻 \(t\) 的密度算符为 \(\rho(t) = U(t, t_0) \rho(t_0) U^\dagger(t, t_0)\)。我们计算 \(\rho(t)\) 的纯度：
+\[
+\rho(t)^2 = \left( U(t, t_0) \rho(t_0) U^\dagger(t, t_0) \right) \left( U(t, t_0) \rho(t_0) U^\dagger(t, t_0) \right)
+\]
+利用时间演化算符的幺正性 \(U^\dagger(t, t_0) U(t, t_0) = I\)，我们得到：
+\[
+\rho(t)^2 = U(t, t_0) \rho(t_0) (U^\dagger(t, t_0) U(t, t_0)) \rho(t_0) U^\dagger(t, t_0)
+\]
+\[
+\rho(t)^2 = U(t, t_0) \rho(t_0) I \rho(t_0) U^\dagger(t, t_0)
+\]
+\[
+\rho(t)^2 = U(t, t_0) \rho(t_0)^2 U^\dagger(t, t_0)
+\]
+现在计算其迹：
+\[
+\Tr(\rho(t)^2) = \Tr\left( U(t, t_0) \rho(t_0)^2 U^\dagger(t, t_0) \right)
+\]
+利用迹的循环不变性 \(\Tr(ABC) = \Tr(CAB)\)：
+\[
+\Tr(\rho(t)^2) = \Tr\left( U^\dagger(t, t_0) U(t, t_0) \rho(t_0)^2 \right)
+\]
+再次利用幺正性 \(U^\dagger(t, t_0) U(t, t_0) = I\)：
+\[
+\Tr(\rho(t)^2) = \Tr\left( I \rho(t_0)^2 \right) = \Tr(\rho(t_0)^2)
+\]
+因此，我们证明了 \(\Tr(\rho(t)^2) = \Tr(\rho(t_0)^2)\)。
+由于初始状态是纯态，\(\Tr(\rho(t_0)^2) = 1\)，所以对于任意时刻 \(t\)，必然有：
+\[
+\Tr(\rho(t)^2) = 1
+\]
+这表明 \(\rho(t)\) 在任意时刻 \(t\) 都描述一个纯态。因此，一个纯态系综在幺正时间演化下永远保持为纯态，不会演化成混合态。
+证毕。
+\end{proof}
+\subsection*{结论}
+密度算符的时间演化遵循 \(\rho(t) = U(t, t_0) \rho(t_0) U^\dagger(t, t_0)\) 的规律。幺正演化保持系统的纯度 \(\Tr(\rho^2)\) 不变，这意味着纯态在封闭系统的演化中始终保持为纯态。混合态的出现需要系统与环境发生相互作用（开放系统）或经历测量过程。
+
+\section*{问题 3}
+考虑一个由 \(N\) 个独立的、可分辨的自旋 1/2 粒子组成的系综。系统处于沿 \(z\) 轴方向的均匀外磁场 \(\vec{B} = B \hat{z}\) 中，并与温度为 \(T\) 的热库达到热平衡。计算该系统的亥姆霍兹自由能 \(F\)。
+\subsection*{推导过程}
+\subsubsection*{系统描述与哈密顿量}
+每个自旋 1/2 粒子的磁矩算符与其自旋算符 \(\vec{S}\) 相关。对于电子，其关系为 \(\vec{\mu} = -g \frac{\mub}{\hbar} \vec{S}\)，其中 \(\mub = \frac{e\hbar}{2m_e}\) 是玻尔磁子，\(g\) 是朗德 g 因子（对电子 \(g \approx 2\)），\(\hbar\) 是约化普朗克常数。
+单个粒子在磁场 \(\vec{B} = B \hat{z}\) 中的相互作用哈密顿量为：
+% 使用 \hat 表示算符
+\[
+\hat{H}_{\text{single}} = -\vec{\mu} \cdot \vec{B} = - \left(-g \frac{\mub}{\hbar} \hat{S}_z\right) B = g \frac{\mub B}{\hbar} \hat{S}_z
+\]
+其中 \(\hat{S}_z = \frac{\hbar}{2} \hat{\sigma}_z\) 是自旋沿 \(z\) 方向的分量算符，\(\hat{\sigma}_z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}\) 是泡利矩阵。将 \(\hat{S}_z\) 的表达式代入哈密顿量：
+\[
+\hat{H}_{\text{single}} = g \frac{\mub B}{\hbar} \left(\frac{\hbar}{2} \hat{\sigma}_z\right) = \frac{1}{2} g \mub B \hat{\sigma}_z
+\]
+为了简化书写，我们定义一个能量 \(\epsilon_0 = \frac{1}{2} g \mub B\)。则单粒子哈密顿量可写为：
+\[
+\hat{H}_{\text{single}} = \epsilon_0 \hat{\sigma}_z
+\]
+\subsubsection*{能级}
+哈密顿量 \(\hat{H}_{\text{single}}\) 的本征态是自旋向上态 \(|\uparrow\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}\) 和自旋向下态 \(|\downarrow\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}\)。它们分别是 \(\hat{\sigma}_z\) 算符本征值为 +1 和 -1 的本征态。对应的能量本征值为：
+\begin{itemize}
+    \item 对于自旋向上 \(|\uparrow\rangle\) (\(\sigma_z = +1\)): 
+    \[ E_\uparrow = \epsilon_0 \cdot (+1) = +\epsilon_0 = +\frac{1}{2} g \mub B \]
+    \item 对于自旋向下 \(|\downarrow\rangle\) (\(\sigma_z = -1\)): 
+    \[ E_\downarrow = \epsilon_0 \cdot (-1) = -\epsilon_0 = -\frac{1}{2} g \mub B \]
+\end{itemize}
+因此，每个粒子只有这两个可能的能量状态。
+\subsubsection*{单粒子配分函数}
+系统与温度为 \(T\) 的热库达到热平衡，处于正则系综。单个粒子的配分函数 \(Z_1\) 由其所有可能状态的玻尔兹曼因子 \(e^{-E_i / (\kb T)}\) 求和得到：
+\[
+Z_1 = \sum_{\text{states } i} e^{-E_i / (\kb T)}
+\]
+其中 \(\kb\) 是玻尔兹曼常数。对于这个二能级系统：
+\[
+Z_1 = e^{-E_\downarrow / (\kb T)} + e^{-E_\uparrow / (\kb T)} = e^{-(-\epsilon_0) / (\kb T)} + e^{-(+\epsilon_0) / (\kb T)}
+\]
+\[
+Z_1 = e^{\epsilon_0 / (\kb T)} + e^{-\epsilon_0 / (\kb T)}
+\]
+这个表达式可以使用双曲余弦函数 \(\cosh(x) = \frac{e^x + e^{-x}}{2}\) 来简化。令 \(x = \frac{\epsilon_0}{\kb T} = \frac{g \mub B}{2 \kb T}\)，则：
+\[
+Z_1 = 2 \cosh\left(\frac{\epsilon_0}{\kb T}\right) = 2 \cosh\left(\frac{g \mub B}{2 \kb T}\right)
+\]
+\subsection*{N 粒子总配分函数}
+由于题目假设 \(N\) 个粒子是独立的且可分辨的（例如，它们被固定在晶格的不同位置上），整个系统的总配分函数 \(Z_N\) 等于单粒子配分函数 \(Z_1\) 的 \(N\) 次方：
+\[
+Z_N = (Z_1)^N = \left[ 2 \cosh\left(\frac{g \mub B}{2 \kb T}\right) \right]^N
+\]
+(注意：如果粒子是不可分辨的全同费米子或玻色子，计算方式会不同。)
+\subsubsection*{亥姆霍兹自由能}
+亥姆霍兹自由能 \(F\) 与正则系综配分函数 \(Z_N\) 的关系由下式给出：
+\[
+F = -\kb T \ln Z_N
+\]
+将我们得到的 \(Z_N\) 代入：
+\[
+F = -\kb T \ln \left\{ \left[ 2 \cosh\left(\frac{g \mub B}{2 \kb T}\right) \right]^N \right\}
+\]
+利用对数的基本性质 \(\ln(a^N) = N \ln(a)\)，我们可以简化上式：
+\[
+F = -N \kb T \ln \left[ 2 \cosh\left(\frac{g \mub B}{2 \kb T}\right) \right]
+\]
+\subsubsection*{结论}
+对于一个由 \(N\) 个独立的、可分辨的自旋 1/2 粒子组成的系综，在均匀外磁场 \(B\) 中，当系统与温度为 \(T\) 的热库达到热平衡时，其亥姆霍兹自由能 \(F(T, B, N)\) 为：
+\[
+F(T, B, N) = -N \kb T \ln \left[ 2 \cosh\left(\frac{g \mub B}{2 \kb T}\right) \right]
+\]
+
+
+\end{document}

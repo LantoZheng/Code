@@ -1,0 +1,32 @@
+{
+  "mcpServers": {
+    "word-document-server": {
+      "command": "/opt/homebrew/opt/python@3.13/bin/python3.13",
+      "args": [
+        "-m",
+        "word_document_server"
+      ],
+      "env": {
+        "MCP_TRANSPORT": "stdio"
+      }
+    },
+    "microsoft/markitdown": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "markitdown-mcp==0.0.1a4",
+        "markitdown-mcp",
+        "--stdio"
+      ]
+    },
+    "WolframAlphaServer": {
+      "command": "/opt/homebrew/opt/python@3.13/bin/python3.13",
+      "args": [
+        "/Users/zhengxiaoyang/Code/Office-Word-MCP-Server/wolframalpha_mcp_server.py"
+      ],
+      "env": {
+        "WOLFRAM_API_KEY": "<insert-your-appid>"
+      }
+    }
+  }
+}

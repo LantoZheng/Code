@@ -1,0 +1,226 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage[backend=biber]{biblatex}
+\usepackage{amsmath,amsthm,amssymb,graphicx,multirow,float,caption}
+\usepackage{geometry}
+\geometry{left=2.54cm, right=2.54cm, top=3.18cm, bottom=3.18cm}
+\usepackage{enumitem}
+\usepackage{subcaption,booktabs,diagbox}
+\setenumerate[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\setitemize[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\setdescription{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\usepackage{adjustbox}
+\usepackage[graphicx]{realboxes}
+\usepackage{rotating}
+
+\usepackage{titlesec}
+
+\newcommand{\be}[1]{
+    \begin{equation}
+        #1
+    \end{equation}
+}
+
+\newcommand{\bfig}[3]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=#1\textwidth]{#2}
+        \caption{#3}
+    \end{figure}
+}
+
+\titleformat{\section}%设置section的样式
+{\raggedright\large\bfseries}%右对齐，4号字，加粗
+{\thesection .\quad}%标号后面有个点
+{0pt}%sep label和title之间的水平距离
+{}%标题前没有内容
+
+\title{\vspace{-4cm}\Large 变温霍尔效应}  %文章标题
+\author{\kaishu 学号:202111030007 \hspace{2cm} 姓名:郑晓旸}   %作者的名称
+\date{2024年3月1日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    本实验利用范德堡尔测量法测量了$77K\sim 300K$的温度范围内InSb半导
+体霍尔系数$R_H$随温度T变化的变化, 并绘制出$ln|R_H|-T$曲线.
+然后结合半导体理论定性分析了曲线$ln|R_H|-T$各部分的变化趋势及其原
+因, 验证了理论给出的判断。并定量计算了$ln|R_H|$极小值温度$T_{min} = 147K$,
+极大值温度$ T_{max} =174K $。
+并测得饱和霍尔系数为 $R_{HS} = 4.43 \times 10^{-3} (m^3· C^{-1})$和最大霍尔系数为
+$R_HM = -2.07 \times 10^{-2} (m^3· C^{-1})$, 并根据此数据计算出电子和空穴的迁移率比值
+$b = 20.64$.
+之后, 在低温饱和区, 利用测量得到的饱和霍尔系数数据, 计算得出样品的
+掺杂浓度 $N_A = 1.66 \times 10^{15}cm^{-3}$.
+最后在接近室温的 $250 \sim 300k$ 区域, 通过拟合 $ln|npT^{-3}| - T^{-1}$曲线, 得到该样品的禁带宽度$E_g = 0.236eV$.
+\end{abstract}
+
+\section{引言}
+1879 年为物理学家霍尔所发现, 对通电的导体或半导体施加一与电流方向相垂直的磁场, 则在垂直于
+电流和磁场方向上有一横向电位差出现, 这个现象被称为霍尔效应. 在本世纪的前半个世纪, 霍尔系数及
+电阻率的测量一直推动着固体导电理论的发展, 特别是在半导体电子论的发展中, 它起着尤为重要的作用.
+
+本实验采用范德堡方法, 测量样品霍尔系数随温度的变化, 并依据曲线分析计算一些特性参数——样
+品掺杂浓度, 迁移率比值, 禁带宽度等。
+
+\section{原理}
+\subsection{实验基本公式}
+\subsubsection{半导体中的载流子}
+半导体内有两种载流子: 电子和空穴, 浓度分别用 $n$, $p$ 表示。本征半导体中载流子全部来源于本征激
+发因此存在等式:$n_i = n = p$, 其中 $n_i$ 称为本征载流子浓度, 基于经典玻尔兹曼统计:
+\be{n_{i}=C T^{\frac{3}{2}} \exp \left(-\frac{E_{g}}{2 k_{B} T}\right)}
+其中, $k_B$ 为玻尔兹曼常数, $T$为绝对温度, $E_g$为禁带宽度. 进一步可得到
+\be{\ln \left(n p T^{-3}\right)=C-\frac{E_{g}}{k_{B} T}}
+
+所以, 禁带宽度 $E_g$, 可由如下公式经过线性拟合得出
+\be{E_{g}=-k_{B} \frac{\Delta\left(\ln \left(n p T^{-3}\right)\right)}{\Delta(1 / T)}}
+
+\subsubsection{霍尔效应及霍尔系数}
+霍尔效应是一种电流磁效应, 当样品通以电流 $I$, 并加一磁场 $B$ 垂直于电流, 则在样品的两侧产生一个
+霍尔电势差 $V_H$:
+\be{V_{H}=R_{H} \frac{I B}{d}}
+其中, $R_H$ 为霍尔系数, $d$为样品在垂直磁场方向的厚度.
+半导体中同时存在数量级相同的两种载流子时, 霍尔系数满足关系
+\be{R_{H}=\frac{3 \pi}{8 q} \frac{p-n b^{2}}{(p+n b)^{2}}}
+其中 $b =\frac{\mu_n}{\mu_p}\gg 1$, 为电子与空穴电导迁移率之比.
+
+\subsection{实验负效应及消除方法}
+在霍尔系数的测量过程中, 存在由于热流产生的电效应, 该效应会形成电势差并叠加在测量值$V$上,
+引起测量误差. 这几个副效应是
+\begin{itemize}
+    \item Ettingshausen效应, 来源于温差电动势, 记作$ V_E\propto  BI$, 该效应与$I$, $B$的方向均有关.
+    \item Nernst 效应, 来源于沿电流方向的热流, 记作 $V_N \propto QB$, 该效应与$B$的方向有关.
+    \item Righi-Leduc 效应, 来源于温度梯度分布, 记作$V_R \propto QB$, 该效应与$B$的方向有关.
+\end{itemize}    
+
+利用副效应与电流和磁场的方向的依赖, 改变电流和磁场方向即可消除部分副效应的影响, 具体的各
+个方向的电压表示和$V_H$的计算公式如下所示:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    电流方向 & 磁场方向 & 测量电压$V_i$的表达式 \\ \hline
+    +    & +    &   $V_{1}=V_{H}+V_{E}+V_{N}+V_{R}$         \\ \hline
+    -    & +    &    $V_{2}=-V_{H}-V_{E}+V_{N}+V_{R}$        \\ \hline
+    -    & -    &    $V_{3}=V_{H}+V_{E}-V_{N}-V_{R}$        \\ \hline
+    +    & -    &     $V_{4}=-V_{H}-V_{E}-V_{N}-V_{R}$       \\ \hline
+    \end{tabular}
+    \end{table}
+最终得到
+\be{V_{H} \approx V_{H}+V_{E}=\frac{1}{4}\left(V_{1}-V_{2}+V_{3}-V_{4}\right)}
+
+其中, 由于 Ettingshausen 效应与霍尔效应对 B, I 方向依赖相同, 无法消去, 但在 $V_H \gg V_E$ 的情况下, 公
+式可近似成立.
+
+\section{实验数据处理与分析}
+\subsection{$ln|R_H|-T$曲线}
+\subsubsection{室温测量霍尔系数}
+在室温下, PID 控温仪的测量值$ T = 297.03K$, 选择 $S2$ 样品, 设定恒流源电流值为 $I = 10mA$. 调整磁
+极 N 面对测量者, 此时电流为正. 移动磁极与样品的相对位置至测量电压 $V_H$ 最大, 此时磁场与样品的表
+面垂直, 标记此时的磁极位置. 之后依次调整磁极和电流的方向, 测量相应的电压. 
+\be{V_{H 1}=1.505 m V \quad V_{H 2}=-1.504 m V \quad V_{H 3}=1.498 m V \quad V_{H 4}=-1.496 m V}
+此时磁场 $B = 422mT$, 样品厚度 $d = 1mm$, 计算可得室温霍尔系数
+\be{R_{H}=3.56 \times 10^{-3}\left(\mathrm{~m}^{3} \cdot C^{-1}\right)}
+\subsubsection{$ln|R_H|-T$曲线绘制}
+利用测量得到的霍尔电压的实验数据, 结合式 (4), 其中电流$ I = 10.003mA$ , 磁场 $B = 422mT$, 样品厚
+度$ d = 1mm$。代入得到$ ln|R_H| $关于温度$ T $的曲线如图所示:
+\bfig{0.8}{lgrh-T.png}{$ln|R_H|-T$曲线}
+\subsubsection{曲线的定性分析}
+曲线可大致分为四个阶段。随温度升高, 对于 $ln |R_H$|, 在 AB 段保持不变, BC 段曲线迅速减小,CD 段曲
+线迅速增长至最大,DE 段逐渐减小。其中存在极小值 C 点和极大值 D 点, 并且在 C 点向负无穷发散. 
+
+对曲线各段, 可做如下分析:
+\begin{itemize}
+    \item AB: 饱和段
+    
+    在低温下半导体不存在本征激发, 载流子浓度由杂质电离提供, 杂质电离在实验所处的低温下便可
+完全电离。此时载流子浓度满足$ n \approx 0$, $p = N_A$, 其中 $N_A$ 称为杂质电离的饱和浓度。
+将此时的霍尔系数称作低温饱和霍尔系数, 记为 $R_{HS}$ , 等于
+\be{R_{H S}=\frac{3 \pi}{8 q} \frac{1}{p}}
+    \item BC: 下降段
+    
+    在温度进一步升高时, 本征激发开始出现, 记半导体本征激发提供的载流子浓度即为 $n_i$, 则 $n = n_i$, $p =n_i + N_A$, 
+    则霍尔系数可表示为
+\be{R_{H}=\frac{3 \pi}{8 q} \frac{N_{A}+n_{i}\left(1-b^{2}\right)}{\left(N_{A}+n_{i}(1+b)\right)^{2}}}
+由于$ b \gg 1$, 在温度 $T$ 升高时,$n_i$ 增大,$ R_H$ 逐渐减小到 0, 则反映在 $ln |R_H|$ 上的是减小到负无穷, 达到
+C 点.
+    \item C: 极小值点
+    
+    在到达该临界温度 C 前, 该半导体 $R_H > 0$, 由空穴导电占主导, 反映为 p 型半导体。
+    \item CD: 上升段
+    
+    达到零点后, 温度升高,$n_i$ 增大,$R_H$ 由正值变为负值,$ln |R_H| $逐渐增大. 此时可计算 $R_H$ 的导数, 可得到
+    \be{\frac{\mathrm{d} R_{H}}{\mathrm{~d} T}=\frac{3 \pi b(b+2)}{8 q} \frac{(b-1) n_{i}-N_{A}}{\left(N_{A}+n_{i}(1+b)\right)^{3}} \frac{\mathrm{d} n_{i}}{\mathrm{~d} T}}
+    所以, 在 $n <\frac{N_A}{b − 1}$时, $R_H$ 减小, $ln |R_H| $增大.
+    \item D: 极大值点
+    
+    所以, $ ln |R_H| $在 $n =\frac{N_A}{b − 1}$时达到最大, 即
+    \be{R_{H M}=-R_{H S} \frac{(b-1)^{2}}{4 b}}
+    其中, $R_{HS} $为饱和霍尔系数.
+    \item DE: 下降段
+
+    当 $n >\frac{N_A}{b − 1}$时, $ln |R_H| $开始减小, 并且存在 $\lim_{T \to \infty}R_H = 0$, 在极值点 C 之后, 该半导体由电子导电占主
+导, 反映为 n 型半导体.
+\end{itemize}
+
+\subsubsection{极值温度}
+
+对于实验测量得到的数据点, 对得到的 $|R_H| - T$ 进行插值, 得到一个较为光滑的插值曲线, 如图所示:
+\bfig{0.8}{rh-T.png}{$|R_H|-T$插值曲线}
+并通过插值曲线计算找到极值点 C, D 所对应的温度为:
+\be{T_{\text {min }}=147K \quad T_{\max }=174K}
+
+\subsection{霍尔系数和迁移率比值计算}
+\subsubsection{霍尔系数}
+在杂质饱和激发区, 选择 5 组温度数据点, 通过公式 $R_H = \frac{V_H d}{IB}$可计算得到, 此时的饱和霍尔系数如下表所示:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    $T(K)$ & 77.22 & 90 & 100 & 110 & 120 & 平均值 \\ \hline
+    $R_H(10^{-3}m^3· C^{-1})$   & 4.29 & 4.42 & 4.46 & 4.49 & 4.49 & 4.43    \\ \hline
+    \end{tabular}
+    \caption{$R_{HS}$结果表}
+    \end{table}
+    所以饱和霍尔系数 $R_{HS}$
+    $$R_{HS}=4.43\times 10^{-3}(m^3· C^{-1})$$
+    同理通过插值曲线, 可计算得到对应的极大值的霍尔系数 $R_{HM}$
+    $$R_{HM}=-2.07\times 10^{-2}(m^3· C^{-1})$$
+\subsubsection{迁移率比值}
+根据(12)可变换得到,(已取大于 1 的根)
+\be{b=1-\frac{2 R_{H M}}{R_{H S}}+\sqrt{\left(1-\frac{2 R_{H M}}{R_{H S}}\right)^{2}-1}}
+代入可计算得到迁移率比值:
+$$b=20.64$$
+与预期相同, 由于空穴的等效质量远大于电子, 故导体中电子迁移率比空穴迁移率可高出一个量级. 
+
+\subsection{掺杂浓度和禁带宽度计算}
+\subsubsection{掺杂浓度}
+通过低温饱和霍尔系数, 可计算得到半导体掺杂浓度为:
+\be{N_{A}=\frac{3 \pi}{8 q R_{H S}}=1.66 \times 10^{21} \mathrm{~m}^{-3}=1.66 \times 10^{15} \mathrm{~cm}^{-3}}
+经过查询, 一般半导体的掺杂浓度位于 $1 \times 10^{13} \sim 1 \times 10^{18}cm^{-3}$, 计算结果符合该范围。
+\subsubsection{禁带宽度计算}
+在接近室温的区间内, 半导体以本征激发主导. 由于电子的迁移率大于空穴, 此时将半导体视为n型半导体来计算载流子浓度. 
+作出$ln|npT^{-3}| - T^{-1}$ 曲线, 如下图所示:
+\bfig{0.8}{linearfit.png}{$ln|npT^{-3}| - T^{-1}$曲线}
+根据最小二乘法, $R^2=0.9994$, 线性良好. 得到斜率:
+
+\be{\alpha=\frac{\Delta\left(\ln \left|n p T^{-3}\right|\right)}{\Delta\left(T^{-1}\right)} \approx-2733 K}
+
+代入计算得到禁带宽度:
+\be{E_{g}=-\alpha k_{B}=0.236 \mathrm{~eV}}
+
+\section{实验结论}
+本实验利用范德堡尔测量法测量了$77K\sim 300K$的温度范围内InSb半导
+体霍尔系数$R_H$随温度T变化的变化, 并绘制出$ln|R_H|-T$曲线.
+然后结合半导体理论定性分析了曲线$ln|R_H|-T$各部分的变化趋势及其原
+因, 验证了理论给出的判断。并定量计算了$ln|R_H|$极小值温度$T_{min} = 147K$,
+极大值温度$ T_{max} =174K $。
+并测得饱和霍尔系数为 $R_{HS} = 4.43 \times 10^{-3} (m^3· C^{-1})$和最大霍尔系数为
+$R_{HM} = -2.07 \times 10^{-2} (m^3· C^{-1})$, 并根据此数据计算出电子和空穴的迁移率比值
+$b = 20.64$.
+之后, 在低温饱和区, 利用测量得到的饱和霍尔系数数据, 计算得出样品的
+掺杂浓度 $N_A = 1.66 \times 10^{15}cm^{-3}$.
+最后在接近室温的 $250 \sim 300K$ 区域, 通过拟合 $ln|npT^{-3}| - T^{-1}$曲线, 得到该样品的禁带宽度$E_g = 0.236eV$.
+
+\end{document}

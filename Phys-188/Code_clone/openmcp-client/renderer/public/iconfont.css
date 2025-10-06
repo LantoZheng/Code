@@ -1,0 +1,243 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4870215 */
+  src: url('iconfont.woff2?t=1751568095152') format('woff2'),
+       url('iconfont.woff?t=1751568095152') format('woff'),
+       url('iconfont.ttf?t=1751568095152') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-pin:before {
+  content: "\e863";
+}
+
+.icon-serial:before {
+  content: "\e78f";
+}
+
+.icon-deploy:before {
+  content: "\e614";
+}
+
+.icon-suffix-xml:before {
+  content: "\e653";
+}
+
+.icon-MCP:before {
+  content: "\e63c";
+}
+
+.icon-wendang:before {
+  content: "\e61b";
+}
+
+.icon-proxy:before {
+  content: "\e723";
+}
+
+.icon-parallel:before {
+  content: "\e61d";
+}
+
+.icon-waiting:before {
+  content: "\e6d0";
+}
+
+.icon-timeout:before {
+  content: "\edf5";
+}
+
+.icon-dui:before {
+  content: "\e627";
+}
+
+.icon-cuo:before {
+  content: "\ed1a";
+}
+
+.icon-video:before {
+  content: "\e865";
+}
+
+.icon-image:before {
+  content: "\ebc7";
+}
+
+.icon-audio:before {
+  content: "\e768";
+}
+
+.icon-error:before {
+  content: "\e6c6";
+}
+
+.icon-warning:before {
+  content: "\e681";
+}
+
+.icon-copy:before {
+  content: "\e77c";
+}
+
+.icon-restart:before {
+  content: "\e86b";
+}
+
+.icon-edit2:before {
+  content: "\e848";
+}
+
+.icon-star:before {
+  content: "\e80f";
+}
+
+.icon-prompt:before {
+  content: "\eb50";
+}
+
+.icon-empty:before {
+  content: "\e698";
+}
+
+.icon-test:before {
+  content: "\e8ad";
+}
+
+.icon-save:before {
+  content: "\e67c";
+}
+
+.icon-more:before {
+  content: "\e612";
+}
+
+.icon-edit:before {
+  content: "\e63b";
+}
+
+.icon-connect:before {
+  content: "\ecda";
+}
+
+.icon-openmcp:before {
+  content: "\e666";
+}
+
+.icon-double-loading:before {
+  content: "\e8fc";
+}
+
+.icon-stop:before {
+  content: "\e708";
+}
+
+.icon-robot1:before {
+  content: "\e644";
+}
+
+.icon-length:before {
+  content: "\e60d";
+}
+
+.icon-web:before {
+  content: "\e935";
+}
+
+.icon-temperature:before {
+  content: "\e62e";
+}
+
+.icon-close:before {
+  content: "\e615";
+}
+
+.icon-blank:before {
+  content: "\e602";
+}
+
+.icon-add:before {
+  content: "\e60c";
+}
+
+.icon-delete:before {
+  content: "\e672";
+}
+
+.icon-company:before {
+  content: "\e6f5";
+}
+
+.icon-token:before {
+  content: "\e68f";
+}
+
+.icon-url-line:before {
+  content: "\ea38";
+}
+
+.icon-llm:before {
+  content: "\e8be";
+}
+
+.icon-bg-colors:before {
+  content: "\e800";
+}
+
+.icon-i18n:before {
+  content: "\e601";
+}
+
+.icon-weixin:before {
+  content: "\e600";
+}
+
+.icon-QQ:before {
+  content: "\e882";
+}
+
+.icon-debug:before {
+  content: "\e76d";
+}
+
+.icon-plugin:before {
+  content: "\e63e";
+}
+
+.icon-about:before {
+  content: "\e6e5";
+}
+
+.icon-setting:before {
+  content: "\e610";
+}
+
+.icon-send:before {
+  content: "\e888";
+}
+
+.icon-robot:before {
+  content: "\e8e8";
+}
+
+.icon-play:before {
+  content: "\e8c2";
+}
+
+.icon-chat:before {
+  content: "\e60b";
+}
+
+.icon-file:before {
+  content: "\e726";
+}
+
+.icon-tool:before {
+  content: "\ea89";
+}
+

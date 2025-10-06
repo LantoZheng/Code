@@ -1,0 +1,45 @@
+{
+    "name": "openmcp-sdk",
+    "version": "0.1.2",
+    "type": "module",
+    "description": "openmcp-sdk",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/LSTM-Kirigaya/openmcp-client"
+    },
+    "keywords": [
+        "mcp",
+        "openmcp",
+        "openmcp-sdk",
+        "llm framework",
+        "agent",
+        "ai agent"
+    ], 
+    "author": "kirigaya",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/LSTM-Kirigaya/openmcp-client/issues"
+    },
+    "homepage": "https://document.kirigaya.cn/blogs/openmcp/main.html",
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.12.1",
+        "@seald-io/nedb": "^4.1.1",
+        "@vue/server-renderer": "^3.5.13",
+        "axios": "^1.7.7",
+        "chalk": "^5.4.1",
+        "bson": "^6.8.0",
+        "openai": "^5.0.1",
+        "pako": "^2.1.0",
+        "tesseract.js": "^6.0.1",
+        "uuid": "^11.1.0",
+		"open": "^10.1.2",
+        "ws": "^8.18.1",
+		"cli-table3": "^0.6.5",
+        "https-proxy-agent": "^7.0.6",
+        "pino": "^9.6.0",
+		"pino-pretty": "^13.0.0"
+    }
+}

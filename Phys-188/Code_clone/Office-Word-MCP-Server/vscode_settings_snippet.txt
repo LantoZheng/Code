@@ -1,0 +1,59 @@
+
+VS Code / OpenMCP helper (manual merge)
+
+Files generated:
+  - /Users/zhengxiaoyang/Code/Office-Word-MCP-Server/vscode_mcp.json
+
+Suggested safe steps (do NOT run automatically):
+
+1) Backup your VS Code settings:
+   - Open Command Palette (Cmd+Shift+P) -> Preferences: Open Settings (JSON)
+   - Save a copy of your current settings.json somewhere safe.
+
+2) If you use the OpenMCP VS Code extension (or similar), import the generated JSON file in the extension's settings or paste the "mcpServers" block into the appropriate extension config. Example insertion:
+
+// Example for OpenMCP-like extension (add to your settings.json)
++"openmcp.client": {
++  "mcpConfig": {
+  "mcpServers": {
+    "word-document-server": {
+      "command": "/opt/homebrew/opt/python@3.13/bin/python3.13",
+      "args": [
+        "-m",
+        "word_document_server"
+      ],
+      "env": {
+        "MCP_TRANSPORT": "stdio"
+      }
+    },
+    "microsoft/markitdown": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "markitdown-mcp==0.0.1a4",
+        "markitdown-mcp",
+        "--stdio"
+      ]
+    },
+    "WolframAlphaServer": {
+      "command": "/opt/homebrew/opt/python@3.13/bin/python3.13",
+      "args": [
+        "/Users/zhengxiaoyang/Code/Office-Word-MCP-Server/wolframalpha_mcp_server.py"
+      ],
+      "env": {
+        "WOLFRAM_API_KEY": "<insert-your-appid>"
+      }
+    }
+  }
+}
++}
+
+3) Alternatively, you can use the raw MCP config with local MCP clients (mcp-use, mcp-agent) by loading the file directly. Example (python mcp-use):
+
++  from mcp_use import MCPClient
++  client = MCPClient.from_config_file("/Users/zhengxiaoyang/Code/Office-Word-MCP-Server/vscode_mcp.json")
+
+4) Notes about Copilot: GitHub Copilot (official extension) currently does not expose a documented settings key to register arbitrary MCP servers. If you rely on Copilot specifically, consider using an intermediary VS Code extension (OpenMCP / openmcp-client) or a local agent (mcp-use) that bridges MCP servers to Copilot-like workflows.
+
+5) If you're unsure, open an issue on the project's repo or consult the OpenMCP / MCPHub project documentation.
+

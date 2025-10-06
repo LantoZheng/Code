@@ -1,0 +1,143 @@
+%This is a experiment example of ZhengXiaoyang's experiment report template
+
+\documentclass[UTF8]{ctexart}
+ 
+\usepackage{amsmath}
+\usepackage{cases}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{SIunits}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage[margin=1in]{geometry}
+\geometry{a4paper}
+\pagestyle{fancy}
+\fancyhf{}
+
+\graphicspath{{picture/}}
+
+
+\title{下落法测粘性系数}
+\graphicspath{{picture/}}
+
+
+\title{下落法测粘性系数预习报告}
+\author{郑晓旸}
+\date{\today}
+\pagenumbering{arabic}
+
+\begin{document}
+%这里是文件的开头
+\fancyhead[L]{郑晓旸}
+\fancyhead[C]{粘性系数}
+\fancyfoot[C]{\thepage}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{实验仪器}
+\begin{itemize}
+    \item DH4606落球法液体粘滞系数测定仪
+    \item 钢尺
+    \item 螺旋测微器
+    \item 电子天平
+    \item 数字温度计
+\end{itemize}
+
+\section{实验目的}
+\begin{enumerate}
+    \item 学习一些基本物理量的测量方法
+    \item 学习用落球法测量蓖麻油的黏性系数
+\end{enumerate}
+
+\section{实验原理}
+在流体（包括气体和液体）中，惯性和黏性是影响运动的两个主要因素。气体黏性的微观机制是不同速度的分子在相邻区域之间扩散，而在液体中，分子之间的作用力是产生黏性的主要原因。
+
+斯托克斯定律（Stokes' Law）用于描述小球在流体中匀速运动时所受的黏性阻力。对于半径为 \(r\) 的球体在黏性系数为 \(\eta\) 的无限大流体中以速度 \(v\) 运动时，黏性阻力 \(F_D\) 为：
+\[
+F_D = 6 \pi \eta r v
+\]
+当雷诺数 \(Re\) 很小时，斯托克斯定律适用。雷诺数的计算公式为：
+\[
+Re = \frac{\rho d v}{\eta}
+\]
+其中 \(\rho\) 为流体密度，\(d\) 为系统的特征尺度。
+
+在落球法测量液体黏性系数实验中，小球在液体中下落时达到稳定速度 \(v_0\)，此时重力、浮力和黏性阻力平衡。由此可得黏性系数 \(\eta\) 的计算公式为：
+\[
+\eta = \frac{(\rho_0 - \rho) d^2 g - \frac{27}{8} \rho d v_0^2}{18 v_0}
+\]
+考虑容器尺寸的修正后，公式为：
+\[
+\eta = \frac{(\rho_0 - \rho) d^2 g - \frac{27}{8} \rho d v_0^2}{18 v_0} \left(1 + 2.4 \frac{d}{D}\right) \left(1 + 1.6 \frac{d}{H}\right)
+\]
+其中 \(D\) 为容器内径，\(H\) 为液柱高度。
+
+\section{实验过程}
+
+\subsection{测量小球的直径与密度}
+使用螺旋测微器测量不少于10个小球的直径，计算平均直径并剔除异常值。使用电子天平测量小球的总质量，计算其平均密度。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 使用螺旋测微器测量10个小球的直径，记录每个小球的直径值，剔除异常值后求取平均值。
+    \item 使用电子天平测量这10个小球的总质量，计算平均质量，进而计算小球的平均密度。
+\end{enumerate}
+
+\subsection{调整测试架}
+使用线锤调整测试架水平，使线锤对准底盘中心圆点。调节两个光电门发射端，使两激光束照在线锤线上，然后调节接收端，使激光正入射到接收器。用钢板尺测量上下激光束的距离 \(s\) 和液体深度 \(H\)，用游标卡尺测量量筒内径 \(D\)。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 将线锤装在支撑横梁中间部位，调整测试架上的三个水平调节螺钉，使线锤对准底盘中心圆点。
+    \item 调节光电门发射端，使激光束照在线锤线上，然后收起线锤，调节接收端，使激光正入射到接收器。
+    \item 用钢尺测量上、下激光束之间的距离 \(s\) 以及液体的深度 \(H\)。
+    \item 用游标卡尺测量量筒的内径 \(D\)。
+\end{enumerate}
+
+\subsection{测量液体温度}
+使用数字温度计测量液体的初始温度和实验结束时的温度，取平均值作为实验温度。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 在实验开始时，用数字温度计测量液体的初始温度，并记录。
+    \item 实验结束后，再次测量液体的温度，并记录。
+    \item 取两次测量值的平均值作为实验过程中液体的温度。
+\end{enumerate}
+
+\subsection{测量小球的收尾速度}
+多次测量（不少于10次）小球下落时间，计算平均时间 \(t\) 和收尾速度 \(v_0 = \frac{s}{t}\)。若小球下落路径偏离中线，用磁铁吸出小球并重新测量。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 将小球从导管顶部释放，使其自由下落。
+    \item 使用计时器记录小球通过上下两个光电门的时间差。
+    \item 重复步骤1和2，不少于10次，记录每次的时间差。
+    \item 计算这些时间差的平均值 \(t\)。
+    \item 计算小球的收尾速度 \(v_0 = \frac{s}{t}\)。
+    \item 若小球下落路径偏离中线，导致光电门无法记录时间，用磁铁将小球吸出，擦拭干净后重新测量。
+\end{enumerate}
+
+\subsection{计算黏性系数}
+利用公式计算雷诺数 \(Re\) 和液体的黏性系数 \(\eta\)，并与参考值比较。
+
+具体步骤如下：
+\begin{enumerate}
+    \item 根据实验测量数据和公式计算雷诺数 \(Re = \frac{\rho d v_0}{\eta}\)。
+    \item 根据公式计算液体的黏性系数 \(\eta\)：
+    \[
+    \eta = \frac{(\rho_0 - \rho) d^2 g - \frac{27}{8} \rho d v_0^2}{18 v_0} \left(1 + 2.4 \frac{d}{D}\right) \left(1 + 1.6 \frac{d}{H}\right)
+    \]
+    \item 将计算结果与实验参考值进行比较，分析误差来源。
+\end{enumerate}
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{./template}  %bib文件名
+
+\end{document}

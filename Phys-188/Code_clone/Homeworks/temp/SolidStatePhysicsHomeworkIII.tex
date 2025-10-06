@@ -1,0 +1,147 @@
+\documentclass{ctexart}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in} % 设置页面大小和边距
+
+\title{固体物理作业 III}
+\author{姓名：郑晓旸 \\ 学号：202111030007} % 作者信息
+
+\date{} % 日期留空
+
+\begin{document}
+\maketitle % 显示标题信息，如果不需要可以注释掉
+
+\section*{一、解释在二维布拉维晶格中为什么没有有心正方晶格。解释在三维布拉维晶格中为什么没有底心正方晶格、面心四方晶格和底心四方晶格。}
+
+\textbf{解：}
+二维布拉维晶格没有独立的有心正方晶格，因为它要么可以简化为简单正方晶格，要么会破坏正方对称性而归类为其他晶格类型（例如，变成有心矩形）。
+
+在三维下，底心正方晶格可以通过选取新的基矢简化为简单正方晶格。面心四方晶格（F）可以通过选取新的基矢简化为体心四方晶格（I），因此不存在独立的面心四方布拉维晶格。底心四方晶格（C）（指 A, B, C 型底心）可以通过选取新的基矢简化为简单四方晶格（P）或体心四方晶格（I）（例如，C心四方可以简化为简单四方P，如果考虑所有底心类型，可能可以归结为 P 或 I），因此不存在独立的底心四方布拉维晶格。任何其他尝试在四方晶格中放置额外格点（除了 P, I 之外）的方式都会破坏四方对称性，或者可以等效为 P 或 I 型四方晶格。
+
+\section*{二、给出石墨烯的惯用单胞的基矢、它的倒晶格的基矢。画出它的第一布里渊区和第二布里渊区。求石墨烯的结构因子。给出消光条件和出现亮点的条件。画出亮点形成的格子。}
+
+\textbf{解：}
+石墨烯是由碳原子组成的二维蜂窝状晶格，属于六角晶系。
+其原胞（primitive cell）基矢可以选为：
+\begin{align*}
+  \vec{a}_1 &= a \left( \frac{\sqrt{3}}{2}, \frac{1}{2} \right) \\
+  \vec{a}_2 &= a \left( \frac{\sqrt{3}}{2}, -\frac{1}{2} \right)
+\end{align*}
+其中晶格常数 $a \approx 2.46 \, \text{Å}$ （这里 $a$ 指六角晶格原胞边长，注意不是 C-C 键长）。
+
+倒晶格基矢 $\vec{b}_1, \vec{b}_2$ 满足 $\vec{a}_i \cdot \vec{b}_j = 2\pi \delta_{ij}$。计算得：
+\begin{align*}
+  \vec{b}_1 &= \frac{2\pi}{a} \left( \frac{1}{\sqrt{3}}, 1 \right) \\
+  \vec{b}_2 &= \frac{2\pi}{a} \left( \frac{1}{\sqrt{3}}, -1 \right)
+\end{align*}
+
+第一布里渊区为一正六边形，其顶点（K点和K'点）坐标例如为：
+\[ K = \frac{2\pi}{a} \left( \frac{1}{\sqrt{3}}, \frac{1}{3} \right), \quad K' = \frac{2\pi}{a} \left( \frac{1}{\sqrt{3}}, -\frac{1}{3} \right) \quad \text{(及其他等效点)} \]
+
+第二布里渊区为包围在第一布里渊区之外的区域，形状更复杂，可通过将第一布里渊区通过倒格矢平移拼接得到。
+
+结构因子 $S(\vec{G})$ 描述晶格对X射线的散射， $\vec{G}$ 为倒格矢。
+\[ S(\vec{G}) = \sum_j f_j e^{i \vec{G} \cdot \vec{r}_j} \]
+对于石墨烯的原胞，包含两个碳原子，设碳原子的形式因子为 $f_C$。选择一个原子位于原点 $\vec{r}_1 = (0,0)$，另一个原子位于（例如） $\vec{r}_2 = \frac{1}{3}(\vec{a}_1 + \vec{a}_2)$。 
+$\vec{r}_1=(0,0), \vec{r}_2=(a,0)$
+则结构因子为：
+\[ S(\vec{H}) = f_C (e^{i\vec{H} \cdot \vec{r}_1} + e^{i\vec{H} \cdot \vec{r}_2}) = f_C (1 + e^{i\vec{H} \cdot \vec{r}_2}) \]
+
+消光条件： $S(\vec{H})=0$
+\[ 1 + e^{i\vec{H} \cdot \vec{r}_2} = 0 \implies e^{i\vec{H} \cdot \vec{r}_2} = -1 \]
+\[ \implies \vec{H} \cdot \vec{r}_2 = (2n+1)\pi, \quad n \in \mathbb{Z} \]
+
+亮光条件： $S(\vec{H}) \neq 0$
+
+亮点（可观测衍射点）对应的倒格矢 $\vec{H}$ 必须是倒易晶格的格点：
+\[ \vec{H} = m\vec{b}_1 + n\vec{b}_2, \quad m, n \in \mathbb{Z} \]
+同时需要满足亮光条件。这些亮点自身也构成一个（倒）格子。
+
+\section*{三、金刚石晶体...纵向振动...群速度。}
+
+\textbf{解：}
+金刚石结构是面心立方（FCC）布拉维晶格，每个格点附加两个相同的碳（C）原子作为基元（basis）。设惯用单胞（立方）边长为 $a_{cubic}$。基元中的两个原子相对于 FCC 格点的位置是 $(0,0,0)$ 和 $\frac{a_{cubic}}{4}(1,1,1)$。
+考虑原子沿 $[111]$ 方向的纵向振动。
+将每个 $(111)$ 晶面等效为一个粒子。沿 $[111]$ 方向，原子排列的周期性由两个不等效的层面（或子晶格）构成，分别记为 A 和 B。
+从 $(0,0,0)$ 处的 A 原子到 $\frac{a_{cubic}}{4}(1,1,1)$ 处的 B 原子，沿 $[111]$ 方向的投影距离为：
+\[ \Delta r = \left\| \frac{a_{cubic}}{4}(1,1,1) \right\| \cos(0) = \frac{a_{cubic}}{4} \sqrt{1^2+1^2+1^2} = \frac{\sqrt{3}}{4} a_{cubic} \]
+（手稿中 $a$ 即这里的 $a_{cubic}$）。
+这个 $\Delta r$ 是相邻 A 层和 B 层沿 [111] 方向的距离。包含一个 A 层和一个 B 层的重复单元长度，即等效一维链的周期 $d$，是 $A \to B \to \text{下一个} A$ 的投影距离的两倍吗？手稿中直接给出等效一维链周期为 $d = \frac{\sqrt{3}}{4} a$。 (注：这里对手稿 $d$ 的推导存疑，相邻同类原子(111)面间距应为 $a_{cubic}/\sqrt{3}$，但 A-B 交错排列使得有效周期不同。采纳手稿结论 $d = \frac{\sqrt{3}}{4} a$ 进行后续计算。)
+
+设 $u_n$ 为第 $n$ 个 A 类原子的位移，$v_n$ 为第 $n$ 个 B 类原子的位移（沿 [111] 方向）。 $M$ 为碳原子质量。 $C_1$ 为最近邻 A-B 原子间的力常数，$C_2$ 为次近邻（同类原子间，如 A-A 或 B-B）的力常数。假设只考虑这两者。
+运动方程为：
+\begin{align*}
+  M \ddot{u}_n &= C_1(v_n - u_n) + C_2(v_{n-1} - u_n) \\ % A 与右侧 B(n) 和 左侧 B(n-1) 相互作用？
+  M \ddot{v}_n &= C_1(u_n - v_n) + C_2(u_{n+1} - v_n) % B 与左侧 A(n) 和 右侧 A(n+1) 相互作用？
+\end{align*}
+
+设简谐波解：
+\[ u_n = A e^{i(knd - \omega t)}, \quad v_n = B e^{i(knd - \omega t)} \]
+代入运动方程：
+\begin{align*}
+  -M\omega^2 A &= C_1(B - A) + C_2(B e^{-ikd} - A) \\
+  -M\omega^2 B &= C_1(A - B) + C_2(A e^{ikd} - B)
+\end{align*}
+整理成矩阵形式：
+\[
+\begin{pmatrix}
+(C_1 + C_2) - M\omega^2 & -(C_1 + C_2 e^{-ikd}) \\
+-(C_1 + C_2 e^{ikd}) & (C_1 + C_2) - M\omega^2
+\end{pmatrix}
+\begin{pmatrix} A \\ B \end{pmatrix}
+= 0
+\]
+存在非零解的条件是系数行列式为零：
+\[ \left( (C_1 + C_2) - M\omega^2 \right)^2 - |C_1 + C_2 e^{-ikd}|^2 = 0 \]
+\[ \left( M\omega^2 - (C_1 + C_2) \right)^2 = (C_1 + C_2 \cos(kd))^2 + (-C_2 \sin(kd))^2 \]
+\[ \left( M\omega^2 - C_1 - C_2 \right)^2 = C_1^2 + C_2^2 \cos^2(kd) + 2C_1 C_2 \cos(kd) + C_2^2 \sin^2(kd) \]
+\[ \left( M\omega^2 - C_1 - C_2 \right)^2 = C_1^2 + C_2^2 + 2C_1 C_2 \cos(kd) \]
+所以：
+\[ M\omega^2 - C_1 - C_2 = \pm \sqrt{C_1^2 + C_2^2 + 2C_1 C_2 \cos(kd)} \]
+得到色散关系 $\omega(k)$:
+\[ \omega^2 = \frac{C_1 + C_2 \pm \sqrt{C_1^2 + C_2^2 + 2C_1 C_2 \cos(kd)}}{M} \]
+其中 '+' 对应光学支，'-' 对应声学支。
+
+群速度 $v_g = \frac{d\omega}{dk}$。计算 $\frac{d(\omega^2)}{dk}$:
+\[ \frac{d(\omega^2)}{dk} = \frac{1}{M} \left( \pm \frac{1}{2\sqrt{C_1^2 + C_2^2 + 2C_1 C_2 \cos(kd)}} \cdot (-2C_1 C_2 d \sin(kd)) \right) \]
+\[ \frac{d(\omega^2)}{dk} = \mp \frac{C_1 C_2 d \sin(kd)}{M \sqrt{C_1^2 + C_2^2 + 2C_1 C_2 \cos(kd)}} \]
+因为 $2\omega \frac{d\omega}{dk} = \frac{d(\omega^2)}{dk}$，所以
+\[ v_g = \frac{1}{2\omega} \frac{d(\omega^2)}{dk} = \mp \frac{C_1 C_2 d \sin(kd)}{2 M \omega \sqrt{C_1^2 + C_2^2 + 2C_1 C_2 \cos(kd)}} \]
+
+计算 $k=0$ (布里渊区中心) 和 $k=\pi/d$ (布里渊区边界) 时的群速度。
+
+\textbf{情况 1: $k=0$}
+$\cos(kd) = \cos(0) = 1$, $\sin(kd) = \sin(0) = 0$.
+\[ \omega^2 = \frac{C_1 + C_2 \pm \sqrt{C_1^2 + C_2^2 + 2C_1 C_2}}{M} = \frac{C_1 + C_2 \pm \sqrt{(C_1+C_2)^2}}{M} = \frac{C_1 + C_2 \pm (C_1+C_2)}{M} \]
+光学支 (+): $\omega^2 = \frac{2(C_1+C_2)}{M}$
+声学支 (-): $\omega^2 = 0$
+
+群速度 $v_g$:
+因为 $\sin(kd) = 0$，代入 $v_g$ 的表达式，分子为 0。
+对于光学支 ($\omega \neq 0$)，显然 $v_g = 0$。
+对于声学支 ($\omega = 0$)，形式为 $0/0$，需要用洛必达法则或极限分析。
+$\lim_{k\to 0} v_g = \lim_{k\to 0} \frac{d\omega}{dk}$.
+对于声学支，当 $k \to 0$ 时， $\omega \approx v_s |k|$，其中 $v_s$ 是声速。
+$M\omega^2 \approx M(v_s k)^2$.
+$M\omega^2 \approx C_1+C_2 - \sqrt{C_1^2+C_2^2+2C_1C_2(1-\frac{(kd)^2}{2})} \approx C_1+C_2 - (C_1+C_2)\sqrt{1-\frac{C_1C_2}{(C_1+C_2)^2}(kd)^2}$
+$M\omega^2 \approx C_1+C_2 - (C_1+C_2)(1-\frac{1}{2}\frac{C_1C_2}{(C_1+C_2)^2}(kd)^2) = \frac{C_1C_2}{2(C_1+C_2)}(kd)^2$
+$\omega^2 \approx \frac{C_1C_2 d^2}{2M(C_1+C_2)} k^2$.
+$\omega \approx \sqrt{\frac{C_1C_2}{2M(C_1+C_2)}} d |k|$.
+所以声学支在 $k=0$ 的群速度（声速） $v_g = v_s = \sqrt{\frac{C_1C_2}{2M(C_1+C_2)}} d \neq 0$.
+
+
+\textbf{情况 2: $k=\pi/d$} (布里渊区边界)
+$\cos(kd) = \cos(\pi) = -1$, $\sin(kd) = \sin(\pi) = 0$.
+\[ \omega^2 = \frac{C_1 + C_2 \pm \sqrt{C_1^2 + C_2^2 - 2C_1 C_2}}{M} = \frac{C_1 + C_2 \pm \sqrt{(C_1-C_2)^2}}{M} \]
+假设 $C_1 > C_2 > 0$, 则 $\sqrt{(C_1-C_2)^2} = C_1-C_2$.
+\[ \omega^2 = \frac{C_1 + C_2 \pm (C_1-C_2)}{M} \]
+光学支 (+): $\omega^2 = \frac{(C_1+C_2)+(C_1-C_2)}{M} = \frac{2C_1}{M}$
+声学支 (-): $\omega^2 = \frac{(C_1+C_2)-(C_1-C_2)}{M} = \frac{2C_2}{M}$
+
+群速度 $v_g$:
+因为 $\sin(kd) = \sin(\pi) = 0$，代入 $v_g$ 的表达式，分子为 0。
+在 $k=\pi/d$ 处，光学支和声学支的 $\omega$ 都不为 0。
+所以，对于光学支和声学支，在 $k=\pi/d$ 处，$v_g = 0$。
+
+
+\end{document}

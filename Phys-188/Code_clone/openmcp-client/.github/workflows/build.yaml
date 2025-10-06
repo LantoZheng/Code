@@ -1,0 +1,42 @@
+name: Build 
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+        cache: 'yarn'
+
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+
+    - name: Build all
+      run: yarn build
+
+    - name: Package VSIX
+      run: npx vsce package --out dist/openmcp.vsix
+
+    - name: Upload VSIX
+      uses: actions/upload-artifact@v4
+      with:
+        name: openmcp-${{ matrix.os }}
+        path: dist/openmcp.vsix
+

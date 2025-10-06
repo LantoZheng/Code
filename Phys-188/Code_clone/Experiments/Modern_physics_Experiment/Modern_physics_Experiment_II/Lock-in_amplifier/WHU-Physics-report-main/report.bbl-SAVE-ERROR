@@ -1,0 +1,110 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{HorowitzHill2015}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=eae852313f1caa761b4d50ecf145958c}{%
+           family={Horowitz},
+           familyi={H\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+        {{hash=4b7649fd9463dfa43a32e8ce571338f0}{%
+           family={Hill},
+           familyi={H\bibinitperiod},
+           given={Winfield},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{9765a7171294b7f07dfa61426a4924f7}
+      \strng{fullhash}{9765a7171294b7f07dfa61426a4924f7}
+      \strng{fullhashraw}{9765a7171294b7f07dfa61426a4924f7}
+      \strng{bibnamehash}{9765a7171294b7f07dfa61426a4924f7}
+      \strng{authorbibnamehash}{9765a7171294b7f07dfa61426a4924f7}
+      \strng{authornamehash}{9765a7171294b7f07dfa61426a4924f7}
+      \strng{authorfullhash}{9765a7171294b7f07dfa61426a4924f7}
+      \strng{authorfullhashraw}{9765a7171294b7f07dfa61426a4924f7}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd}
+      \field{title}{The Art of Electronics}
+      \field{year}{2015}
+    \endentry
+    \entry{Lyons2011}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=30cfa3906c03117342e730ef1ed57349}{%
+           family={Lyons},
+           familyi={L\bibinitperiod},
+           given={Richard\bibnamedelima G.},
+           giveni={R\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Prentice Hall}%
+      }
+      \strng{namehash}{30cfa3906c03117342e730ef1ed57349}
+      \strng{fullhash}{30cfa3906c03117342e730ef1ed57349}
+      \strng{fullhashraw}{30cfa3906c03117342e730ef1ed57349}
+      \strng{bibnamehash}{30cfa3906c03117342e730ef1ed57349}
+      \strng{authorbibnamehash}{30cfa3906c03117342e730ef1ed57349}
+      \strng{authornamehash}{30cfa3906c03117342e730ef1ed57349}
+      \strng{authorfullhash}{30cfa3906c03117342e730ef1ed57349}
+      \strng{authorfullhashraw}{30cfa3906c03117342e730ef1ed57349}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd}
+      \field{title}{Understanding Digital Signal Processing}
+      \field{year}{2011}
+    \endentry
+    \entry{Meade1983}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=adf0395cd27511ff810e2dddbfab3464}{%
+           family={Meade},
+           familyi={M\bibinitperiod},
+           given={M.\bibnamedelimi L.},
+           giveni={M\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Peter Peregrinus Ltd.}%
+      }
+      \strng{namehash}{adf0395cd27511ff810e2dddbfab3464}
+      \strng{fullhash}{adf0395cd27511ff810e2dddbfab3464}
+      \strng{fullhashraw}{adf0395cd27511ff810e2dddbfab3464}
+      \strng{bibnamehash}{adf0395cd27511ff810e2dddbfab3464}
+      \strng{authorbibnamehash}{adf0395cd27511ff810e2dddbfab3464}
+      \strng{authornamehash}{adf0395cd27511ff810e2dddbfab3464}
+      \strng{authorfullhash}{adf0395cd27511ff810e2dddbfab3464}
+      \strng{authorfullhashraw}{adf0395cd27511ff810e2dddbfab3464}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Lock-in amplifiers: Principles and applications}
+      \field{year}{1983}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

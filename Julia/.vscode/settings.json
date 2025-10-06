@@ -1,0 +1,6 @@
+{
+  "julia.executablePath": "/usr/local/bin/julia",
+  "julia.environmentPath": "${workspaceFolder}",
+  "julia.packageManager": "Pkg",
+  "julia.format.indent": 2
+}

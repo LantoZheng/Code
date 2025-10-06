@@ -1,0 +1,121 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ctex}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\title{热力学与统计物理作业}
+\author{姓名：郑晓旸 \\ 学号：202111030007} % 作者信息
+
+\date{\today} % 日期留空
+
+\begin{document}
+\maketitle % 显示标题信息，如果不需要可以注释掉
+\section*{3-2}
+在 p-v 图上将范德瓦耳斯气体不同温度的等温线上的极大点与极小点连成一条曲线, 证明这条曲线的方程为
+\[ pv^3 = a(v - 2b) \]
+式中 v 为气体的摩尔体积, 并说明这条曲线分割的区域 I、II、III 的意义。
+
+\textbf{解:} 对物质量为 $n$ 的范德瓦耳斯方程为
+\[ \left( P + \frac{a}{v^2} \right) (v - b) = RT \]
+即
+\[ P = \frac{RT}{v-b} - \frac{a}{v^2} \]
+可得
+\[ \left( \frac{\partial P}{\partial v} \right)_T = - \frac{RT}{(v-b)^2} + \frac{2a}{v^3} \]
+等温线的极大与极小值点满足
+\[ \left( \frac{\partial P}{\partial v} \right)_T = 0 \]
+得
+\[ \frac{RT}{(v-b)^2} = \frac{2a}{v^3} \]
+联立范德瓦耳斯方程, 可得
+% (Derivation steps seem skipped in the image, directly showing the result)
+% From RT = 2a(v-b)^2 / v^3, substitute into P = RT/(v-b) - a/v^2
+% P = [2a(v-b)^2 / v^3] / (v-b) - a/v^2
+% P = 2a(v-b) / v^3 - a/v^2
+% P = (2av - 2ab - av) / v^3 = (av - 2ab) / v^3
+% Pv^3 = a(v - 2b)
+% The image shows intermediate step: pv^3 = 2a(v-b) - av = a(v-2b)
+\[ Pv^3 = 2a(v-b) - av = a(v-2b) \]
+
+\hrulefill
+
+\section*{3-5}
+证明处于两相平衡的单元系, 有下式成立:
+\[ \frac{C_V}{\kappa_S} = T v \left( \frac{dp}{dT} \right)^2 \]
+其中, 等熵压缩率定义为 $\kappa_S = -\frac{1}{v} \left( \frac{\partial v}{\partial p} \right)_S$.
+
+\textbf{解:}
+\[ C_V = T \left( \frac{\partial S}{\partial T} \right)_V \quad \kappa_S = -\frac{1}{v} \left( \frac{\partial v}{\partial p} \right)_S \]
+故
+\[ \frac{C_V}{\kappa_S} = \frac{T (\partial S / \partial T)_V}{- (1/v) (\partial v / \partial p)_S} = - T v \frac{(\partial S / \partial T)_V}{(\partial v / \partial p)_S} \]
+利用关系 $\left( \frac{\partial v}{\partial p} \right)_S = \left( \frac{\partial v}{\partial T} \right)_S \left( \frac{\partial T}{\partial p} \right)_S$:
+\[ \frac{C_V}{\kappa_S} = - T v \frac{(\partial S / \partial T)_V}{(\partial v / \partial T)_S (\partial T / \partial p)_S} = - T v \left( \frac{\partial S}{\partial T} \right)_V \left( \frac{\partial T}{\partial v} \right)_S \left( \frac{\partial p}{\partial T} \right)_S \]
+由麦克斯韦关系 $\left( \frac{\partial T}{\partial v} \right)_S = - \left( \frac{\partial p}{\partial S} \right)_V$:
+\[ \frac{C_V}{\kappa_S} = - T v \left( \frac{\partial S}{\partial T} \right)_V \left( - \frac{\partial p}{\partial S} \right)_V \left( \frac{\partial p}{\partial T} \right)_S = T v \left[ \left( \frac{\partial S}{\partial T} \right)_V \left( \frac{\partial p}{\partial S} \right)_V \right] \left( \frac{\partial p}{\partial T} \right)_S \]
+利用链式法则 $\left( \frac{\partial p}{\partial T} \right)_V = \left( \frac{\partial p}{\partial S} \right)_V \left( \frac{\partial S}{\partial T} \right)_V$:
+\[ \frac{C_V}{\kappa_S} = T v \left( \frac{\partial p}{\partial T} \right)_V \left( \frac{\partial p}{\partial T} \right)_S \]
+\[ = T v \left( \frac{\partial p}{\partial T} \right)_V^2 \]
+两相平衡时, $p=p(T)$, 压力只是温度的函数, 偏导数等于全导数。
+故
+\[ \frac{C_V}{\kappa_S} = T v \left( \frac{dp}{dT} \right)^2 \]
+
+
+\hrulefill
+
+\section*{3-3}
+证明: 在用克拉珀龙方程描述相变过程中, 内能的变化为
+\[ u_2 - u_1 = L \left( 1 - \frac{d \ln T}{d \ln p} \right) \]
+
+\textbf{解:} 相变过程中, $\Delta U, \Delta H, \Delta V$ 满足关系 $\Delta U = \Delta H - P \Delta V$.
+由克拉珀龙方程 $\frac{dp}{dT} = \frac{\Delta H}{T \Delta V}$.
+得 $\Delta V = \frac{\Delta H}{T (dp/dT)}$.
+故
+\[ \Delta U = \Delta H - P \Delta V = \Delta H - P \frac{\Delta H}{T (dp/dT)} = \Delta H \left( 1 - \frac{P}{T} \frac{dT}{dp} \right) \]
+注意到 $\frac{d \ln T}{d \ln p} = \frac{dT/T}{dp/p} = \frac{p}{T} \frac{dT}{dp}$.
+\[ \Delta U = \Delta H \left( 1 - \frac{d \ln T}{d \ln p} \right) \]
+考虑 $\Delta H = L$ (L 为相变潜热).
+可得
+\[ u_2 - u_1 = L \left( 1 - \frac{d \ln T}{d \ln p} \right) \]
+
+\hrulefill
+
+\section*{3-4}
+设气体的物态方程如下所示:
+\[ p(v - b) = RT \exp\left(-\frac{a}{RTv}\right) \]
+试求出临界温度 $T_c$、临界压强 $p_c$ 和临界体积 $v_c$.
+
+\textbf{解:} 临界处要求 $\left( \frac{\partial p}{\partial v} \right)_T = 0$, $\left( \frac{\partial^2 p}{\partial v^2} \right)_T = 0$.
+由物态方程 $p = \frac{RT}{v-b} \exp\left(-\frac{a}{RTv}\right)$ 可得
+\begin{align*} \left( \frac{\partial p}{\partial v} \right)_T &= \frac{\partial}{\partial v} \left[ \frac{RT}{v-b} \exp\left(-\frac{a}{RTv}\right) \right] \\ &= -\frac{RT}{(v-b)^2} \exp\left(-\frac{a}{RTv}\right) + \frac{RT}{v-b} \exp\left(-\frac{a}{RTv}\right) \left( \frac{a}{RTv^2} \right) \\ &= \exp\left(-\frac{a}{RTv}\right) \left[ -\frac{RT}{(v-b)^2} + \frac{a}{(v-b)v^2} \right] \end{align*}
+令 $\left( \frac{\partial p}{\partial v} \right)_T = 0$, 由于 $\exp(...) \neq 0$, 则
+\[ -\frac{RT}{(v-b)^2} + \frac{a}{(v-b)v^2} = 0 \]
+\[ \frac{RT}{v-b} = \frac{a}{v^2} \quad (*). \]
+得
+\[ a = \frac{RT v^2}{v-b} \]
+对 $\left( \frac{\partial p}{\partial v} \right)_T$ 再求导:
+\[ \left( \frac{\partial^2 p}{\partial v^2} \right)_T = \frac{\partial}{\partial v} \left\{ \exp\left(-\frac{a}{RTv}\right) \left[ -\frac{RT}{(v-b)^2} + \frac{a}{(v-b)v^2} \right] \right\} \]
+在临界点, $\left[ -\frac{RT}{(v-b)^2} + \frac{a}{(v-b)v^2} \right] = 0$, 故只需令中括号内项对 $v$ 的导数为零:
+\[ \frac{\partial}{\partial v} \left[ -\frac{RT}{(v-b)^2} + \frac{a}{(v-b)v^2} \right] = 0 \]
+\[ -RT(-2)(v-b)^{-3} + a \left[ (-1)(v-b)^{-2}v^{-2} + (v-b)^{-1}(-2)v^{-3} \right] = 0 \]
+\[ \frac{2RT}{(v-b)^3} - a \left[ \frac{1}{(v-b)^2 v^2} + \frac{2}{(v-b)v^3} \right] = 0 \]
+\[ \frac{2RT}{(v-b)^3} = a \left[ \frac{v + 2(v-b)}{(v-b)^2 v^3} \right] = a \frac{3v-2b}{(v-b)^2 v^3} \]
+\[ \frac{2RT}{v-b} = \frac{a(3v-2b)}{v^3} \]
+将 (*) 式 $\frac{RT}{v-b} = \frac{a}{v^2}$ 代入上式:
+\[ 2 \left( \frac{a}{v^2} \right) = \frac{a(3v-2b)}{v^3} \]
+假设 $a \neq 0$:
+\[ \frac{2}{v^2} = \frac{3v-2b}{v^3} \]
+\[ 2v = 3v - 2b \]
+\[ v = 2b \]
+得临界体积 $v_c = 2b$.
+代回 (*) 式求 $T_c$:
+\[ \frac{RT_c}{v_c-b} = \frac{a}{v_c^2} \implies \frac{RT_c}{2b-b} = \frac{a}{(2b)^2} \]
+\[ \frac{RT_c}{b} = \frac{a}{4b^2} \implies RT_c = \frac{a}{4b} \]
+得临界温度 $T_c = \frac{a}{4bR}$.
+代回物态方程求 $p_c$:
+\begin{align*} p_c &= \frac{RT_c}{v_c-b} \exp\left(-\frac{a}{RT_c v_c}\right) \\ &= \frac{a/4b}{2b-b} \exp\left(-\frac{a}{(a/4b)(2b)}\right) \\ &= \frac{a/4b}{b} \exp\left(-\frac{a}{a/2}\right) \\ &= \frac{a}{4b^2} \exp(-2) = \frac{a}{4b^2 e^2} \end{align*}
+
+代回方程得 $p_c = \frac{a}{(2be)^2}$.
+
+\vspace{1cm}
+\hfill 郑晓旸 20211130007
+
+\end{document}

@@ -1,0 +1,230 @@
+\documentclass{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics} % For \ket{}, \bra{}, \expval{}, etc.
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun} % Or any other CJK font available on your system
+\usepackage{hyperref} % Optional
+
+\begin{document}
+
+\title{量子力学II (2025) 期末 - 答卷}
+\author{郑晓旸 \\ 202111030007}
+\date{\today}
+\maketitle
+
+\section*{问题 1 (30分)}
+\noindent (a) 利用 \(J_z\) 时间反演为奇，证明 \(\Theta|j, m\rangle = c|j, -m\rangle\)，其中 \(c\) 为常数。\\
+\noindent (b) 再利用 \(J_\pm |jm\rangle = e^{i\delta} c_\pm(j, m) |jm \pm 1\rangle\)，进一步证明:
+\[ \Theta|j, m\rangle = e^{i\delta} (-1)^m |j, -m\rangle. \]
+\rule[1ex]{\textwidth}{0.4pt}
+\subsection*{(a) 证明：}
+时间反演算符 \(\Theta\) 是一个反幺正算符，其重要性质之一是对角动量算符的作用：
+\[ \Theta \mathbf{J} \Theta^{-1} = -\mathbf{J} \]
+这意味着 \(\Theta J_k \Theta^{-1} = -J_k\) 对于 \(k=x, y, z\) 都成立。
+
+首先考虑总角动量算符 \(\mathbf{J}^2 = J_x^2 + J_y^2 + J_z^2\) 在时间反演下的变换：
+\[ \Theta \mathbf{J}^2 \Theta^{-1} = \Theta (J_x^2 + J_y^2 + J_z^2) \Theta^{-1} \]
+\[ = (\Theta J_x \Theta^{-1})^2 + (\Theta J_y \Theta^{-1})^2 + (\Theta J_z \Theta^{-1})^2 \]
+\[ = (-J_x)^2 + (-J_y)^2 + (-J_z)^2 \]
+\[ = J_x^2 + J_y^2 + J_z^2 = \mathbf{J}^2 \]
+因此，\(\mathbf{J}^2\) 在时间反演下是不变的，即 \([\mathbf{J}^2, \Theta] = 0\)。
+
+已知角动量本征态 \(\ket{j, m}\) 是 \(\mathbf{J}^2\) 的本征态：
+\[ \mathbf{J}^2 \ket{j, m} = j(j+1)\hbar^2 \ket{j, m} \]
+将 \(\mathbf{J}^2\) 作用到态 \(\Theta\ket{j, m}\) 上：
+\[ \mathbf{J}^2 (\Theta\ket{j, m}) = (\mathbf{J}^2 \Theta) \ket{j, m} = \Theta (\mathbf{J}^2 \ket{j, m}) \]
+\[ = \Theta (j(j+1)\hbar^2 \ket{j, m}) \]
+由于 \(j(j+1)\hbar^2\) 是一个实数，且 \(\Theta\) 是反幺正算符 (\(\Theta c = c^* \Theta\))，对实数作用时可直接提出：
+\[ \mathbf{J}^2 (\Theta\ket{j, m}) = j(j+1)\hbar^2 (\Theta\ket{j, m}) \]
+这表明 \(\Theta\ket{j, m}\) 仍然是 \(\mathbf{J}^2\) 的本征态，其本征值与 \(\ket{j, m}\) 相同，为 \(j(j+1)\hbar^2\)。
+
+接下来考虑 \(J_z\) 算符。题目给定 \(J_z\) 时间反演为奇 (\(\Theta J_z \Theta^{-1} = -J_z\))。
+这意味着 \(J_z \Theta = -\Theta J_z\)。
+
+已知 \(\ket{j, m}\) 是 \(J_z\) 的本征态：
+\[ J_z \ket{j, m} = m\hbar \ket{j, m} \]
+将 \(J_z\) 作用到态 \(\Theta\ket{j, m}\) 上：
+\[ J_z (\Theta\ket{j, m}) = (-\Theta J_z) \ket{j, m} = -\Theta (J_z \ket{j, m}) \]
+\[ = -\Theta (m\hbar \ket{j, m}) \]
+由于 \(m\hbar\) 是一个实数：
+\[ J_z (\Theta\ket{j, m}) = -m\hbar (\Theta\ket{j, m}) \]
+这表明 \(\Theta\ket{j, m}\) 是 \(J_z\) 的本征态，其本征值为 \(-m\hbar\)。
+
+综上所述，态 \(\Theta\ket{j, m}\) 是 \(\mathbf{J}^2\) 和 \(J_z\) 的共同本征态，其本征值分别为 \(j(j+1)\hbar^2\) 和 \(-m\hbar\)。在角动量量子数 \(j\) 给定的子空间内，由 \(\mathbf{J}^2\) 和 \(J_z\) 的本征值唯一确定了态 \(\ket{j, -m}\) (不考虑相位)。因此，\(\Theta\ket{j, m}\) 必须与 \(\ket{j, -m}\) 成正比：
+\[ \Theta\ket{j, m} = c_{j,m}\ket{j, -m} \]
+其中 \(c_{j,m}\) 是一个复常数，其可能依赖于 \(j\) 和 \(m\)。
+
+\subsection*{(b) 证明：}
+首先，确定升降算符 \(J_\pm = J_x \pm iJ_y\) 在时间反演下的变换：
+\[ \Theta J_+ \Theta^{-1} = \Theta (J_x + iJ_y) \Theta^{-1} \]
+\[ = \Theta J_x \Theta^{-1} + \Theta i \Theta^{-1} \Theta J_y \Theta^{-1} \]
+\[ = (-J_x) + (-i) (-J_y) \]
+\[ = -J_x + iJ_y = -(J_x - iJ_y) = -J_- \]
+所以，\(\Theta J_+ = -J_- \Theta\)。类似地，可得 \(\Theta J_- = -J_+ \Theta\)。
+
+考虑将时间反演算符 \(\Theta\) 作用到 \(J_+\ket{j, m}\) 的等式两边：
+\[ \Theta (J_+\ket{j, m}) = \Theta (e^{i\delta} c_+(j, m) \ket{j, m+1}) \]
+左边利用 \(\Theta J_+ = -J_- \Theta\) 和 (a) 的结果 \(\Theta\ket{j, k} = c_k\ket{j, -k}\) (这里用 \(c_k\) 表示依赖于 \(m\) 的常数 \(c_{j,k}\))：
+\[ \text{LHS} = (\Theta J_+) \ket{j, m} = (-J_- \Theta) \ket{j, m} = -J_- (\Theta\ket{j, m}) = -J_- (c_m\ket{j, -m}) \]
+由于 \(c_m\) 是一个系数，可以提出：
+\[ \text{LHS} = -c_m J_-\ket{j, -m} \]
+根据题目给定的 \(J_-\) 作用形式 (将 \(m\) 替换为 \(-m\))：
+\[ J_-\ket{j, -m} = e^{i\delta} c_-(j, -m) \ket{j, -m-1} \]
+所以，
+\[ \text{LHS} = -c_m e^{i\delta} c_-(j, -m) \ket{j, -m-1} \]
+
+右边利用 \(\Theta\) 的反幺正性 (\(\Theta c = c^* \Theta\)) 和 (a) 的结果：
+\[ \text{RHS} = \Theta (e^{i\delta} c_+(j, m) \ket{j, m+1}) = (e^{i\delta})^* c_+(j, m) \Theta\ket{j, m+1} \]
+\[ = e^{-i\delta} c_+(j, m) c_{m+1} \ket{j, -(m+1)} = e^{-i\delta} c_+(j, m) c_{m+1} \ket{j, -m-1} \]
+令 LHS = RHS，并比较 \(\ket{j, -m-1}\) 前的系数 (假设 \(\ket{j, -m-1} \neq 0\))：
+\[ -c_m e^{i\delta} c_-(j, -m) = e^{-i\delta} c_+(j, m) c_{m+1} \]
+\[ c_{m+1} = -c_m \frac{e^{i\delta}}{e^{-i\delta}} \frac{c_-(j, -m)}{c_+(j, m)} = -c_m e^{2i\delta} \frac{c_-(j, -m)}{c_+(j, m)} \]
+这是系数 \(c_m\) 的递推关系。
+
+要证明的形式是 \(\Theta|j, m\rangle = e^{i\delta} (-1)^m |j, -m\rangle\)，这意味着 \(c_m = e^{i\delta} (-1)^m\)。
+如果 \(c_m = e^{i\delta} (-1)^m\)，那么 \(c_{m+1} = e^{i\delta} (-1)^{m+1} = -e^{i\delta} (-1)^m = -c_m\)。
+将此代入递推关系中：
+\[ -c_m = -c_m e^{2i\delta} \frac{c_-(j, -m)}{c_+(j, m)} \]
+若 \(c_m \neq 0\)，则要求：
+\[ 1 = e^{2i\delta} \frac{c_-(j, -m)}{c_+(j, m)} \]
+即 \(c_+(j, m) = e^{2i\delta} c_-(j, -m)\)。
+这个条件是关于题目中给定的 \(J_\pm\) 算符系数 \(c_\pm(j,m)\) 和相位 \(e^{i\delta}\) 之间的一个一致性要求。
+如果这个一致性条件成立，那么递推关系 \(c_{m+1} = -c_m e^{2i\delta} \frac{c_-(j, -m)}{c_+(j, m)}\) 就简化为 \(c_{m+1} = -c_m\)。
+此递推关系的通解为 \(c_m = C_0 (-1)^m\)，其中 \(C_0\) 是一个不依赖于 \(m\) 的常数 (但可能依赖于 \(j\))。
+为了与目标形式 \(\Theta|j, m\rangle = e^{i\delta} (-1)^m |j, -m\rangle\) 相符，选择 \(C_0 = e^{i\delta}\)。
+因此，在题目给定的 \(J_\pm\) 作用形式与 \(\Theta\) 作用结果形式内在一致（即 \(c_+(j, m) = e^{2i\delta} c_-(j, -m)\)）的前提下，证明了：
+\[ \Theta|j, m\rangle = e^{i\delta} (-1)^m |j, -m\rangle. \]
+\newpage
+\section*{问题 2 (30分)}
+\noindent 一个无自旋粒子束缚在固定点，其束缚势能 \(V(\mathbf{x})\) 不是中心势，故能级都是非简并的。利用时间反演对称性证明 \(\langle \mathbf{L} \rangle = 0\)。
+
+\rule[1ex]{\textwidth}{0.4pt}
+
+\subsection*{证明：}
+\begin{enumerate}
+\item \textbf{哈密顿量与时间反演对称性}
+
+系统的哈密顿量为
+\[ H = \frac{\mathbf{p}^2}{2m} + V(\mathbf{x}) \]
+其中 \(\mathbf{p}\) 是动量算符，\(V(\mathbf{x})\) 是束缚势能。时间反演算符为 \(\Theta\)。对于无自旋粒子，时间反演算符对坐标算符 \(\mathbf{x}\) 和动量算符 \(\mathbf{p}\) 的作用如下：
+\[ \Theta \mathbf{x} \Theta^{-1} = \mathbf{x} \]
+\[ \Theta \mathbf{p} \Theta^{-1} = -\mathbf{p} \]
+因此，哈密顿量在时间反演下的变换为：
+\[ \Theta H \Theta^{-1} = \Theta \left( \frac{\mathbf{p}^2}{2m} + V(\mathbf{x}) \right) \Theta^{-1} \]
+\[ = \frac{1}{2m} (\Theta \mathbf{p} \Theta^{-1}) \cdot (\Theta \mathbf{p} \Theta^{-1}) + V(\Theta \mathbf{x} \Theta^{-1}) \]
+\[ = \frac{1}{2m} (-\mathbf{p}) \cdot (-\mathbf{p}) + V(\mathbf{x}) \]
+\[ = \frac{\mathbf{p}^2}{2m} + V(\mathbf{x}) = H \]
+这表明哈密顿量 \(H\) 在时间反演下是不变的，即系统具有时间反演对称性：\([\Theta, H] = 0\)。
+
+\item \textbf{非简并能级与时间反演态}
+
+设 \(|n\rangle\) 是哈密顿量 \(H\) 的一个能量本征态，对应的能量本征值为 \(E_n\)，即：
+\[ H |n\rangle = E_n |n\rangle \]
+由于哈密顿量具有时间反演对称性，\(\Theta |n\rangle\) 也是 \(H\) 的一个本征态，且具有相同的能量本征值 \(E_n\):
+\[ H (\Theta |n\rangle) = (\Theta H \Theta^{-1}) (\Theta |n\rangle) = \Theta (H |n\rangle) = \Theta (E_n |n\rangle) = E_n (\Theta |n\rangle) \]
+（因为能量 \(E_n\) 是实数）。
+题目中已说明能级都是非简并的。这意味着对于每一个能量本征值 \(E_n\)，只存在一个（除去整体相位因子外）线性无关的本征态。因此，\(\Theta |n\rangle\) 必须与 \(|n\rangle\) 成正比：
+\[ \Theta |n\rangle = c_n |n\rangle \]
+其中 \(c_n\) 是一个复数。
+对于无自旋粒子，时间反演算符的平方 \(\Theta^2 = 1\)。将 \(\Theta\) 再次作用于上式：
+\[ \Theta^2 |n\rangle = \Theta (c_n |n\rangle) \]
+由于 \(\Theta\) 是反幺正算符，\(\Theta (c_n |n\rangle) = c_n^* (\Theta |n\rangle) = c_n^* (c_n |n\rangle) = |c_n|^2 |n\rangle\)。
+因此有：
+\[ 1 \cdot |n\rangle = |c_n|^2 |n\rangle \]
+这意味着 \(|c_n|^2 = 1\)。对于非简并能级，可以选择本征态的相位，使得 \(c_n = 1\)。所以：
+\[ \Theta |n\rangle = |n\rangle \]
+
+\item \textbf{轨道角动量算符在时间反演下的变换}
+
+轨道角动量算符 \(\mathbf{L} = \mathbf{x} \times \mathbf{p}\)。其在时间反演下的变换为：
+\[ \Theta \mathbf{L} \Theta^{-1} = (\Theta \mathbf{x} \Theta^{-1}) \times (\Theta \mathbf{p} \Theta^{-1}) \]
+\[ = \mathbf{x} \times (-\mathbf{p}) = -(\mathbf{x} \times \mathbf{p}) = -\mathbf{L} \]
+
+\item \textbf{证明 \(\langle \mathbf{L} \rangle = 0\)}
+
+考虑在能量本征态 \(|n\rangle\) 下轨道角动量的期望值 \(\langle \mathbf{L} \rangle_n = \langle n | \mathbf{L} | n \rangle\)。
+利用 \(\Theta |n\rangle = |n\rangle\)，可以写出：
+\[ \langle \mathbf{L} \rangle_n = \langle n | \mathbf{L} | n \rangle = \langle \Theta n | \mathbf{L} | \Theta n \rangle \]
+由于时间反演算符 \(\Theta\) 是反幺正的，对于任意算符 \(A\) 和任意态 \(|\psi\rangle, |\phi\rangle\)，有如下关系：
+\[ \langle \Theta \psi | A | \Theta \phi \rangle = \langle \psi | \Theta^{-1} A \Theta | \phi \rangle^* \]
+将此应用于 \(\langle \Theta n | \mathbf{L} | \Theta n \rangle\)，得到：
+\[ \langle \Theta n | \mathbf{L} | \Theta n \rangle = \langle n | \Theta^{-1} \mathbf{L} \Theta | n \rangle^* \]
+将 \(\Theta^{-1} \mathbf{L} \Theta = -\mathbf{L}\) 代入上式 (因为 \(\Theta \mathbf{L} \Theta^{-1} = -\mathbf{L} \implies \mathbf{L} = \Theta^{-1} (-\mathbf{L}) \Theta \implies \Theta^{-1} \mathbf{L} \Theta = -\mathbf{L}\))：
+\[ \langle \Theta n | \mathbf{L} | \Theta n \rangle = \langle n | (-\mathbf{L}) | n \rangle^* = - \langle n | \mathbf{L} | n \rangle^* \]
+因此，得到：
+\[ \langle n | \mathbf{L} | n \rangle = - \langle n | \mathbf{L} | n \rangle^* \]
+即：
+\[ \langle \mathbf{L} \rangle_n = - \langle \mathbf{L} \rangle_n^* \]
+由于轨道角动量算符 \(\mathbf{L}\) 是厄米算符，其在任意态下的期望值是一个实矢量。这意味着 \(\langle \mathbf{L} \rangle_n^* = \langle \mathbf{L} \rangle_n\)。
+将此代入上面的等式：
+\[ \langle \mathbf{L} \rangle_n = - \langle \mathbf{L} \rangle_n \]
+\[ 2 \langle \mathbf{L} \rangle_n = 0 \]
+\[ \langle \mathbf{L} \rangle_n = 0 \]
+这证明了对于一个无自旋粒子，如果其束缚在固定点的势能 \(V(\mathbf{x})\) 不是中心势，且能级都是非简并的，那么其轨道角动量的期望值为零。由于这是对任意非简并本征态 \(|n\rangle\) 成立的，所以一般结论 \(\langle \mathbf{L} \rangle = 0\) 成立。
+\end{enumerate}
+\newpage
+\section*{问题 3 (40分)}
+\noindent 三个 \(S = 1/2\) 粒子构成的系统，哈密顿量为
+\[ H = J(\mathbf{S}_1 \cdot \mathbf{S}_2 + \mathbf{S}_2 \cdot \mathbf{S}_3 + \mathbf{S}_3 \cdot \mathbf{S}_1). \]
+\noindent (1) 请问系统是否具有时间反演不变性? (2) 能级是否简并?
+
+\rule[1ex]{\textwidth}{0.4pt}
+
+\subsection*{1. 系统的时间反演不变性}
+系统具有时间反演不变性。
+
+\textbf{证明：}
+时间反演算符 \(\Theta\) 是一个反幺正算符。对于自旋算符 \(\mathbf{S}_i\)，其变换性质为 \(\Theta \mathbf{S}_i \Theta^{-1} = -\mathbf{S}_i\)。
+考虑哈密顿量中的任意一项 \(\mathbf{S}_i \cdot \mathbf{S}_j = S_{ix}S_{jx} + S_{iy}S_{jy} + S_{iz}S_{jz}\)。在时间反演操作下：
+\[ \Theta (\mathbf{S}_i \cdot \mathbf{S}_j) \Theta^{-1} = \sum_{k=x,y,z} \Theta (S_{ik} S_{jk}) \Theta^{-1} \]
+由于 \(\Theta\) 是反幺正的，且 \(\Theta S_{ik} \Theta^{-1} = -S_{ik}\) 和 \(\Theta S_{jk} \Theta^{-1} = -S_{jk}\)，我们有：
+\[ \Theta (S_{ik} S_{jk}) \Theta^{-1} = (\Theta S_{ik} \Theta^{-1}) (\Theta S_{jk} \Theta^{-1}) = (-S_{ik})(-S_{jk}) = S_{ik} S_{jk} \]
+因此，\(\Theta (\mathbf{S}_i \cdot \mathbf{S}_j) \Theta^{-1} = \mathbf{S}_i \cdot \mathbf{S}_j\)。
+假设耦合常数 \(J\) 是实数 (通常物理哈密顿量中的参数是实数)，则 \(\Theta J \Theta^{-1} = J^* = J\)。
+哈密顿量在时间反演下的变换为：
+\[ \Theta H \Theta^{-1} = \Theta [J(\mathbf{S}_1 \cdot \mathbf{S}_2 + \mathbf{S}_2 \cdot \mathbf{S}_3 + \mathbf{S}_3 \cdot \mathbf{S}_1)] \Theta^{-1} \]
+\[ = J(\Theta (\mathbf{S}_1 \cdot \mathbf{S}_2) \Theta^{-1} + \Theta (\mathbf{S}_2 \cdot \mathbf{S}_3) \Theta^{-1} + \Theta (\mathbf{S}_3 \cdot \mathbf{S}_1) \Theta^{-1}) \]
+\[ = J(\mathbf{S}_1 \cdot \mathbf{S}_2 + \mathbf{S}_2 \cdot \mathbf{S}_3 + \mathbf{S}_3 \cdot \mathbf{S}_1) = H \]
+由于 \(\Theta H \Theta^{-1} = H\)，即 \([H, \Theta] = 0\)，系统具有时间反演不变性。
+
+
+\subsection*{2. 能级简并}
+
+\textbf{证明：}
+
+引入总自旋算符 \(\mathbf{S}_{tot} = \mathbf{S}_1 + \mathbf{S}_2 + \mathbf{S}_3\)。
+其平方为 \(\mathbf{S}_{tot}^2 = (\mathbf{S}_1 + \mathbf{S}_2 + \mathbf{S}_3)^2 = \mathbf{S}_1^2 + \mathbf{S}_2^2 + \mathbf{S}_3^2 + 2(\mathbf{S}_1 \cdot \mathbf{S}_2 + \mathbf{S}_1 \cdot \mathbf{S}_3 + \mathbf{S}_2 \cdot \mathbf{S}_3)\)。
+对于 \(S=1/2\) 的粒子，\(\mathbf{S}_i^2 = s_i(s_i+1)\hbar^2 = \frac{1}{2}(\frac{1}{2}+1)\hbar^2 = \frac{3}{4}\hbar^2\)。
+所以，\(\mathbf{S}_1^2 + \mathbf{S}_2^2 + \mathbf{S}_3^2 = 3 \cdot \frac{3}{4}\hbar^2 = \frac{9}{4}\hbar^2\)。
+则哈密顿量中的点乘项可以表示为：
+\[ \mathbf{S}_1 \cdot \mathbf{S}_2 + \mathbf{S}_2 \cdot \mathbf{S}_3 + \mathbf{S}_3 \cdot \mathbf{S}_1 = \frac{1}{2} (\mathbf{S}_{tot}^2 - (\mathbf{S}_1^2 + \mathbf{S}_2^2 + \mathbf{S}_3^2)) = \frac{1}{2} \left(\mathbf{S}_{tot}^2 - \frac{9}{4}\hbar^2\right) \]
+哈密顿量 \(H\) 可以改写为：
+\[ H = J \left( \frac{1}{2} \mathbf{S}_{tot}^2 - \frac{9}{8}\hbar^2 \right) = \frac{J}{2} \mathbf{S}_{tot}^2 - \frac{9J}{8}\hbar^2 \]
+系统的能量本征值 \(E\) 取决于总自旋量子数 \(S\) (其中 \(\mathbf{S}_{tot}^2\) 的本征值为 \(S(S+1)\hbar^2\))：
+\[ E_S = \frac{J}{2} S(S+1)\hbar^2 - \frac{9J}{8}\hbar^2 \]
+对于三个 \(S=1/2\) 的粒子耦合，总自旋 \(S\) 的可能取值：
+首先耦合 \(\mathbf{S}_1\) 和 \(\mathbf{S}_2\) 得到 \(\mathbf{S}_{12} = \mathbf{S}_1 + \mathbf{S}_2\)。\(S_{12}\) 可以取 \(1/2+1/2=1\) 或 \(1/2-1/2=0\)。
+然后耦合 \(\mathbf{S}_{12}\) 和 \(\mathbf{S}_3\)：
+\begin{itemize}
+    \item 如果 \(S_{12}=1\)，与 \(S_3=1/2\) 耦合，得到 \(S_{tot} = 1+1/2 = 3/2\) 或 \(1-1/2 = 1/2\)。
+    \item 如果 \(S_{12}=0\)，与 \(S_3=1/2\) 耦合，得到 \(S_{tot} = 0+1/2 = 1/2\)。
+\end{itemize}
+所以，总自旋 \(S_{tot}\) 的可能取值为 \(3/2\) (出现一次) 和 \(1/2\) (出现两次)。
+
+对应的能量本征值为：
+\begin{itemize}
+    \item 对于 \(S = 3/2\)：
+    \[ E_{3/2} = \frac{J}{2} \frac{3}{2}\left(\frac{3}{2}+1\right)\hbar^2 - \frac{9J}{8}\hbar^2 = \frac{J}{2} \frac{3}{2} \frac{5}{2}\hbar^2 - \frac{9J}{8}\hbar^2 = \frac{15J}{8}\hbar^2 - \frac{9J}{8}\hbar^2 = \frac{6J}{8}\hbar^2 = \frac{3J}{4}\hbar^2 \]
+    此能级的简并度为 \(2S+1 = 2(3/2)+1 = 4\)。
+    \item 对于 \(S = 1/2\)：
+    \[ E_{1/2} = \frac{J}{2} \frac{1}{2}\left(\frac{1}{2}+1\right)\hbar^2 - \frac{9J}{8}\hbar^2 = \frac{J}{2} \frac{1}{2} \frac{3}{2}\hbar^2 - \frac{9J}{8}\hbar^2 = \frac{3J}{8}\hbar^2 - \frac{9J}{8}\hbar^2 = -\frac{6J}{8}\hbar^2 = -\frac{3J}{4}\hbar^2 \]
+    由于总自旋 \(S=1/2\) 的态出现了两次 (即有两个独立的态系列可以耦合得到总自旋 \(S=1/2\))，每个 \(S=1/2\) 的态对应的简并度是 \(2S+1 = 2(1/2)+1 = 2\)。因此，对应能量 \(E_{1/2}\) 的总简并度为 \(2 \times 2 = 4\)。
+\end{itemize}
+系统有两个不同的能量本征值，\(E_{3/2} = \frac{3J}{4}\hbar^2\) 和 \(E_{1/2} = -\frac{3J}{4}\hbar^2\)。
+每个能量本征值都对应一个 4 重简并的能级。因此，能级是简并的。
+
+此外，由于系统由奇数个 (3个) 半整数自旋粒子组成，且哈密顿量具有时间反演不变性，根据 Kramers' 定理，所有能级至少是两重简并的。我们的计算结果 (4重简并) 与 Kramers' 定理是一致的。
+
+\end{document}

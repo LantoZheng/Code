@@ -17,6 +17,26 @@
             ]
         },
         {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "lualatex",
+            "command": "lualatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
             "name": "biber",
             "command": "biber",
             "args": [
@@ -26,12 +46,48 @@
     ],
     "latex-workshop.latex.recipes": [
         {
-            "name": "xelatex -> biber -> xelatex*2",
+            "name": "XeLaTeX (single run)",
+            "tools": [
+                "xelatex"
+            ]
+        },
+        {
+            "name": "PdfLaTeX (single run)",
+            "tools": [
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "LuaLaTeX (single run)",
+            "tools": [
+                "lualatex"
+            ]
+        },
+        {
+            "name": "XeLaTeX -> Biber -> XeLaTex*2",
             "tools": [
                 "xelatex",
                 "biber",
                 "xelatex",
                 "xelatex"
+            ]
+        },
+        {
+            "name": "PdfLaTeX -> Biber -> PdfLaTeX*2",
+            "tools": [
+                "pdflatex",
+                "biber",
+                "pdflatex",
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "LuaLaTeX -> Biber -> LuaLaTeX*2",
+            "tools": [
+                "lualatex",
+                "biber",
+                "lualatex",
+                "lualatex"
             ]
         }
     ],

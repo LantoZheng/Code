@@ -1,0 +1,54 @@
+name: 🚀 Feature Request
+description: 提交新功能建议或改进请求
+title: "[Feature] 简短描述功能需求"
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **请详细描述你的功能需求**
+  - type: input
+    id: problem
+    attributes:
+      label: 想要解决的问题
+      description: "说明当前痛点或未满足的需求"
+      placeholder: "例如:无法支持mcp中函数参数是自定义类型的情况"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 功能描述
+      description: "你想要的新功能具体是什么？"
+      placeholder: "例如:支持mcp中函数参数是自定义类型的情况"
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 使用场景
+      description: "这个功能会在什么情况下使用？"
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 功能优先级
+      options:
+        - "高（核心功能缺失）"
+        - "中（显著提升效率）"
+        - "低（优化体验）"
+    validations:
+      required: true
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: "是否愿意参与贡献？"
+      options:
+        - label: "我愿意为此功能提供代码"
+        - label: "我可以提供详细设计文档"
+        - label: "暂时无法参与开发"
+  - type: textarea
+    id: additional_notes
+    attributes:
+      label: 其他备注信息
+      description: "补充说明"
+      placeholder: "如技术约束、参考案例等"
