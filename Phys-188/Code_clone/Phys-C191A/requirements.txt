@@ -1,6 +1,0 @@
-# Draft requirements for Phys-C191A/ (auto-generated)
-qiskit
-qiskit-aer
-numpy
-
-# Notes: `Shor.ipynb` uses qiskit and qiskit_aer. qiskit package layout has changed across versions; tests required.

@@ -1,8 +1,0 @@
-<codelisting ref="#test">
-    <fun>
-        <bla>
-            lalalalala <lb/>
-            <!-- comment -->
-        </bla>
-    </fun>
-</codelisting>
