@@ -1,0 +1,453 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{ctex}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#6}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{Thermo Dynamics}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Professor Jingdong Bao}
+\newcommand{\hmwkAuthorName}{\textbf{郑晓旸}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+   在体积 \(V\) 中有 \(N\) 个可区分的粒子，系统的能量为 \(E = \sum_{i=1}^{N} cp_i\)，其中 \(c\) 为光速，\(p_i\) 为第 \(i\) 粒子的动量。若气体的温度为 \(T\)，试求：
+\begin{enumerate}
+    \item[(a)] 物态方程
+    \item[(b)] 内能
+\end{enumerate}
+
+    \textbf{Solution}
+由于粒子是可区分的，并且系统的 \(N, V, T\) 给定，我们使用正则系综进行处理。
+\subsection*{1. 单粒子配分函数 \(z\)}
+单个粒子的能量为 \(\epsilon = cp\)，其中 \(p = |\vec{p}|\) 是动量的大小。
+单粒子配分函数 \(z\) 定义为：
+\[z = \frac{1}{h^3} \int e^{-\beta \epsilon} d^3r d^3p\]
+其中 \(\beta = \frac{1}{k_B T}\)，\(k_B\) 是玻尔兹曼常数，\(h\) 是普朗克常数。
+由于能量 \(\epsilon\) 与位置 \(\vec{r}\) 无关，对空间的积分 \(\int d^3r = V\)。
+\[z = \frac{V}{h^3} \int e^{-\beta cp} d^3p\]
+我们将动量空间积分转换到球坐标系，\(d^3p = 4\pi p^2 dp\)：
+\[z = \frac{4\pi V}{h^3} \int_0^{\infty} p^2 e^{-\beta cp} dp\]
+为了计算这个积分，我们可以使用伽马函数 \(\Gamma(n) = \int_0^{\infty} x^{n-1}e^{-x}dx\)。对于 \(n=3\)，\(\Gamma(3) = (3-1)! = 2! = 2\)。
+令 \(x = \beta c p\)，则 \(p = \frac{x}{\beta c}\)，\(dp = \frac{dx}{\beta c}\)。
+积分变为：
+\[\int_0^{\infty} \left(\frac{x}{\beta c}\right)^2 e^{-x} \frac{dx}{\beta c} = \frac{1}{(\beta c)^3} \int_0^{\infty} x^2 e^{-x} dx = \frac{1}{(\beta c)^3} \Gamma(3) = \frac{2}{(\beta c)^3}\]
+所以，单粒子配分函数为：
+\[z = \frac{4\pi V}{h^3} \frac{2}{(\beta c)^3} = \frac{8\pi V}{(h\beta c)^3}\]
+代入 \(\beta = \frac{1}{k_B T}\)：
+\[z = 8\pi V \left(\frac{k_B T}{hc}\right)^3\]
+\subsection*{2. N粒子系统的配分函数 \(Z_N\)}
+由于粒子是可区分的，\(N\) 粒子系统的总配分函数 \(Z_N\) 为：
+\[Z_N = z^N = \left[ \frac{8\pi V}{(h\beta c)^3} \right]^N\]
+\subsection*{3. 亥姆霍兹自由能 \(F\)}
+亥姆霍兹自由能 \(F\) 与配分函数 \(Z_N\) 的关系是：
+\[F = -k_B T \ln Z_N\]
+\[F = -k_B T \ln \left[ \left( \frac{8\pi V}{(h\beta c)^3} \right)^N \right]\]
+\[F = -N k_B T \ln \left( \frac{8\pi V}{(h\beta c)^3} \right)\]
+\[F = -N k_B T \left[ \ln(8\pi V) - 3\ln(h\beta c) \right]\]
+将 \(\beta = 1/(k_B T)\) 代入，可以写成：
+\[F = -N k_B T \left[ \ln(8\pi V) - 3\ln\left(\frac{hc}{k_B T}\right) \right]\]
+\[F = -N k_B T \left[ \ln(8\pi V) - 3\ln(hc) + 3\ln(k_B T) \right]\]
+\subsection*{(a) 物态方程}
+物态方程可以通过亥姆霍兹自由能对体积的偏导数得到压强 \(P\)：
+\[P = -\left(\frac{\partial F}{\partial V}\right)_{T,N}\]
+\[P = -\frac{\partial}{\partial V} \left( -N k_B T \left[ \ln(8\pi V) - 3\ln(h\beta c) \right] \right)_{T,N}\]
+\[P = N k_B T \frac{\partial}{\partial V} \left[ \ln(8\pi V) - 3\ln(h\beta c) \right]_{T,N}\]
+由于 \(T\) 和 \(N\) 是常数，\(\ln(h\beta c)\) 项对 \(V\) 的导数为零。
+\[P = N k_B T \frac{\partial}{\partial V} \ln(8\pi V) = N k_B T \frac{1}{8\pi V} (8\pi)\]
+\[P = \frac{N k_B T}{V}\]
+所以，物态方程为：
+\[PV = N k_B T\]
+\subsection*{(b) 内能 \(U\)}
+内能 \(U\) (题目中用 \(E\) 表示总能量，这里我们用统计物理中常用的 \(U\) 表示内能) 可以通过以下关系得到：
+\[U = -\left(\frac{\partial \ln Z_N}{\partial \beta}\right)_{V,N}\]
+首先计算 \(\ln Z_N\)：
+\[\ln Z_N = N \ln z = N \ln \left( \frac{8\pi V}{(h\beta c)^3} \right) = N \left[ \ln(8\pi V) - 3\ln(h c) - 3\ln\beta \right]\]
+然后对 \(\beta\) 求偏导：
+\[\frac{\partial \ln Z_N}{\partial \beta} = N \frac{\partial}{\partial \beta} \left[ \ln(8\pi V) - 3\ln(h c) - 3\ln\beta \right]\]
+\[\frac{\partial \ln Z_N}{\partial \beta} = N \left( 0 - 0 - \frac{3}{\beta} \right) = -\frac{3N}{\beta}\]
+所以，内能 \(U\) 为：
+\[U = -\left(-\frac{3N}{\beta}\right) = \frac{3N}{\beta}\]
+代入 \(\beta = \frac{1}{k_B T}\)：
+\[U = 3N k_B T\]
+\\
+对于所描述的 \(N\) 个可区分的、能量为 \(\epsilon = cp_i\) 的粒子组成的系统：
+\begin{enumerate}
+    \item[(a)] 物态方程为：
+    \[PV = N k_B T\]
+    \item[(b)] 内能为：
+    \[U = 3N k_B T\]
+\end{enumerate}
+
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+   体积 \(V\) 内盛有两种组元的单原子分子混合理想气体，其物质的量分别为 \(\nu_1\) 和 \(\nu_2\)，温度为 \(T\)。试用正则分布导出混合理想气体的内能、熵以及物态方程
+    \textbf{Solution}
+    我们将使用正则系综来处理这个混合理想气体系统。假设两种组元的单原子分子质量分别为 \(m_1\) 和 \(m_2\)。对应的粒子数分别为 \(N_1 = \nu_1 N_A\) 和 \(N_2 = \nu_2 N_A\)，其中 \(N_A\) 是阿伏伽德罗常数。
+\subsection*{1. 单种单原子理想气体的配分函数}
+对于体积 \(V\) 中由 \(N\) 个同种单原子理想气体分子组成的系统，其能量仅为平动动能 \(\epsilon = \frac{p^2}{2m}\)。
+单个粒子的配分函数 \(z\) 为：
+\[z = \frac{1}{h^3} \int e^{-\beta \epsilon} d^3r d^3p = \frac{V}{h^3} \int_{-\infty}^{\infty} e^{-\beta p_x^2/(2m)} dp_x \int_{-\infty}^{\infty} e^{-\beta p_y^2/(2m)} dp_y \int_{-\infty}^{\infty} e^{-\beta p_z^2/(2m)} dp_z\]
+利用高斯积分 \(\int_{-\infty}^{\infty} e^{-ax^2} dx = \sqrt{\frac{\pi}{a}}\)，我们得到：
+\[\int_{-\infty}^{\infty} e^{-\beta p_x^2/(2m)} dp_x = \sqrt{\frac{2\pi m}{\beta}}\]
+因此，单粒子配分函数为：
+\[z = \frac{V}{h^3} \left(\frac{2\pi m}{\beta}\right)^{3/2} = V \left(\frac{2\pi m k_B T}{h^2}\right)^{3/2}\]
+其中 \(\beta = 1/(k_B T)\)，\(k_B\) 是玻尔兹曼常数，\(h\) 是普朗克常数。
+对于 \(N\) 个不可区分的同种粒子，其正则配分函数 \(Z_N\) 为：
+\[Z_N = \frac{z^N}{N!} = \frac{1}{N!} \left[ V \left(\frac{2\pi m k_B T}{h^2}\right)^{3/2} \right]^N\]
+\subsection*{2. 两种组元混合理想气体的配分函数 \(Z_{mix}\)}
+对于两种组元的混合理想气体，由于不同组元的粒子是可区分的，而同组元的粒子是不可区分的，总配分函数是各组分配分函数的乘积：
+\[Z_{mix} = Z_{N_1} Z_{N_2} = \frac{z_1^{N_1}}{N_1!} \frac{z_2^{N_2}}{N_2!}\]
+其中：
+\[z_1 = V \left(\frac{2\pi m_1 k_B T}{h^2}\right)^{3/2}\]
+\[z_2 = V \left(\frac{2\pi m_2 k_B T}{h^2}\right)^{3/2}\]
+所以，
+\[Z_{mix} = \frac{1}{N_1! N_2!} \left[ V \left(\frac{2\pi m_1 k_B T}{h^2}\right)^{3/2} \right]^{N_1} \left[ V \left(\frac{2\pi m_2 k_B T}{h^2}\right)^{3/2} \right]^{N_2}\]
+\subsection*{3. 亥姆霍兹自由能 \(F\)}
+亥姆霍兹自由能 \(F = -k_B T \ln Z_{mix}\)。
+\[\ln Z_{mix} = N_1 \ln z_1 + N_2 \ln z_2 - \ln N_1! - \ln N_2!\]
+使用斯特林近似 \(\ln N! \approx N \ln N - N\)：
+\[F \approx -k_B T \left[ N_1 \left( \ln \left( \frac{V}{N_1} \left(\frac{2\pi m_1 k_B T}{h^2}\right)^{3/2} \right) + 1 \right) + N_2 \left( \ln \left( \frac{V}{N_2} \left(\frac{2\pi m_2 k_B T}{h^2}\right)^{3/2} \right) + 1 \right) \right]\]
+将 \(N_1 = \nu_1 N_A\) 和 \(N_2 = \nu_2 N_A\) 代入，并使用 \(R = N_A k_B\):
+\[F \approx -\sum_{i=1}^{2} \nu_i R T \left[ \ln \left( \frac{V}{\nu_i N_A} \left(\frac{2\pi m_i k_B T}{h^2}\right)^{3/2} \right) + 1 \right]\]
+\subsection*{4. 内能 \(U\)}
+内能 \(U = -\left(\frac{\partial \ln Z_{mix}}{\partial \beta}\right)_{V, N_1, N_2}\)。
+\[\frac{\partial \ln Z_{mix}}{\partial \beta} = -\frac{3N_1}{2\beta} - \frac{3N_2}{2\beta} = -\frac{3(N_1+N_2)}{2\beta}\]
+所以，内能为：
+\[U = - \left( -\frac{3(N_1+N_2)}{2\beta} \right) = \frac{3}{2}(N_1+N_2)k_B T\]
+用物质的量 \(\nu_1, \nu_2\) 和气体常数 \(R = N_A k_B\) 表示：
+\[U = \frac{3}{2}(\nu_1 + \nu_2)RT\]
+\subsection*{5. 物态方程}
+压强 \(P = -\left(\frac{\partial F}{\partial V}\right)_{T, N_1, N_2} = k_B T \left(\frac{\partial \ln Z_{mix}}{\partial V}\right)_{T, N_1, N_2}\)。
+\[\left(\frac{\partial \ln Z_{mix}}{\partial V}\right)_{T, N_1, N_2} = \frac{N_1}{V} + \frac{N_2}{V} = \frac{N_1+N_2}{V}\]
+因此，压强为：
+\[P = k_B T \frac{N_1+N_2}{V}\]
+物态方程为：
+\[PV = (N_1+N_2)k_B T\]
+用物质的量表示：
+\[PV = (\nu_1+\nu_2)RT\]
+\subsection*{6. 熵 \(S\)}
+熵 \(S = \frac{U-F}{T}\)。
+\[S = k_B \left[ N_1 \left( \ln \left( \frac{V}{N_1} \left(\frac{2\pi m_1 k_B T}{h^2}\right)^{3/2} \right) + \frac{5}{2} \right) + N_2 \left( \ln \left( \frac{V}{N_2} \left(\frac{2\pi m_2 k_B T}{h^2}\right)^{3/2} \right) + \frac{5}{2} \right) \right]\]
+用物质的量表示：
+\[S = \sum_{i=1}^{2} \nu_i R \left[ \ln \left( \frac{V}{\nu_i N_A} \left(\frac{2\pi m_i k_B T}{h^2}\right)^{3/2} \right) + \frac{5}{2} \right]\]
+\section*{总结}
+对于体积 \(V\) 内，温度为 \(T\)，由物质的量分别为 \(\nu_1\) 和 \(\nu_2\) 的两种单原子理想气体组成的混合物：
+\begin{enumerate}
+    \item[(a)] \textbf{内能 \(U\)}：
+    \[U = \frac{3}{2}(\nu_1 + \nu_2)RT\]
+    \item[(b)] \textbf{物态方程}：
+    \[PV = (\nu_1 + \nu_2)RT\]
+    \item[(c)] \textbf{熵 \(S\)}：
+    \[S = \sum_{i=1}^{2} \nu_i R \left[ \ln \left( \frac{V}{\nu_i N_A} \left(\frac{2\pi m_i k_B T}{h^2}\right)^{3/2} \right) + \frac{5}{2} \right]\]
+\end{enumerate}
+其中 \(m_i\) 是第 \(i\) 种分子的质量，\(N_A\) 是阿伏伽德罗常数，\(R\) 是理想气体常数，\(k_B\) 是玻尔兹曼常数，\(h\) 是普朗克常数。
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    求证：
+$$
+ \overline{\left(\frac{\mathrm{d} \ln D(E)}{\mathrm{d}E}\right)}_{\text{正则}} = \frac{1}{k_B T} 
+$$
+其中 $D(E)$ 是系统的能态密度，$k_B$ 是玻尔兹曼常数，$T$ 是正则系综的温度。上划线和下标“正则”表示在正则系综中对物理量取平均值。
+    \\
+    
+    \textbf{Solution}
+我们知道 \(P(E) = D(E)e^{-\beta E}/Z\)，所以 \(\ln D(E) = \ln P(E) + \beta E - \ln(1/Z) = \ln P(E) + \beta E + \ln Z\)。
+对能量 \(E\)求导：
+\[ \frac{\mathrm{d} \ln D(E)}{\mathrm{d}E} = \frac{\mathrm{d} \ln P(E)}{\mathrm{d}E} + \beta \]
+(\(\beta\) 和 \(Z\) 在此对 \(E\) 的导数中视为常数，因为这里的 \(E\) 是微观状态的能量，而不是系统的平均能量 \(U\))。
+对上式两边取正则系综平均：
+\[ \overline{\left(\frac{\mathrm{d} \ln D(E)}{\mathrm{d}E}\right)} = \overline{\left(\frac{\mathrm{d} \ln P(E)}{\mathrm{d}E} + \beta\right)} = \overline{\left(\frac{\mathrm{d} \ln P(E)}{\mathrm{d}E}\right)} + \overline{\beta} \]
+由于 \(\beta\) 是由热库决定的常数，\(\overline{\beta} = \beta\)。
+计算 \(\overline{\left(\frac{\mathrm{d} \ln P(E)}{\mathrm{d}E}\right)}\)：
+\[ \overline{\left(\frac{\mathrm{d} \ln P(E)}{\mathrm{d}E}\right)} = \int_{E_0}^{\infty} \left(\frac{1}{P(E)}\frac{\mathrm{d}P(E)}{\mathrm{d}E}\right) P(E) \mathrm{d}E = \int_{E_0}^{\infty} \frac{\mathrm{d}P(E)}{\mathrm{d}E} \mathrm{d}E \]
+\[ = [P(E)]_{E_0}^{\infty} = P(\infty) - P(E_0) \]
+由于 \(P(E)\) 是概率密度，它在 \(E \to \infty\) 时必须为0（保证归一化积分收敛），所以 \(P(\infty)=0\)。
+因此，\(\overline{\left(\frac{\mathrm{d} \ln P(E)}{\mathrm{d}E}\right)} = -P(E_0)\)。
+代回原式：
+\[ \overline{\left(\frac{\mathrm{d} \ln D(E)}{\mathrm{d}E}\right)} = \beta - P(E_0) = \beta - \frac{D(E_0)e^{-\beta E_0}}{Z} \]
+同样，在 \(P(E_0)=0\) (例如 \(D(E_0)=0\)) 的条件下：
+\[ \overline{\left(\frac{\mathrm{d} \ln D(E)}{\mathrm{d}E}\right)}_{\text{正则}} = \beta = \frac{1}{k_B T} \]
+证毕。
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    证明正则系综的配分函数 \(Z(N,V,T)\) 满足：
+\[ N \left(\frac{\partial \ln Z}{\partial N}\right)_{V,T} + V \left(\frac{\partial \ln Z}{\partial V}\right)_{N,T} = \ln Z \]
+\\
+
+\textbf{Solution}\\
+证明正则系综的配分函数 \(Z(N,V,T)\) 满足：
+\[ N \left(\frac{\partial \ln Z}{\partial N}\right)_{V,T} + V \left(\frac{\partial \ln Z}{\partial V}\right)_{N,T} = \ln Z \]
+\section*{证明}
+我们从正则系综中的热力学关系出发。
+亥姆霍兹自由能 \(F\) 与正则配分函数 \(Z\) 的关系是：
+\[ F(N,V,T) = -k_B T \ln Z(N,V,T) \]
+其中 \(k_B\) 是玻尔兹曼常数。
+由此可得：
+\[ \ln Z = -\frac{F}{k_B T} \]
+我们需要计算 \(\ln Z\) 对粒子数 \(N\) 和体积 \(V\) 的偏导数。
+\subsection*{1. 对粒子数 \(N\) 的偏导数}
+\[ \left(\frac{\partial \ln Z}{\partial N}\right)_{V,T} = \frac{\partial}{\partial N} \left(-\frac{F}{k_B T}\right)_{V,T} = -\frac{1}{k_B T} \left(\frac{\partial F}{\partial N}\right)_{V,T} \]
+根据热力学定义，化学势 \(\mu\) 为：
+\[ \mu = \left(\frac{\partial F}{\partial N}\right)_{V,T} \]
+所以，
+\begin{equation} \label{eq:dlnZ_dN}
+\left(\frac{\partial \ln Z}{\partial N}\right)_{V,T} = -\frac{\mu}{k_B T}
+\end{equation}
+\subsection*{2. 对体积 \(V\) 的偏导数}
+\[ \left(\frac{\partial \ln Z}{\partial V}\right)_{N,T} = \frac{\partial}{\partial V} \left(-\frac{F}{k_B T}\right)_{N,T} = -\frac{1}{k_B T} \left(\frac{\partial F}{\partial V}\right)_{N,T} \]
+根据热力学定义，压强 \(P\) 为：
+\[ P = -\left(\frac{\partial F}{\partial V}\right)_{N,T} \]
+所以，
+\begin{equation} \label{eq:dlnZ_dV}
+\left(\frac{\partial \ln Z}{\partial V}\right)_{N,T} = -\frac{1}{k_B T} (-P) = \frac{P}{k_B T}
+\end{equation}
+现在，我们将式 \eqref{eq:dlnZ_dN} 和 \eqref{eq:dlnZ_dV} 代入待证明等式的左边 (LHS)：
+\[ \text{LHS} = N \left(-\frac{\mu}{k_B T}\right) + V \left(\frac{P}{k_B T}\right) \]
+\[ \text{LHS} = \frac{PV - N\mu}{k_B T} \]
+我们知道吉布斯自由能 \(G\) 的定义是 \(G = F + PV\)。
+对于单组分系统，吉布斯自由能也可以表示为 \(G = N\mu\)。
+因此，我们有：
+\[ N\mu = F + PV \]
+这意味着 \(PV - N\mu = -F\)。
+将此关系代入 LHS 的表达式：
+\[ \text{LHS} = \frac{-F}{k_B T} \]
+因为 \(F = -k_B T \ln Z\)，所以 \(-F = k_B T \ln Z\)。
+代入上式：
+\[ \text{LHS} = \frac{k_B T \ln Z}{k_B T} = \ln Z \]
+这正是待证明等式的右边 (RHS)。
+因此，我们证明了：
+\[ N \left(\frac{\partial \ln Z}{\partial N}\right)_{V,T} + V \left(\frac{\partial \ln Z}{\partial V}\right)_{N,T} = \ln Z \]
+证毕。
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    (a) 求证巨正则系综的粒子数的方均涨落为
+\[ \overline{(\Delta N)^2} = k_B T \frac{\partial \overline{N}}{\partial \mu} \]
+(b) 据此求单原子分子和双原子分子理想气体的粒子数相对涨落。
+
+\textbf{Solution}
+
+\subsection*{(a) 求证巨正则系综的粒子数的方均涨落公式}
+在巨正则系综中，系统的状态由化学势 \(\mu\)、体积 \(V\) 和温度 \(T\) 决定。巨配分函数 \(\Xi(\mu, V, T)\) 定义为：
+\[ \Xi(\mu, V, T) = \sum_{N=0}^{\infty} \sum_{i} e^{-\beta(E_i(N,V) - \mu N)} = \sum_{N=0}^{\infty} e^{\beta \mu N} Z(N,V,T) \]
+其中 \(\beta = 1/(k_B T)\)，\(Z(N,V,T)\) 是包含 \(N\) 个粒子时的正则配分函数，\(E_i(N,V)\) 是系统粒子数为 \(N\) 时第 \(i\) 个能级的能量。
+平均粒子数 \(\overline{N}\) 由下式给出：
+\[ \overline{N} = \frac{1}{\Xi} \sum_{N=0}^{\infty} N e^{\beta \mu N} Z(N,V,T) \]
+我们可以注意到，\(\sum_{N=0}^{\infty} N e^{\beta \mu N} Z(N,V,T) = \frac{1}{\beta} \left(\frac{\partial \Xi}{\partial \mu}\right)_{V,T}\)。
+所以，
+\begin{equation}
+\overline{N} = \frac{1}{\beta \Xi} \left(\frac{\partial \Xi}{\partial \mu}\right)_{V,T} = k_B T \frac{1}{\Xi} \left(\frac{\partial \Xi}{\partial \mu}\right)_{V,T} = k_B T \left(\frac{\partial \ln \Xi}{\partial \mu}\right)_{V,T} \label{eq:N_avg}
+\end{equation}
+粒子数的方均值 \(\overline{N^2}\) 由下式给出：
+\[ \overline{N^2} = \frac{1}{\Xi} \sum_{N=0}^{\infty} N^2 e^{\beta \mu N} Z(N,V,T) \]
+我们可以注意到，\(\sum_{N=0}^{\infty} N^2 e^{\beta \mu N} Z(N,V,T) = \frac{1}{\beta^2} \left(\frac{\partial^2 \Xi}{\partial \mu^2}\right)_{V,T}\)。
+所以，
+\begin{equation}
+\overline{N^2} = \frac{1}{\beta^2 \Xi} \left(\frac{\partial^2 \Xi}{\partial \mu^2}\right)_{V,T} = (k_B T)^2 \frac{1}{\Xi} \left(\frac{\partial^2 \Xi}{\partial \mu^2}\right)_{V,T} \label{eq:N2_avg}
+\end{equation}
+粒子数的方均涨落 \(\overline{(\Delta N)^2}\) 定义为：
+\[ \overline{(\Delta N)^2} = \overline{(N - \overline{N})^2} = \overline{N^2 - 2N\overline{N} + (\overline{N})^2} = \overline{N^2} - 2\overline{N}\overline{N} + (\overline{N})^2 = \overline{N^2} - (\overline{N})^2 \]
+代入 \(\overline{N}\) 和 \(\overline{N^2}\) 的表达式：
+\[ \overline{(\Delta N)^2} = (k_B T)^2 \frac{1}{\Xi} \left(\frac{\partial^2 \Xi}{\partial \mu^2}\right)_{V,T} - \left(k_B T \frac{1}{\Xi} \left(\frac{\partial \Xi}{\partial \mu}\right)_{V,T}\right)^2 \]
+\[ \overline{(\Delta N)^2} = (k_B T)^2 \left[ \frac{1}{\Xi} \left(\frac{\partial^2 \Xi}{\partial \mu^2}\right)_{V,T} - \left(\frac{1}{\Xi} \left(\frac{\partial \Xi}{\partial \mu}\right)_{V,T}\right)^2 \right] \]
+括号中的项正是 \(\ln \Xi\) 对 \(\mu\) 的二阶偏导数：
+\[ \left(\frac{\partial^2 \ln \Xi}{\partial \mu^2}\right)_{V,T} = \frac{\partial}{\partial \mu} \left(\frac{1}{\Xi} \left(\frac{\partial \Xi}{\partial \mu}\right)_{V,T}\right)_{V,T} = \frac{1}{\Xi} \left(\frac{\partial^2 \Xi}{\partial \mu^2}\right)_{V,T} - \frac{1}{\Xi^2} \left(\left(\frac{\partial \Xi}{\partial \mu}\right)_{V,T}\right)^2 \]
+因此，
+\begin{equation}
+\overline{(\Delta N)^2} = (k_B T)^2 \left(\frac{\partial^2 \ln \Xi}{\partial \mu^2}\right)_{V,T} \label{eq:DeltaN2_lnXi}
+\end{equation}
+从式 \eqref{eq:N_avg}，我们有 \(\overline{N} = k_B T \left(\frac{\partial \ln \Xi}{\partial \mu}\right)_{V,T}\)。对这个表达式两边再关于 \(\mu\) 求偏导（保持 \(V,T\) 不变）：
+\[ \left(\frac{\partial \overline{N}}{\partial \mu}\right)_{V,T} = \frac{\partial}{\partial \mu} \left(k_B T \left(\frac{\partial \ln \Xi}{\partial \mu}\right)_{V,T}\right)_{V,T} = k_B T \left(\frac{\partial^2 \ln \Xi}{\partial \mu^2}\right)_{V,T} \]
+比较上式与式 \eqref{eq:DeltaN2_lnXi}：
+\[ \overline{(\Delta N)^2} = k_B T \left[ k_B T \left(\frac{\partial^2 \ln \Xi}{\partial \mu^2}\right)_{V,T} \right] = k_B T \left(\frac{\partial \overline{N}}{\partial \mu}\right)_{V,T} \]
+通常简写为：
+\[ \overline{(\Delta N)^2} = k_B T \frac{\partial \overline{N}}{\partial \mu} \]
+证毕。
+\subsection*{(b) 据此求单原子分子和双原子分子理想气体的粒子数相对涨落}
+对于经典理想气体（无论是单原子分子还是双原子分子），其巨配分函数 \(\Xi\) 可以表示为：
+\[ \Xi = \sum_{N=0}^{\infty} \frac{(Z_1 e^{\beta \mu})^N}{N!} = \exp(Z_1 e^{\beta \mu}) \]
+其中 \(Z_1(V,T)\) 是单个粒子的配分函数, \(Z_1 = Z_{1,\text{tr}} \cdot Z_{1,\text{int}}\)。
+从巨配分函数，我们可以得到平均粒子数 \(\overline{N}\)：
+\[ \ln \Xi = Z_1 e^{\beta \mu} \]
+\[ \overline{N} = k_B T \left(\frac{\partial \ln \Xi}{\partial \mu}\right)_{V,T} = k_B T \frac{\partial}{\partial \mu} (Z_1 e^{\beta \mu}) = k_B T (Z_1 \beta e^{\beta \mu}) = Z_1 e^{\beta \mu} \]
+所以，对于理想气体，\(\overline{N} = \ln \Xi\)。
+现在我们计算 \(\left(\frac{\partial \overline{N}}{\partial \mu}\right)_{V,T}\)：
+\[ \left(\frac{\partial \overline{N}}{\partial \mu}\right)_{V,T} = \frac{\partial}{\partial \mu} (Z_1 e^{\beta \mu}) = Z_1 \beta e^{\beta \mu} \]
+因为 \(Z_1 e^{\beta \mu} = \overline{N}\) 且 \(\beta = 1/(k_B T)\)，所以：
+\[ \left(\frac{\partial \overline{N}}{\partial \mu}\right)_{V,T} = \beta \overline{N} = \frac{\overline{N}}{k_B T} \]
+将此结果代入 (a) 中证明的公式：
+\[ \overline{(\Delta N)^2} = k_B T \left(\frac{\partial \overline{N}}{\partial \mu}\right)_{V,T} = k_B T \left(\frac{\overline{N}}{k_B T}\right) = \overline{N} \]
+粒子数的相对涨落定义为 \(\frac{\sqrt{\overline{(\Delta N)^2}}}{\overline{N}}\)。
+因此，对于单原子分子和双原子分子理想气体：
+\[ \frac{\sqrt{\overline{(\Delta N)^2}}}{\overline{N}} = \frac{\sqrt{\overline{N}}}{\overline{N}} = \frac{1}{\sqrt{\overline{N}}} \]
+这个结果表明，对于经典理想气体，其粒子数的相对涨落与气体是单原子还是双原子无关，仅取决于平均粒子数的平方根的倒数。
+
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    巨正则系统中，能量的方均涨落可以表示为：
+$$
+(\Delta E)^2_{\text{巨}} = -\frac{\partial \overline{E}}{\partial \beta} = k_B T^2 \left(\frac{\partial \overline{E}}{\partial T}\right)_{\mu,V}
+$$
+    其中 \(\overline{E}\) 是巨正则系综的平均能量，\(\beta = \frac{1}{k_B T}\) 是倒温度。证明这个公式，并解释其物理意义。
+
+    \textbf{Solution}
+从巨正则系综的基本定义出发。巨正则系综的配分函数为：
+\[\Xi(\mu,V,T) = \sum_{N=0}^{\infty}\sum_{i}e^{-\beta(E_i-\mu N)}\]
+平均能量可以通过巨配分函数 $\Xi$ 表示为：
+\[\overline{E} = -\frac{\partial \ln \Xi}{\partial \beta}\bigg|_{\mu,V}\]
+能量的平方平均值可以表示为：
+\[\overline{E^2} = \frac{\partial^2 \ln \Xi}{\partial \beta^2}\bigg|_{\mu,V}\]
+因此，能量的方均涨落为：
+\[(\Delta E)^2_{\text{巨}} = \overline{E^2} - \overline{E}^2 = \frac{\partial^2 \ln \Xi}{\partial \beta^2} - \left(\frac{\partial \ln \Xi}{\partial \beta}\right)^2\]
+通过数学运算，可以证明：
+\[(\Delta E)^2_{\text{巨}} = -\frac{\partial \overline{E}}{\partial \beta}\bigg|_{\mu,V}\]
+再利用求导链式法则，考虑到 $\beta = \frac{1}{k_B T}$，所以 $\frac{\partial \beta}{\partial T} = -\frac{1}{k_B T^2}$，因此：
+\[\frac{\partial \overline{E}}{\partial \beta}\bigg|_{\mu,V} = \frac{\partial \overline{E}}{\partial T}\bigg|_{\mu,V} \cdot \frac{\partial T}{\partial \beta}\bigg|_{\mu,V} = -k_B T^2 \frac{\partial \overline{E}}{\partial T}\bigg|_{\mu,V}\]
+带入前面的方均涨落公式，最终得到：
+\[(\Delta E)^2_{\text{巨}} = -\frac{\partial \overline{E}}{\partial \beta}\bigg|_{\mu,V} = k_B T^2 \left(\frac{\partial \overline{E}}{\partial T}\right)_{\mu,V}\]
+\subsection*{物理意义与应用}
+这个公式揭示了巨正则系统中能量涨落与系统热容量之间的关系。注意到定容热容量可以表示为：
+\[C_V = \left(\frac{\partial \overline{E}}{\partial T}\right)_V\]
+因此，对于巨正则系统，能量涨落可以重写为：
+\[(\Delta E)^2_{\text{巨}} = k_B T^2 C_{\mu,V}\]
+
+\end{homeworkProblem}
+\end{document}
