@@ -14,3 +14,7 @@ code .
 对于需要其它解释器或虚拟环境的子项目，请在对应子目录的 `README` 中说明如何切换或激活环境。
 
 （注：仓库内部的 `.gpt-runner/copilot.gpt.md` 已包含相同的 Copilot 优先使用 `conda base` 的指示。）
+
+## VS Code 同步配置提示
+- C/C++ 任务：`.vscode/tasks.json` 已改为自动根据系统选择编译器（Windows 使用 MinGW `g++.exe`，macOS 使用 `/usr/bin/clang++`，Linux 默认 `g++`）。请确保各平台的编译器已安装并加入 PATH，若需自定义路径，可在个人设置中覆盖 `C/C++` 扩展的编译器路径。
+- LaTeX 构建：`.vscode/settings.json` 将默认使用 `XeLaTeX -> Biber -> XeLaTeX*2` 配方，确保跨平台的 BibTeX/字体处理一致。macOS 建议使用 MacTeX，Windows 建议使用 TeX Live。
