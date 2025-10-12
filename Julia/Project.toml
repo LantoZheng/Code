@@ -1,7 +1,0 @@
-[deps]
-IJulia = "1.26"
-Pluto = "0.17"
-Revise = "3.3"
-
-[compat]
-julia = ">=1.8"

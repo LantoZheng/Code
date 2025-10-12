@@ -1,0 +1,131 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MANUSCRIPT TEMPLATE: This is the official\subsection{\subsection{Restricting the Quantum State Space}\label{s:3.2}
+Another approach is to constrain the set of admissible quantum states. If the system's hash function or verification operator defines only a finite number of valid states, then the total monetary supply is inherently capped. This approach imposes scarcity directly at the level of the underlying Hilbert space — only a limited number of orthogonal states satisfy the verification criteria, preventing inflation by physical limitation rather than protocol-level enforcement.
+
+\textbf{Technical Implementation:} Define the monetary state space as a finite-dimensional subspace $\mathcal{H}_{\text{money}} \subset \mathcal{H}$ of the full Hilbert space. Specifically:
+\begin{enumerate}
+\item \textit{Orthogonal Basis Construction:} Select a finite set of $N$ mutually orthogonal quantum states $\{\ket{\phi_1}, \ket{\phi_2}, \ldots, \ket{\phi_N}\}$ that form a complete basis for $\mathcal{H}_{\text{money}}$. These states are chosen such that they are eigenstates of a specially designed verification operator $\hat{V}$ with distinct eigenvalues.
+\item \textit{Superposition Encoding:} Each valid quantum money token is a coherent superposition within this subspace: $\ket{\psi_{\text{valid}}} = \sum_{i=1}^{N} \alpha_i \ket{\phi_i}$, where the coefficients $\alpha_i$ encode a unique serial number via quantum fingerprinting.
+\item \textit{Hard Cap Enforcement:} Since the dimensionality is fixed at $N$, the maximum number of distinguishable (approximately orthogonal) money states is bounded by $N$. Any attempt to create additional states either falls outside $\mathcal{H}_{\text{money}}$ (and fails verification) or is non-orthogonal to existing tokens (violating uniqueness).
+\end{enumerate}
+
+This scheme can be implemented using topological quantum codes or stabilizer codes, where the code space itself acts as $\mathcal{H}_{\text{money}}$. For example, using a quantum error-correcting code with parameters $[[n,k,d]]$, the logical code space has dimension $2^k$, providing exactly $2^k$ orthogonal money states. The verification process checks whether a given state lies within the code space by measuring stabilizer generators. This approach naturally prevents inflation: once all $2^k$ tokens are issued, no new valid tokens can be created without violating the orthogonality constraint or the code structure.mputational Difficulty Adjustment}\label{s:3.1}
+One straightforward method is to tie the generation of valid quantum states to a hard computational problem. In Zhandry's formulation, a bolt is valid only if it satisfies a specific public hash condition — that is, it is a quantum state whose measurement outcomes correspond to a preimage of a cryptographic hash value. Because finding such states is computationally difficult, this naturally limits the rate of new currency creation. The difficulty level can be adjusted dynamically, analogous to Bitcoin's mining difficulty, thereby maintaining a stable rate of issuance.
+
+\textbf{Technical Implementation:} Consider a quantum money scheme where a valid state $\ket{\psi}$ must satisfy $H(\ket{\psi}) < D$, where $H$ is a quantum-accessible hash function and $D$ is a difficulty threshold. The minting process involves:
+\begin{enumerate}
+\item \textit{Quantum State Preparation:} Generate a trial quantum state $\ket{\psi_{\text{trial}}}$ using a parameterized quantum circuit with random inputs.
+\item \textit{Hash Verification:} Apply the quantum hash operator $\hat{H}$ and measure the output. If the result falls below the target difficulty $D$, the state is accepted as valid currency.
+\item \textit{Dynamic Adjustment:} The difficulty parameter $D$ is updated every $N$ blocks based on the actual issuance rate versus the target rate: $D_{n+1} = D_n \times \frac{T_{\text{target}}}{T_{\text{actual}}}$, where $T$ represents time intervals.
+\end{enumerate}
+
+This mechanism mirrors Bitcoin's halving schedule but operates at the quantum level. The key advantage is that the quantum hash function can be designed to be collision-resistant even against quantum adversaries, using techniques from quantum cryptography such as quantum-secure one-way functions or extractable witness encryption. The computational cost of finding valid states grows exponentially with the difficulty parameter, ensuring that the currency supply expands at a controlled, predictable rate regardless of advances in quantum computing power.anuscript template (v1.0, released 31 August 2025) for Constitutional Studies. If you are new to using LaTeX to layout manuscripts in Overleaf, please read this helpful tutorial at www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes. For more on Constitutional Studies, visit constitutionalstudies.org.
+
+% TO PREPARE YOUR MANUSCRIPT: Review our manuscript guidelines at https://constitutionalstudies-ojs-utexas.tdl.org/cs/manuscriptguidelines. Then follow the instructions in green below at the beginning of each section.
+
+% TO SUBMIT YOUR MANUSCRIPT: Follow our submission process at https://constitutionalstudies-ojs-utexas.tdl.org/cs/submit.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% DOCUMENT SETUP: Do not make any changes to this section.
+\documentclass[a4paper,10.5pt,twoside]{article}
+\hyphenpenalty=8000
+\textwidth=125mm
+\textheight=200mm
+\usepackage[top=3cm, bottom=3cm, inner=3cm, outer=3cm, includehead]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\raggedbottom
+\usepackage{xurl}
+\usepackage{graphicx}
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage[hidelinks, pdftex]{hyperref}
+\urlstyle{same}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{csquotes}
+\usepackage[notes, backend=biber]{biblatex-chicago}
+\bibliography{references}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% LANGUAGE SELECTION: If you are submitting your manuscript in English, do not make any changes to this section. If you are submitting your manuscript in French, add a % in front of the "\usepackage[english]{babel}" command and remove the % in front of the "\usepackage[french]{babel}" command below; this will apply French spelling and formatting rules to the document. If you are submitting your manuscript in Spanish, add a % in front of the "\usepackage[english]{babel}" command and remove the % in front of the "\usepackage[spanish]{babel}" command below; this will apply Spanish spelling and formatting rules to the document.
+\usepackage[english]{babel}
+%\usepackage[french]{babel}
+%\usepackage[spanish]{babel}
+
+% AUTHOR AND TITLE: Replace "Author1" with your first author's information where noted below. Add or remove additional author information as needed, depending on the number of authors on your manuscript. Replace "Article title" with your article title where noted below.
+\begin{document}
+\fancyhead[LE]{\thepage\ \ \ \ Author1 last name, Author2 last name, and Author3 last name}
+\fancyhead[RO]{First Report for PHYS-C191A \ \ \ \ \thepage}
+\begin{center}
+\LARGE
+\textbf{Quantum Money and the Economics of Trust: From Bitcoin to Quantum Lightning}\\[11pt]
+\normalsize
+\textbf {XXX, XXX, XXX}\\[4pt]
+\end{center}
+
+% ABSTRACT AND KEYWORDS: Replace "Abstract text" with your abstract text of 100-200 words where noted below. Replace "keyword, keyword, keyword" with your 5-10 keywords, separated by commas, where noted below. 
+\begin{abstract}
+\normalsize
+This report explores the evolution of digital currency from Bitcoin to quantum money, focusing on the underlying mechanisms of trust and scarcity. Bitcoin pioneered decentralized value transfer through computational consensus and cryptographic security, but its reliance on classical assumptions leaves it vulnerable to quantum attacks and scalability issues. Quantum money, leveraging the no-cloning theorem, offers a fundamentally different approach: unforgeability rooted in the laws of physics. The report reviews both centralized and decentralized quantum money architectures, with emphasis on Quantum Lightning as a public-key, self-scarce system. It further analyzes strategies to prevent uncontrolled issuance and inflation in quantum monetary systems, such as computational difficulty, state space restriction, and chained validation. Finally, the report discusses the practical and theoretical challenges that must be overcome for quantum money to become a viable, inflation-resistant medium of exchange, highlighting its potential to redefine digital trust and economic value.
+\vskip 2mm
+\textbf{Keywords:} bitcoin, quantum money, quantum lighting, inflation.
+\end{abstract}
+
+% MAIN BODY: Replace "Section Title," "Subsection Title," and "Subsubsection Title" with your section, subsection, and subsubsection titles, using title case to capitalize the first and all major words in these titles. Replace lorem ipsum text with your text for each section and subsection. Add additional sections and subsections as needed.
+\section{From Bitcoin to Quantum Money}\label{s:1}
+
+The emergence of Bitcoin in 2009 marked the first large-scale realization of a decentralized digital currency system. It introduced a groundbreaking idea: that monetary value could be maintained and transferred securely without any centralized authority. This is achieved through the blockchain — a distributed, append-only ledger maintained collectively by a network of participants known as miners. Each transaction is recorded as part of a block, and new blocks are added to the chain through a computationally expensive process known as Proof of Work (PoW).
+
+The scarcity of Bitcoin is therefore a function of computation: each new unit of currency is created as a reward to solve a cryptographic puzzle, requiring large amounts of computational and energy resources. The integrity of the system arises not from trust in any single actor, but from the global consensus of thousands of independent nodes verifying every transaction.
+
+However, the security of Bitcoin is fundamentally based on classical cryptographic assumptions. The hardness of problems such as integer factorization, discrete logarithms of elliptic curves, and hash preimage resistance is what prevents forgery and double spending. Quantum algorithms like Shor’s and Grover’s could, in principle, break these assumptions, making Bitcoin’s public-key infrastructure vulnerable in a post-quantum world. In addition, the Bitcoin architecture suffers from scalability limitations and extreme energy inefficiency, making it difficult to use it as a universal medium of exchange.
+
+Quantum money proposes an entirely different paradigm. Instead of relying on computational difficulty, the method relies on the immutable physical laws of quantum mechanics. According to the no-cloning theorem, it is physically impossible to create an identical copy of an unknown quantum state. This property can be used to design monetary systems in which each quantum “banknote” is represented by a unique and uncopyable quantum state. Forgery, therefore, becomes impossible by the very laws of physics, not by means of merely computational infeasibility. However, the trade-off is practicality: quantum states are fragile, sensitive to environmental noise, and require specialized quantum memory and measurement devices. As a result, quantum money systems remain largely theoretical today — yet conceptually they represent a leap beyond classical cryptographic currencies such as Bitcoin.
+
+
+
+\section{Architectures of Quantum Money: Centralized Schemes and Quantum Lightning}\label{s:2}
+Existing research on quantum money divides into two major design paradigms: centralized quantum money and decentralized or public-key quantum money, the latter exemplified by the Quantum Lightning framework.
+
+\subsection{Centralized Quantum Money}\label{s:2.1}
+
+The earliest formulation of quantum money was proposed by Stephen Wiesner in the 1970s, in a scheme now regarded as foundational to quantum cryptography. In Wiesner’s model, a trusted bank acts as the issuer of quantum banknotes. Each note consists of two components: a classical serial number and a corresponding quantum state encoded in randomly chosen non-orthogonal bases. The bank maintains a private database linking each serial number to its specific quantum state.
+
+When a holder seeks to verify a note, the bank performs measurements on the provided state in the appropriate bases. If the results match the stored record, the note is deemed authentic. Because any attempt to measure or clone an unknown quantum state will disturb it irreversibly, counterfeiting is physically impossible.
+
+While conceptually elegant, this design has clear limitations. The requirement that all verifications pass through the issuing bank reintroduces centralization and dependence on a single trusted authority. Furthermore, the need for the bank to maintain and access a secret record of all legitimate quantum states creates both scalability and privacy concerns. Consequently, while Wiesner’s idea demonstrated the fundamental viability of quantum money, it was unsuitable for large-scale, decentralized economies.
+% BIBLIOGRAPHY: Create or upload a bib file to manage your references. For instructions, see www.overleaf.com/learn/how-to/Using_bibliographies_on_Overleaf. Citations will use the Chicago Manual of Style notes and bibliography citation format, described at www.chicagomanualofstyle.org/tools_citationguide/citation-guide-1.html.
+\subsection{Quantum Lightning and Public-Key Verification}\label{s:2.1}
+To overcome these limitations, researchers have sought to design publicly verifiable quantum money — systems in which any party can verify authenticity without contacting a central authority. Among these, the Quantum Lightning framework, developed by Mark Zhandry, represents one of the most advanced and conceptually elegant approaches.
+
+In Quantum Lightning, each unit of currency is a unique “bolt” — a special quantum state that cannot be recreated, even by the algorithm that generated it. The system relies on collision-resistant quantum hash functions and specific cryptographic assumptions ensuring that two identical bolts cannot exist. The verification process is public: anyone can run a polynomial-time quantum algorithm to determine whether a given state is a valid bolt, much like verifying a digital signature.
+
+The innovation lies in the system’s self-scarcity: no central issuer is needed, and yet duplication is physically and algorithmically impossible. This makes Quantum Lightning the quantum analogue of decentralized cryptocurrencies like Bitcoin, but with one key difference — scarcity arises from the structure of quantum mechanics itself rather than from economic cost or computational effort.
+\section{Preventing Infinite Minting and Inflation}\label{s:2.1}
+Despite solving the problem of counterfeiting, a new challenge emerges in decentralized quantum money: how to prevent uncontrolled currency creation. If any participant could generate valid quantum bolts at will, the monetary supply would inflate indefinitely, destroying the currency’s value. Thus, quantum money must incorporate a mechanism to regulate issuance — the equivalent of Bitcoin’s mining difficulty or fiat monetary policy.
+
+Several strategies have been proposed to address this issue.
+
+\subsection{Computational Difficulty Adjustment}\label{s:2.1}
+One straightforward method is to tie the generation of valid quantum states to a hard computational problem. In Zhandry’s formulation, a bolt is valid only if it satisfies a specific public hash condition — that is, it is a quantum state whose measurement outcomes correspond to a preimage of a cryptographic hash value. Because finding such states is computationally difficult, this naturally limits the rate of new currency creation. The difficulty level can be adjusted dynamically, analogous to Bitcoin’s mining difficulty, thereby maintaining a stable rate of issuance.
+\subsection{Restricting the Quantum State Space:}\label{s:2.1}
+Another approach is to constrain the set of admissible quantum states. If the system’s hash function or verification operator defines only a finite number of valid states, then the total monetary supply is inherently capped. This approach imposes scarcity directly at the level of the underlying Hilbert space — only a limited number of orthogonal states satisfy the verification criteria, preventing inflation by physical limitation rather than protocol-level enforcement.
+\subsection{Chain-Based or Signature-Based Validation:}\label{s:2.1}
+A more sophisticated strategy involves linking each valid state to the previous one through a chain of quantum signatures. In such a “quantum blockchain,” each newly minted bolt contains encoded information derived from the measurement results of earlier bolts. This enforces a chronological issuance order and provides public traceability of the monetary supply. While still theoretical, such chained validation mechanisms could establish decentralized monetary policy enforced entirely by quantum laws and cryptographic consistency.
+
+Taken together, these strategies demonstrate that even in a physics-based monetary system, economic stability demands regulation — whether through difficulty tuning, space limitation, or chained validation. Quantum money thus combines the rigidity of physical unforgeability with the flexibility of algorithmic governance, potentially offering a new paradigm for secure and inflation-resistant value exchange.
+
+\section{Conclusion}\label{s:2.1}
+Quantum money represents a profound conceptual shift in the foundations of currency and trust. Whereas Bitcoin and classical cryptocurrencies rely on computational assumptions and network consensus to maintain scarcity and authenticity, quantum money grounds these properties directly in the laws of nature. The impossibility of cloning unknown quantum states guarantees unforgeability at the most fundamental physical level.
+
+Nonetheless, substantial obstacles remain before such systems can be realized. Reliable quantum memories, low-noise quantum communication channels, and scalable quantum verification protocols are still under development. Moreover, designing monetary policies that ensure fairness, scarcity, and resistance to manipulation without central control remains an open problem.
+
+In essence, Bitcoin constructs trust from computation; quantum money constructs trust from physics. Should future technology enable the storage, transmission, and manipulation of quantum information at scale, systems such as Quantum Lightning could redefine both digital finance and the very notion of scarcity. In that scenario, currency would not just be a product of mathematics or economics, but an embodiment of the fundamental principles of quantum mechanics itself — a true “currency of nature.”
+\printbibliography
+
+\end{document}

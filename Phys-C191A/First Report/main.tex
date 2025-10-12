@@ -1,0 +1,172 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MANUSCRIPT TEMPLATE: This is the official manuscript template (v1.0, released 31 August 2025) for Constitutional Studies. If you are new to using LaTeX to layout manuscripts in Overleaf, please read this helpful tutorial at www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes. For more on Constitutional Studies, visit constitutionalstudies.org.
+
+% TO PREPARE YOUR MANUSCRIPT: Review our manuscript guidelines at https://constitutionalstudies-ojs-utexas.tdl.org/cs/manuscriptguidelines. Then follow the instructions in green below at the beginning of each section.
+
+% TO SUBMIT YOUR MANUSCRIPT: Follow our submission process at https://constitutionalstudies-ojs-utexas.tdl.org/cs/submit.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% DOCUMENT SETUP: Do not make any changes to this section.
+\documentclass[a4paper,10.5pt,twoside]{article}
+\hyphenpenalty=8000
+\textwidth=125mm
+\textheight=200mm
+\usepackage[top=3cm, bottom=3cm, inner=3cm, outer=3cm, includehead]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\raggedbottom
+\usepackage{xurl}
+\usepackage{graphicx}
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{braket}
+\usepackage[hidelinks, pdftex]{hyperref}
+\urlstyle{same}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{csquotes}
+\usepackage[notes, backend=biber]{biblatex-chicago}
+\bibliography{references}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% LANGUAGE SELECTION: If you are submitting your manuscript in English, do not make any changes to this section. If you are submitting your manuscript in French, add a % in front of the "\usepackage[english]{babel}" command and remove the % in front of the "\usepackage[french]{babel}" command below; this will apply French spelling and formatting rules to the document. If you are submitting your manuscript in Spanish, add a % in front of the "\usepackage[english]{babel}" command and remove the % in front of the "\usepackage[spanish]{babel}" command below; this will apply Spanish spelling and formatting rules to the document.
+\usepackage[english]{babel}
+%\usepackage[french]{babel}
+%\usepackage[spanish]{babel}
+
+% AUTHOR AND TITLE: Replace "Author1" with your first author's information where noted below. Add or remove additional author information as needed, depending on the number of authors on your manuscript. Replace "Article title" with your article title where noted below.
+\begin{document}
+\fancyhead[LE]{\thepage\ \ \ \ Ding, Ariyaratrangsee, and Zheng}
+\fancyhead[RO]{First Report for PHYS-C191A \ \ \ \ \thepage}
+\begin{center}
+\LARGE
+\textbf{Quantum Money and Inflation Control: Theoretical Frameworks for Decentralized Quantum Currency}\\[6pt]
+\large
+\textit{Topic Choice: Quantum Money}\\[11pt]
+\normalsize
+\textbf {Juncheng Ding, Tian Ariyaratrangsee, Xiaoyang Zheng}\\[4pt]
+\end{center}
+
+% ABSTRACT AND KEYWORDS: Replace "Abstract text" with your abstract text of 100-200 words where noted below. Replace "keyword, keyword, keyword" with your 5-10 keywords, separated by commas, where noted below. 
+\begin{abstract}
+\normalsize
+This report explores the transition from classical cryptocurrencies to quantum money, focusing on inflation control mechanisms. While Bitcoin's security relies on computational assumptions vulnerable to quantum attacks, quantum money leverages the no-cloning theorem for physical unforgeability. We review centralized (Wiesner) and decentralized (Quantum Lightning) architectures, then propose four theoretical strategies to prevent uncontrolled currency issuance: computational difficulty adjustment, state space restriction, chain-based validation, and hybrid economic mechanisms. Each exploits distinct quantum properties to regulate monetary supply. While promising theoretically, substantial technological challenges remain before practical implementation.
+\vskip 2mm
+\textbf{Keywords:} bitcoin, quantum money, quantum lightning, inflation control, no-cloning theorem, quantum cryptography.
+\end{abstract}
+
+% MAIN BODY: Replace "Section Title," "Subsection Title," and "Subsubsection Title" with your section, subsection, and subsubsection titles, using title case to capitalize the first and all major words in these titles. Replace lorem ipsum text with your text for each section and subsection. Add additional sections and subsections as needed.
+\section{From Bitcoin to Quantum Money}\label{s:1}
+
+Bitcoin pioneered decentralized digital currency through blockchain and Proof of Work,\autocite{Nakamoto_2008} where computational difficulty ensures scarcity and network consensus maintains security. However, its classical cryptographic foundations—relying on the hardness of integer factorization and discrete logarithms—are vulnerable to quantum algorithms like Shor's\autocite{Shor_1997} and Grover's,\autocite{Grover_1996} threatening its long-term viability.
+
+Quantum money offers a fundamentally different approach: leveraging the no-cloning theorem of quantum mechanics,\autocite{Nielsen_Chuang_2010} where the physical impossibility of copying unknown quantum states guarantees unforgeability. Unlike Bitcoin's computational security, quantum money grounds trust in the laws of nature itself. While current implementations face practical challenges—quantum state fragility, specialized hardware requirements—the paradigm represents a conceptual leap toward physics-based currency systems.
+
+
+
+\section{Architectures of Quantum Money: Centralized Schemes and Quantum Lightning}\label{s:2}
+
+\subsection{Centralized Quantum Money}\label{s:2.1}
+
+Stephen Wiesner's foundational scheme\autocite{Wiesner_1983} uses a trusted bank to issue quantum banknotes, each consisting of a classical serial number paired with a quantum state in random non-orthogonal bases. The bank maintains a private database for verification. While the no-cloning theorem prevents counterfeiting, this design suffers from centralization: all verification requires the bank, creating scalability and privacy bottlenecks unsuitable for large-scale decentralized economies.
+
+% BIBLIOGRAPHY: Create or upload a bib file to manage your references. For instructions, see www.overleaf.com/learn/how-to/Using_bibliographies_on_Overleaf. Citations will use the Chicago Manual of Style notes and bibliography citation format, described at www.chicagomanualofstyle.org/tools_citationguide/citation-guide-1.html.
+\subsection{Quantum Lightning and Public-Key Verification}\label{s:2.2}
+
+Mark Zhandry's Quantum Lightning framework\autocite{Zhandry_2019} addresses centralization through publicly verifiable quantum money. Each currency unit is a unique quantum "bolt"—a state that cannot be recreated even by its generator. Using collision-resistant quantum hash functions, the system ensures no two identical bolts can exist. Verification is public: any party can run a polynomial-time quantum algorithm to validate authenticity.
+
+The key innovation is self-scarcity: without a central issuer, duplication remains physically and algorithmically impossible. This makes Quantum Lightning the quantum analogue of decentralized cryptocurrencies, with scarcity emerging from quantum mechanics rather than computational cost.
+
+\section{Preventing Infinite Minting and Inflation}\label{s:3}
+Despite solving the problem of counterfeiting, a new challenge emerges in decentralized quantum money: how to prevent uncontrolled currency creation. If any participant could generate valid quantum bolts at will, the monetary supply would inflate indefinitely, destroying the currency's value. Thus, quantum money must incorporate a mechanism to regulate issuance — the equivalent of Bitcoin's mining difficulty or fiat monetary policy.
+
+Several strategies have been proposed to address this issue, each with distinct technical implementations.
+
+\subsection{Computational Difficulty Adjustment}\label{s:3.1}
+One straightforward method is to tie the generation of valid quantum states to a hard computational problem. In Zhandry's formulation,\autocite{Zhandry_2019} a bolt is valid only if it satisfies a specific public hash condition — that is, it is a quantum state whose measurement outcomes correspond to a preimage of a cryptographic hash value. Because finding such states is computationally difficult, this naturally limits the rate of new currency creation. The difficulty level can be adjusted dynamically, analogous to Bitcoin's mining difficulty, thereby maintaining a stable rate of issuance.
+
+\textbf{Technical Implementation:} Consider a quantum money scheme where a valid state $\ket{\psi}$ must satisfy $H(\ket{\psi}) < D$, where $H$ is a quantum-accessible hash function and $D$ is a difficulty threshold. The minting process involves:
+\begin{enumerate}
+\item \textit{Quantum State Preparation:} Generate a trial quantum state $\ket{\psi_{\text{trial}}}$ using a parameterized quantum circuit with random inputs.
+\item \textit{Hash Verification:} Apply the quantum hash operator $\hat{H}$ and measure the output. If the result falls below the target difficulty $D$, the state is accepted as valid currency.
+\item \textit{Dynamic Adjustment:} The difficulty parameter $D$ is updated every $N$ blocks based on the actual issuance rate versus the target rate: $D_{n+1} = D_n \times \frac{T_{\text{target}}}{T_{\text{actual}}}$, where $T$ represents time intervals.
+\end{enumerate}
+
+This mechanism mirrors Bitcoin's halving schedule but operates at the quantum level. The key advantage is that the quantum hash function can be designed to be collision-resistant even against quantum adversaries, using techniques from quantum cryptography such as quantum-secure one-way functions or extractable witness encryption. The computational cost of finding valid states grows exponentially with the difficulty parameter, ensuring that the currency supply expands at a controlled, predictable rate regardless of advances in quantum computing power.
+
+\subsection{Restricting the Quantum State Space}\label{s:3.2}
+Another approach is to constrain the set of admissible quantum states. If the system's hash function or verification operator defines only a finite number of valid states, then the total monetary supply is inherently capped. This approach imposes scarcity directly at the level of the underlying Hilbert space — only a limited number of orthogonal states satisfy the verification criteria, preventing inflation by physical limitation rather than protocol-level enforcement.
+
+\textbf{Technical Implementation:} Define the monetary state space as a finite-dimensional subspace $\mathcal{H}_{\text{money}} \subset \mathcal{H}$ of the full Hilbert space. Specifically:
+\begin{enumerate}
+\item \textit{Orthogonal Basis Construction:} Select a finite set of $N$ mutually orthogonal quantum states $\{\ket{\phi_1}, \ket{\phi_2}, \ldots, \ket{\phi_N}\}$ that form a complete basis for $\mathcal{H}_{\text{money}}$. These states are chosen such that they are eigenstates of a specially designed verification operator $\hat{V}$ with distinct eigenvalues.
+\item \textit{Superposition Encoding:} Each valid quantum money token is a coherent superposition within this subspace: $\ket{\psi_{\text{valid}}} = \sum_{i=1}^{N} \alpha_i \ket{\phi_i}$, where the coefficients $\alpha_i$ encode a unique serial number via quantum fingerprinting.
+\item \textit{Hard Cap Enforcement:} Since the dimensionality is fixed at $N$, the maximum number of distinguishable (approximately orthogonal) money states is bounded by $N$. Any attempt to create additional states either falls outside $\mathcal{H}_{\text{money}}$ (and fails verification) or is non-orthogonal to existing tokens (violating uniqueness).
+\end{enumerate}
+
+This scheme can be implemented using topological quantum codes or stabilizer codes,\autocite{Gottesman_Chuang_2001} where the code space itself acts as $\mathcal{H}_{\text{money}}$. For example, using a quantum error-correcting code with parameters $[[n,k,d]]$, the logical code space has dimension $2^k$, providing exactly $2^k$ orthogonal money states. The verification process checks whether a given state lies within the code space by measuring stabilizer generators.\autocite{Nielsen_Chuang_2010} This approach naturally prevents inflation: once all $2^k$ tokens are issued, no new valid tokens can be created without violating the orthogonality constraint or the code structure.
+
+\subsection{Chain-Based or Signature-Based Validation}\label{s:3.3}
+A more sophisticated strategy involves linking each valid state to the previous one through a chain of quantum signatures.\autocite{Gottesman_Chuang_2001,Ben-David_Sattath_2017} In such a "quantum blockchain," each newly minted bolt contains encoded information derived from the measurement results of earlier bolts. This enforces a chronological issuance order and provides public traceability of the monetary supply. While still theoretical, such chained validation mechanisms could establish decentralized monetary policy enforced entirely by quantum laws and cryptographic consistency.
+
+\textbf{Technical Implementation:} Construct a quantum blockchain where each money state $\ket{\psi_n}$ at position $n$ in the chain satisfies:
+\begin{equation}
+\ket{\psi_n} = U_n(\vec{m}_{n-1}) \ket{\phi_{\text{seed}}}
+\end{equation}
+where $U_n$ is a unitary operator parameterized by the measurement outcomes $\vec{m}_{n-1}$ obtained from the previous state $\ket{\psi_{n-1}}$, and $\ket{\phi_{\text{seed}}}$ is a fixed initial seed state. The implementation proceeds as follows:
+
+\begin{enumerate}
+\item \textit{Genesis State:} The blockchain begins with a publicly verifiable genesis state $\ket{\psi_0}$ chosen through a distributed randomness protocol (e.g., quantum coin flipping among founding participants).
+
+\item \textit{Chained Minting:} To mint a new token, a participant must:
+\begin{itemize}
+    \item Obtain the most recent valid state $\ket{\psi_{n-1}}$ from the network
+    \item Perform a predetermined set of measurements in a specific basis, yielding classical outcomes $\vec{m}_{n-1}$
+    \item Use these outcomes to parameterize a quantum circuit $U_n(\vec{m}_{n-1})$
+    \item Apply this circuit to generate the next state: $\ket{\psi_n} = U_n(\vec{m}_{n-1}) \ket{\phi_{\text{seed}}}$
+\end{itemize}
+
+\item \textit{Public Verification:} Any party can verify the chain by:
+\begin{itemize}
+    \item Starting from the genesis state $\ket{\psi_0}$
+    \item Sequentially verifying that each subsequent state was correctly derived using the published measurement outcomes
+    \item Checking that each state passes a collision-resistant quantum hash test
+\end{itemize}
+
+\item \textit{Inflation Control:} The rate of issuance is controlled by making the measurement and circuit-construction process computationally expensive. For instance, the measurement basis can be chosen such that finding outcomes that produce a valid next state (one that passes the hash test) requires solving a computationally hard problem, similar to proof-of-work in Bitcoin.
+\end{enumerate}
+
+This approach has several advantages: it provides an immutable audit trail of all currency creation, prevents arbitrary minting by enforcing sequential dependencies, and allows for algorithmic monetary policy through difficulty adjustment of the quantum circuit construction. However, it requires maintaining quantum coherence across the entire blockchain, which presents significant practical challenges with current technology.
+
+\subsection{Hybrid Approaches and Economic Mechanisms}\label{s:3.4}
+Real-world quantum money systems will likely combine multiple anti-inflation strategies. For example, one could implement a two-tier system:
+
+\begin{enumerate}
+\item \textit{Layer 1 (Base Layer):} Use state space restriction to impose a hard cap on the total number of "primary" quantum tokens. These tokens exist in a fixed-dimensional code space and cannot exceed a predetermined maximum supply.
+
+\item \textit{Layer 2 (Transaction Layer):} Implement computational difficulty adjustment for "secondary" tokens that facilitate everyday transactions. These tokens can be created more freely but require proof-of-work, and they must be periodically redeemed or validated against primary tokens to maintain value.
+\end{enumerate}
+
+Additionally, economic mechanisms familiar from traditional monetary policy can be adapted:
+\begin{itemize}
+\item \textit{Quantum Token Burning:} Implement a protocol where tokens can be deliberately destroyed by measuring them in a way that collapses their superposition irreversibly, effectively removing them from circulation
+\item \textit{Stake-Based Issuance:} Limit minting rights to participants who hold and lock up existing tokens, creating an economic incentive structure that naturally regulates supply
+\item \textit{Time-Locked Release:} Encode newly minted tokens in quantum states that require a minimum number of quantum operations (and hence time) before they can be verified and spent, preventing sudden supply shocks
+\end{itemize}
+
+Taken together, these strategies demonstrate that even in a physics-based monetary system, economic stability demands regulation — whether through difficulty tuning, space limitation, chained validation, or hybrid economic mechanisms. Quantum money thus combines the rigidity of physical unforgeability with the flexibility of algorithmic governance, potentially offering a new paradigm for secure and inflation-resistant value exchange.
+
+\section{Conclusion}\label{s:4}
+Quantum money represents a conceptual shift from computational to physical foundations of trust. While Bitcoin relies on computational assumptions vulnerable to quantum attacks, quantum money leverages the no-cloning theorem to guarantee unforgeability through the laws of nature itself.
+
+This report has outlined four theoretical strategies for inflation control: computational difficulty adjustment, state space restriction, chain-based validation, and hybrid mechanisms. Each approach exploits different quantum properties—computational hardness, Hilbert space constraints, measurement dependencies, and state collapse irreversibility.
+
+However, substantial obstacles remain. Current quantum technology cannot yet provide the reliable quantum memories, low-noise communication channels, and scalable verification protocols required for practical implementation. The theoretical frameworks presented here require significant experimental validation and technological advancement before quantum money can become viable. Nonetheless, if these challenges are overcome, quantum money could fundamentally redefine digital currency as an embodiment of physical law rather than computational convention.
+
+\printbibliography
+
+\end{document}
