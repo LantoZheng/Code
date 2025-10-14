@@ -91,7 +91,7 @@
             ]
         }
     ],
-    "latex-workshop.latex.recipe.default": "XeLaTeX -> Biber -> XeLaTeX*2",
+    "latex-workshop.latex.recipe.default": "XeLaTeX (single run)",
     "latex-workshop.latex.clean.fileTypes": [
         "*.aux",
         "*.bbl",
