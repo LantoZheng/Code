@@ -107,5 +107,15 @@
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.latex.autoBuild.run": "onFileChange",
     "latex-workshop.message.update.show": false,
-    "latex-workshop.intellisense.package.enabled": true
+    "latex-workshop.intellisense.package.enabled": true,
+    "files.associations": {
+        "*.r": "r",
+        "*.mlx": "matlab",
+        "*.m": "matlab",
+        "*.tex": "latex",
+        "regex": "cpp",
+        "ios": "cpp",
+        "*.inc": "cpp"
+    },
+    "C_Cpp.default.compilerPath": "/opt/homebrew/bin/gcc"
 }

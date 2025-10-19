@@ -1,0 +1,68 @@
+% Compact XeLaTeX document for the Research Plan
+\documentclass[11pt,a4paper]{article}
+% Use fontspec for XeLaTeX
+\usepackage{fontspec}
+% Use a common system font; change if you prefer another installed font
+\setmainfont{Times New Roman}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{setspace}
+\singlespacing
+\usepackage{microtype}
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+% Use biblatex for bibliography management with biber backend
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\addbibresource{references_tiny.bib}
+
+% Bibliography: use biblatex + biber. Run sequence: xelatex -> biber -> xelatex -> xelatex
+% Citations in the document use \cite{key} and will be rendered by biblatex.
+\title{Research Plan}
+\author{Xiaoyang Zheng}
+\date{\today}
+
+
+\begin{document}
+\begin{center}
+    \Large \textbf{AI-Enabled Multi-Objective Inverse Design of Chiral Metasurfaces\\for Biosensing via Moth-Eye Template Nanofabrication}\\
+    \vspace{4pt}
+    \normalsize Xiaoyang Zheng
+\end{center}
+\vspace{4pt}
+
+\section*{Research Motivation and Background}
+Detecting biomolecular chirality is essential for drug discovery and diagnostics, yet traditional circular dichroism (CD) spectroscopy requires expensive instrumentation and large sample volumes~\cite{nanophotonic_biosensors_acs}. Professor Mana Toma's group has pioneered plasmonic metasurface biosensors leveraging collective plasmon modes for label-free colorimetric detection using silver nanodome arrays~\cite{toma_researches,toma_colorimetric_biosensor,toma_plasmonic_metasurface}, enabling practical spectrometer-free biosensing through industrially scalable moth-eye nanoimprint lithography~\cite{nil_metasurface_review}.
+
+I aim to extend this platform to chiral sensing, where superchiral electromagnetic fields achieve ultrasensitive detection of molecular handedness~\cite{chiral_biosensing_review}. Current AI-driven metasurface design methods cannot efficiently generate manufacturable chiral structures optimized for both signal enhancement and biosensing performance~\cite{dl_nanophotonics_rg}, creating urgent need for an AI framework generating moth-eye-compatible designs with multi-objective optimization.
+
+\section*{Research Objectives}
+I propose developing a conditional Generative Adversarial Network (cGAN) framework tailored to Professor Toma's moth-eye fabrication platform for rapid generation of optimized chiral plasmonic metasurface biosensor designs~\cite{conditional_gan_nanophotonics,gan_nanophotonic_inverse}:
+
+\begin{enumerate}
+    \setlength{\itemsep}{0.5pt}
+    \setlength{\parskip}{0pt}
+  \item \textbf{Define parametric design space:} Mathematical model describing achievable 3D chiral nanostructures within moth-eye constraints, inspired by Professor Toma's silver nanodome architectures.
+  \item \textbf{Generate training dataset:} High-quality dataset ($>$10,000 designs) via automated FDTD simulations evaluating CD enhancement and LSPR wavelength shifts.
+  \item \textbf{Develop cGAN architecture:} PyTorch-based cGAN with dual performance targets (chiroptical response + colorimetric sensitivity) as inputs and manufacturable parameters as outputs.
+  \item \textbf{Experimental validation:} Fabricate top designs using moth-eye templates and characterize via Professor Toma's protocols (CD spectroscopy, colorimetric immunoassays).
+\end{enumerate}
+
+\section*{Methodology}
+\textbf{Phase 1 (Months 1--8):} Develop automated Python-FDTD pipeline sampling moth-eye parameter space (silver thickness, template depth, asymmetry), generating paired geometric and performance data (CD enhancement, refractive index sensitivity).
+
+\textbf{Phase 2 (Months 9--16):} Train forward-predicting surrogate network for rapid evaluation, then train cGAN with multi-objective loss (adversarial learning, dual-target reconstruction, physics constraints), validated via FDTD and comparison with Professor Toma's published designs.
+
+\textbf{Phase 3 (Months 17--24):} Fabricate selected designs using Professor Toma's moth-eye process with silver deposition. Characterize via SEM, CD spectroscopy, and label-free binding assays with model biomolecules (chiral amino acids, IgG)~\cite{toma_plasmonic_metasurface,toma_enhanced_fluorescence}.
+
+\section*{Expected Outcomes and Impact}
+Deliverables: (1) validated cGAN tool for rapid chiral biosensor customization without re-training, (2) design library demonstrating chiroptical-colorimetric trade-offs, and (3) proof-of-concept devices with $<$10\% prediction-experiment deviation. This directly advances Professor Toma's mission of democratizing biosensing~\cite{toma_achievements} by combining her scalable moth-eye platform with AI-driven multi-objective design for pharmaceutical quality control and point-of-care diagnostics.
+
+\newpage
+\printbibliography[title={References}]
+
+\end{document}

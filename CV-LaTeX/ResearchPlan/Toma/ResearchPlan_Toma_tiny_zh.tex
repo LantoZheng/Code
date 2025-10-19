@@ -1,0 +1,68 @@
+% 紧凑型 XeLaTeX 文档，用于研究计划
+\documentclass[11pt,a4paper]{article}
+% 使用 fontspec 以支持 XeLaTeX
+\usepackage{fontspec}
+% 使用常见的系统字体；如需更改，请选择其他已安装字体
+\setmainfont{Times New Roman}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{setspace}
+\singlespacing
+\usepackage{microtype}
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+% 使用 biblatex 进行文献管理，后端为 biber
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\usepackage{xeCJK}
+\addbibresource{references_tiny.bib}
+
+% 文献管理：使用 biblatex + biber。运行顺序：xelatex -> biber -> xelatex -> xelatex
+% 文中引用使用 \cite{key}，由 biblatex 渲染。
+\title{研究计划}
+\author{Xiaoyang Zheng}
+\date{\today}
+
+\begin{document}
+\begin{center}
+    \Large \textbf{基于蛾眼模板纳米制造的用于生物传感的手性超表面多目标逆向设计}
+    \vspace{4pt}
+    \normalsize Zheng Xiaoyang
+\end{center}
+\vspace{4pt}
+
+\section*{研究动机与背景}
+检测生物分子的手性对于药物研发和诊断至关重要，但传统的圆二色性（CD）光谱技术需要昂贵的仪器和大量的样品体积~\cite{nanophotonic_biosensors_acs}。Mana Toma 教授的团队率先开发了利用集体等离子体模式的等离子体超表面生物传感器，通过银纳米穹顶阵列实现了无标记的比色检测~\cite{toma_researches,toma_colorimetric_biosensor,toma_plasmonic_metasurface}，并通过工业可扩展的蛾眼纳米压印光刻技术实现了实用的无光谱仪生物传感~\cite{nil_metasurface_review}。
+
+我计划将这一平台扩展到手性传感领域，其中超手性电磁场可实现对分子手性的超灵敏检测~\cite{chiral_biosensing_review}。当前的 AI 驱动的超表面设计方法无法高效生成既可制造又优化信号增强和生物传感性能的手性结构~\cite{dl_nanophotonics_rg}，因此迫切需要一个 AI 框架来生成兼容蛾眼的设计，并实现多目标优化。
+
+\section*{研究目标}
+我提议开发一个基于条件生成对抗网络（cGAN）的框架，专为 Toma 教授的蛾眼制造平台设计，用于快速生成优化的手性等离子体超表面生物传感器设计~\cite{conditional_gan_nanophotonics,gan_nanophotonic_inverse}：
+
+\begin{enumerate}
+    \setlength{\itemsep}{0.5pt}
+    \setlength{\parskip}{0pt}
+  \item \textbf{定义参数化设计空间：} 数学模型描述了在蛾眼约束内可实现的三维手性纳米结构，灵感来自 Toma 教授的银纳米穹顶架构。
+  \item \textbf{生成训练数据集：} 通过自动化的 FDTD 仿真生成高质量数据集（$>$10,000 个设计），评估 CD 增强和 LSPR 波长偏移。
+  \item \textbf{开发 cGAN 架构：} 基于 PyTorch 的 cGAN，具有双重性能目标（手性光学响应 + 比色灵敏度）作为输入，制造参数作为输出。
+  \item \textbf{实验验证：} 使用蛾眼模板制造顶级设计，并通过 Toma 教授的协议（CD 光谱、比色免疫测定）进行表征。
+\end{enumerate}
+
+\section*{研究方法}
+\textbf{第一阶段（第 1--8 个月）：} 开发自动化的 Python-FDTD 管道，采样蛾眼参数空间（银厚度、模板深度、不对称性），生成几何和性能数据对（CD 增强、折射率灵敏度）。
+
+\textbf{第二阶段（第 9--16 个月）：} 训练前向预测代理网络以实现快速评估，然后训练具有多目标损失（对抗学习、双目标重建、物理约束）的 cGAN，通过 FDTD 和与 Toma 教授已发表设计的比较进行验证。
+
+\textbf{第三阶段（第 17--24 个月）：} 使用 Toma 教授的蛾眼工艺和银沉积制造选定设计。通过 SEM、CD 光谱和无标记结合测定（模型生物分子：手性氨基酸、IgG）进行表征~\cite{toma_plasmonic_metasurface,toma_enhanced_fluorescence}。
+
+\section*{预期成果与影响}
+交付成果：（1）验证的 cGAN 工具，用于快速定制手性生物传感器而无需重新训练；（2）展示手性光学-比色权衡的设计库；（3）具有 $<$10\% 预测-实验偏差的概念验证设备。这直接推进了 Toma 教授通过将其可扩展的蛾眼平台与 AI 驱动的多目标设计相结合，实现生物传感民主化的使命~\cite{toma_achievements}，并服务于药品质量控制和即时诊断。
+
+\newpage
+\printbibliography[title={参考文献}]
+
+\end{document}
