@@ -1,0 +1,128 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{Homework 5}
+\author{Zheng Xiaoyang}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Problem I.7.4}
+
+\medskip
+\noindent
+For both internal particles in the loop to be real (on-shell), we need $p^2 = m^2$ for each.
+
+Let the two particles have 4-momenta $k$ and $k_1 + k_2 - k$. Then:
+\begin{align*}
+    k^2 &= m^2 \\
+    (k_1 + k_2 - k)^2 &= m^2
+\end{align*}
+
+In the CM frame, $P = k_1 + k_2 = (E, \vec{0})$. Let $k = (k^0, \vec{k})$, then $k' = (E - k^0, -\vec{k})$.
+
+From the on-shell conditions:
+\begin{align*}
+    (k^0)^2 - |\vec{k}|^2 &= m^2 \quad \Rightarrow \quad k^0 = \sqrt{|\vec{k}|^2 + m^2} \\
+    (E - k^0)^2 - |\vec{k}|^2 &= m^2 \quad \Rightarrow \quad E - k^0 = \sqrt{|\vec{k}|^2 + m^2}
+\end{align*}
+
+Therefore $E = 2k^0 = 2\sqrt{|\vec{k}|^2 + m^2}$.
+
+Since $|\vec{k}|^2 \ge 0$, the minimum energy is at $|\vec{k}|^2 = 0$:
+$$E_{\text{min}} = 2m$$
+
+Thus $\boxed{E \ge 2m}$.
+
+\bigskip
+\noindent\textbf{Problem I.8.1}
+
+\medskip
+\noindent
+\textbf{(a)} Starting from the momentum-space propagator:
+\[ D_F(x) = i \int \frac{d^{D+1}k}{(2\pi)^{D+1}} \frac{e^{-ik \cdot x}}{k^2 - m^2 + i\epsilon} \]
+
+Do the $k^0$ integral first:
+\[ I_0 = \int_{-\infty}^{\infty} \frac{dk^0}{2\pi} \frac{e^{-ik^0 t}}{(k^0)^2 - \omega_k^2 + i\epsilon} \]
+where $\omega_k = \sqrt{|\vec{k}|^2 + m^2}$.
+
+The poles are at $k^0 \approx \pm\omega_k$ with the $i\epsilon$ prescription shifting them slightly off the real axis.
+
+For $t > 0$: close contour in lower half-plane, pick up pole at $k^0 = \omega_k$:
+\[ I_0 = -i \frac{e^{-i\omega_k t}}{2\omega_k} \]
+
+For $t < 0$: close contour in upper half-plane, pick up pole at $k^0 = -\omega_k$:
+\[ I_0 = i \frac{e^{i\omega_k t}}{-2\omega_k} \]
+
+Combining with step functions:
+\[ \boxed{D_F(x) = \int \frac{d^Dk}{(2\pi)^D 2\omega_k} \left[ \theta(t)e^{-ik\cdot x} + \theta(-t)e^{ik\cdot x} \right]} \]
+
+\medskip
+\noindent
+\textbf{(b)} Start with the manifestly Lorentz invariant integral:
+\[ I = \int d^{D+1}k \, \delta(k^2 - m^2) \theta(k^0) \]
+
+Using $\delta((k^0)^2 - \omega_k^2) = \frac{1}{2\omega_k}[\delta(k^0 - \omega_k) + \delta(k^0 + \omega_k)]$ and $\theta(k^0)$ kills the negative pole:
+\[ I = \int d^Dk \int dk^0 \, \frac{1}{2\omega_k} \delta(k^0 - \omega_k) = \int \frac{d^Dk}{2\omega_k} \]
+
+Since we started with a Lorentz invariant quantity, the measure $d^Dk/(2\omega_k)$ is Lorentz invariant.
+
+\medskip
+\noindent
+\textbf{(c)} Define $a_O(\vec{k}) = a_Z(\vec{k})/\sqrt{2\omega_k}$ where $a_Z$ are Zee's operators.
+
+\textit{Lorentz transformation:} We know $U(\Lambda) a_Z^\dagger(\vec{k}) U(\Lambda)^\dagger = a_Z^\dagger(\Lambda\vec{k})$. Then:
+\begin{align*}
+    U(\Lambda) a_O^\dagger(\vec{k}) U(\Lambda)^\dagger &= \frac{1}{\sqrt{2\omega_k}} U(\Lambda) a_Z^\dagger(\vec{k}) U(\Lambda)^\dagger \\
+    &= \frac{1}{\sqrt{2\omega_k}} a_Z^\dagger(\Lambda\vec{k}) = \sqrt{\frac{\omega_{\Lambda k}}{\omega_k}} a_O^\dagger(\Lambda\vec{k})
+\end{align*}
+
+\textit{Commutation relation:} Using $[a_Z(\vec{k}), a_Z^\dagger(\vec{p})] = (2\pi)^D 2\omega_k \delta^D(\vec{k}-\vec{p})$:
+\begin{align*}
+    [a_O(\vec{k}), a_O^\dagger(\vec{p})] &= \frac{1}{\sqrt{4\omega_k \omega_p}} [a_Z(\vec{k}), a_Z^\dagger(\vec{p})] \\
+    &= \frac{(2\pi)^D 2\omega_k \delta^D(\vec{k}-\vec{p})}{2\sqrt{\omega_k \omega_p}} \\
+    &= (2\pi)^D \delta^D(\vec{k}-\vec{p})
+\end{align*}
+where in the last step the delta function sets $\omega_p = \omega_k$.
+
+\bigskip
+\noindent\textbf{Problem I.8.2}
+
+\medskip
+\noindent
+Calculate $\langle k'|H|k\rangle$ where $|k\rangle = a^\dagger(\vec{k})|0\rangle$.
+
+The Hamiltonian is:
+\[ H = \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p})a(\vec{p}) \]
+
+Act $H$ on $|k\rangle$:
+\begin{align*}
+    H|k\rangle &= \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p})a(\vec{p}) a^\dagger(\vec{k})|0\rangle
+\end{align*}
+
+Using $a(\vec{p})a^\dagger(\vec{k}) = a^\dagger(\vec{k})a(\vec{p}) + [a(\vec{p}), a^\dagger(\vec{k})]$:
+\begin{align*}
+    H|k\rangle &= \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p}) (2\pi)^D 2\omega_k \delta^D(\vec{p}-\vec{k}) |0\rangle \\
+    &= \omega_k a^\dagger(\vec{k})|0\rangle = \omega_k |k\rangle
+\end{align*}
+
+So $|k\rangle$ is an eigenstate with eigenvalue $\omega_k$.
+
+Now:
+\[ \langle k'|H|k\rangle = \omega_k \langle k'|k\rangle \]
+
+Calculate the inner product:
+\begin{align*}
+    \langle k'|k\rangle &= \langle 0|a(\vec{k}') a^\dagger(\vec{k})|0\rangle \\
+    &= \langle 0| [a(\vec{k}'), a^\dagger(\vec{k})] |0\rangle \\
+    &= (2\pi)^D 2\omega_k \delta^D(\vec{k}'-\vec{k})
+\end{align*}
+
+Therefore:
+\[ \boxed{\langle k'|H|k\rangle = \omega_k (2\pi)^D 2\omega_k \delta^D(\vec{k}'-\vec{k})} \]
+
+\end{document}

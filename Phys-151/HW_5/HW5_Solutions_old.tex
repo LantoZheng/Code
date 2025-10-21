@@ -1,0 +1,213 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{Homework 5}
+\author{Zheng Xiaoyang}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Problem I.7.4}
+
+The loop integral has two propagators for internal particles with 4-momenta:
+\begin{itemize}
+    \item Particle 1: $k$
+    \item Particle 2: $k' = k_1 + k_2 - k$
+
+\begin{itemize}
+    \item Particle 1: $k$
+    \item Particle 2: $k_1 + k_2 - k$
+\end{itemize}
+
+For both particles to be real (on-shell): $p^2 = m^2$:
+\begin{align}
+    k^2 &= m^2 \\
+    (k_1 + k_2 - k)^2 &= m^2
+\end{align}
+
+In the center-of-mass frame: $P = k_1 + k_2 = (E, \vec{0})$. Let $k = (k^0, \vec{k})$, then the second particle has momentum $k' = (E - k^0, -\vec{k})$.
+
+On-shell conditions:
+\begin{itemize}
+    \item Particle 1: $(k^0)^2 - |\vec{k}|^2 = m^2 \implies k^0 = \sqrt{|\vec{k}|^2 + m^2}$
+    \item Particle 2: $(E - k^0)^2 - |\vec{k}|^2 = m^2 \implies E - k^0 = \sqrt{|\vec{k}|^2 + m^2}$
+\end{itemize}
+
+Therefore: $E = 2k^0 = 2\sqrt{|\vec{k}|^2 + m^2}$
+
+Since $|\vec{k}|^2 \ge 0$, the minimum energy occurs at $|\vec{k}|^2 = 0$:
+$$E_{\text{min}} = 2m$$
+
+Thus: $\boxed{E \ge 2m}$
+
+\bigskip
+\noindent\textbf{Problem I.8.1}
+
+\textbf{(a)} Derive position-space propagator from momentum-space form.
+
+\subsubsection{Part 1: Derivation of the Feynman Propagator}
+
+\textbf{Task:} Derive (13) from the momentum-space representation of the propagator (14).
+\[ \text{(14): } D_F(x) = i \int \frac{d^{D+1}k}{(2\pi)^{D+1}} \frac{e^{-ik \cdot x}}{k^2 - m^2 + i\epsilon} \quad \longrightarrow \quad \text{(13)} \]
+
+\textbf{Step 1: Isolate the energy integral.} We perform the $k^0$ integration first using contour integration.
+\[ I_0 = \int_{-\infty}^{\infty} \frac{dk^0}{2\pi} \frac{e^{-ik^0 t}}{(k^0)^2 - |\vec{k}|^2 - m^2 + i\epsilon} \]
+The denominator $(k^0)^2 - \omega_k^2 + i\epsilon$ (where $\omega_k = \sqrt{|\vec{k}|^2 + m^2}$) has poles at $k^0 = \pm(\omega_k - i\epsilon')$, i.e., at $k^0 \approx \omega_k$ in the lower-half plane and $k^0 \approx -\omega_k$ in the upper-half plane.
+
+\textbf{Step 2: Case 1 ($t>0$).} The term $e^{-ik^0 t}$ vanishes for $\text{Im}(k^0) \to -\infty$. We close the contour in the lower-half plane (clockwise, picking up a minus sign).
+\begin{align*}
+    I_0 &= (-2\pi i) \times \frac{1}{2\pi} \times \text{Res}\left[\frac{e^{-ik^0 t}}{(k^0-\omega_k)(k^0+\omega_k)}\right]_{k^0=\omega_k} \\
+        &= -i \left( \frac{e^{-i\omega_k t}}{2\omega_k} \right)
+\end{align*}
+
+\textbf{Step 3: Case 2 ($t<0$).} The term $e^{-ik^0 t}$ vanishes for $\text{Im}(k^0) \to +\infty$. We close the contour in the upper-half plane (counter-clockwise).
+\begin{align*}
+    I_0 &= (2\pi i) \times \frac{1}{2\pi} \times \text{Res}\left[\frac{e^{-ik^0 t}}{(k^0-\omega_k)(k^0+\omega_k)}\right]_{k^0=-\omega_k} \\
+        &= i \left( \frac{e^{i\omega_k t}}{-2\omega_k} \right)
+\end{align*}
+
+\textbf{Step 4: Combine results.} Substitute $I_0$ back into the full expression for $D_F(x)$ and combine the cases using the Heaviside step function $\theta(t)$.
+\[ D_F(x) = \int \frac{d^Dk}{(2\pi)^D 2\omega_k} \left[ \theta(t)e^{-i(\omega_k t - \vec{k}\cdot\vec{x})} + \theta(-t)e^{i(\omega_k t + \vec{k}\cdot\vec{x})} \right] \]
+
+For the $t<0$ term, we perform a change of variables $\vec{k} \to -\vec{k}$. The measure $d^Dk$ and $\omega_k$ are invariant. This yields expression (13):
+\begin{equation}
+    \boxed{D_F(x) = \int \frac{d^Dk}{(2\pi)^D 2\omega_k} \left[ \theta(t)e^{-ik\cdot x} + \theta(-t)e^{ik\cdot x} \right]}
+\end{equation}
+where $k \cdot x = \omega_k t - \vec{k}\cdot\vec{x}$.
+
+\subsubsection{Part 2: Lorentz Invariance of the Measure}
+
+\textbf{Task:} Show that the measure $d^Dk / (2\omega_k)$ is Lorentz invariant.
+
+\textbf{Step 1: Start with a known invariant.} The 4-momentum integral over the positive-energy mass shell is manifestly Lorentz invariant:
+\[ I = \int d^{D+1}k \, \delta(k^2 - m^2) \theta(k^0) \]
+Here, $d^{D+1}k$, the delta function argument $k^2-m^2$, and the condition $k^0 > 0$ are all Lorentz scalars.
+
+\textbf{Step 2: Evaluate the energy integral.} We can perform the $k^0$ integration to reduce the measure.
+\begin{align*}
+    \delta(k^2 - m^2) = \delta((k^0)^2 - \omega_k^2) = \frac{1}{2\omega_k} \left[ \delta(k^0 - \omega_k) + \delta(k^0 + \omega_k) \right]
+\end{align*}
+The $\theta(k^0)$ term eliminates the pole at $k^0 = -\omega_k$.
+\begin{align*}
+    I &= \int d^Dk \int dk^0 \, \frac{1}{2\omega_k} \delta(k^0 - \omega_k) = \int \frac{d^Dk}{2\omega_k}
+\end{align*}
+
+\textbf{Conclusion:} Since we started with a Lorentz invariant integral $I$, the resulting measure $\int d^Dk/(2\omega_k)$ must also be Lorentz invariant.
+
+\subsubsection{Part 3: Alternative Operator Normalization}
+
+\textbf{Task:} Analyze operators defined with a $\sqrt{2\omega_k}$ normalization factor. Let's denote Zee's operators as $a_Z$ and the alternative operators as $a_O$.
+\begin{align*}
+    \phi(x) &= \int \frac{d^Dk}{(2\pi)^D 2\omega_k} [a_Z(\vec{k})e^{-ik\cdot x} + \dots] \\
+    \phi(x) &= \int \frac{d^Dk}{(2\pi)^D \sqrt{2\omega_k}} [a_O(\vec{k})e^{-ik\cdot x} + \dots]
+\end{align*}
+Equating these gives the relation: $a_O(\vec{k}) = a_Z(\vec{k}) / \sqrt{2\omega_k}$.
+
+\textbf{(a) Lorentz Covariance}
+
+One-particle states $|k\rangle_Z = a_Z^\dagger(\vec{k})|0\rangle$ have a Lorentz-invariant normalization, $\langle p|k \rangle_Z \propto 2\omega_k \delta^D(\vec{p}-\vec{k})$. This implies a simple transformation law for states, $U(\Lambda)|k\rangle_Z = |\Lambda k\rangle_Z$, and for the operators:
+\[ U(\Lambda) a_Z^\dagger(\vec{k}) U(\Lambda)^\dagger = a_Z^\dagger(\Lambda\vec{k}) \]
+
+We use this to find the transformation for $a_O^\dagger(\vec{k}) = a_Z^\dagger(\vec{k})/\sqrt{2\omega_k}$.
+\begin{align*}
+    U(\Lambda) a_O^\dagger(\vec{k}) U(\Lambda)^\dagger &= \frac{1}{\sqrt{2\omega_k}} U(\Lambda) a_Z^\dagger(\vec{k}) U(\Lambda)^\dagger \\
+    &= \frac{1}{\sqrt{2\omega_k}} a_Z^\dagger(\Lambda\vec{k}) \\
+    &= \frac{\sqrt{2\omega_{\Lambda k}}}{\sqrt{2\omega_k}} a_O^\dagger(\Lambda\vec{k}) = \sqrt{\frac{\omega_{\Lambda k}}{\omega_k}} a_O^\dagger(\Lambda\vec{k})
+\end{align*}
+
+\textbf{Conclusion:} The operator $a_O$ transforms covariantly, picking up a factor related to the energy transformation.
+
+\textbf{(b) Commutation Relation}
+
+The operators $a_Z$ must satisfy $[a_Z(\vec{k}), a_Z^\dagger(\vec{p})] = (2\pi)^D 2\omega_k \delta^D(\vec{k}-\vec{p})$ to give the correct canonical commutation relations for the field $\phi$. We use this to find the commutator for $a_O$.
+\begin{align*}
+    [a_O(\vec{k}), a_O^\dagger(\vec{p})] &= \left[ \frac{a_Z(\vec{k})}{\sqrt{2\omega_k}}, \frac{a_Z^\dagger(\vec{p})}{\sqrt{2\omega_p}} \right] \\
+    &= \frac{1}{\sqrt{4\omega_k \omega_p}} [a_Z(\vec{k}), a_Z^\dagger(\vec{p})] \\
+    &= \frac{1}{2\sqrt{\omega_k \omega_p}} (2\pi)^D 2\omega_k \delta^D(\vec{k}-\vec{p}) \\
+    &= (2\pi)^D \delta^D(\vec{k}-\vec{p})
+\end{align*}
+
+In the last step, the delta function enforces $\omega_p = \omega_k$. 
+
+\textbf{Conclusion:} This is the standard "relativistically normalized" commutation relation.
+
+\newpage
+
+% ==================== PROBLEM I.8.2 ====================
+\section{Problem I.8.2: Hamiltonian Matrix Element}
+
+\subsection{Problem Statement}
+Calculate the matrix element $\langle k'|H|k\rangle$ for the free scalar field Hamiltonian, where $|k\rangle = a^\dagger(\vec{k})|0\rangle$ is a one-particle state.
+
+\subsection{Solution}
+
+\subsubsection{Setup and Definitions}
+
+\textbf{1. States:} The one-particle states are defined by the action of the creation operator on the vacuum:
+\begin{align*}
+    |k\rangle &= a^\dagger(\vec{k})|0\rangle \\
+    \langle k'| &= \langle 0|a(\vec{k}')
+\end{align*}
+
+\textbf{2. Hamiltonian:} The normal-ordered Hamiltonian for a free scalar field is:
+\[ H = \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p})a(\vec{p}) \]
+This form uses the Lorentz-invariant measure.
+
+\textbf{3. Commutation Relation:} We use the commutation relation consistent with the field expansion in (11):
+\[ [a(\vec{p}), a^\dagger(\vec{k})] = (2\pi)^D 2\omega_k \delta^D(\vec{p}-\vec{k}) \]
+
+\subsubsection{Calculation}
+
+The most direct approach is to first determine the action of the Hamiltonian on a one-particle state $|k\rangle$.
+
+\textbf{Step 1: Act $H$ on $|k\rangle$.}
+\[ H|k\rangle = H a^\dagger(\vec{k})|0\rangle = \left[ \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p})a(\vec{p}) \right] a^\dagger(\vec{k})|0\rangle \]
+
+\textbf{Step 2: Commute operators.} To simplify, we move the annihilation operator $a(\vec{p})$ to the right until it can act on the vacuum. We use the commutation relation:
+\[ a(\vec{p})a^\dagger(\vec{k}) = a^\dagger(\vec{k})a(\vec{p}) + [a(\vec{p}), a^\dagger(\vec{k})] \]
+
+The term $a^\dagger(\vec{k})a(\vec{p})$ will give zero when acting on $|0\rangle$, so we only need to consider the commutator term.
+\begin{align*}
+    H|k\rangle &= \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p}) \left( [a(\vec{p}), a^\dagger(\vec{k})] \right) |0\rangle \\
+    &= \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p}) \left( (2\pi)^D 2\omega_k \delta^D(\vec{p}-\vec{k}) \right) |0\rangle
+\end{align*}
+
+\textbf{Step 3: Evaluate the integral.} The Dirac delta function collapses the integral, setting $\vec{p} = \vec{k}$.
+\[ H|k\rangle = \left( \frac{1}{2\omega_k} \omega_k a^\dagger(\vec{k}) (2\omega_k) \right) |0\rangle = \omega_k a^\dagger(\vec{k})|0\rangle \]
+
+This gives the important result that $|k\rangle$ is an eigenstate of the Hamiltonian:
+\begin{equation}
+    H|k\rangle = \omega_k |k\rangle
+\end{equation}
+
+\textbf{Step 4: Calculate the matrix element.} Now, calculating the matrix element is straightforward.
+\[ \langle k'|H|k\rangle = \langle k'| (\omega_k |k\rangle) = \omega_k \langle k'|k\rangle \]
+
+\textbf{Step 5: Calculate the inner product $\langle k'|k\rangle$.}
+\begin{align*}
+    \langle k'|k\rangle &= \langle 0|a(\vec{k}') a^\dagger(\vec{k})|0\rangle \\
+    &= \langle 0| \left( [a(\vec{k}'), a^\dagger(\vec{k})] + a^\dagger(\vec{k})a(\vec{k}') \right) |0\rangle \\
+    &= \langle 0| [a(\vec{k}'), a^\dagger(\vec{k})] |0\rangle \quad (\text{since } a(\vec{k}')|0\rangle = 0) \\
+    &= (2\pi)^D 2\omega_k \delta^D(\vec{k}'-\vec{k})
+\end{align*}
+
+\textbf{Step 6: Final Result.} Combining the previous steps gives the final answer.
+\begin{equation}
+    \boxed{\langle k'|H|k\rangle = \omega_k (2\pi)^D 2\omega_k \delta^D(\vec{k}'-\vec{k})}
+\end{equation}
+
+Due to the delta function, this can also be written as $\omega_{k'} (2\pi)^D 2\omega_{k'} \delta^D(\vec{k}'-\vec{k})$.
+
+\subsubsection{Physical Interpretation}
+
+The result shows that the Hamiltonian $H$ is diagonal in the basis of one-particle momentum eigenstates. This is expected for a free theory, as particles do not interact or change their momentum. 
+
+The matrix element is zero unless $\vec{k}' = \vec{k}$. When they are equal, the value of the matrix element is the energy of the particle, $\omega_k$, times the normalization of the state. 
+
+The fact that $|k\rangle$ is an energy eigenstate confirms that a single particle with a definite momentum is a stationary state of the system.
+
+\end{document}

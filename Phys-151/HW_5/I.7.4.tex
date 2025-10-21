@@ -1,0 +1,81 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{fontspec}
+
+\usepackage[english, bidi=basic, provide=*]{babel}
+
+\babelprovide[import, onchar=ids fonts]{english}
+
+% Set default/Latin font to Sans Serif in the main (rm) slot
+\babelfont{rm}{Noto Sans}
+
+% --- PACKAGES ---
+\usepackage{amsmath} % For advanced math environments
+\usepackage{hyperref} % For hyperlinks, should be loaded last
+
+% --- DOCUMENT METADATA ---
+\title{Solution Draft: Zee's QFT Problem on Loop Integrals}
+\author{A. Zee, Chapter I.7}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\textbf{Goal:} Show that for both internal particles in the loop diagram (eq. 23) to be real, the total energy must satisfy $E \ge 2m$.
+
+\section*{Mathematical Derivation}
+
+\begin{enumerate}
+    \item \textbf{Internal Particles:} The loop integral has two propagators for internal particles with 4-momenta:
+    \begin{itemize}
+        \item Particle 1: $k$
+        \item Particle 2: $k' = k_1 + k_2 - k$
+    \end{itemize}
+
+    \item \textbf{On-Shell Condition:} A particle is real (on-shell) when its propagator pole is hit: $p^2 = m^2$. For both particles to be real:
+    \begin{align}
+        k^2 &= m^2 \label{eq:cond1} \\
+        (k_1 + k_2 - k)^2 &= m^2 \label{eq:cond2}
+    \end{align}
+
+    \item \textbf{Center-of-Mass Frame:} In the center-of-mass (CM) frame, the total 4-momentum $P$ is:
+    $$P = k_1 + k_2 = (E, \vec{0})$$
+    The on-shell conditions become:
+    \begin{align}
+        k^2 &= m^2 \label{eq:cond3} \\
+        (P - k)^2 &= m^2 \label{eq:cond4}
+    \end{align}
+
+    \item \textbf{Solve for Energy $E$:} Let $k = (k^0, \vec{k})$. The second particle's momentum is $k' = (E - k^0, -\vec{k})$. Applying the on-shell condition $p^2 = (p^0)^2 - |\vec{p}|^2 = m^2$ to both:
+    \begin{itemize}
+        \item Particle 1: $(k^0)^2 - |\vec{k}|^2 = m^2 \implies k^0 = \sqrt{|\vec{k}|^2 + m^2}$
+        \item Particle 2: $(E - k^0)^2 - |-\vec{k}|^2 = m^2 \implies E - k^0 = \sqrt{|\vec{k}|^2 + m^2}$
+    \end{itemize}
+    From these two equations, $E = 2k^0$. Substituting for $k^0$:
+    $$E = 2\sqrt{|\vec{k}|^2 + m^2}$$
+
+    \item \textbf{Find Minimum Energy Threshold:} To find the minimum energy, we note that spatial momentum squared must be non-negative:
+    $$|\vec{k}|^2 \ge 0$$
+    The minimum energy therefore occurs when $|\vec{k}|^2 = 0$:
+    $$E_{\text{min}} = 2\sqrt{0 + m^2} = 2m$$
+    This sets the minimum energy threshold for the on-shell condition to be met.
+    \[ \mathbf{E \ge 2m} \]
+\end{enumerate}
+
+\section*{Physical Interpretation (Draft)}
+
+The condition $\mathbf{E \ge 2m}$ is the \textbf{threshold energy for particle production}.
+
+The total energy $E$ in the CM frame is available for a quantum fluctuation to create the two intermediate particles.
+\begin{itemize}
+    \item If $\mathbf{E < 2m}$: There is insufficient energy to create two real particles of mass $m$. The particles must remain \textbf{virtual}.
+    \item If $\mathbf{E \ge 2m}$: Sufficient energy exists to create two \textbf{real, physical particles}. The excess energy ($E - 2m$) becomes their kinetic energy.
+\end{itemize}
+
+\textbf{Summary:} The loop integral develops a singularity (an imaginary part) when the energy $E$ is high enough to promote the virtual particles in the loop to real, on-shell particles. The poles of propagators correspond to the physical thresholds for particle production.
+
+\end{document}
+

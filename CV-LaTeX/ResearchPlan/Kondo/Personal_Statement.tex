@@ -1,0 +1,214 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- 宏包设置 ---
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage{geometry}
+\geometry{margin=0.75in}
+\usepackage{setspace}
+\setstretch{1.0}
+\usepackage{microtype}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+\usepackage{enumitem}
+\setlist{nosep, leftmargin=*, itemsep=2pt, topsep=3pt}
+\usepackage{titlesec}
+
+% 紧凑的章节标题格式
+\titleformat{\section}
+  {\large\bfseries}
+  {}
+  {0em}
+  {}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+
+\titleformat{\subsection}
+  {\normalsize\bfseries}
+  {}
+  {0em}
+  {}
+\titlespacing*{\subsection}{0pt}{6pt}{3pt}
+
+% 移除页码
+\pagenumbering{gobble}
+
+% --- 文档开始 ---
+\begin{document}
+
+% --- 标题 ---
+\begin{center}
+    {\Large \textbf{Personal Statement}}\\[0.4em]
+    {\large Master's Program, Graduate School of Science, University of Tokyo}\\[0.8em]
+    \textbf{Xiaoyang Zheng} $\cdot$ Beijing Normal University\\
+    \href{mailto:xiaoyangzheng@mail.bnu.edu.cn}{xiaoyangzheng@mail.bnu.edu.cn}
+\end{center}
+
+\vspace{-0.3em}
+
+% --- 正文 ---
+\section{Introduction: Building Bridges Between Applied and Fundamental Physics}
+
+As a final-year undergraduate Physics major at Beijing Normal University (ranked 2/23, GPA 3.7/4.0), I have developed a distinctive research profile that combines \textbf{hands-on experimental innovation}, \textbf{computational problem-solving}, and \textbf{leadership in scientific communication}. My journey from designing diffractive neural networks to characterizing nanophotonic materials has taught me not only technical skills, but also the independence of mind, perseverance, and collaborative spirit essential for frontier scientific research.
+
+This personal statement highlights the key accomplishments and initiatives that have shaped my research philosophy and prepared me to contribute meaningfully to advanced experimental physics at the graduate level.
+
+\section{Research Accomplishments: From Concept to Implementation}
+
+\subsection{Pioneering Single-Layer Diffractive Neural Networks (2024-Present)}
+
+My most significant independent research achievement has been the design and validation of a \textbf{single-layer diffractive neural network (D2NN)} for optical computing. This project exemplifies my ability to identify problems in existing approaches and develop innovative solutions:
+
+\textbf{Problem identification:} Traditional multi-layer D2NNs suffer from significant intensity loss at output layers due to multiple diffraction stages, limiting their practical applicability for high-speed optical computing.
+
+\textbf{Independent innovation:} I proposed using a \textbf{single phase mask in a 4f optical system} to achieve comparable performance while eliminating cascaded diffraction losses. This required:
+\begin{itemize}
+    \item Deriving the optical transfer function from first-principles diffraction theory
+    \item Designing spatial light modulator (SLM) phase patterns for the Fourier plane
+    \item Implementing a custom training pipeline in PyTorch that bridges optical physics and machine learning
+    \item Conducting extensive optical simulations to validate the concept
+\end{itemize}
+
+\textbf{Results and impact:} Achieved \textbf{97\%+ accuracy} on MNIST classification through optical simulation, demonstrating that single-layer architectures can rival multi-layer designs. This work showcases my ability to work independently on cutting-edge problems at the intersection of optics, physics, and artificial intelligence.
+
+\textbf{Skills demonstrated:} Independent research design, mathematical modeling, software development (Python/PyTorch), optical system analysis, and ability to challenge established approaches with novel solutions.
+
+\subsection{Self-Calibrating Beam Shaping System: Turning Theory into Hardware (2024)}
+
+For my advanced optics course project, I took the initiative to go beyond standard coursework by designing and \textbf{constructing a complete optical system from scratch}:
+
+\textbf{Technical challenge:} Real-world laser beams suffer from wavefront distortions and higher-order modes. Commercial systems for wavefront correction are expensive and lack flexibility for research applications.
+
+\textbf{My solution:} Developed a \textbf{self-calibrating feedback control system} integrating:
+\begin{itemize}
+    \item A reflective SLM for dynamic phase modulation
+    \item A CCD camera with microlens array as a wavefront sensor
+    \item Custom Python software implementing optimization algorithms (stochastic gradient descent and simulated annealing) to minimize wavefront error in real-time
+\end{itemize}
+
+\textbf{Overcoming practical difficulties:} This project required troubleshooting numerous experimental challenges: optical alignment precision, SLM calibration, camera-SLM synchronization, and algorithm convergence. Through systematic debugging and iterative refinement, I successfully demonstrated \textbf{real-time wavefront correction} and generation of Gaussian and Laguerre-Gaussian beam profiles.
+
+\textbf{Skills demonstrated:} Hands-on experimental ability, systems integration (optics + electronics + software), algorithm implementation, problem-solving under constraints, and ability to deliver functional prototypes from conceptual designs.
+
+\subsection{Nanophotonics Research: Learning to Ask the Right Questions (2022-2024)}
+
+As an \textbf{undergraduate research assistant} under Prof.~Jinwei Shi (supported by Beijing Undergraduate Research Training Program), I contributed to nanophotonics research studying plasmon resonances in gold nanostructures:
+
+\textbf{Technical contributions:}
+\begin{itemize}
+    \item Characterized nanoparticle samples using \textbf{scanning electron microscopy (SEM)} and \textbf{transmission electron microscopy (TEM)}
+    \item Performed optical spectroscopy measurements to analyze plasmon resonance peaks
+    \item Conducted \textbf{FDTD (Finite-Difference Time-Domain) simulations} to study electromagnetic mode distributions in gold nanorods and their interaction with 2D materials
+    \item Investigated how nanorod dimensions affect absorption spectra, providing design guidelines for plasmonic devices
+\end{itemize}
+
+\textbf{Growth in scientific thinking:} This two-year experience taught me how to transition from following protocols to \textbf{asking independent research questions}. I learned to critically analyze experimental data, propose hypotheses for observed phenomena, and design simulations to test theoretical predictions. The iterative process of experiment-simulation-refinement instilled in me the patience and rigor required for experimental physics research.
+
+\textbf{Skills demonstrated:} Advanced characterization techniques (SEM/TEM), optical spectroscopy, electromagnetic simulation, data analysis, scientific communication with faculty advisor, and sustained commitment to long-term research projects.
+
+\subsection{Atomic Magnetometry: Interdisciplinary Collaboration (Summer 2023)}
+
+During a summer research stint at the University of Science and Technology of China (USTC) under Prof.~Dong Sheng, I contributed to the development of \textbf{atomic co-magnetometers} for precision measurements:
+
+\textbf{Cross-disciplinary learning:} This project exposed me to atomic physics, precision measurement techniques, and thermal management in sensitive instruments—fields outside my primary optics background. I quickly learned the fundamentals of atomic magnetometry and contributed meaningfully within a short timeframe.
+
+\textbf{Technical contributions:}
+\begin{itemize}
+    \item Conducted \textbf{COMSOL thermal simulations} to optimize temperature stability of critical components
+    \item Participated in optical system construction for atomic excitation and detection
+    \item Assisted in developing electronic circuits for signal acquisition and noise reduction
+\end{itemize}
+
+\textbf{Skills demonstrated:} Rapid learning ability, adaptability to new research fields, multiphysics simulation (thermal-optical coupling), teamwork in a fast-paced research environment, and ability to contribute to projects beyond my core expertise.
+
+\section{Leadership and Scientific Communication}
+
+Beyond individual research, I have demonstrated \textbf{leadership and communication skills} through science outreach and community building:
+
+\subsection{Chairman, Beijing Normal University Photographer Association (2023-2024)}
+
+As chairman of BNUPA, I transformed the organization into a platform for scientific education:
+
+\textbf{Initiatives and impact:}
+\begin{itemize}
+    \item Organized \textbf{3 expert lectures and 2 interviews} engaging approximately \textbf{200 students} across campus
+    \item Delivered two lecture series bridging physics and photography:
+    \begin{itemize}
+        \item \textit{"Optical Concepts in Photography"}: Explained diffraction limits, lens aberrations, and Fourier optics in the context of camera design
+        \item \textit{"Imaging System Quality from Photographic Equipment Perspective"}: Discussed modulation transfer functions (MTF), resolution, and sensor technology
+    \end{itemize}
+    \item Coordinated inter-university events and external collaborations
+\end{itemize}
+
+\textbf{Skills demonstrated:} Leadership, event organization, public speaking, ability to communicate complex physics concepts to non-specialist audiences, team management, and initiative in creating educational opportunities.
+
+\textbf{Communication philosophy:} These experiences taught me that effective scientific communication requires not only deep understanding but also empathy—the ability to anticipate audience knowledge and craft explanations that resonate. This skill will be invaluable in graduate research, where collaboration with theorists, experimentalists, and students from diverse backgrounds is essential.
+
+\subsection{Homoludens Archive: Documenting Academic Heritage (2022-2023)}
+
+As an undergraduate researcher and archives administrator for the Homoludens Archive project, I contributed to \textbf{preserving and organizing institutional academic history}. This role required meticulous attention to detail, systematic documentation, and commitment to long-term scholarly infrastructure—qualities equally important in experimental research where proper data management and reproducibility are paramount.
+
+\section{Academic Resilience and Growth Mindset}
+
+\subsection{Balancing Dual Degrees: Physics and Economics}
+
+One significant challenge I have navigated is pursuing a \textbf{double major in Physics and Economics} while maintaining competitive academic standing (2/23 ranking, GPA 3.7/4.0). This required:
+\begin{itemize}
+    \item Exceptional time management to balance laboratory work, coursework in two demanding fields, and research projects
+    \item Strategic prioritization of learning goals—focusing deeply on core physics while gaining quantitative and analytical skills from economics
+    \item Maintaining high performance in technical courses: Optics (93), Computational Physics (95), Electromagnetism (97), Quantum Mechanics I\&II (89)
+\end{itemize}
+
+This dual-degree experience has sharpened my ability to work efficiently under pressure, integrate knowledge across disciplines, and maintain focus on long-term goals despite short-term obstacles.
+
+\subsection{International Academic Adaptation: UC Berkeley Exchange (2025)}
+
+My current participation in the \textbf{Berkeley Physics International Education (BPIE) Program} represents another form of overcoming challenges:
+\begin{itemize}
+    \item Adapting to a completely English-language academic environment (supported by IELTS 7.5, TOEFL 101)
+    \item Engaging with cutting-edge condensed matter physics research at a world-leading institution
+    \item Building cross-cultural communication skills and international research networks
+    \item Demonstrating initiative by seeking out opportunities beyond my home institution
+\end{itemize}
+
+This experience has reinforced my confidence in thriving in diverse academic cultures—a crucial preparation for graduate study in Japan.
+
+\subsection{Continuous Skill Development Through Coursework}
+
+My strong performance in \textbf{Computational Physics (95/100)} reflects deliberate effort to acquire modern research skills. I taught myself Python, PyTorch, and numerical methods—skills not traditionally emphasized in Chinese physics curricula—because I recognized their importance for contemporary experimental and theoretical research. This proactive approach to skill acquisition demonstrates my independence of mind and commitment to becoming a well-rounded researcher.
+
+\section{Research Philosophy and Future Contributions}
+
+My research experiences have crystallized a clear philosophy: \textbf{the best science happens at the intersection of disciplines, where innovative techniques meet fundamental questions}. Whether designing diffractive neural networks, building optical feedback systems, or characterizing nanomaterials, I have consistently sought to:
+
+\begin{enumerate}
+    \item \textbf{Take initiative}: Identify problems independently and propose novel solutions
+    \item \textbf{Bridge theory and practice}: Combine mathematical rigor with hands-on experimental validation
+    \item \textbf{Embrace challenges}: View experimental setbacks and technical obstacles as learning opportunities
+    \item \textbf{Communicate effectively}: Share knowledge through teaching, presentations, and collaborative research
+    \item \textbf{Think long-term}: Commit to sustained effort on complex projects requiring patience and persistence
+\end{enumerate}
+
+These principles, developed through my undergraduate research and leadership experiences, will guide my contributions to graduate research in advanced spectroscopy and quantum materials physics.
+
+\section{Conclusion: Ready for the Next Challenge}
+
+My past accomplishments—from pioneering single-layer D2NNs to leading scientific outreach initiatives—demonstrate that I possess the \textbf{technical skills, independence of mind, communication abilities, and resilience} necessary for success in a rigorous graduate program. I have proven my ability to work independently on novel research problems, collaborate effectively in team environments, communicate complex ideas to diverse audiences, and persevere through experimental and academic challenges.
+
+I am excited to bring this combination of hands-on experimental expertise, computational problem-solving skills, and collaborative spirit to the University of Tokyo, where I can contribute to frontier research in ultrafast spectroscopy of quantum materials while continuing to grow as an independent scientist and effective communicator.
+
+Thank you for considering my application. I look forward to the opportunity to demonstrate these abilities in the challenging and inspiring environment of the Graduate School of Science.
+
+\vspace{0.5em}
+
+\noindent
+\textbf{Xiaoyang Zheng}\\
+Beijing Normal University (Physics Major, Class Rank 2/23, GPA 3.7/4.0)\\
+UC Berkeley Exchange Program (BPIE, Aug-Dec 2025)\\
+Email: \href{mailto:xiaoyangzheng@mail.bnu.edu.cn}{xiaoyangzheng@mail.bnu.edu.cn} $\cdot$ Phone: +86-13955190184
+
+\end{document}

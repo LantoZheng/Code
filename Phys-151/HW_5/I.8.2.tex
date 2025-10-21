@@ -1,0 +1,87 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{fontspec}
+
+\usepackage[english, bidi=basic, provide=*]{babel}
+
+\babelprovide[import, onchar=ids fonts]{english}
+
+% Set default/Latin font to Sans Serif in the main (rm) slot
+\babelfont{rm}{Noto Sans}
+
+% --- PACKAGES ---
+\usepackage{amsmath} % For advanced math environments
+\usepackage{hyperref} % For hyperlinks, should be loaded last
+
+% --- DOCUMENT METADATA ---
+\title{Solution Draft: Hamiltonian Matrix Element}
+\author{A. Zee, Chapter I.3}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\textbf{Goal:} Calculate the matrix element $\langle k'|H|k\rangle$ for the free scalar field Hamiltonian, where $|k\rangle = a^\dagger(\vec{k})|0\rangle$ is a one-particle state.
+
+\section*{Setup and Definitions}
+
+\begin{enumerate}
+    \item \textbf{States:} The one-particle states are defined by the action of the creation operator on the vacuum:
+    \begin{align*}
+        |k\rangle &= a^\dagger(\vec{k})|0\rangle \\
+        \langle k'| &= \langle 0|a(\vec{k}')
+    \end{align*}
+
+    \item \textbf{Hamiltonian:} The normal-ordered Hamiltonian for a free scalar field is:
+    \[ H = \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p})a(\vec{p}) \]
+    This form uses the Lorentz-invariant measure.
+
+    \item \textbf{Commutation Relation:} We use the commutation relation consistent with the field expansion in (11):
+    \[ [a(\vec{p}), a^\dagger(\vec{k})] = (2\pi)^D 2\omega_k \delta^D(\vec{p}-\vec{k}) \]
+\end{enumerate}
+
+\section*{Calculation}
+
+The most direct approach is to first determine the action of the Hamiltonian on a one-particle state $|k\rangle$.
+
+\begin{enumerate}
+    \item \textbf{Act $H$ on $|k\rangle$:}
+    \[ H|k\rangle = H a^\dagger(\vec{k})|0\rangle = \left[ \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p})a(\vec{p}) \right] a^\dagger(\vec{k})|0\rangle \]
+
+    \item \textbf{Commute operators:} To simplify, we move the annihilation operator $a(\vec{p})$ to the right until it can act on the vacuum. We use the commutation relation:
+    \[ a(\vec{p})a^\dagger(\vec{k}) = a^\dagger(\vec{k})a(\vec{p}) + [a(\vec{p}), a^\dagger(\vec{k})] \]
+    The term $a^\dagger(\vec{k})a(\vec{p})$ will give zero when acting on $|0\rangle$, so we only need to consider the commutator term.
+    \begin{align*}
+        H|k\rangle &= \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p}) \left( [a(\vec{p}), a^\dagger(\vec{k})] \right) |0\rangle \\
+        &= \int \frac{d^Dp}{(2\pi)^D 2\omega_p} \omega_p a^\dagger(\vec{p}) \left( (2\pi)^D 2\omega_k \delta^D(\vec{p}-\vec{k}) \right) |0\rangle
+    \end{align*}
+
+    \item \textbf{Evaluate the integral:} The Dirac delta function collapses the integral, setting $\vec{p} = \vec{k}$.
+    \[ H|k\rangle = \left( \frac{1}{2\omega_k} \omega_k a^\dagger(\vec{k}) (2\omega_k) \right) |0\rangle = \omega_k a^\dagger(\vec{k})|0\rangle \]
+    This gives the important result that $|k\rangle$ is an eigenstate of the Hamiltonian:
+    \[ H|k\rangle = \omega_k |k\rangle \]
+
+    \item \textbf{Calculate the matrix element:} Now, calculating the matrix element is straightforward.
+    \[ \langle k'|H|k\rangle = \langle k'| (\omega_k |k\rangle) = \omega_k \langle k'|k\rangle \]
+
+    \item \textbf{Calculate the inner product $\langle k'|k\rangle$:}
+    \begin{align*}
+        \langle k'|k\rangle &= \langle 0|a(\vec{k}') a^\dagger(\vec{k})|0\rangle \\
+        &= \langle 0| \left( [a(\vec{k}'), a^\dagger(\vec{k})] + a^\dagger(\vec{k})a(\vec{k}') \right) |0\rangle \\
+        &= \langle 0| [a(\vec{k}'), a^\dagger(\vec{k})] |0\rangle \quad (\text{since } a(\vec{k}')|0\rangle = 0) \\
+        &= (2\pi)^D 2\omega_k \delta^D(\vec{k}'-\vec{k})
+    \end{align*}
+
+    \item \textbf{Final Result:} Combining the previous steps gives the final answer.
+    \[ \langle k'|H|k\rangle = \omega_k (2\pi)^D 2\omega_k \delta^D(\vec{k}'-\vec{k}) \]
+    Due to the delta function, this can also be written as $\omega_{k'} (2\pi)^D 2\omega_{k'} \delta^D(\vec{k}'-\vec{k})$.
+\end{enumerate}
+
+\section*{Physical Interpretation (Draft)}
+
+The result shows that the Hamiltonian $H$ is diagonal in the basis of one-particle momentum eigenstates. This is expected for a free theory, as particles do not interact or change their momentum. The matrix element is zero unless $\vec{k}' = \vec{k}$. When they are equal, the value of the matrix element is the energy of the particle, $\omega_k$, times the normalization of the state. The fact that $|k\rangle$ is an energy eigenstate confirms that a single particle with a definite momentum is a stationary state of the system.
+
+\end{document}

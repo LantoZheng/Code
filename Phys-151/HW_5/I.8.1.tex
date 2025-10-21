@@ -1,0 +1,100 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- UNIVERSAL PREAMble BLOCK ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{fontspec}
+\usepackage[english, bidi=basic, provide=*]{babel}
+\babelprovide[import, onchar=ids fonts]{english}
+\babelfont{rm}{Noto Sans}
+
+% --- PACKAGES ---
+\usepackage{amsmath}
+\usepackage{amssymb} % For symbols like \theta
+\usepackage{hyperref}
+
+% --- DOCUMENT METADATA ---
+\title{Solution Draft: Canonical Quantization Problems}
+\author{A. Zee, Chapter I.3}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\textbf{Goal:} This draft addresses three problems related to the canonical quantization of a scalar field: (1) Deriving the Feynman propagator in position space from its momentum space form, (2) showing the Lorentz invariance of the integration measure, and (3) analyzing an alternative normalization for creation and annihilation operators.
+
+\section*{1. Derivation of the Feynman Propagator}
+\textbf{Task:} Derive (13) from the momentum-space representation of the propagator (14).
+\[ \text{(14): } D_F(x) = i \int \frac{d^{D+1}k}{(2\pi)^{D+1}} \frac{e^{-ik \cdot x}}{k^2 - m^2 + i\epsilon} \quad \longrightarrow \quad \text{(13)} \]
+
+\begin{itemize}
+    \item \textbf{Isolate the energy integral:} We perform the $k^0$ integration first using contour integration.
+    \[ I_0 = \int_{-\infty}^{\infty} \frac{dk^0}{2\pi} \frac{e^{-ik^0 t}}{(k^0)^2 - |\vec{k}|^2 - m^2 + i\epsilon} \]
+    The denominator $(k^0)^2 - \omega_k^2 + i\epsilon$ (where $\omega_k = \sqrt{|\vec{k}|^2 + m^2}$) has poles at $k^0 = \pm(\omega_k - i\epsilon')$, i.e., at $k^0 \approx \omega_k$ in the lower-half plane and $k^0 \approx -\omega_k$ in the upper-half plane.
+
+    \item \textbf{Case 1 ($t>0$):} The term $e^{-ik^0 t}$ vanishes for $\text{Im}(k^0) \to -\infty$. We close the contour in the lower-half plane (clockwise, picking up a minus sign).
+    \begin{align*}
+        I_0 &= (-2\pi i) \times \frac{1}{2\pi} \times \text{Res}\left[\frac{e^{-ik^0 t}}{(k^0-\omega_k)(k^0+\omega_k)}\right]_{k^0=\omega_k} \\
+            &= -i \left( \frac{e^{-i\omega_k t}}{2\omega_k} \right)
+    \end{align*}
+
+    \item \textbf{Case 2 ($t<0$):} The term $e^{-ik^0 t}$ vanishes for $\text{Im}(k^0) \to +\infty$. We close the contour in the upper-half plane (counter-clockwise).
+    \begin{align*}
+        I_0 &= (2\pi i) \times \frac{1}{2\pi} \times \text{Res}\left[\frac{e^{-ik^0 t}}{(k^0-\omega_k)(k^0+\omega_k)}\right]_{k^0=-\omega_k} \\
+            &= i \left( \frac{e^{i\omega_k t}}{-2\omega_k} \right)
+    \end{align*}
+
+    \item \textbf{Combine results:} Substitute $I_0$ back into the full expression for $D_F(x)$ and combine the cases using the Heaviside step function $\theta(t)$.
+    \[ D_F(x) = \int \frac{d^Dk}{(2\pi)^D 2\omega_k} \left[ \theta(t)e^{-i(\omega_k t - \vec{k}\cdot\vec{x})} + \theta(-t)e^{i(\omega_k t + \vec{k}\cdot\vec{x})} \right] \]
+    For the $t<0$ term, we perform a change of variables $\vec{k} \to -\vec{k}$. The measure $d^Dk$ and $\omega_k$ are invariant. This yields expression (13):
+    \[ D_F(x) = \int \frac{d^Dk}{(2\pi)^D 2\omega_k} \left[ \theta(t)e^{-i(\omega_k t - \vec{k}\cdot\vec{x})} + \theta(-t)e^{i(\omega_k t - \vec{k}\cdot\vec{x})} \right] \]
+\end{itemize}
+
+\section*{2. Lorentz Invariance of the Measure}
+\textbf{Task:} Show that the measure $d^Dk / (2\omega_k)$ is Lorentz invariant.
+\begin{itemize}
+    \item \textbf{Start with a known invariant:} The 4-momentum integral over the positive-energy mass shell is manifestly Lorentz invariant:
+    \[ I = \int d^{D+1}k \, \delta(k^2 - m^2) \theta(k^0) \]
+    Here, $d^{D+1}k$, the delta function argument $k^2-m^2$, and the condition $k^0 > 0$ are all Lorentz scalars.
+
+    \item \textbf{Evaluate the energy integral:} We can perform the $k^0$ integration to reduce the measure.
+    \begin{align*}
+        \delta(k^2 - m^2) = \delta((k^0)^2 - \omega_k^2) = \frac{1}{2\omega_k} \left[ \delta(k^0 - \omega_k) + \delta(k^0 + \omega_k) \right]
+    \end{align*}
+    The $\theta(k^0)$ term eliminates the pole at $k^0 = -\omega_k$.
+    \begin{align*}
+        I &= \int d^Dk \int dk^0 \, \frac{1}{2\omega_k} \delta(k^0 - \omega_k) = \int \frac{d^Dk}{2\omega_k}
+    \end{align*}
+    Since we started with a Lorentz invariant integral $I$, the resulting measure $\int d^Dk/(2\omega_k)$ must also be Lorentz invariant.
+\end{itemize}
+
+\section*{3. Alternative Operator Normalization}
+\textbf{Task:} Analyze operators defined with a $\sqrt{2\omega_k}$ normalization factor. Let's denote Zee's operators as $a_Z$ and the alternative operators as $a_O$.
+\begin{align*}
+    \phi(x) &= \int \frac{d^Dk}{(2\pi)^D 2\omega_k} [a_Z(\vec{k})e^{-ik\cdot x} + \dots] \\
+    \phi(x) &= \int \frac{d^Dk}{(2\pi)^D \sqrt{2\omega_k}} [a_O(\vec{k})e^{-ik\cdot x} + \dots]
+\end{align*}
+Equating these gives the relation: $a_O(\vec{k}) = a_Z(\vec{k}) / \sqrt{2\omega_k}$.
+
+\subsection*{3a. Lorentz Covariance}
+One-particle states $|k\rangle_Z = a_Z^\dagger(\vec{k})|0\rangle$ have a Lorentz-invariant normalization, $\langle p|k \rangle_Z \propto 2\omega_k \delta^D(\vec{p}-\vec{k})$. This implies a simple transformation law for states, $U(\Lambda)|k\rangle_Z = |\Lambda k\rangle_Z$, and for the operators:
+\[ U(\Lambda) a_Z^\dagger(\vec{k}) U(\Lambda)^\dagger = a_Z^\dagger(\Lambda\vec{k}) \]
+We use this to find the transformation for $a_O^\dagger(\vec{k}) = a_Z^\dagger(\vec{k})/\sqrt{2\omega_k}$.
+\begin{align*}
+    U(\Lambda) a_O^\dagger(\vec{k}) U(\Lambda)^\dagger &= \frac{1}{\sqrt{2\omega_k}} U(\Lambda) a_Z^\dagger(\vec{k}) U(\Lambda)^\dagger \\
+    &= \frac{1}{\sqrt{2\omega_k}} a_Z^\dagger(\Lambda\vec{k}) \\
+    &= \frac{\sqrt{2\omega_{\Lambda k}}}{\sqrt{2\omega_k}} a_O^\dagger(\Lambda\vec{k}) = \sqrt{\frac{\omega_{\Lambda k}}{\omega_k}} a_O^\dagger(\Lambda\vec{k})
+\end{align*}
+The operator $a_O$ transforms covariantly, picking up a factor related to the energy transformation.
+
+\subsection*{3b. Commutation Relation}
+The operators $a_Z$ must satisfy $[a_Z(\vec{k}), a_Z^\dagger(\vec{p})] = (2\pi)^D 2\omega_k \delta^D(\vec{k}-\vec{p})$ to give the correct canonical commutation relations for the field $\phi$. We use this to find the commutator for $a_O$.
+\begin{align*}
+    [a_O(\vec{k}), a_O^\dagger(\vec{p})] &= \left[ \frac{a_Z(\vec{k})}{\sqrt{2\omega_k}}, \frac{a_Z^\dagger(\vec{p})}{\sqrt{2\omega_p}} \right] \\
+    &= \frac{1}{\sqrt{4\omega_k \omega_p}} [a_Z(\vec{k}), a_Z^\dagger(\vec{p})] \\
+    &= \frac{1}{2\sqrt{\omega_k \omega_p}} (2\pi)^D 2\omega_k \delta^D(\vec{k}-\vec{p}) \\
+    &= (2\pi)^D \delta^D(\vec{k}-\vec{p})
+\end{align*}
+In the last step, the delta function enforces $\omega_p = \omega_k$. This is the standard "relativistically normalized" commutation relation.
+
+\end{document}

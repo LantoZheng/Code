@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Wolfram产品密码生成器</title>
+        <script>
+            'use strict';
+
+            // 翻译对象
+            var translations = {
+                'zh': {
+                    title: 'Wolfram产品密码生成器',
+                    h1: 'Wolfram产品密码生成器',
+                    step1: '从官网安装 <b>Mathematica</b> 或 <b>Wolfram Finance Platform</b> 或 <b>Wolfram|One</b> 或 <b>Wolfram|Alpha Notebook Edition</b>（在14.1+版本中，这4个产品已合并为一个名为 <b>Wolfram</b> 的产品）<br />或从官网安装 <b>Wolfram Player</b><br />或从官网安装 <b>System Modeler</b>。',
+                    step2: '在程序激活界面点击 <b>Other ways to activate</b>，然后点击 <b>Manual Activation</b> 或 <b>Activate offline through activation key and requested password</b>。',
+                    step3_intro: '输入获得的 <b>MathID</b> (nnnn-nnnnn-nnnnn)，任意 <b>Activation Key</b> (nnnn-nnnn-xxxxxx)（可以直接使用默认的Activation Key），输入 <b>哈希值</b>，对于版本 <b>14.1+</b> 的 <b>Wolfram</b> 产品（替代了Mathematica、Wolfram Finance Platform、Wolfram|One和Wolfram|Alpha Notebook Edition），必须指定 <b>许可证类型（License Type - 见下文）</b>，如需要还可以指定其他数据。<br />哈希值列表：<br />',
+                    step3_hash_note: '因此，从14.1版本开始，Mathematica和System Modeler共享哈希列表（除一个外），下一版本可能会使用完全相同的哈希列表。<br />Mathematica和System Modeler的所有哈希值也适用于相应版本的MathLM。<br />Mathematica的哈希值也可用于Wolfram Player、Wolfram Finance Platform、Wolfram|Alpha Notebook Edition、Wolfram|One、Wolfram Desktop、Wolfram Engine、WolframScript。<br />哈希列表按程序内部相反的顺序列出，因此更持久的哈希值在列表开头。<br /><br />',
+                    step3_mathlm: '要为MathLM生成密码，请勾选 <b>"We Are Everywhere!"</b> 并指定许可证类别（<b>License Class</b>）：CA或CX或CB或CC或CM（对于其他程序，不需要勾选此项且不需要指定许可证类别）。Windows、Mac OS X和某些Linux平台属于A类。服务器级平台属于B类。对于同一个Activation Key，可以为每个类别分配一个许可证。<br />A、X、B、C类密码用于Mathematica进程（MathKernel、Mathematica、Sub MathKernel、Sub Mathematica）。<br />A类密码适用于A类客户端。<br />X类密码适用于A、X类客户端。<br />B类密码适用于A、X、B类客户端。<br />C类密码适用于A、X、B、C类客户端。<br />M类密码用于System Modeler进程（Modeling Center、Simulation Center、Session Manager）。<br />因此，对于MathLM，可能只需要2个许可证：C类（用于Mathematica进程客户端）和M类（用于System Modeler进程客户端）。<br /><br />',
+                    step3_limits: 'Mathematica和System Modeler的进程和子进程数量限制（<b>Max License Processes和Subprocesses</b>）以几个正整数的形式指定，用逗号分隔，不带空格。如果留空，进程和子进程的数量将不受限制。<br />对于Mathematica，可以指定最多4个数字：第一个数字是内核进程（MathKernel）的最大数量，第二个数字是前端进程（Mathematica）的最大数量，如果只指定一个数字，第二个将被认为等于第一个，第三和第四个数字分别是内核（MathKernel）和前端（Mathematica）的最大子进程数。如果只指定2个数字，第3和第4个将被认为是第1和第2个数字的4倍。<br />对于System Modeler，可以指定最多3个数字：第一个数字是Modeling Center进程的最大数量，第二个数字是Simulation Center进程的最大数量，第三个数字是Session Manager进程的最大数量，如果不指定第二个数字，它将被认为等于第一个，如果不指定第三个数字，它将被认为等于第一个。<br />9999及以上的数字表示无限，即不受限制的数量，即Mathematica的9999,9999,9999,9999和System Modeler的9999,9999,9999将产生与空字符串相同的效果。<br /><br />',
+                    step3_license_type: '许可证类型（<b>License Type</b>）- 十六进制数（不带0x前缀）。对于14.0及更早版本，如果未指定，将是Professional许可证，对于14.1+版本，需要指定包含加数100000或200000或400000或800000或20或40的值（见下文）。值具有数字的单独位，因此可以通过添加单独的十六进制加数来获得许可证类型：<br />1 - 似乎没有任何意义，<br />2 - Trial（还需要设置License Expiration Date），<br />4 - Student，<br />8 - 似乎没有任何意义，<br />10 - Player（带有此类许可证的Mathematica 13将像Wolfram Player一样），<br />20 - Player（许可证可用于Wolfram Player，带有此类许可证的Mathematica和Wolfram 14.1+也将像Wolfram Player一样），<br />40 - Player Pro（许可证可用于Wolfram Player - 它将变成Wolfram Player Pro，带有此类许可证的Mathematica和Wolfram 14.1+将像Wolfram Player Pro一样），<br />800 - Home（Home Edition），<br />1000 - Enterprise（带有此类许可证的Mathematica 13在"About"和"Welcome Screen"窗口中写入"Enterprise Edition"，但实际上似乎不像Enterprise一样工作），<br />2000 - Enterprise（带有此类许可证的Mathematica和Wolfram 14.1+在选择"Preview for Wolfram Player"菜单项时，会打开带有"WOLFRAM Player Pro"和"Enterprise CDF Preview"的预览，还允许以EnterpriseCDF格式写入CDF文件（CDFDeploy默认使用"Target" -> "PlayerPro"选项，要写入FreeCDF需要明确指定"Target"->"CDFPlayer"）），<br />80000 - 此类许可证类型用于免费的Wolfram Engine（前端Mathematica的限制为零），可能实际上没有任何意义，<br />100000 - 用于Wolfram|Alpha Notebook Edition 14.1+。<br />200000 - 用于Wolfram|One 14.1+。<br />400000 - 用于Wolfram Finance Platform 14.1+。<br />800000 - 用于Wolfram Mathematica 14.1+。<br />因此，对于Mathematica许可证和MathLM的Mathematica许可证（即A、X、B、C类许可证），最好的许可证类型是803000（对于14.1以下的版本 - 3000就足够了），对于Wolfram Player - 40（如果既没有20也没有40，Player不会接受许可证），对于System Modeler - 将"License Type"留空，但也可以指定与Mathematica相同的许可证类型（803000）- 这似乎不会造成伤害<br /><br />',
+                    step3_expiration: '试用到期日期（<b>License Expiration Date</b>）以YYYYMMDD格式的数字指定。如果未指定，许可证将是无限期的。<br /><br />',
+                    step3_string: '除了所有参数（除了哈希）之外，您可以指定 <b>密码生成字符串</b>（如果字符串不为空，则除哈希外的所有参数都将被忽略）：<br />- 对于MathLM格式：<br />',
+                    step3_string_mathlm: '- 对于Mathematica、Wolfram Player和System Modeler格式：<br />',
+                    step3_string_note: '可以不指定不需要的参数及其前面的相应符号。<br /><br />MathID=1234-12345-12345和Activation Key=3893-9258-K6XJLE的示例：<br /><br />',
+                    step3_example1: '- 对于Mathematica Enterprise，许可证类型803000：<br />字符串：1234-12345-12345$803000&3893-9258-K6XJLE<br />使用哈希0xD1CF（版本14.1+），密码将是：<br />9368-487-266::803000<br /><br />',
+                    step3_example2: '- 对于Wolfram Finance Platform Enterprise，许可证类型403000：<br />字符串：1234-12345-12345$403000&3893-9258-K6XJLE<br />使用哈希0xD1CF（版本14.1+），密码将是：<br />2658-485-561::403000<br /><br />',
+                    step3_example3: '- 对于Wolfram|One Enterprise，许可证类型203000：<br />字符串：1234-12345-12345$203000&3893-9258-K6XJLE<br />使用哈希0xD1CF（版本14.1+），密码将是：<br />9658-398-102::203000<br /><br />',
+                    step3_example4: '- 对于Wolfram|Alpha Notebook Edition Enterprise，许可证类型103000：<br />字符串：1234-12345-12345$103000&3893-9258-K6XJLE<br />使用哈希0xD1CF（版本14.1+），密码将是：<br />6068-933-417::103000<br /><br />',
+                    step3_example5: '- 对于Wolfram Player Pro，许可证类型40：<br />字符串：1234-12345-12345$40&3893-9258-K6XJLE<br />使用哈希0xD1CF（版本14.1+），密码将是：<br />7095-360-541::40<br /><br />',
+                    step3_example6: '- 对于System Modeler：<br />字符串：1234-12345-12345&3893-9258-K6XJLE<br />使用哈希0xD1CF（版本14.1+），密码将是：<br />0915-289-754<br /><br />',
+                    step3_example7: '- 对于MathLM的Mathematica Enterprise，许可证类型803000，许可证类别C：<br />字符串：We Are Everywhere!1234-12345-12345*CC$803000&3893-9258-K6XJLE<br />使用哈希0x72A4（版本10.0 – 14.1+），密码将是：<br />4199-578-457::803000::CC<br /><br />',
+                    step3_example8: '- 对于MathLM的System Modeler，许可证类别M：<br />字符串：We Are Everywhere!1234-12345-12345*CM&3893-9258-K6XJLE<br />使用哈希0x72A4（版本10.0 – 14.1+），密码将是：<br />9235-965-858::::CM<br /><br />',
+                    step4: '点击 <b>生成密码</b>。',
+                    step5: '在产品激活窗口中输入您的 <b>Activation Key</b> 和生成的 <b>Password</b> 以激活产品。',
+                    step6: '忽略 <b>Register</b> 请求。',
+                    legend: '生成器',
+                    hashFor: '用于',
+                    and: '和',
+                    quickGuideTitle: '快速开始指南',
+                    quickGuideStep1: '输入您的 MathID（从软件激活界面获取）',
+                    quickGuideStep2: '选择或输入哈希值（根据您的软件版本）',
+                    quickGuideStep3: '点击生成密码按钮',
+                    instructionsTitle: '详细说明',
+                    commonHashesTitle: '常用哈希值快速选择',
+                    mathematicaLatest: 'Mathematica 最新版 (14.1+)',
+                    systemModelerLatest: 'System Modeler 最新版 (14.1+)',
+                    mathlmCommon: 'MathLM 通用 (10.0-14.1+)',
+                    mathematicaOlder: 'Mathematica 旧版 (12.0-14.1)',
+                    examplesTitle: '示例数据',
+                    fillExample: '填充示例',
+                    clearForm: '清空表单',
+                    requiredField: '必填',
+                    optionalField: '可选',
+                    weAreEverywhere: '"We Are Everywhere!": ',
+                    weAreEverywhereTitle: '如果许可证用于MathLM，请勾选此框',
+                    mathID: 'MachineID (MathID): ',
+                    mathIDTitle: '格式为nnnn-nnnnn-nnnnn，其中n为数字',
+                    activationKey: '激活密钥 (Activation Key): ',
+                    activationKeyTitle: '格式为nnnn-nnnn-xxxxxx，其中n为数字，x为数字或大写拉丁字母',
+                    maxProcesses: '最大进程和子进程数 (Max License Processes和Subprocesses): ',
+                    maxProcessesTitle: '1到4个数字，从0到9999，用逗号分隔或空字符串',
+                    licenseType: '许可证类型 (License Type): ',
+                    licenseTypeTitle: '1到8位的十六进制数或空字符串',
+                    expirationDate: 'License Expiration Date: ',
+                    expirationDateTitle: '格式为YYYYMMDD的日期或空字符串',
+                    licenseClass: '许可证类别 (License Class): ',
+                    licenseClassTitle: 'CA或CX或CB或CC或CM（用于MathLM许可证）或空字符串',
+                    keyValStr: '密码生成字符串: ',
+                    keyValStrTitle: '密码生成字符串',
+                    salt: '哈希值: ',
+                    saltTitle: '0到65535之间的数字，十进制或十六进制格式（0x0000 - 0xFFFF）',
+                    generateButton: '生成密码',
+                    alertMathID: '请指定Machine ID (Math ID)或密码生成字符串',
+                    alertWeAreEverywhere1: '取消勾选"We Are Everywhere!"或指定许可证类别或指定密码生成字符串',
+                    alertWeAreEverywhere2: '勾选"We Are Everywhere!"或清空许可证类别字段或指定密码生成字符串',
+                    passwordFor: 'Password for string'
+                },
+                'en': {
+                    title: 'Wolfram Products Password Generator',
+                    h1: 'Wolfram Products Password Generator',
+                    step1: 'Install <b>Mathematica</b> or <b>Wolfram Finance Platform</b> or <b>Wolfram|One</b> or <b>Wolfram|Alpha Notebook Edition</b> (in version 14.1+ all these 4 products are replaced by one called <b>Wolfram</b>) from the official website<br />or install <b>Wolfram Player</b> from the official website<br />or install <b>System Modeler</b> from the official website.',
+                    step2: 'On the program activation screen, click the <b>Other ways to activate</b> button, then <b>Manual Activation</b> or <b>Activate offline through activation key and requested password</b>.',
+                    step3_intro: 'Enter the obtained <b>MathID</b> (nnnn-nnnnn-nnnnn), any <b>Activation Key</b> (nnnn-nnnn-xxxxxx) below (it is enough to just leave the default Activation Key), enter the <b>hash</b>, and for version <b>14.1+</b> of the product called <b>Wolfram</b> (which replaces Mathematica, Wolfram Finance Platform, Wolfram|One and Wolfram|Alpha Notebook Edition simultaneously) you must specify the <b>license type (License Type - see below)</b> and, if necessary, other data.<br />List of hashes:<br />',
+                    step3_hash_note: 'Thus, starting from version 14.1, Mathematica and System Modeler share a hash list, except for one, and from the next version they will probably have the same hash lists.<br />All hashes from Mathematica and System Modeler are also suitable for the corresponding versions of MathLM.<br />Hashes from Mathematica are also used for Wolfram Player, Wolfram Finance Platform, Wolfram|Alpha Notebook Edition, Wolfram|One, Wolfram Desktop, Wolfram Engine, WolframScript.<br />Hash lists are given in reverse order to that hardcoded in the programs, so more durable hashes are given here at the beginning of the lists.<br /><br />',
+                    step3_mathlm: 'To generate a password for MathLM, check the <b>"We Are Everywhere!"</b> box and specify the license class (<b>License Class</b>): CA or CX or CB or CC or CM (for other programs, this box should not be checked and the license class should not be specified). Windows, Mac OS X and some Linux platforms belong to class A. Server-class platforms belong to class B. For the same Activation Key, one license of each class can be assigned.<br />Class A, X, B, C passwords are intended for Mathematica processes (MathKernel, Mathematica, Sub MathKernel, Sub Mathematica).<br />Class A passwords are valid for class A clients.<br />Class X passwords are valid for classes A, X clients.<br />Class B passwords are valid for classes A, X, B clients.<br />Class C passwords are valid for classes A, X, B, C clients.<br />Class M passwords are intended for System Modeler processes (Modeling Center, Simulation Center, Session Manager).<br />Therefore, for MathLM, 2 licenses are probably enough: class C (for Mathematica process clients) and class M (for System Modeler process clients).<br /><br />',
+                    step3_limits: 'Limits for the number of Mathematica and System Modeler processes and subprocesses (<b>Max License Processes and Subprocesses</b>) are specified as several positive integers listed separated by commas without spaces. If left blank, the number of processes and subprocesses will be unlimited.<br />For Mathematica, up to 4 numbers can be specified: the first number is the maximum number of kernel processes (i.e. control processes) (MathKernel), the second number is the maximum number of Front End processes (Mathematica), if only one number is specified, the second will be considered equal to the first, the third and fourth numbers are the maximum number of subprocesses (i.e. computational processes) for the kernel (MathKernel) and Front End (Mathematica) respectively. If only 2 numbers are specified, the 3rd and 4th will be considered 4 times larger than the 1st and 2nd numbers respectively.<br />For System Modeler, up to 3 numbers can be specified: the first number is the maximum number of Modeling Center processes, the second number is the maximum number of Simulation Center processes, the third number is the maximum number of Session Manager processes, if the second number is not specified, it will be considered equal to the first, if the third number is not specified, it will be considered equal to the first.<br />Numbers 9999 and above mean infinity, i.e. unlimited number, i.e. 9999,9999,9999,9999 for Mathematica and 9999,9999,9999 for System Modeler will give the same effect as an empty string.<br /><br />',
+                    step3_license_type: 'License type (<b>License Type</b>) - hexadecimal number (without 0x prefix). For versions 14.0 and earlier, if not specified, it will be a Professional license, for versions 14.1+ you need to specify a value that includes the addend 100000 or 200000 or 400000 or 800000 or 20 or 40 (see below). Values have individual bits of the number, so the license type can be obtained by adding individual hexadecimal addends:<br />1 - seems to mean nothing,<br />2 - Trial (you also need to set License Expiration Date),<br />4 - Student,<br />8 - seems to mean nothing,<br />10 - Player (Mathematica 13 with such a license will be like Wolfram Player)<br />20 - Player (the license can be used for Wolfram Player, Mathematica and Wolfram 14.1+ with such a license will also be like Wolfram Player)<br />40 - Player Pro (the license can be used for Wolfram Player - it will turn into Wolfram Player Pro, Mathematica and Wolfram 14.1+ with such a license will be like Wolfram Player Pro)<br />800 - Home (Home Edition)<br />1000 - Enterprise (Mathematica 13 with such a license writes in the "About" and "Welcome Screen" windows that it is "Enterprise Edition", but it does not really seem to work like Enterprise)<br />2000 - Enterprise (Mathematica and Wolfram 14.1+ with such a license when selecting the "Preview for Wolfram Player" menu item opens Preview with "WOLFRAM Player Pro" and "Enterprise CDF Preview", and also allows writing CDF files in EnterpriseCDF format (CDFDeploy with the "Target" -> "PlayerPro" option by default, to write FreeCDF you will need to explicitly specify "Target"->"CDFPlayer"))<br />80000 - this license type is issued for the free Wolfram Engine (with zero limit for Front End Mathematica), possibly, it actually means nothing<br />100000 - for Wolfram|Alpha Notebook Edition 14.1+.<br />200000 - for Wolfram|One 14.1+.<br />400000 - for Wolfram Finance Platform 14.1+.<br />800000 - for Wolfram Mathematica 14.1+.<br />Thus, for a Mathematica license and a license for MathLM for Mathematica (i.e. licenses of classes A, X, B, C), the best license type will be 803000 (for versions less than 14.1 - 3000 is enough), for Wolfram Player - 40 (if there is neither 20 nor 40, Player will not accept the license), for System Modeler - leave the "License Type" string empty, but you can also specify the same license type as for Mathematica (803000) - this does not seem to hurt<br /><br />',
+                    step3_expiration: 'Trial expiration date (<b>License Expiration Date</b>) is specified as a number in YYYYMMDD format. If not specified, the license will be unlimited in time.<br /><br />',
+                    step3_string: 'Instead of all parameters (except the hash), you can specify a <b>password generation string</b> (if the string is not empty, all parameters except the hash are ignored):<br />- for MathLM in the format:<br />',
+                    step3_string_mathlm: '- for Mathematica, Wolfram Player and System Modeler in the format:<br />',
+                    step3_string_note: 'Unnecessary parameters along with the corresponding symbol before them can be omitted.<br /><br />Examples for MathID=1234-12345-12345 and Activation Key=3893-9258-K6XJLE:<br /><br />',
+                    step3_example1: '- for Mathematica Enterprise, license type 803000:<br />string: 1234-12345-12345$803000&3893-9258-K6XJLE<br />With hash 0xD1CF (versions 14.1+) the password will be:<br />9368-487-266::803000<br /><br />',
+                    step3_example2: '- for Wolfram Finance Platform Enterprise, license type 403000:<br />string: 1234-12345-12345$403000&3893-9258-K6XJLE<br />With hash 0xD1CF (versions 14.1+) the password will be:<br />2658-485-561::403000<br /><br />',
+                    step3_example3: '- for Wolfram|One Enterprise, license type 203000:<br />string: 1234-12345-12345$203000&3893-9258-K6XJLE<br />With hash 0xD1CF (versions 14.1+) the password will be:<br />9658-398-102::203000<br /><br />',
+                    step3_example4: '- for Wolfram|Alpha Notebook Edition Enterprise, license type 103000:<br />string: 1234-12345-12345$103000&3893-9258-K6XJLE<br />With hash 0xD1CF (versions 14.1+) the password will be:<br />6068-933-417::103000<br /><br />',
+                    step3_example5: '- for Wolfram Player Pro, license type 40:<br />string: 1234-12345-12345$40&3893-9258-K6XJLE<br />With hash 0xD1CF (versions 14.1+) the password will be:<br />7095-360-541::40<br /><br />',
+                    step3_example6: '- for System Modeler:<br />string: 1234-12345-12345&3893-9258-K6XJLE<br />With hash 0xD1CF (versions 14.1+) the password will be:<br />0915-289-754<br /><br />',
+                    step3_example7: '- for MathLM for Mathematica Enterprise, license type 803000, license class C:<br />string: We Are Everywhere!1234-12345-12345*CC$803000&3893-9258-K6XJLE<br />With hash 0x72A4 (versions 10.0 – 14.1+) the password will be:<br />4199-578-457::803000::CC<br /><br />',
+                    step3_example8: '- for MathLM for System Modeler, license class M:<br />string: We Are Everywhere!1234-12345-12345*CM&3893-9258-K6XJLE<br />With hash 0x72A4 (versions 10.0 – 14.1+) the password will be:<br />9235-965-858::::CM<br /><br />',
+                    step4: 'Click <b>Generate Password</b>.',
+                    step5: 'In the product activation window, enter your <b>Activation Key</b> and the generated <b>Password</b> to activate the product.',
+                    step6: 'Ignore the <b>Register</b> request.',
+                    legend: 'Generator',
+                    hashFor: 'for',
+                    and: 'and',
+                    quickGuideTitle: 'Quick Start Guide',
+                    quickGuideStep1: 'Enter your MathID (from software activation screen)',
+                    quickGuideStep2: 'Select or enter hash (based on your software version)',
+                    quickGuideStep3: 'Click Generate Password button',
+                    instructionsTitle: 'Detailed Instructions',
+                    commonHashesTitle: 'Common Hashes Quick Select',
+                    mathematicaLatest: 'Mathematica Latest (14.1+)',
+                    systemModelerLatest: 'System Modeler Latest (14.1+)',
+                    mathlmCommon: 'MathLM Common (10.0-14.1+)',
+                    mathematicaOlder: 'Mathematica Older (12.0-14.1)',
+                    examplesTitle: 'Example Data',
+                    fillExample: 'Fill Example',
+                    clearForm: 'Clear Form',
+                    requiredField: 'Required',
+                    optionalField: 'Optional',
+                    weAreEverywhere: '"We Are Everywhere!": ',
+                    weAreEverywhereTitle: 'Check the box if the license is for MathLM',
+                    mathID: 'MachineID (MathID): ',
+                    mathIDTitle: 'In the format nnnn-nnnnn-nnnnn, where n is a digit',
+                    activationKey: 'Activation Key: ',
+                    activationKeyTitle: 'In the format nnnn-nnnn-xxxxxx, where n is a digit and x is a digit or uppercase Latin letter',
+                    maxProcesses: 'Max License Processes and Subprocesses: ',
+                    maxProcessesTitle: '1 to 4 numbers from 0 to 9999, separated by commas or empty string',
+                    licenseType: 'License Type: ',
+                    licenseTypeTitle: 'Hexadecimal number from 1 to 8 digits or empty string',
+                    expirationDate: 'License Expiration Date: ',
+                    expirationDateTitle: 'Date in YYYYMMDD format or empty string',
+                    licenseClass: 'License Class: ',
+                    licenseClassTitle: 'CA or CX or CB or CC or CM (for MathLM licenses) or empty string',
+                    keyValStr: 'Password generation string: ',
+                    keyValStrTitle: 'Password generation string',
+                    salt: 'Hash: ',
+                    saltTitle: 'Number from 0 to 65535 in decimal or hexadecimal format (0x0000 - 0xFFFF)',
+                    generateButton: 'Generate Password',
+                    alertMathID: 'Specify Machine ID (Math ID) or password generation string',
+                    alertWeAreEverywhere1: 'Uncheck "We Are Everywhere!" or specify license class or specify password generation string',
+                    alertWeAreEverywhere2: 'Check "We Are Everywhere!" or clear the license class field or specify password generation string',
+                    passwordFor: 'Password for string'
+                },
+                'ja': {
+                    title: 'Wolfram製品パスワードジェネレーター',
+                    h1: 'Wolfram製品パスワードジェネレーター',
+                    step1: '公式サイトから<b>Mathematica</b>または<b>Wolfram Finance Platform</b>または<b>Wolfram|One</b>または<b>Wolfram|Alpha Notebook Edition</b>をインストールします（バージョン14.1+では、これら4つの製品は<b>Wolfram</b>という1つの製品に統合されました）<br />または公式サイトから<b>Wolfram Player</b>をインストールします<br />または公式サイトから<b>System Modeler</b>をインストールします。',
+                    step2: 'プログラムのアクティベーション画面で<b>Other ways to activate</b>ボタンをクリックし、次に<b>Manual Activation</b>または<b>Activate offline through activation key and requested password</b>をクリックします。',
+                    step3_intro: '取得した<b>MathID</b>（nnnn-nnnnn-nnnnn）、任意の<b>Activation Key</b>（nnnn-nnnn-xxxxxx）を以下に入力します（デフォルトのActivation Keyをそのまま使用するだけで十分です）、<b>ハッシュ</b>を入力し、<b>Wolfram</b>という製品のバージョン<b>14.1+</b>（Mathematica、Wolfram Finance Platform、Wolfram|One、Wolfram|Alpha Notebook Editionを同時に置き換えます）の場合、<b>ライセンスタイプ（License Type - 以下を参照）</b>を指定する必要があり、必要に応じて他のデータも指定します。<br />ハッシュリスト：<br />',
+                    step3_hash_note: 'したがって、バージョン14.1から、MathematicaとSystem Modelerは1つを除いてハッシュリストを共有し、次のバージョンからはおそらく同じハッシュリストになります。<br />MathematicaとSystem Modelerのすべてのハッシュは、対応するバージョンのMathLMにも適しています。<br />Mathematicaのハッシュは、Wolfram Player、Wolfram Finance Platform、Wolfram|Alpha Notebook Edition、Wolfram|One、Wolfram Desktop、Wolfram Engine、WolframScriptにも使用されます。<br />ハッシュリストは、プログラムにハードコードされている順序とは逆の順序で示されているため、より耐久性のあるハッシュはリストの先頭に示されています。<br /><br />',
+                    step3_mathlm: 'MathLMのパスワードを生成するには、<b>「We Are Everywhere!」</b>チェックボックスをオンにし、ライセンスクラス（<b>License Class</b>）を指定します：CAまたはCXまたはCBまたはCCまたはCM（他のプログラムの場合、このチェックボックスをオンにする必要はなく、ライセンスクラスを指定する必要もありません）。Windows、Mac OS X、および一部のLinuxプラットフォームはクラスAに属します。サーバークラスのプラットフォームはクラスBに属します。同じActivation Keyに対して、各クラスのライセンスを1つずつ割り当てることができます。<br />クラスA、X、B、Cのパスワードは、Mathematicaプロセス（MathKernel、Mathematica、Sub MathKernel、Sub Mathematica）を対象としています。<br />クラスAのパスワードは、クラスAクライアントに有効です。<br />クラスXのパスワードは、クラスA、Xクライアントに有効です。<br />クラスBのパスワードは、クラスA、X、Bクライアントに有効です。<br />クラスCのパスワードは、クラスA、X、B、Cクライアントに有効です。<br />クラスMのパスワードは、System Modelerプロセス（Modeling Center、Simulation Center、Session Manager）を対象としています。<br />したがって、MathLMの場合、おそらく2つのライセンスで十分です：クラスC（Mathematicaプロセスクライアント用）とクラスM（System Modelerプロセスクライアント用）。<br /><br />',
+                    step3_limits: 'MathematicaとSystem Modelerのプロセスとサブプロセスの数の制限（<b>Max License ProcessesとSubprocesses</b>）は、スペースなしでカンマで区切られた複数の正の整数として指定されます。空白のままにすると、プロセスとサブプロセスの数は無制限になります。<br />Mathematicaの場合、最大4つの数値を指定できます。最初の数値はカーネルプロセス（つまり制御プロセス）（MathKernel）の最大数、2番目の数値はFront Endプロセス（Mathematica）の最大数で、1つの数値のみを指定した場合、2番目は最初と等しいと見なされ、3番目と4番目の数値は、カーネル（MathKernel）とFront End（Mathematica）のそれぞれの最大サブプロセス数（つまり計算プロセス）です。2つの数値のみを指定した場合、3番目と4番目はそれぞれ1番目と2番目の数値の4倍と見なされます。<br />System Modelerの場合、最大3つの数値を指定できます。最初の数値はModeling Centerプロセスの最大数、2番目の数値はSimulation Centerプロセスの最大数、3番目の数値はSession Managerプロセスの最大数で、2番目の数値を指定しない場合は最初と等しいと見なされ、3番目の数値を指定しない場合は最初と等しいと見なされます。<br />9999以上の数値は無限を意味します。つまり無制限の数を意味し、Mathematicaの場合は9999,9999,9999,9999、System Modelerの場合は9999,9999,9999は空の文字列と同じ効果を与えます。<br /><br />',
+                    step3_license_type: 'ライセンスタイプ（<b>License Type</b>） - 16進数（0xプレフィックスなし）。バージョン14.0以前の場合、指定しない場合はProfessionalライセンスになり、バージョン14.1+の場合は、加数100000または200000または400000または800000または20または40を含む値を指定する必要があります（以下を参照）。値には数値の個別のビットがあるため、個別の16進加数を追加することでライセンスタイプを取得できます：<br />1 - 何も意味しないようです、<br />2 - Trial（License Expiration Dateも設定する必要があります）、<br />4 - Student、<br />8 - 何も意味しないようです、<br />10 - Player（このようなライセンスを持つMathematica 13はWolfram Playerのようになります）<br />20 - Player（ライセンスはWolfram Playerに使用でき、このようなライセンスを持つMathematicaとWolfram 14.1+もWolfram Playerのようになります）<br />40 - Player Pro（ライセンスはWolfram Playerに使用でき、Wolfram Player Proになります。このようなライセンスを持つMathematicaとWolfram 14.1+はWolfram Player Proのようになります）<br />800 - Home（Home Edition）<br />1000 - Enterprise（このようなライセンスを持つMathematica 13は「About」および「Welcome Screen」ウィンドウに「Enterprise Edition」と書かれますが、実際にはEnterpriseのように動作しないようです）<br />2000 - Enterprise（このようなライセンスを持つMathematicaとWolfram 14.1+は、「Preview for Wolfram Player」メニュー項目を選択すると、「WOLFRAM Player Pro」と「Enterprise CDF Preview」を含むプレビューを開き、EnterpriseCDF形式でCDFファイルを書き込むこともできます（デフォルトで「Target」 -> 「PlayerPro」オプションを使用したCDFDeploy、FreeCDFを書き込むには「Target」->「CDFPlayer」を明示的に指定する必要があります））<br />80000 - このライセンスタイプは無料のWolfram Engine用に発行されます（Front End Mathematicaのゼロ制限付き）、おそらく実際には何も意味しません<br />100000 - Wolfram|Alpha Notebook Edition 14.1+用。<br />200000 - Wolfram|One 14.1+用。<br />400000 - Wolfram Finance Platform 14.1+用。<br />800000 - Wolfram Mathematica 14.1+用。<br />したがって、MathematicaライセンスおよびMathLM用のMathematicaライセンス（つまりクラスA、X、B、Cのライセンス）の場合、最良のライセンスタイプは803000です（14.1未満のバージョンの場合 - 3000で十分です）、Wolfram Playerの場合 - 40（20も40もない場合、Playerはライセンスを受け入れません）、System Modelerの場合 - 「License Type」文字列を空のままにしますが、Mathematicaと同じライセンスタイプ（803000）を指定することもできます - これは害にならないようです<br /><br />',
+                    step3_expiration: 'トライアル期限（<b>License Expiration Date</b>）は、YYYYMMDD形式の数値として指定されます。指定しない場合、ライセンスは時間的に無制限になります。<br /><br />',
+                    step3_string: 'すべてのパラメータ（ハッシュを除く）の代わりに、<b>パスワード生成文字列</b>を指定できます（文字列が空でない場合、ハッシュを除くすべてのパラメータは無視されます）：<br />- MathLMの形式：<br />',
+                    step3_string_mathlm: '- Mathematica、Wolfram Player、System Modelerの形式：<br />',
+                    step3_string_note: '不要なパラメータとその前の対応する記号は省略できます。<br /><br />MathID=1234-12345-12345およびActivation Key=3893-9258-K6XJLEの例：<br /><br />',
+                    step3_example1: '- Mathematica Enterprise用、ライセンスタイプ803000：<br />文字列：1234-12345-12345$803000&3893-9258-K6XJLE<br />ハッシュ0xD1CF（バージョン14.1+）では、パスワードは次のようになります：<br />9368-487-266::803000<br /><br />',
+                    step3_example2: '- Wolfram Finance Platform Enterprise用、ライセンスタイプ403000：<br />文字列：1234-12345-12345$403000&3893-9258-K6XJLE<br />ハッシュ0xD1CF（バージョン14.1+）では、パスワードは次のようになります：<br />2658-485-561::403000<br /><br />',
+                    step3_example3: '- Wolfram|One Enterprise用、ライセンスタイプ203000：<br />文字列：1234-12345-12345$203000&3893-9258-K6XJLE<br />ハッシュ0xD1CF（バージョン14.1+）では、パスワードは次のようになります：<br />9658-398-102::203000<br /><br />',
+                    step3_example4: '- Wolfram|Alpha Notebook Edition Enterprise用、ライセンスタイプ103000：<br />文字列：1234-12345-12345$103000&3893-9258-K6XJLE<br />ハッシュ0xD1CF（バージョン14.1+）では、パスワードは次のようになります：<br />6068-933-417::103000<br /><br />',
+                    step3_example5: '- Wolfram Player Pro用、ライセンスタイプ40：<br />文字列：1234-12345-12345$40&3893-9258-K6XJLE<br />ハッシュ0xD1CF（バージョン14.1+）では、パスワードは次のようになります：<br />7095-360-541::40<br /><br />',
+                    step3_example6: '- System Modeler用：<br />文字列：1234-12345-12345&3893-9258-K6XJLE<br />ハッシュ0xD1CF（バージョン14.1+）では、パスワードは次のようになります：<br />0915-289-754<br /><br />',
+                    step3_example7: '- MathLM用Mathematica Enterprise、ライセンスタイプ803000、ライセンスクラスC：<br />文字列：We Are Everywhere!1234-12345-12345*CC$803000&3893-9258-K6XJLE<br />ハッシュ0x72A4（バージョン10.0 – 14.1+）では、パスワードは次のようになります：<br />4199-578-457::803000::CC<br /><br />',
+                    step3_example8: '- MathLM用System Modeler、ライセンスクラスM：<br />文字列：We Are Everywhere!1234-12345-12345*CM&3893-9258-K6XJLE<br />ハッシュ0x72A4（バージョン10.0 – 14.1+）では、パスワードは次のようになります：<br />9235-965-858::::CM<br /><br />',
+                    step4: '<b>パスワード生成</b>をクリックします。',
+                    step5: '製品のアクティベーションウィンドウで、<b>Activation Key</b>と生成された<b>Password</b>を入力して製品をアクティベートします。',
+                    step6: '<b>Register</b>リクエストを無視します。',
+                    legend: 'ジェネレーター',
+                    hashFor: '用',
+                    and: 'と',
+                    quickGuideTitle: 'クイックスタートガイド',
+                    quickGuideStep1: 'MathIDを入力（ソフトウェアアクティベーション画面から取得）',
+                    quickGuideStep2: 'ハッシュを選択または入力（ソフトウェアバージョンに基づく）',
+                    quickGuideStep3: 'パスワード生成ボタンをクリック',
+                    instructionsTitle: '詳細な説明',
+                    commonHashesTitle: 'よく使用されるハッシュ クイック選択',
+                    mathematicaLatest: 'Mathematica 最新版 (14.1+)',
+                    systemModelerLatest: 'System Modeler 最新版 (14.1+)',
+                    mathlmCommon: 'MathLM 共通 (10.0-14.1+)',
+                    mathematicaOlder: 'Mathematica 旧版 (12.0-14.1)',
+                    examplesTitle: 'サンプルデータ',
+                    fillExample: 'サンプル入力',
+                    clearForm: 'フォームをクリア',
+                    requiredField: '必須',
+                    optionalField: '任意',
+                    weAreEverywhere: '"We Are Everywhere!": ',
+                    weAreEverywhereTitle: 'ライセンスがMathLM用の場合はチェックボックスをオンにします',
+                    mathID: 'MachineID (MathID): ',
+                    mathIDTitle: 'nnnn-nnnnn-nnnnn形式、nは数字',
+                    activationKey: 'アクティベーションキー (Activation Key): ',
+                    activationKeyTitle: 'nnnn-nnnn-xxxxxx形式、nは数字、xは数字または大文字のラテン文字',
+                    maxProcesses: '最大プロセスおよびサブプロセス数 (Max License ProcessesとSubprocesses): ',
+                    maxProcessesTitle: '0から9999までの1から4つの数字、カンマ区切りまたは空の文字列',
+                    licenseType: 'ライセンスタイプ (License Type): ',
+                    licenseTypeTitle: '1から8桁の16進数または空の文字列',
+                    expirationDate: 'License Expiration Date: ',
+                    expirationDateTitle: 'YYYYMMDD形式の日付または空の文字列',
+                    licenseClass: 'ライセンスクラス (License Class): ',
+                    licenseClassTitle: 'CAまたはCXまたはCBまたはCCまたはCM（MathLMライセンス用）または空の文字列',
+                    keyValStr: 'パスワード生成文字列: ',
+                    keyValStrTitle: 'パスワード生成文字列',
+                    salt: 'ハッシュ: ',
+                    saltTitle: '0から65535までの数値、10進数または16進数形式（0x0000 - 0xFFFF）',
+                    generateButton: 'パスワード生成',
+                    alertMathID: 'Machine ID (Math ID)またはパスワード生成文字列を指定してください',
+                    alertWeAreEverywhere1: '「We Are Everywhere!」のチェックを外すか、ライセンスクラスを指定するか、パスワード生成文字列を指定してください',
+                    alertWeAreEverywhere2: '「We Are Everywhere!」をチェックするか、ライセンスクラスフィールドをクリアするか、パスワード生成文字列を指定してください',
+                    passwordFor: '文字列のパスワード'
+                }
+            };
+
+            var currentLang = 'zh';
+
+            function setLanguage(lang) {
+                currentLang = lang;
+                var t = translations[lang];
+                document.documentElement.lang = lang === 'zh' ? 'zh-CN' : (lang === 'ja' ? 'ja' : 'en');
+                document.title = t.title;
+                updateContent();
+            }
+
+            function updateContent() {
+                var t = translations[currentLang];
+                // 这个函数将在DOM加载后被调用
+            }
+
+            var defaultActivationKey = '3893-9258-K6XJLE';
+
+            function genKeyValStr(mathID, activationKey=defaultActivationKey, maxLicenseProcessesSubprocesses="", licenseType="", licenseExpirationDate="", licenseClass="") {
+                var keyValStr = "";
+                if (typeof mathID !== "undefined" && mathID.length != 0)
+                {
+                    keyValStr = mathID;
+                    if (typeof licenseExpirationDate           !== "undefined" && licenseExpirationDate          .length != 0) {keyValStr += "@" + licenseExpirationDate          };
+                    if (typeof maxLicenseProcessesSubprocesses !== "undefined" && maxLicenseProcessesSubprocesses.length != 0) {keyValStr += ":" + maxLicenseProcessesSubprocesses};
+                    if (typeof licenseClass                    !== "undefined" && licenseClass                   .length != 0) {keyValStr += "*" + licenseClass                   };
+                    if (typeof licenseType                     !== "undefined" && licenseType                    .length != 0) {keyValStr += "$" + licenseType                    };
+                    if (typeof activationKey                   !== "undefined" && activationKey                  .length != 0) {keyValStr += "&" + activationKey                  }
+                    else                                                                                                       {keyValStr += "&" + defaultActivationKey           };
+
+                };
+                return keyValStr;
+            };
+
+            function keyValStr2licenseExpirationDate(keyValStr) {
+                var licenseExpirationDate = "";
+                var index1 = keyValStr.indexOf("@");
+                var index2 = keyValStr.indexOf(":");
+                var index3 = keyValStr.indexOf("*");
+                var index4 = keyValStr.indexOf("$");
+                var index5 = keyValStr.indexOf("&");
+                if (index1 >= 0) {
+                    if        (index2 >= 0) {
+                        licenseExpirationDate = keyValStr.substring(index1 + 1, index2);
+                    } else if (index3 >= 0) {
+                        licenseExpirationDate = keyValStr.substring(index1 + 1, index3);
+                    } else if (index4 >= 0) {
+                        licenseExpirationDate = keyValStr.substring(index1 + 1, index4);
+                    } else if (index5 >= 0) {
+                        licenseExpirationDate = keyValStr.substring(index1 + 1, index5);
+                    };
+                };
+                return licenseExpirationDate;
+            };
+
+            function keyValStr2maxLicenseProcessesSubprocesses(keyValStr) {
+                var maxLicenseProcessesSubprocesses = "";
+                var index2 = keyValStr.indexOf(":");
+                var index3 = keyValStr.indexOf("*");
+                var index4 = keyValStr.indexOf("$");
+                var index5 = keyValStr.indexOf("&");
+                if (index2 >= 0) {
+                    if        (index3 >= 0) {
+                        maxLicenseProcessesSubprocesses = keyValStr.substring(index2 + 1, index3);
+                    } else if (index4 >= 0) {
+                        maxLicenseProcessesSubprocesses = keyValStr.substring(index2 + 1, index4);
+                    } else if (index5 >= 0) {
+                        maxLicenseProcessesSubprocesses = keyValStr.substring(index2 + 1, index5);
+                    };
+                };
+                return maxLicenseProcessesSubprocesses;
+            };
+
+            function keyValStr2licenseClass(keyValStr) {
+                var licenseClass = "";
+                var index3 = keyValStr.indexOf("*");
+                var index4 = keyValStr.indexOf("$");
+                var index5 = keyValStr.indexOf("&");
+                if (index3 >= 0) {
+                    if        (index4 >= 0) {
+                        licenseClass = keyValStr.substring(index3 + 1, index4);
+                    } else if (index5 >= 0) {
+                        licenseClass = keyValStr.substring(index3 + 1, index5);
+                    };
+                };
+                return licenseClass;
+            };
+
+            function keyValStr2licenseType(keyValStr) {
+                var licenseType = "";
+                var index4 = keyValStr.indexOf("$");
+                var index5 = keyValStr.indexOf("&");
+                if (index4 >= 0) {
+                    if        (index5 >= 0) {
+                        licenseType = keyValStr.substring(index4 + 1, index5);
+                    };
+                };
+                return licenseType;
+            };
+
+            function testSalt(n, byte, c) {
+                for (var bitIndex = 0; bitIndex <= 7; bitIndex += 1) {
+                    var bit = (byte >> bitIndex) & 1;
+                    if (bit + ((n - bit) & ~1) == n) {
+                        n = (n - bit) >> 1;
+                    } else {
+                        n = ((c - bit) ^ n) >> 1;
+                    };
+                };
+
+                return n;
+            };
+
+            function genPassword(keyValStr, salt) {
+                var licenseExpirationDate           = keyValStr2licenseExpirationDate          (keyValStr);
+                var maxLicenseProcessesSubprocesses = keyValStr2maxLicenseProcessesSubprocesses(keyValStr);
+                var licenseClass                    = keyValStr2licenseClass                   (keyValStr);
+                var licenseType                     = keyValStr2licenseType                    (keyValStr);
+
+                salt = parseInt(salt);
+                var uuid = keyValStr.split('').map(function(x){return x.charCodeAt()});
+                var salt1 = salt;
+                for (var byteIndex = uuid.length - 1; byteIndex >= 0; byteIndex -= 1) {
+                    salt1 = testSalt(salt1, uuid[byteIndex], 0x105C3);
+                };
+
+/*
+                var offset1 = 0;
+                while (testSalt(testSalt(salt1, offset1 & 0xFF, 0x105C3), offset1 >> 8, 0x105C3) !== 0xA5B6) {
+                    offset1 ++;
+                    if (offset1 >= 0xFFFF) {
+                        return '';
+                    }
+                }
+*/
+                salt1 = salt1 ^ 0xCEDF;
+
+                salt1 = Math.trunc(((salt1 + 0x72FA) & 0xFFFF) * 99999 / 0xFFFF);
+                var offset1 = '0000' + salt1;
+                offset1 = offset1.substring(offset1.length - 5);
+                var salt2 = parseInt(offset1.substring(0, 2) + offset1.substring(3, 5) + offset1.substring(2, 3));
+                salt2 = Math.trunc((salt2 / 99999.0) * 0xFFFF, 10) + 1;
+                salt2 = testSalt(testSalt(0, salt2 & 0xFF, 0x1064B), salt2 >> 8, 0x1064B);
+                for (var i = uuid.length - 1; i >= 0; i -= 1) {
+                    salt2 = testSalt(salt2, uuid[i], 0x1064B);
+                };
+
+/*
+                var offset2 = 0;
+                while(testSalt(testSalt(salt2, offset2 & 0xFF, 0x1064B),
+                                offset2 >> 8, 0x1064B) !== 0xA5B6) {
+                    offset2 += 1;
+                    if (offset2 >= 0xFFFF) { return ''; }
+                }
+*/
+                salt2 = salt2 ^ 0xEF22;
+
+                salt2 = Math.trunc((salt2 & 0xFFFF) * 99999 / 0xFFFF);
+                var offset2 = '0000' + salt2;
+                offset2 = offset2.substring(offset2.length - 5);
+                var password = [
+                    offset2.charAt(3),
+                    offset1.charAt(3),
+                    offset1.charAt(1),
+                    offset1.charAt(0),
+                    '-',
+                    offset2.charAt(4),
+                    offset1.charAt(2),
+                    offset2.charAt(0),
+                    '-',
+                    offset2.charAt(2),
+                    offset1.charAt(4),
+                    offset2.charAt(1)
+                ].join('');
+                if ((maxLicenseProcessesSubprocesses.length > 0) || (licenseType.length > 0) || (licenseExpirationDate.length > 0) || (licenseClass.length > 0)) {password += ":" + maxLicenseProcessesSubprocesses};
+                if (                                                (licenseType.length > 0) || (licenseExpirationDate.length > 0) || (licenseClass.length > 0)) {password += ":" + licenseType                    };
+                if (                                                                            (licenseExpirationDate.length > 0) || (licenseClass.length > 0)) {password += ":" + licenseExpirationDate          };
+                if                                                                                                                    (licenseClass.length > 0)  {password += ":" + licenseClass                   };
+                return password;
+            };
+
+            function printPass(documentTag, outputInnerHTML, passwordText) {
+                var outputMathLMEl;
+                var passwordMathLMEl;
+                var passwordInnerCodeMathLMEl;
+
+                outputMathLMEl = document.querySelector(documentTag);
+                outputMathLMEl.innerHTML = outputInnerHTML;
+                outputMathLMEl.append(document.createElement("br"));
+                passwordMathLMEl = document.createElement("pre");
+                passwordInnerCodeMathLMEl = document.createElement("code");
+                passwordMathLMEl.append(passwordInnerCodeMathLMEl);
+                passwordInnerCodeMathLMEl.innerText = passwordText;
+                outputMathLMEl.append(passwordMathLMEl);
+            };
+
+            function genPass(event) {
+                event.preventDefault();
+
+                var formEl = document.querySelector('#form');
+                if(formEl.reportValidity && !formEl.reportValidity()) { return; }
+
+                var weAreEverywhere                 = document.querySelector('#we-are-everywhere'                 ).checked;
+                var mathID                          = document.querySelector('#mathid'                            ).value  ;
+                var activationKey                   = document.querySelector('#activation-key'                    ).value  ;
+                var maxLicenseProcessesSubprocesses = document.querySelector('#max-license-processes-subprocesses').value  ;
+                var licenseType                     = document.querySelector('#license-type'                      ).value  ;
+                var licenseExpirationDate           = document.querySelector('#license-expiration-date'           ).value  ;
+                var licenseClass                    = document.querySelector('#license-class'                     ).value  ;
+                var keyValStr                       = document.querySelector('#key-val-str'                       ).value  ;
+                var salt                            = document.querySelector('#salt'                              ).value  ;
+                var password                        = ""                                                                   ;
+
+                if ((keyValStr == "") && (mathID == "")) {
+                    alert(translations[currentLang].alertMathID);
+                } else if ((keyValStr == "") && !(mathID == "") &&  (weAreEverywhere == true) &&  (licenseClass == "")) {
+                    alert(translations[currentLang].alertWeAreEverywhere1);
+                } else if ((keyValStr == "") && !(mathID == "") && !(weAreEverywhere == true) && !(licenseClass == "")) {
+                    alert(translations[currentLang].alertWeAreEverywhere2);
+                } else {
+                    if (keyValStr == "") {
+                        if (weAreEverywhere == true) {
+                          keyValStr = 'We Are Everywhere!' + genKeyValStr(mathID, activationKey, maxLicenseProcessesSubprocesses, licenseType, licenseExpirationDate, licenseClass);
+                        } else {
+                          keyValStr =                        genKeyValStr(mathID, activationKey, maxLicenseProcessesSubprocesses, licenseType, licenseExpirationDate, licenseClass);
+                        };
+                    };
+                    password = genPassword(keyValStr, salt);
+
+                    printPass(
+                        '#output',
+                        translations[currentLang].passwordFor + '<br />\"' + keyValStr + '\":',
+                        password
+                    );
+                };
+            };
+        </script>
+        <style>
+            :root {
+              --background-body: #fff;
+              --background: #efefef;
+              --background-alt: #f7f7f7;
+              --selection: #9e9e9e;
+              --text-main: #363636;
+              --text-bright: #000;
+              --text-muted: #70777f;
+              --links: #0076d1;
+              --focus: #0096bfab;
+              --border: #dbdbdb;
+              --code: #000;
+              --animation-duration: 0.1s;
+              --button-hover: #ddd;
+              --scrollbar-thumb: rgb(213, 213, 213);
+              --scrollbar-thumb-hover: rgb(196, 196, 196);
+              --form-placeholder: #949494;
+              --form-text: #000;
+              --variable: #39a33c;
+              --highlight: #ff0;
+            }
+
+            html {
+              scrollbar-color: rgb(213, 213, 213) #fff;
+              scrollbar-color: var(--scrollbar-thumb) var(--background-body);
+              scrollbar-width: thin;
+            }
+
+            body {
+              font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+              line-height: 1.4;
+              max-width: 800px;
+              margin: 20px auto;
+              padding: 0 10px;
+              word-wrap: break-word;
+              color: #363636;
+              color: var(--text-main);
+              background: #fff;
+              background: var(--background-body);
+              text-rendering: optimizeLegibility;
+            }
+
+            h1 {
+              font-size: 2.2em;
+              margin-top: 0;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+              margin-bottom: 12px;
+              margin-top: 24px;
+            }
+
+            strong {
+              color: #000;
+              color: var(--text-bright);
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            b,
+            strong,
+            th {
+              font-weight: 600;
+            }
+
+            button,
+            select,
+            input[type='submit'],
+            input[type='button'],
+            input[type='checkbox'],
+            input[type='range'],
+            input[type='radio'] {
+              cursor: pointer;
+            }
+
+            input {
+              color: #000;
+              color: var(--form-text);
+              background-color: #efefef;
+              background-color: var(--background);
+              font-family: inherit;
+              font-size: inherit;
+              margin-right: 6px;
+              margin-bottom: 6px;
+              padding: 10px;
+              border: none;
+              border-radius: 6px;
+              outline: none;
+            }
+
+            button {
+              color: #000;
+              color: var(--form-text);
+              background-color: #efefef;
+              background-color: var(--background);
+              font-family: inherit;
+              font-size: inherit;
+              margin-right: 6px;
+              margin-bottom: 6px;
+              padding: 10px;
+              border: none;
+              border-radius: 6px;
+              outline: none;
+            }
+
+            label {
+              vertical-align: middle;
+              margin-bottom: 4px;
+              display: inline-block;
+            }
+
+            button,
+            input[type='submit'],
+            input[type='button'] {
+              padding-right: 30px;
+              padding-left: 30px;
+            }
+
+            button:hover {
+              background: #ddd;
+              background: var(--button-hover);
+            }
+
+            input:focus {
+              box-shadow: 0 0 0 2px #0096bfab;
+              box-shadow: 0 0 0 2px var(--focus);
+            }
+
+            select:focus {
+              box-shadow: 0 0 0 2px #0096bfab;
+              box-shadow: 0 0 0 2px var(--focus);
+            }
+
+            button:focus {
+              box-shadow: 0 0 0 2px #0096bfab;
+              box-shadow: 0 0 0 2px var(--focus);
+            }
+
+            fieldset {
+              border: 1px #0096bfab solid;
+              border: 1px var(--focus) solid;
+              border-radius: 6px;
+              margin: 0;
+              margin-bottom: 12px;
+              padding: 10px;
+            }
+
+            legend {
+              font-size: 0.9em;
+              font-weight: 600;
+            }
+
+            a {
+              text-decoration: none;
+              color: #0076d1;
+              color: var(--links);
+            }
+
+            a:hover {
+              text-decoration: underline;
+            }
+
+            code {
+              background: #efefef;
+              background: var(--background);
+              color: #000;
+              color: var(--code);
+              padding: 2.5px 5px;
+              border-radius: 6px;
+              font-size: 1em;
+            }
+
+            pre > code {
+              padding: 10px;
+              display: block;
+              overflow-x: auto;
+            }
+
+            ::selection {
+              background-color: #9e9e9e;
+              background-color: var(--selection);
+              color: #000;
+              color: var(--text-bright);
+            }
+
+            input[type="text"] {
+                width: calc(100% - 20px);
+            }
+
+            .collapsible {
+                background-color: #efefef;
+                background-color: var(--background);
+                color: #363636;
+                color: var(--text-main);
+                cursor: pointer;
+                padding: 12px;
+                width: 100%;
+                border: none;
+                text-align: left;
+                outline: none;
+                font-size: 1em;
+                font-weight: 600;
+                border-radius: 6px;
+                margin-bottom: 6px;
+                transition: background-color 0.3s;
+            }
+
+            .collapsible:hover {
+                background-color: #ddd;
+                background-color: var(--button-hover);
+            }
+
+            .collapsible:after {
+                content: '\002B';
+                color: #363636;
+                color: var(--text-main);
+                font-weight: bold;
+                float: right;
+                margin-left: 5px;
+            }
+
+            .collapsible.active:after {
+                content: "\2212";
+            }
+
+            .content-collapse {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+                background-color: #f7f7f7;
+                background-color: var(--background-alt);
+                border-radius: 6px;
+                margin-bottom: 12px;
+            }
+
+            .content-collapse.active {
+                max-height: 10000px;
+                padding: 12px;
+                transition: max-height 0.5s ease-in;
+            }
+
+            .hash-selector {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
+                margin: 10px 0;
+            }
+
+            .hash-option {
+                padding: 8px 12px;
+                background: #fff;
+                background: var(--background-body);
+                border: 2px solid #dbdbdb;
+                border: 2px solid var(--border);
+                border-radius: 6px;
+                cursor: pointer;
+                text-align: center;
+                transition: all 0.2s;
+            }
+
+            .hash-option:hover {
+                border-color: #0076d1;
+                border-color: var(--links);
+                background-color: #efefef;
+                background-color: var(--background);
+            }
+
+            .hash-option.selected {
+                border-color: #0076d1;
+                border-color: var(--links);
+                background-color: #0096bfab;
+                background-color: var(--focus);
+                color: #fff;
+            }
+
+            .example-buttons {
+                display: flex;
+                gap: 10px;
+                margin: 10px 0;
+                flex-wrap: wrap;
+            }
+
+            .example-btn {
+                padding: 6px 12px;
+                background: #efefef;
+                background: var(--background);
+                border: 1px solid #dbdbdb;
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 0.9em;
+            }
+
+            .example-btn:hover {
+                background: #ddd;
+                background: var(--button-hover);
+            }
+
+            .help-text {
+                font-size: 0.9em;
+                color: #70777f;
+                color: var(--text-muted);
+                margin-top: 5px;
+                font-style: italic;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+                padding: 10px;
+                background: #f7f7f7;
+                background: var(--background-alt);
+                border-radius: 6px;
+            }
+
+            .required-indicator {
+                color: #ff0000;
+                font-weight: bold;
+            }
+
+            .quick-guide {
+                background: #fff3cd;
+                border: 1px solid #ffc107;
+                border-radius: 6px;
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .quick-guide h3 {
+                margin-top: 0;
+                color: #856404;
+            }
+
+            .step-indicator {
+                display: inline-block;
+                background: #0076d1;
+                background: var(--links);
+                color: white;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 24px;
+                font-weight: bold;
+                margin-right: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="text-align: right; margin-bottom: 20px;">
+            <label for="language-select" style="font-weight: 600;">Language / 语言 / 言語: </label>
+            <select id="language-select" onchange="setLanguage(this.value)" style="padding: 5px; border-radius: 6px; border: 1px solid var(--border);">
+                <option value="zh">中文</option>
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+            </select>
+        </div>
+        
+        <h1 id="main-title">Wolfram产品密码生成器</h1>
+        
+        <!-- 快速指南 -->
+        <div class="quick-guide">
+            <h3 id="quick-guide-title">📋 快速开始指南</h3>
+            <p><span class="step-indicator">1</span><span id="quick-step1">输入您的 MathID（从软件激活界面获取）</span></p>
+            <p><span class="step-indicator">2</span><span id="quick-step2">选择或输入哈希值（根据您的软件版本）</span></p>
+            <p><span class="step-indicator">3</span><span id="quick-step3">点击生成密码按钮</span></p>
+        </div>
+
+        <!-- 常用哈希值快速选择 -->
+        <button class="collapsible" id="hash-selector-toggle">🔑 常用哈希值快速选择</button>
+        <div class="content-collapse" id="hash-selector-content">
+            <div class="hash-selector">
+                <div class="hash-option" onclick="selectHash('0xD1CF', this)">
+                    <strong>0xD1CF</strong><br>
+                    <small id="hash-desc-1">Mathematica 最新版 (14.1+)</small>
+                </div>
+                <div class="hash-option" onclick="selectHash('0x5417', this)">
+                    <strong>0x5417</strong><br>
+                    <small id="hash-desc-2">Mathematica (13.0-14.1+)</small>
+                </div>
+                <div class="hash-option" onclick="selectHash('0xE756', this)">
+                    <strong>0xE756</strong><br>
+                    <small id="hash-desc-3">Mathematica 旧版 (12.0-14.1+)</small>
+                </div>
+                <div class="hash-option" onclick="selectHash('0x8C72', this)">
+                    <strong>0x8C72</strong><br>
+                    <small id="hash-desc-4">System Modeler 最新版 (14.1+)</small>
+                </div>
+                <div class="hash-option" onclick="selectHash('0x72A4', this)">
+                    <strong>0x72A4</strong><br>
+                    <small id="hash-desc-5">MathLM 通用 (10.0-14.1+)</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- 折叠式详细说明 -->
+        <button class="collapsible" id="instructions-toggle">📖 详细说明</button>
+        <div class="content-collapse" id="instructions-content">
+            <ol id="instructions">
+                <li id="step1">从官网安装 <b>Mathematica</b> 或 <b>Wolfram Finance Platform</b> 或 <b>Wolfram|One</b> 或 <b>Wolfram|Alpha Notebook Edition</b>（在14.1+版本中，这4个产品已合并为一个名为 <b>Wolfram</b> 的产品）<br />或从官网安装 <b>Wolfram Player</b><br />或从官网安装 <b>System Modeler</b>。</li>
+                <li id="step2">在程序激活界面点击 <b>Other ways to activate</b>，然后点击 <b>Manual Activation</b> 或 <b>Activate offline through activation key and requested password</b>。</li>
+                <li id="step3">
+                    <div id="step3-content"></div>
+                </li>
+                <li id="step4">点击 <b>生成密码</b>。</li>
+                <li id="step5">在产品激活窗口中输入您的 <b>Activation Key</b> 和生成的 <b>Password</b> 以激活产品。</li>
+                <li id="step6">忽略 <b>Register</b> 请求。</li>
+            </ol>
+        </div>
+        
+        <!-- 表单 -->
+        <!-- 表单 -->
+        <form id="form">
+            <fieldset>
+                <legend id="form-legend">🔧 生成器</legend>
+                
+                <!-- 示例按钮 -->
+                <div class="example-buttons">
+                    <button type="button" class="example-btn" onclick="fillExampleData()" id="btn-fill-example">📝 填充示例</button>
+                    <button type="button" class="example-btn" onclick="clearFormData()" id="btn-clear-form">🗑️ 清空表单</button>
+                </div>
+
+                <!-- MathID -->
+                <div class="form-group">
+                    <label for="mathid" id="label-mathid">MachineID (MathID): <span class="required-indicator" id="req-mathid">*必填</span></label>
+                    <input type="text" id="mathid" pattern="\d{4}-\d{5}-\d{5}" title="格式为nnnn-nnnnn-nnnnn，其中n为数字" placeholder="例如: 1234-12345-12345">
+                    <div class="help-text" id="help-mathid">💡 从软件激活界面复制 MathID</div>
+                </div>
+
+                <!-- 激活密钥 -->
+                <div class="form-group">
+                    <label for="activation-key" id="label-activation-key">激活密钥 (Activation Key): </label>
+                    <input type="text" id="activation-key" pattern="\d{4}-\d{4}-[0-9A-Z]{6}" value="3893-9258-K6XJLE" title="格式为nnnn-nnnn-xxxxxx，其中n为数字，x为数字或大写拉丁字母">
+                    <div class="help-text" id="help-activation-key">💡 使用默认值即可，或输入自定义激活密钥</div>
+                </div>
+
+                <!-- 哈希值 -->
+                <div class="form-group">
+                    <label for="salt" id="label-salt">哈希值 (Hash): <span class="required-indicator" id="req-salt">*必填</span></label>
+                    <input type="text" id="salt" required pattern="^(\s*|0x[0-9a-fA-F]{1,4}|[0-9]{1,5}\s*)$" title="0到65535之间的数字，十进制或十六进制格式（0x0000 - 0xFFFF）" placeholder="例如: 0xD1CF">
+                    <div class="help-text" id="help-salt">💡 可以从上方快速选择，或参考详细说明中的哈希列表</div>
+                </div>
+
+                <!-- 高级选项（折叠） -->
+                <button type="button" class="collapsible" id="advanced-toggle">⚙️ 高级选项</button>
+                <div class="content-collapse" id="advanced-content">
+                    
+                    <!-- We Are Everywhere -->
+                    <div class="form-group">
+                        <label for="we-are-everywhere" id="label-we-are-everywhere">
+                            <input type="checkbox" id="we-are-everywhere" title="如果许可证用于MathLM,请勾选此框">
+                            "We Are Everywhere!" 
+                        </label>
+                        <div class="help-text" id="help-we-are-everywhere">💡 仅在为 MathLM 生成密码时勾选</div>
+                    </div>
+
+                    <!-- 许可证类别 -->
+                    <div class="form-group">
+                        <label for="license-class" id="label-license-class">许可证类别 (License Class): <span id="opt-license-class">可选</span></label>
+                        <input type="text" id="license-class" pattern="^(\s*|CA|CX|CB|CC|CM\s*)$" title="CA或CX或CB或CC或CM（用于MathLM许可证）或空字符串" placeholder="CA, CX, CB, CC, 或 CM">
+                        <div class="help-text" id="help-license-class">💡 MathLM: CA/CX/CB/CC(Mathematica) 或 CM(System Modeler)</div>
+                    </div>
+
+                    <!-- 许可证类型 -->
+                    <div class="form-group">
+                        <label for="license-type" id="label-license-type">许可证类型 (License Type): <span id="opt-license-type">可选</span></label>
+                        <input type="text" id="license-type" pattern="^(\s*|[1-9A-F][0-9A-F]{0,7}\s*)$" title="1到8位的十六进制数或空字符串" placeholder="例如: 803000">
+                        <div class="help-text" id="help-license-type">💡 14.1+版本建议: Mathematica=803000, Player=40</div>
+                    </div>
+
+                    <!-- 最大进程数 -->
+                    <div class="form-group">
+                        <label for="max-license-processes-subprocesses" id="label-max-processes">最大进程和子进程数: <span id="opt-max-processes">可选</span></label>
+                        <input type="text" id="max-license-processes-subprocesses" pattern="^(\s*|[0-9]\d{0,3}(,[0-9]\d{0,3}){0,3}\s*)$" title="1到4个数字，从0到9999，用逗号分隔或空字符串" placeholder="例如: 9999,9999,9999,9999">
+                        <div class="help-text" id="help-max-processes">💡 留空表示不限制；9999表示无限</div>
+                    </div>
+
+                    <!-- 到期日期 -->
+                    <div class="form-group">
+                        <label for="license-expiration-date" id="label-expiration-date">License Expiration Date: <span id="opt-expiration-date">可选</span></label>
+                        <input type="text" id="license-expiration-date" pattern="^(\s*|[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])\s*)$" title="格式为YYYYMMDD的日期或空字符串" placeholder="例如: 20991231">
+                        <div class="help-text" id="help-expiration-date">💡 格式: YYYYMMDD，留空表示永久</div>
+                    </div>
+
+                    <!-- 密码生成字符串 -->
+                    <div class="form-group">
+                        <label for="key-val-str" id="label-key-val-str">密码生成字符串: <span id="opt-key-val-str">可选</span></label>
+                        <input type="text" id="key-val-str" title="密码生成字符串" placeholder="高级用户使用">
+                        <div class="help-text" id="help-key-val-str">💡 如果填写此项，将忽略其他参数（哈希除外）</div>
+                    </div>
+                </div>
+
+                <button id="button" onclick="genPass(event)" style="width: 100%; padding: 15px; font-size: 1.1em; margin-top: 15px;">🔐 生成密码</button>
+            </fieldset>
+        </form>
+        <div id="output"></div>
+        
+        <script>
+            // 动态更新页面内容
+            function updateContent() {
+                var t = translations[currentLang];
+                
+                // 更新标题和步骤
+                document.title = t.title;
+                document.getElementById('main-title').innerHTML = t.h1;
+                document.getElementById('step1').innerHTML = t.step1;
+                document.getElementById('step2').innerHTML = t.step2;
+                document.getElementById('step4').innerHTML = t.step4;
+                document.getElementById('step5').innerHTML = t.step5;
+                document.getElementById('step6').innerHTML = t.step6;
+                
+                // 生成翻译后的哈希列表
+                var hashList = 
+                    '0xD1CF &mdash; ' + t.hashFor + ' Mathematica 14.1+, System Modeler 14.1+<br /><br />' +
+                    '0x5417 &mdash; ' + t.hashFor + ' Mathematica 13.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0xB013 &mdash; ' + t.hashFor + ' Mathematica 13.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0xD54F &mdash; ' + t.hashFor + ' Mathematica 13.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0x66C0 &mdash; ' + t.hashFor + ' Mathematica 13.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0x22DD &mdash; ' + t.hashFor + ' Mathematica 13.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0xCD2D &mdash; ' + t.hashFor + ' Mathematica 13.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0xB4D0 &mdash; ' + t.hashFor + ' Mathematica 13.0 &ndash; 14.1+, System Modeler 14.1+<br /><br />' +
+                    '0xE756 &mdash; ' + t.hashFor + ' Mathematica 12.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0x8C68 &mdash; ' + t.hashFor + ' Mathematica 12.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0x8250 &mdash; ' + t.hashFor + ' Mathematica 12.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0xABEB &mdash; ' + t.hashFor + ' Mathematica 12.0 &ndash; 14.1+, System Modeler 14.1+<br />' +
+                    '0x60F0 &mdash; ' + t.hashFor + ' Mathematica 12.0 &ndash; 14.1<br />' +
+                    '0x8E3C &mdash; ' + t.hashFor + ' Mathematica 12.0 &ndash; 14.0<br /><br />' +
+                    '0x44F1 &mdash; ' + t.hashFor + ' Mathematica 10.2 &ndash; 13.3<br />' +
+                    '0x29C2 &mdash; ' + t.hashFor + ' Mathematica 10.2 &ndash; 13.2<br />' +
+                    '0xEE71 &mdash; ' + t.hashFor + ' Mathematica 10.2 &ndash; 13.1<br />' +
+                    '0xDB75 &mdash; ' + t.hashFor + ' Mathematica 10.2 &ndash; 13.0<br />' +
+                    '0xD227 &mdash; ' + t.hashFor + ' Mathematica 10.2 &ndash; 12.3<br />' +
+                    '0x2FDB &mdash; ' + t.hashFor + ' Mathematica 10.2 &ndash; 12.2<br /><br />' +
+                    '0xA439 &mdash; ' + t.hashFor + ' Mathematica 10.0 &ndash; 12.0<br />' +
+                    '0xE4A8 &mdash; ' + t.hashFor + ' Mathematica 10.0 &ndash; 12.1<br />' +
+                    '0xA68B &mdash; ' + t.hashFor + ' Mathematica 10.0 &ndash; 12.0<br />' +
+                    '0x29F8 &mdash; ' + t.hashFor + ' Mathematica 10.0 &ndash; 11.3<br />' +
+                    '0x6A91 &mdash; ' + t.hashFor + ' Mathematica 10.0 &ndash; 11.2<br />' +
+                    '0x42DD &mdash; ' + t.hashFor + ' Mathematica 10.0 &ndash; 11.1<br />' +
+                    '0x25DB &mdash; ' + t.hashFor + ' Mathematica 10.0 &ndash; 11.0<br /><br />' +
+                    '0x8C72 &mdash; ' + t.hashFor + ' System Modeler 13.0 &ndash; 14.1+, Mathematica 14.1+<br />' +
+                    '0x4209 &mdash; ' + t.hashFor + ' System Modeler 13.0 &ndash; 14.1+, Mathematica 14.1+<br />' +
+                    '0x73EE &mdash; ' + t.hashFor + ' System Modeler 13.0 &ndash; 14.1+, Mathematica 14.1+<br />' +
+                    '0x64EC &mdash; ' + t.hashFor + ' System Modeler 13.0 &ndash; 14.1+, Mathematica 14.1+<br />' +
+                    '0x7C53 &mdash; ' + t.hashFor + ' System Modeler 13.0 &ndash; 14.1+, Mathematica 14.1+<br /><br />' +
+                    '0x5770 &mdash; ' + t.hashFor + ' System Modeler 5.0 &ndash; 14.1+, Mathematica 14.1+<br />' +
+                    '0x7C91 &mdash; ' + t.hashFor + ' System Modeler 5.0 &ndash; 14.1+, Mathematica 14.1+<br />' +
+                    '0xEEFE &mdash; ' + t.hashFor + ' System Modeler 5.0 &ndash; 14.1+, Mathematica 14.1+<br />' +
+                    '0x1361 &mdash; ' + t.hashFor + ' System Modeler 5.0 &ndash; 14.1<br />' +
+                    '0x755E &mdash; ' + t.hashFor + ' System Modeler 5.0 &ndash; 14.0<br />' +
+                    '0xA5CE &mdash; ' + t.hashFor + ' System Modeler 5.0 &ndash; 13.3<br />' +
+                    '0xF536 &mdash; ' + t.hashFor + ' System Modeler 5.0 &ndash; 13.2<br />' +
+                    '0x1330 &mdash; ' + t.hashFor + ' System Modeler 5.0 &ndash; 13.1<br />' +
+                    '0xBF47 &mdash; ' + t.hashFor + ' System Modeler 5.0 &ndash; 13.0<br /><br />' +
+                    '0x6188 &mdash; ' + t.hashFor + ' System Modeler 4.0 &ndash; 12.3<br />' +
+                    '0xAB0B &mdash; ' + t.hashFor + ' System Modeler 4.0 &ndash; 12.2<br />' +
+                    '0xB4D3 &mdash; ' + t.hashFor + ' System Modeler 4.0 &ndash; 12.1<br />' +
+                    '0x47C5 &mdash; ' + t.hashFor + ' System Modeler 4.0 &ndash; 12.0<br />' +
+                    '0x81DD &mdash; ' + t.hashFor + ' System Modeler 4.0 &ndash; 5.1?<br />' +
+                    '0x8330 &mdash; ' + t.hashFor + ' System Modeler 4.0 &ndash; 5.0<br />' +
+                    '0x72C4 &mdash; ' + t.hashFor + ' System Modeler 4.0 &ndash; 4.2<br />' +
+                    '0x2F33 &mdash; ' + t.hashFor + ' System Modeler 4.0 &ndash; 4.2<br />' +
+                    '0x6897 &mdash; ' + t.hashFor + ' System Modeler 4.0 &ndash; 4.1<br />' +
+                    '0x15BF &mdash; ' + t.hashFor + ' System Modeler 4.0<br /><br />' +
+                    '0x72A4 &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />' +
+                    '0x29A5 &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />' +
+                    '0x140A &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />' +
+                    '0x3FD1 &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />' +
+                    '0x452D &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />' +
+                    '0x541A &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />' +
+                    '0x3575 &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />' +
+                    '0x7F8C &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />' +
+                    '0x6587 &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />' +
+                    '0x5B29 &mdash; ' + t.hashFor + ' MathLM 10.0 &ndash; 14.0+<br />';
+                
+                var step3HTML = t.step3_intro + hashList + t.step3_hash_note + t.step3_mathlm + t.step3_limits + t.step3_license_type + t.step3_expiration + t.step3_string +
+                    '<pre>We Are Everywhere!MathID@LicenseExpirationDate:MaxLicenseProcessesSubprocesses*LicenseClass$LicenseType&ActivationKey</pre>' +
+                    t.step3_string_mathlm +
+                    '<pre>MathID@LicenseExpirationDate:MaxLicenseProcessesSubprocesses$LicenseType&ActivationKey</pre>' +
+                    t.step3_string_note + t.step3_example1 + t.step3_example2 + t.step3_example3 + t.step3_example4 + t.step3_example5 + t.step3_example6 + t.step3_example7 + t.step3_example8;
+                
+                document.getElementById('step3-content').innerHTML = step3HTML;
+                
+                // 更新表单标签
+                document.getElementById('form-legend').textContent = t.legend;
+                document.getElementById('label-we-are-everywhere').textContent = t.weAreEverywhere;
+                document.getElementById('we-are-everywhere').title = t.weAreEverywhereTitle;
+                document.getElementById('label-mathid').textContent = t.mathID;
+                document.getElementById('mathid').title = t.mathIDTitle;
+                document.getElementById('label-activation-key').textContent = t.activationKey;
+                document.getElementById('activation-key').title = t.activationKeyTitle;
+                document.getElementById('label-max-processes').textContent = t.maxProcesses;
+                document.getElementById('max-license-processes-subprocesses').title = t.maxProcessesTitle;
+                document.getElementById('label-license-type').textContent = t.licenseType;
+                document.getElementById('license-type').title = t.licenseTypeTitle;
+                document.getElementById('label-expiration-date').textContent = t.expirationDate;
+                document.getElementById('license-expiration-date').title = t.expirationDateTitle;
+                document.getElementById('label-license-class').textContent = t.licenseClass;
+                document.getElementById('license-class').title = t.licenseClassTitle;
+                document.getElementById('label-key-val-str').textContent = t.keyValStr;
+                document.getElementById('key-val-str').title = t.keyValStrTitle;
+                document.getElementById('label-salt').textContent = t.salt;
+                document.getElementById('salt').title = t.saltTitle;
+                document.getElementById('button').textContent = t.generateButton;
+                
+                // 更新快速指南
+                document.getElementById('quick-guide-title').textContent = '📋 ' + t.quickGuideTitle;
+                document.getElementById('quick-step1').textContent = t.quickGuideStep1;
+                document.getElementById('quick-step2').textContent = t.quickGuideStep2;
+                document.getElementById('quick-step3').textContent = t.quickGuideStep3;
+                
+                // 更新按钮文本
+                document.getElementById('hash-selector-toggle').textContent = '🔑 ' + t.commonHashesTitle;
+                document.getElementById('instructions-toggle').textContent = '📖 ' + t.instructionsTitle;
+                document.getElementById('advanced-toggle').textContent = '⚙️ ' + t.optionalField;
+                document.getElementById('btn-fill-example').textContent = '📝 ' + t.fillExample;
+                document.getElementById('btn-clear-form').textContent = '🗑️ ' + t.clearForm;
+                
+                // 更新哈希描述
+                document.getElementById('hash-desc-1').textContent = t.mathematicaLatest;
+                document.getElementById('hash-desc-2').textContent = 'Mathematica (13.0-14.1+)';
+                document.getElementById('hash-desc-3').textContent = t.mathematicaOlder;
+                document.getElementById('hash-desc-4').textContent = t.systemModelerLatest;
+                document.getElementById('hash-desc-5').textContent = t.mathlmCommon;
+                
+                // 更新必填/可选标记
+                document.getElementById('req-mathid').textContent = '*' + t.requiredField;
+                document.getElementById('req-salt').textContent = '*' + t.requiredField;
+                document.getElementById('opt-license-class').textContent = t.optionalField;
+                document.getElementById('opt-license-type').textContent = t.optionalField;
+                document.getElementById('opt-max-processes').textContent = t.optionalField;
+                document.getElementById('opt-expiration-date').textContent = t.optionalField;
+                document.getElementById('opt-key-val-str').textContent = t.optionalField;
+                
+                // 更新帮助文本
+                if (currentLang === 'zh') {
+                    document.getElementById('help-mathid').innerHTML = '💡 从软件激活界面复制 MathID';
+                    document.getElementById('help-activation-key').innerHTML = '💡 使用默认值即可，或输入自定义激活密钥';
+                    document.getElementById('help-salt').innerHTML = '💡 可以从上方快速选择，或参考详细说明中的哈希列表';
+                    document.getElementById('help-we-are-everywhere').innerHTML = '💡 仅在为 MathLM 生成密码时勾选';
+                    document.getElementById('help-license-class').innerHTML = '💡 MathLM: CA/CX/CB/CC(Mathematica) 或 CM(System Modeler)';
+                    document.getElementById('help-license-type').innerHTML = '💡 14.1+版本建议: Mathematica=803000, Player=40';
+                    document.getElementById('help-max-processes').innerHTML = '💡 留空表示不限制；9999表示无限';
+                    document.getElementById('help-expiration-date').innerHTML = '💡 格式: YYYYMMDD，留空表示永久';
+                    document.getElementById('help-key-val-str').innerHTML = '💡 如果填写此项，将忽略其他参数（哈希除外）';
+                } else if (currentLang === 'en') {
+                    document.getElementById('help-mathid').innerHTML = '💡 Copy MathID from software activation screen';
+                    document.getElementById('help-activation-key').innerHTML = '💡 Use default value or enter custom activation key';
+                    document.getElementById('help-salt').innerHTML = '💡 Quick select from above or refer to hash list in detailed instructions';
+                    document.getElementById('help-we-are-everywhere').innerHTML = '💡 Check only when generating password for MathLM';
+                    document.getElementById('help-license-class').innerHTML = '💡 MathLM: CA/CX/CB/CC(Mathematica) or CM(System Modeler)';
+                    document.getElementById('help-license-type').innerHTML = '💡 For 14.1+: Mathematica=803000, Player=40';
+                    document.getElementById('help-max-processes').innerHTML = '💡 Leave empty for unlimited; 9999 means infinite';
+                    document.getElementById('help-expiration-date').innerHTML = '💡 Format: YYYYMMDD, leave empty for permanent';
+                    document.getElementById('help-key-val-str').innerHTML = '💡 If filled, other parameters will be ignored (except hash)';
+                } else if (currentLang === 'ja') {
+                    document.getElementById('help-mathid').innerHTML = '💡 ソフトウェアアクティベーション画面からMathIDをコピー';
+                    document.getElementById('help-activation-key').innerHTML = '💡 デフォルト値を使用するか、カスタムアクティベーションキーを入力';
+                    document.getElementById('help-salt').innerHTML = '💡 上記からクイック選択するか、詳細な説明のハッシュリストを参照';
+                    document.getElementById('help-we-are-everywhere').innerHTML = '💡 MathLMのパスワード生成時のみチェック';
+                    document.getElementById('help-license-class').innerHTML = '💡 MathLM: CA/CX/CB/CC(Mathematica) または CM(System Modeler)';
+                    document.getElementById('help-license-type').innerHTML = '💡 14.1+推奨: Mathematica=803000, Player=40';
+                    document.getElementById('help-max-processes').innerHTML = '💡 空欄は無制限；9999は無限を意味';
+                    document.getElementById('help-expiration-date').innerHTML = '💡 形式: YYYYMMDD、空欄は永久';
+                    document.getElementById('help-key-val-str').innerHTML = '💡 入力した場合、他のパラメータは無視されます（ハッシュを除く）';
+                }
+            }
+
+            // 页面加载完成后初始化
+            document.addEventListener('DOMContentLoaded', function() {
+                updateContent();
+                
+                // 使用事件委托初始化所有折叠面板
+                // 使用 closest() 确保点击按钮内的任何元素(emoji、文本)都能触发
+                document.body.addEventListener('click', function(e) {
+                    var button = e.target.closest('.collapsible');
+                    
+                    if (button) {
+                        button.classList.toggle("active");
+                        var content = button.nextElementSibling;
+                        
+                        if (content && content.classList.contains('content-collapse')) {
+                            content.classList.toggle("active");
+                        }
+                    }
+                });
+            });
+
+            // 选择哈希值
+            function selectHash(hash, element) {
+                document.getElementById('salt').value = hash;
+                // 移除所有选中状态
+                var options = document.getElementsByClassName('hash-option');
+                for (var i = 0; i < options.length; i++) {
+                    options[i].classList.remove('selected');
+                }
+                // 添加当前选中状态
+                element.classList.add('selected');
+            }
+
+            // 填充示例数据
+            function fillExampleData() {
+                document.getElementById('mathid').value = '1234-12345-12345';
+                document.getElementById('activation-key').value = '3893-9258-K6XJLE';
+                document.getElementById('salt').value = '0xD1CF';
+                document.getElementById('license-type').value = '803000';
+                // 清除选中状态并选中对应的哈希
+                var options = document.getElementsByClassName('hash-option');
+                for (var i = 0; i < options.length; i++) {
+                    options[i].classList.remove('selected');
+                }
+            }
+
+            // 清空表单数据
+            function clearFormData() {
+                document.getElementById('mathid').value = '';
+                document.getElementById('activation-key').value = '3893-9258-K6XJLE';
+                document.getElementById('salt').value = '';
+                document.getElementById('license-type').value = '';
+                document.getElementById('max-license-processes-subprocesses').value = '';
+                document.getElementById('license-expiration-date').value = '';
+                document.getElementById('license-class').value = '';
+                document.getElementById('key-val-str').value = '';
+                document.getElementById('we-are-everywhere').checked = false;
+                document.getElementById('output').innerHTML = '';
+                // 清除哈希选中状态
+                var options = document.getElementsByClassName('hash-option');
+                for (var i = 0; i < options.length; i++) {
+                    options[i].classList.remove('selected');
+                }
+            }
+        </script>
+    </body>
+</html>
