@@ -1,0 +1,62 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+
+\title{Physics 151: Intro to QFT \\ FALL 2025 MID-TERM TAKE-HOME EXAM}
+\author{Petr Hořava}
+\date{Fall 2025}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1}
+
+Consider the theory of a relativistic real scalar field $\phi(x^{\mu})$ in four spacetime dimensions, whose action is
+$$S=\int d^{4}x\left\{\frac{1}{2}(\partial\phi)^{2}-\frac{1}{2}m^{2}\phi^{2}-\frac{1}{4!}\lambda\phi^{4}\right\}$$
+Quantum fluctuations in this theory will contribute to the vacuum energy, causing the notorious "cosmological constant problem" when the system is coupled to gravity. In perturbation theory, these contributions to the vacuum energy come from all the "vacuum Feynman diagrams", defined as those diagrams which have no external legs. [If you wish to see more background on these vacuum fluctuations, please consult page 59 and Section VIII.2 of Zee.]
+
+\begin{enumerate}
+    \item[(i)] Draw all connected vacuum Feynman diagrams for this theory, up to and including order $\lambda^{2}.$
+    \item[(ii)] Determine the symmetry factors for each of these diagrams.
+    \item[(iii)] What is the dimension of $\lambda$ in the units of the mass (and why), and would it be the same in different spacetime dimensions?
+    \item[(iv)] If we added also a $g\phi^{3}$ interaction term to this theory, what would be the answers to the previous Problem 1(iii) for the coupling constant $g$?
+\end{enumerate}
+
+\section*{Problem 2}
+
+Consider the following two free-field theories of a scalar field in $d=D+1$ spacetime dimensions. One is relativistic, with the field denoted again by $\phi,$ in the Minkowski spacetime with coordinates $x^{\mu}$, $\mu=0,...D;$ the other is non-relativistic, with the field denoted by $\Phi$, and the spacetime parametrized by coordinates $t$ and $x^{i}$, $i=1,...D$ Their actions are:
+$$S_{\text{rel}}=\frac{1}{2}\int d^{d}x(\partial_{\mu}\phi)(\partial^{\mu}\phi),$$
+and
+$$S_{\text{nonrel}}=\frac{1}{2}\int dt~d^{D}x\left\{(\dot{\Phi})^{2}-(\partial_{i}\partial_{i}\Phi)(\partial_{j}\partial_{j}\Phi)\right\},$$
+where $\dot{\Phi}$, as usual, denotes the time derivative $\partial\Phi/\partial t$.
+
+\begin{enumerate}
+    \item[(i)] In the units of energy, what is the classical scaling dimension of $\phi,$ as a function of $d=D+1$?
+    \item[(ii)] In the units of energy, what is the classical scaling dimension of $\Phi$? [Hint: Note that in this theory (known as the "Lifshitz scalar") the scaling transformations are treating time $t$ and space $x^{i}$ differently, so that both terms in $S_{\text{nonrel}}$ are equally important.]
+    \item[(iii)] Propose a meaningful mathematical expression for the analog of the Feynman propagator for $\Phi$, following the principles that we implemented in the relativistic cases, and explain your normalization of the numerator of the propagator in terms of the number of independent polarizations of the propagating field.
+\end{enumerate}
+
+\section*{Problem 3}
+
+Let's continue with the theory of the non-relativistic scalar field from Problem 2, and let's fix the spacetime dimension $d=D+1$ to be four. We will now add two Gaussian terms to the action, so that the theory stays free:
+$$\hat{S}_{\text{nonrel}}=\frac{1}{2}\int dt~d^{3}x\left\{(\dot{\Phi})^{2}-(\partial_{i}\partial_{i}\Phi)(\partial_{j}\partial_{j}\Phi)-c^{2}(\partial_{i}\Phi)(\partial_{i}\Phi)-m^{2}\Phi^{2}\right\}$$
+
+\begin{enumerate}
+    \item[(i)] Using your findings from Problem 2(ii), determine whether the two coupling constants $c^{2}$ and $m^{2}$ are relevant, irrelevant or marginal.
+    \item[(ii)] Describe in qualitative terms the possible patterns of the renormalization group flow that you find in this free nonrelativistic theory as described by the action $\hat{S}_{\text{nonrel}}$, in the space parametrized by the couplings $c^{2}$ and $m^{2}$.
+    \item[(iii)] Is there a renormalization-group fixed point in this space of couplings $c^{2}$ and $m^{2}$ which exhibits an emergent relativistic Lorentz symmetry? If so, where is it?
+\end{enumerate}
+
+\section*{Problem 4}
+
+\begin{enumerate}
+    \item[(i)] Using the appropriate $i\epsilon$ prescriptions, write down the advanced propagator $D_{A}(x-y)$ and the causal Feynman propagator $D_{F}(x-y)$ for the real scalar field $\phi(x)$ from Problem 1, ignoring all quantum corrections (i.e., at "tree level"). (It is sufficient to write them in the form of an integral over momentum space, you don't need to complete the evaluation of the integral.)
+    \item[(ii)] Do these two propagators satisfy the same differential equation for the Green's function of?
+\end{enumerate}
+
+\vspace{1em}
+\noindent [Each of the 12 individual sub-problems labeled by (i), ..., (iv) in Problems 1 to 4 is worth the same amount of 5 points each, for the total of 60 points for the entire exam. Enjoy!]
+
+\end{document}
