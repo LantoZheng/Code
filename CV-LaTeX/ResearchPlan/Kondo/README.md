@@ -1,334 +1,264 @@
-# Research Plan - Kondo Lab
+# Kondo Lab 申请材料文档索引
 
-**学生**: Xiaoyang Zheng  
-**题目**: Band-Selective Ultrafast Dynamics and Non-Thermal Control in the Topological Kagome Metal CsV₃Sb₅  
-**实验室**: Kondo Laboratory  
-**最后更新**: 2025年10月20日
+**最后更新**: 2025年10月23日
 
 ---
 
-## 📚 文档目录
-
-### 主文档
-- **ResearchPlan.pdf** (8 页) - 完整的研究计划，包含导师审查标记
-- **ResearchPlan.tex** - LaTeX 源文件
-- **ResearchPlan.bib** - 参考文献数据库（11 篇引用）
-
-### 辅助文档（按阅读顺序）
-
-1. **SUMMARY_ADVISOR_MARKS.md** ⭐ 从这里开始
-   - 完成工作总结
-   - 所有标记的快速概览
-   - 使用指南和工作流程
-
-2. **ADVISOR_CHECKLIST.md** 📋 会议必备
-   - 可打印的单页检查清单
-   - 复选框格式，便于记录决策
-   - 会议记录空间
-
-3. **ADVISOR_REVIEW_NOTES.md** 📖 详细参考
-   - 所有 12 个标记的完整说明
-   - 按优先级排序的关键事项
-   - 技术实现细节
-
-4. **MODIFICATIONS.md** 📝 修改历史
-   - 详细的内容修改对比
-   - 修改前后的文档统计
-   - 未来改进建议
-
----
-
-## 🎨 标记系统说明
-
-### 三种彩色标记
-
-| 标记 | 颜色 | 用途 | 数量 |
-|------|------|------|------|
-| `[ADVISOR REVIEW: ...]` | 🔴 红色 | 需要导师决策的关键事项 | 7 个 |
-| `[VERIFY: ...]` | 🔵 蓝色 | 需要验证的技术参数 | 5 个 |
-| `[TODO: ...]` | 🟠 橙色 | 学生待办事项 | 1 个 |
-
-### 标记分布
+## � 文件夹结构
 
 ```
-首页：审查摘要框（overview）
-  ├─ Objectives（3 个标记）
-  │   ├─ [VERIFY] M-点和K-点能量值
-  │   ├─ [VERIFY] Fano 参数范围
-  │   └─ [VERIFY] 测量灵敏度
-  ├─ Methodology（4 个标记）
-  │   ├─ [ADVISOR] OPA 系统可用性
-  │   ├─ [VERIFY] 四分之一波片
-  │   ├─ [ADVISOR] 样品合作
-  │   └─ [VERIFY] 低温设备
-  ├─ Timeline（3 个标记）
-  │   ├─ [ADVISOR] 时间规划现实性
-  │   ├─ [TODO] 理论合作者
-  │   └─ [ADVISOR] 毕业要求对齐
-  ├─ Risk Assessment（2 个标记）
-  │   ├─ [ADVISOR] Prof. Ozeki 合作
-  │   └─ [ADVISOR] 样品优先级
-  └─ Broader Impact（1 个标记）
-      └─ [ADVISOR] 研究方向契合度
+Kondo/
+├── README.md                    # 📖 本文件（总索引）
+│
+├── Documentation/               # 📚 说明文档
+│   ├── Notes_on_SoP.md         # SoP 完整说明
+│   ├── Notes_on_SoP_Final.md   # SoP Final 版优化说明 ⭐
+│   ├── Notes_on_SP.md          # Personal Statement 说明
+│   ├── Notes_on_RP.md          # Research Plan 说明
+│   └── README.md               # 说明文档索引
+│
+├── SoP/                        # 📝 Statement of Purpose
+│   ├── Statement_of_Purpose_Final.pdf      # ✅ 推荐提交（2 页）
+│   ├── Statement_of_Purpose_Final.tex      # LaTeX 源文件
+│   ├── Statement_of_Purpose.pdf            # 参考版（6 页）
+│   ├── Statement_of_Purpose.tex            # LaTeX 源文件
+│   ├── Statement_of_Purpose_Committee.pdf  # 中间版（3 页）
+│   ├── Statement_of_Purpose_Committee.tex  # LaTeX 源文件
+│   └── README.md                           # SoP 文件夹说明
+│
+├── SP/                         # 📝 Personal Statement
+│   ├── Personal_Statement_Final.pdf        # ✅ 推荐提交（2 页）
+│   ├── Personal_Statement_Final.tex        # LaTeX 源文件
+│   ├── Personal_Statement.pdf              # 参考版（4 页）
+│   ├── Personal_Statement.tex              # LaTeX 源文件
+│   └── README.md                           # SP 文件夹说明
+│
+└── RP/                         # 🔬 Research Plan
+    ├── ResearchPlan.pdf        # 研究计划（8 页，含导师标记）
+    ├── ResearchPlan.tex        # LaTeX 源文件
+    ├── ResearchPlan.bib        # 参考文献（24 篇）
+    └── README.md               # RP 文件夹说明
 ```
 
 ---
 
-## 🎯 关键事项（按优先级）
+## 🎯 快速开始
 
-### ⭐⭐⭐⭐⭐ 最高优先级
-1. **OPA 系统**：是否需要购买或共享？
-2. **样品合作**：是否已与合成组建立联系？
-3. **能带结构**：能量值是否需要 DFT 计算验证？
+### 首次使用
+1. **先看本文件（README.md）** 了解整体结构
+2. **进入对应文件夹** 查看具体材料
+3. **查阅 Documentation/** 了解详细说明
 
-### ⭐⭐⭐⭐ 高优先级
-4. 低温设备规格确认
-5. Prof. Ozeki 合作可行性
-6. 毕业时间线和期刊目标对齐
-7. 研究方向与实验室优先级匹配
+### 准备提交申请
+1. ✅ 使用推荐版本：
+   - `SoP/Statement_of_Purpose_Final.pdf` (2 页)
+   - `SP/Personal_Statement_Final.pdf` (2 页)
+   - `RP/ResearchPlan.pdf` (8 页)
+2. 📋 检查 `Documentation/` 中各文档的最终检查清单
 
-### ⭐⭐⭐ 中等优先级
-8. 测量灵敏度验证
-9. Fano 参数参考值
-10. 光学元件光谱范围
-11. 实验阶段时间评估
-
-### 待办事项
-12. 识别理论合作者
+### 准备导师会议
+1. 📖 阅读 `Documentation/Notes_on_RP.md` 的导师审查系统
+2. 🔍 了解 13 个标记的含义和位置
+3. 📝 按优先级准备讨论关键问题
 
 ---
 
-## 📖 快速开始指南
+## 📚 Documentation 文件夹说明
 
-### 给导师
+### [Documentation/Notes_on_SoP.md](Documentation/Notes_on_SoP.md)
+- Statement of Purpose 完整说明
+- 版本选择、结构详解、写作策略
+- 与 Kondo Lab 技术差异的应对
+- 导师咨询邮件模板
 
-#### 第一次审阅（15-20 分钟）
-1. 打开 **ResearchPlan.pdf**
-2. 阅读第 1 页的"审查摘要框"（红框）
-3. 浏览标记部分（彩色文本）
-4. 记录初步想法
+### [Documentation/Notes_on_SoP_Final.md](Documentation/Notes_on_SoP_Final.md) ⭐
+- **专门讲解压缩技巧**
+- Final 版 (2 页) vs. 原始版 (6 页) 详细对比
+- 格式优化、内容精简、结构重组策略
+- 适合需要自己压缩文档的申请者
 
-#### 详细审阅（准备会议）
-1. 阅读 **ADVISOR_REVIEW_NOTES.md** 了解每个标记的背景
-2. 使用 **ADVISOR_CHECKLIST.md** 记录决策
-3. 准备会议议程
+### [Documentation/Notes_on_SP.md](Documentation/Notes_on_SP.md)
+- Personal Statement 完整说明
+- 核心内容解析、写作技巧
+- Show, Don't Tell 原则
+- 与 SoP 的区别
 
-#### 会议中
-- 使用 ADVISOR_CHECKLIST 逐项讨论
-- 在复选框中记录决策
-- 明确学生的下一步行动
-
----
-
-### 给学生
-
-#### 会前准备
-- [ ] 打印 **ADVISOR_CHECKLIST.md**
-- [ ] 准备每个 VERIFY 项的支持材料
-- [ ] 列出可能的样品合作组
-- [ ] 调研实验室设备清单
-- [ ] 准备 DFT 能带结构图（或查找文献）
-
-#### 会议中
-- [ ] 记录所有导师决策
-- [ ] 标注需要跟进的事项
-- [ ] 明确 deadline
-
-#### 会后跟进
-- [ ] 根据反馈更新 ResearchPlan.tex
-- [ ] 完成所有 TODO 事项
-- [ ] 联系样品合成组（如批准）
-- [ ] 准备最终版（移除标记）
+### [Documentation/Notes_on_RP.md](Documentation/Notes_on_RP.md)
+- Research Plan 完整说明
+- 导师审查标记系统（🔴🔵🟠）
+- 关键问题与决策、修改历史
+- 导师会议准备指南
 
 ---
 
-## 🔧 编译说明
+## 📄 各文件夹内容
 
-### 完整编译流程
-```bash
-cd /Users/zhengxiaoyang/Code/CV-LaTeX/ResearchPlan/Kondo
-xelatex ResearchPlan.tex
-biber ResearchPlan
-xelatex ResearchPlan.tex
-xelatex ResearchPlan.tex
-```
+### [SoP/](SoP/) - Statement of Purpose
+- **推荐提交**：`Statement_of_Purpose_Final.pdf` (2 页)
+- 参考版本：`Statement_of_Purpose.pdf` (6 页)
+- 中间版本：`Statement_of_Purpose_Committee.pdf` (3 页)
+- 所有 LaTeX 源文件
 
-### 要求
-- XeLaTeX（用于 fontspec 和 Times New Roman）
-- Biber（参考文献管理）
-- 字体：Times New Roman（系统字体）
+**特点**：强调研究匹配度、灵活性、暂定研究计划
 
-### 编译后输出
-- **ResearchPlan.pdf**（8 页）
-  - 第 1 页：标题 + 审查摘要框 + 摘要
-  - 第 2-3 页：背景和研究目标
-  - 第 4-5 页：方法学和时间线
-  - 第 6-7 页：风险评估和广泛影响
-  - 第 8 页：参考文献
+### [SP/](SP/) - Personal Statement
+- **推荐提交**：`Personal_Statement_Final.pdf` (2 页)
+- 参考版本：`Personal_Statement.pdf` (4 页)
+- 所有 LaTeX 源文件
+
+**特点**：展示过去成就、能力、独立性、领导力
+
+### [RP/](RP/) - Research Plan
+- 研究计划：`ResearchPlan.pdf` (8 页)
+- 参考文献：`ResearchPlan.bib` (24 篇)
+- LaTeX 源文件
+
+**特点**：技术细节、时间线、导师审查标记
+
+---
+
+## 🔍 快速导航
+
+### 按任务查找
+
+| 任务 | 推荐路径 |
+|------|---------|
+| **准备提交申请** | 1. 确认推荐版本（见下文）<br>2. 查看各文件夹中的 README<br>3. 检查 Documentation 中的检查清单 |
+| **准备导师会议** | 1. `Documentation/Notes_on_RP.md` 导师审查系统<br>2. `RP/README.md` 会议准备指南<br>3. 准备讨论关键问题 |
+| **学习压缩技巧** | `Documentation/Notes_on_SoP_Final.md` ⭐ |
+| **修改文档** | 1. 查看对应的 `Documentation/Notes_on_*.md`<br>2. 进入对应文件夹修改源文件<br>3. 编译生成新 PDF |
+| **面试准备** | 使用详细版本：<br>- `SoP/Statement_of_Purpose.pdf` (6 页)<br>- `SP/Personal_Statement.pdf` (4 页) |
+| **了解文档区别** | `Documentation/` 中各文档的对比表 |
+
+---
+
+### 推荐提交版本
+
+✅ **提交给招生委员会**：
+- **Statement of Purpose**: [`SoP/Statement_of_Purpose_Final.pdf`](SoP/Statement_of_Purpose_Final.pdf) (2 页)
+- **Personal Statement**: [`SP/Personal_Statement_Final.pdf`](SP/Personal_Statement_Final.pdf) (2 页)
+- **Research Plan**: [`RP/ResearchPlan.pdf`](RP/ResearchPlan.pdf) (8 页)
+
+---
+
+### 参考版本（面试准备）
+
+📖 **个人深入准备**：
+- **Statement of Purpose**: [`SoP/Statement_of_Purpose.pdf`](SoP/Statement_of_Purpose.pdf) (6 页)
+- **Personal Statement**: [`SP/Personal_Statement.pdf`](SP/Personal_Statement.pdf) (4 页)
 
 ---
 
 ## 📊 文档统计
 
+### Statement of Purpose
+- 推荐版本：2 页
+- 包含：学术背景、研究对齐、暂定研究计划、职业目标
+- 关键特点：灵活性、技术匹配度、Kondo Lab 深入了解
+
+### Personal Statement
+- 推荐版本：2 页
+- 包含：研究成就（4 个项目）、领导力、学术韧性
+- 关键特点：具体成果、数字数据、能力展示
+
 ### Research Plan
-- **总页数**: 8 页（含参考文献）
-- **字数**: ~3,500 词
-- **章节**: 6 个主要章节
-- **参考文献**: 11 篇
-- **标记数**: 12 个
-
-### 修改历史
-- **初始版本**: ~4-5 页，缺乏实验细节
-- **第一次修改**: 扩展至 7 页，添加详细方法学和风险评估
-- **第二次修改**: 8 页，添加导师审查标记和首页摘要
+- 长度：8 页
+- 参考文献：24 篇
+- 标记数量：13 个（7 ADVISOR + 5 VERIFY + 1 TODO）
+- 时间线：24 个月（Master 项目）
+- 预期成果：1-2 篇论文（PRB/JPSJ）
 
 ---
 
-## 🎓 研究计划亮点
+## 🎨 三种文档的区别
 
-### 创新点
-1. **Band-selective 视角**：超越传统 band-averaged 方法
-2. **动量分辨耦合图谱**：首次针对 kagome 金属
-3. **圆偏振探测**：寻找 chiral CDW 的动力学证据
-
-### 技术特色
-- 泵浦能量可调（0.8-1.6 eV）
-- 时间分辨率 ~50 fs
-- 温度范围 10-300 K
-- 圆二色性测量灵敏度 10⁻³-10⁻²
-
-### 预期成果
-- 首个 kagome 金属的 excitation spectrum
-- 动量选择性电子-声子耦合机制
-- 潜在的 chiral order 动力学证据
-- 高影响力期刊论文（PRL/Nature Comm.）
+| 维度 | Statement of Purpose | Personal Statement | Research Plan |
+|------|---------------------|-------------------|--------------|
+| **焦点** | 未来研究计划与动机 | 过去成就与能力 | 技术细节与时间线 |
+| **时间** | 未来 2 年 | 过去 4 年 | 未来 2 年（详细） |
+| **语气** | 专业、学术 | 个人、叙事 | 技术、详实 |
+| **受众** | 招生委员会 | 招生委员会 | 导师 + 委员会 |
+| **页数** | 2 页 | 2 页 | 8 页 |
+| **目的** | 展示匹配度和动机 | 展示能力和独立性 | 展示技术准备 |
 
 ---
 
-## 🔄 工作流程
+## ⚠️ 重要提醒
 
-### 当前阶段：导师审查
-```
-┌─────────────────┐
-│  完成标记添加   │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ 安排导师会议    │ ← 你在这里
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  会议讨论决策   │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  更新研究计划   │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ 生成最终版本    │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ 开始实验准备    │
-└─────────────────┘
-```
+### 技术差异注意
+- **Research Plan** 侧重泵浦-探测反射光谱
+- **Kondo Lab** 主要使用 ARPES（正开发时间分辨）
+- **策略**：在 SoP 中强调灵活性和适应性
+
+### 版本控制
+- 推荐版本（Final）是经过多轮优化的 2 页版本
+- 详细版本保留用于个人参考和面试准备
+- 不要混淆或提交错误版本
+
+### 导师沟通
+- Research Plan 中的标记是**沟通工具**，不是问题
+- 展示深思熟虑和主动准备
+- 按优先级讨论关键问题
 
 ---
 
-## 📞 常见问题
+## � 使用建议
 
-### Q: 如何移除标记生成最终版？
-**A**: 两种方法：
-1. 在 LaTeX 序言中添加：
-   ```latex
-   \renewcommand{\advisornote}[1]{}
-   \renewcommand{\verify}[1]{}
-   \renewcommand{\todo}[1]{}
-   ```
-2. 手动删除所有标记调用和首页摘要框
+### 第一次使用
+1. 📖 **先看本文件**（README.md）了解整体结构
+2. 📁 **浏览各文件夹** 的 README 了解具体内容
+3. 📚 **查阅 Documentation** 了解详细说明
 
-### Q: 可以修改标记颜色吗？
-**A**: 可以，在 LaTeX 序言中修改 `\color{red}` 为其他颜色，如 `\color{purple}`
+### 准备特定文档
+1. 进入对应文件夹（SoP/, SP/, RP/）
+2. 查看该文件夹的 README
+3. 阅读 Documentation 中对应的详细说明
 
-### Q: 如何添加新标记？
-**A**: 使用已定义的命令：
-```latex
-\advisornote{你的审查问题}
-\verify{需要验证的参数}
-\todo{待办事项}
-```
-
-### Q: 检查清单可以数字化吗？
-**A**: 可以转换为 Google Form 或使用 Markdown 编辑器的复选框功能
+### 学习优化技巧
+- 想了解如何压缩文档 → `Documentation/Notes_on_SoP_Final.md` ⭐
+- 想了解写作技巧 → `Documentation/Notes_on_SP.md`
+- 想了解研究计划 → `Documentation/Notes_on_RP.md`
 
 ---
 
-## 📂 文件组织建议
+## 📞 需要帮助？
 
-### 当前结构
-```
-Kondo/
-├── ResearchPlan.tex           # 主文档
-├── ResearchPlan.pdf           # PDF 输出
-├── ResearchPlan.bib           # 参考文献
-├── ADVISOR_CHECKLIST.md       # 检查清单
-├── ADVISOR_REVIEW_NOTES.md    # 详细说明
-├── MODIFICATIONS.md           # 修改历史
-├── SUMMARY_ADVISOR_MARKS.md   # 总结
-└── README.md                  # 本文件
-```
+### 按问题类型查找
 
-### 建议添加（未来）
-```
-Kondo/
-├── figures/                   # 图片文件夹
-│   └── band_structure.pdf    # 能带结构图
-├── data/                      # 数据文件夹
-│   └── energy_estimates.csv  # 能量估算
-├── meeting_notes/             # 会议记录
-│   └── 2025-10-20.md
-└── versions/                  # 历史版本
-    └── ResearchPlan_v1.0.pdf
-```
+| 问题类型 | 查看文档 | 位置 |
+|---------|---------|------|
+| **SoP 怎么写** | Notes_on_SoP.md | [Documentation/](Documentation/) |
+| **如何压缩页数** | Notes_on_SoP_Final.md ⭐ | [Documentation/](Documentation/) |
+| **PS 怎么写** | Notes_on_SP.md | [Documentation/](Documentation/) |
+| **RP 标记含义** | Notes_on_RP.md | [Documentation/](Documentation/) |
+| **哪个版本提交** | 各文件夹 README | [SoP/](SoP/), [SP/](SP/), [RP/](RP/) |
+| **如何编译文档** | 各文件夹 README | [SoP/](SoP/), [SP/](SP/), [RP/](RP/) |
 
----
+### Documentation 文件夹内容
 
-## 🎯 下一步行动
+每个 Notes 文档包含：
+- ✅ 版本说明与选择
+- ✅ 结构详解
+- ✅ 写作策略
+- ✅ 常见问题与解答
+- ✅ 最终检查清单
 
-### 立即行动
-- [ ] 阅读 **SUMMARY_ADVISOR_MARKS.md**
-- [ ] 安排导师会议
-- [ ] 打印 **ADVISOR_CHECKLIST.md**
-
-### 会前准备（建议 2-3 天）
-- [ ] 准备能带结构图
-- [ ] 列出样品合作组清单
-- [ ] 调研实验室设备
-- [ ] 收集相关文献
-
-### 会后跟进
-- [ ] 更新研究计划
-- [ ] 完成待办事项
-- [ ] 准备最终版
+**特别推荐** `Notes_on_SoP_Final.md`：
+- ✅ 6 页 → 2 页的详细压缩过程
+- ✅ 逐段对比示例
+- ✅ LaTeX 格式优化技术
+- ✅ 给其他申请者的实用建议
 
 ---
 
-## 📧 联系方式
+## 🎓 祝申请顺利！
 
-如有技术问题，请参考：
-- LaTeX 编译问题：检查 `ResearchPlan.log`
-- 内容问题：查阅 `ADVISOR_REVIEW_NOTES.md`
-- 流程问题：参考本 README
+这些文档是经过精心准备和多轮修改的成果。按照说明使用，相信会对你的申请有很大帮助！
 
----
+**最后建议**：
+1. 提交前使用各文档中的检查清单
+2. 确保三份材料内容一致（技能、项目、时间线）
+3. 保持自信但谦逊的语气
+4. 展示准备充分和真诚热情
 
-**版本**: 2.0（含导师审查标记）  
-**状态**: ✅ 准备就绪，等待导师审查  
-**创建日期**: 2025年10月20日  
-**预计会议日期**: _待定_
+Good luck! 🍀

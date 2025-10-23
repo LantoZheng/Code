@@ -1,0 +1,323 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   此 LaTeX 文档根据 Portfolio-Overview.pdf 转换而来
+%   请使用 XeLaTeX 或 LuaLaTeX 编译
+%   (例如: xelatex your_filename.tex)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper, 12pt]{ctexart}
+
+% --- 页面设置 ---
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% --- 基础包 ---
+\usepackage{amsmath}     % 数学公式
+\usepackage{amssymb}     % 数学符号
+\usepackage{graphicx}    % 插入图片 (此处用于占位)
+\usepackage{hyperref}    % 超链接，用于邮箱
+\usepackage[T1]{fontenc} % 字体编码
+\usepackage{setspace}    % 行距
+
+% --- 列表格式 ---
+\usepackage{enumitem} % 自定义列表
+\setlist[itemize,1]{label=\textbullet, leftmargin=*}
+
+% --- 章节标题格式 ---
+\usepackage{titlesec}
+% 定义 \section 格式 (无编号，加粗，下方有横线)
+\titleformat{\section}
+  {\Large\bfseries} % 格式
+  {}                % 标签 (无)
+  {0em}             % 标签和标题的间距
+  {}                % 标题代码
+  [\titlerule]      % 标题后的代码 (加横线)
+\titlespacing*{\section}
+  {0pt} % 左边距
+  {3.5ex plus 1ex minus .2ex} % 上边距
+  {2.3ex plus .2ex} % 下边距
+
+% 定义 \subsection 格式 (无编号，加粗)
+\titleformat{\subsection}
+  {\large\bfseries} % 格式
+  {}                % 标签 (无)
+  {0em}             % 标签和标题的间距
+  {}                % 标题代码
+\titlespacing*{\subsection}
+  {0pt} % 左边距
+  {2ex plus 1ex minus .2ex} % 上边距
+  {1ex plus .2ex} % 下边距
+
+% --- 段落设置 ---
+\setlength{\parindent}{0pt} % 段落首行不缩进
+\setlength{\parskip}{1ex}   % 段落间距
+
+% --- 自定义环境：图片描述 ---
+% 此环境用于添加源文档中图片的文字描述
+\newenvironment{imagedescription}[1]
+  {\begin{center}\itshape\small\parbox{0.9\textwidth}{%
+  \textbf{[图片描述: }#1]}}
+  {\end{parbox}\end{center}}
+
+% --- 文档开始 ---
+\begin{document}
+
+% ===================
+% 页面 1: 封面/联系方式
+% ===================
+\begin{center}
+    {\Huge\bfseries Portfolio Overview} % [1]
+    \vspace{2em}
+
+    \large
+    mail: \href{mailto:xiaoyang_zheng@berkeley.edu}{xiaoyang\_zheng@berkeley.edu} \\ % [2]
+    Tel: +86 13955190184 \\ % [3]
+    Address: 2217 Channing Way Apt.C, CA % [4]
+\end{center}
+\vspace{1em}
+
+
+% ===================
+% 页面 2: 教育与技能
+% ===================
+\section*{Education} % [6]
+\textbf{Beijing Normal University}, Beijing, China \hfill \textit{September 2021 - Present} \\ % [7, 8]
+Undergraduate in Physics (Liyun Elite Program) (Expected graduation: July 2026) \\ % [9]
+Undergraduate in Economics % [9]
+
+\section*{Computer and Laboratory Skills} % [10]
+
+\subsection*{Computer Skills} % [11]
+\begin{itemize}
+    \item Python (including PyTorch, SciPy, RenPy) % [12]
+    \item MatLab, Comsol Simulation, FDTD Simulation % [14]
+    \item C++, Mathematica % [14]
+\end{itemize}
+
+\subsection*{Laboratory Skills} % [15]
+\begin{itemize}
+    \item Scanning Tunnel Microscope (STM) and Transmission Electron Microscope (TEM) for material characterization and analysis. % [16]
+    \item Designed experimental instruments using Solidworks and performed 3D printing. % [17]
+\end{itemize}
+
+
+% ===================
+% 页面 3: 成绩与奖学金
+% ===================
+\newpage
+\section*{Standardized Test Scores \& Scholarships} % [19]
+
+\begin{itemize}
+    \item \textbf{Major GPA: $3.8/4.0$} % [20]
+    \item Completed all courses in the Department of Physics in two years (2023.9-2025.7), ranking 2nd in the Liyun Elite experimental class. % [21]
+\end{itemize}
+
+\subsection*{Core Courses} % [22]
+\begin{itemize}
+    \item Optics (93) % [24]
+    \item Electrodynamics (91) % [25]
+    \item Computation methods in Physics (95) % [26]
+    \item Electromagnetism (97) % [26]
+    \item General Relativity (90) % [27]
+\end{itemize}
+
+\subsection*{Scholarships} % [28]
+\begin{itemize}
+    \item Outstanding Freshman Scholarship \hfill 2021.09 % [30, 31]
+    \item Beijing Normal University Jingshi First-Class Scholarship \hfill 2024.10/2022.10 % [32, 33]
+    \item Beijing Normal University First-Class Incentive Bursary \hfill 2024.10/2023.10 / 2022.10 % [34, 37]
+\end{itemize}
+
+\subsection*{Languages} % [35]
+\begin{itemize}
+    \item \textbf{IELTS: 7.5} \& \textbf{TOEFL: 101} % [36]
+    \begin{itemize}
+        \item Listening: 8.5 \& 28; Reading: 8.0 \& 30; Speaking: 6.5 \& 20; Writing: 6.0 \& 23 % [38]
+    \end{itemize}
+\end{itemize}
+
+
+% ===================
+% 页面 4: 工作经历
+% ===================
+\newpage
+\section*{Work Experience} % [40]
+
+\subsection*{Beijing Normal University Photography Association | President} % [41]
+\hfill \textit{2023.09-2024.09} % [42]
+
+\begin{itemize}
+    \item Organized and hosted multiple lectures and external expert interviews, including 3 lectures and 2 interviews, attracting approximately 200 students. % [51]
+    \item Delivered a series of lectures, including "Optical Concepts in Photography" and "Imaging System Quality from a Photography Equipment Perspective." % [55]
+\end{itemize}
+
+\begin{imagedescription}
+{页面包含一个由多张截图组成的拼贴图，内容似乎来自“北京师范大学摄影学社”(BNUPA) 的公众号。
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item "BNU 影子性" [43] "摄影学社公开课调研|摄影讲座与相机体验" [44] (2024年3月13日) [45]。
+    \item "摄影基础系列讲座:第一辑溯源影像技术与中国影像故事" [47] (2024年2月28日) [50]。
+    \item "摄协春季招新|春天,来BNUPA追寻光的踪迹!" [52] (2024年1月13日) [56]。
+    \item "2023 BNUPA的大家伙拍了啥" [57] (2023年11月30日) [63]。
+    \item "24款BNUPA新LOGO!" [60]。
+    \item "双子座流星雨~集合啦!" [65]。
+\end{itemize}
+}
+\end{imagedescription}
+
+\subsection*{Homoludens Archive | Undergraduate Researcher \& Archivist} % [59]
+\hfill \textit{2022.09-2023.07} % [61]
+% (无详细描述)
+
+
+% ===================
+% 页面 5: 项目 1 (DNN)
+% ===================
+\newpage
+\section*{Project: Single-Layer Diffractive Neural Network Design (DNN)} % [66]
+
+\begin{imagedescription}
+{一张 2D 科学绘图，显示了光的强度分布。背景为蓝色，一条明亮的红色水平光束从左向右传播。光束在左侧汇聚，然后在中心区域传播。Y 轴标有微米 ($\mu$m)，范围大约从 -250 到 250。X 轴在 7.5 [81]、12.5 [82] 和 17.5 [83] 处有标记。三条带有双箭头的垂直红线标记了 X 轴上的特定区域。}
+\end{imagedescription}
+
+\subsection*{1. Background of Single-Layer DNN} % [67]
+\begin{itemize}
+    \item DNN can transfer neural networks to optical paths for inference, accelerating inference speed and parallelism. % [69]
+    \item Mask-based D2NN requires multiple masks, leading to significant brightness loss in the output layer. % [70, 71]
+    \item The same effect can be achieved by using a 4f system with a single-layer mask in the Fourier plane. % [72, 73]
+\end{itemize}
+
+\subsection*{2. Optical Newron Network Weight Design} % [74]
+\begin{itemize}
+    \item Design SLM as the optical phase mask in the Fourier plane of a 4f system. % [74]
+    \item Construct the core of an optical neural network. % [75]
+    \item Design optically-based neural network transfer functions, and train them using PyTorch. % [76]
+\end{itemize}
+
+\subsection*{3. Single Phase Mask Inference} % [77]
+\begin{itemize}
+    \item Utilize the MNIST handwritten digit dataset % [78]
+    \item Efficiently train D2NN using optical simulation methods. % [79]
+    \item Achieved high-speed neural network inference within an optical system using only a single phase mask. % [80]
+\end{itemize}
+
+
+% ===================
+% 页面 6: 项目 1 续 (D2NN)
+% ===================
+\newpage
+\section*{Project: Single-Layer Diffractive Neural Network Design (D2NN)} % [85]
+
+\begin{imagedescription}
+{页面显示了三张图表：
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item \textbf{左图:} "Input image with total intensity 559.73" [105]。这是一张手写数字 "4" [109, 121] 的热图，在深紫色背景上显示为黄绿色。
+    \item \textbf{中图:} "Mask of layer phase\_0" [124]。这是一张充满噪声的像素化热图，颜色从绿色到黄色，似乎是一个相位掩模。
+    \item \textbf{右图:} 一个显示输出强度的条形图。X 轴标记为数字 0 到 9。对应于 "4" [152] 的条形柱明显高于所有其他条形柱，表明成功对手写数字 "4" 进行了分类。
+\end{itemize}
+}
+\end{imagedescription}
+
+% --- 注意：此处的文本在源文档中与第 5 页重复 ---
+\subsection*{1. Design Background of Single-Layer DNN} % [86]
+\begin{itemize}
+    \item DNN can transfer neural networks to optical paths for inference, accelerating inference speed and parallelism. % [88, 89]
+    \item Mask-based D2NN requires multiple masks, leading to significant brightness loss in the output layer. % [90, 91]
+    \item The same effect can be achieved by using a 4f system with a single-layer mask in the Fourier plane. % [92, 93, 94]
+\end{itemize}
+
+\subsection*{2. Optical Newron Network Weight Design} % [86]
+\begin{itemize}
+    \item Design SLM as the optical phase mask in the Fourier plane of a 4f system. Construct the core of an optical neural network. % [95, 96]
+    \item Design optically-based neural network transfer functions, and train them using PyTorch. % [97]
+\end{itemize}
+
+\subsection*{3. Single Phase Mask Inference} % [98]
+\begin{itemize}
+    \item Utilize the MNIST handwritten digit dataset % [99]
+    \item Efficiently train D2NN using optical simulation methods. % [100]
+    \item Achieved high-speed neural network inference within an optical system using only a single phase mask. % [101, 102]
+\end{itemize}
+
+
+% ===================
+% 页面 7: 项目 2 (光束整形)
+% ===================
+\newpage
+\section*{Project: Self-calibrating Beam Shaping Based on Reflective Spatial Light Modulator} % [163]
+\textit{Course Project} % [164]
+
+\begin{imagedescription}
+{一个光学系统的 3D 示意图。一束 "Laser" (激光) [160] (粉色光束) 穿过 "Poloroid" (偏振片) [182]、透镜 ("f=7mm" [183], "f=25mm" [180]) [180, 183] 和 "half wave lens" (半波片) [181]，然后从 "Spliter" (分束器) [179] 反射。反射的光束照射到 "SLM" (空间光调制器) [161] 上。从 SLM 反射的光线再次穿过分束器，被引向 "CCD smars" (CCD 相机) [162]。}
+\end{imagedescription}
+
+\subsection*{1. Real-time Correction of High-Order Modes in Lasers} % [168]
+\begin{itemize}
+    \item Lasers may generate high-order transverse modes during use, This need to be corrected and eliminated. % [168, 169]
+    \item Designed an optical system based on SLM to correct wavefront aberrations using a feedback control method. % [170]
+\end{itemize}
+
+\subsection*{2. System Design and Construction} % [171]
+\begin{itemize}
+    \item Utilizing a Spatial Light Modulator as a wavefront phase modulation Unit; % [173]
+    \item Using a CCD with a microlens array as a wavefront sensor % [174]
+    \item Achieved real-time adjustment of the wavefront shape at the end of the optical path. % [175]
+    \item The basic optical path is shown on the right. % [176]
+\end{itemize}
+
+\subsection*{3. Control Program Development} % [177]
+\begin{itemize}
+    \item Developed a Python program to use the squared error between the wavefront image data from the wavefront sensor and ideal data for stochastic gradient descent or simulated annealing algorithm to optimize the phase modulated on the SLM to calibrate and dynamically control beams with specific wavefront shapes (e.g., Gaussian). % [178]
+\end{itemize}
+
+
+% ===================
+% 页面 8: 项目 3 & 4
+% ===================
+\newpage
+\section*{Atomic Comagnetometer} % [185]
+\textit{Undergraduate Research Assistant} \hfill \textit{2023.06-2023.08} \\ % [186]
+Advisor: Dong Sheng (Professor, University of Science and Technology of China) % [187]
+
+\begin{imagedescription}
+{一个简单的 3D CAD (计算机辅助设计) 模型。它展示了一个透明的立方体，内部包含一个较小的实心块。这个组件放置在一个平坦的、红色的、带有中心开口的方形底座上。左侧放置着一个单独的绿色环状物体。}
+\end{imagedescription}
+
+\subsection*{COMSOL Thermal Simulation} % [188]
+\begin{itemize}
+    \item Conducted COMSOL thermal simulations. % [189]
+    \item Optimized the design, ensuring thermal stability of key components in the atomic comagnetometer device. % [190]
+\end{itemize}
+
+\subsection*{Experimental Setup Construction} % [191]
+\begin{itemize}
+    \item Participated in the construction and alignment of the laser atomic state detection optical path. % [192]
+\end{itemize}
+
+\section*{Micro-nano Optics} % [193]
+\textit{Undergraduate Research Training Program (Municipal Level)} \hfill \textit{2022.4-2023.6} \\ % [194]
+Advisor: Jinwei Shi (Professor, Department of Physics, Beijing Normal University) % [194]
+
+\subsection*{Optical Surface Structure Characterization} % [195]
+\begin{itemize}
+    \item Used Scanning Electron Microscope (SEM) to determine particle size and morphology, and optical spectroscopy to measure their plasmon resonance. % [196]
+\end{itemize}
+
+\subsection*{FDTD Optical Property Simulation} % [197]
+\begin{itemize}
+    \item Simulated the modes of gold nanorods under visible light band electromagnetic wave excitation using FDTD. % [198]
+    \item Investigated the influence of nanorod length, width, and length uniformity on the position and width of absorption peaks induced by second-order excitation modes in 2D materials. % [199]
+\end{itemize}
+
+
+% ===================
+% 页面 9: 结尾
+% ===================
+\newpage
+\begin{center}
+    \vspace{5em} % 增加一些垂直间距
+    \Large
+    Thank you for your listening! % [201]
+\end{center}
+
+\end{document}
