@@ -1,85 +1,235 @@
-# 📚 Documentation - 说明文档
+# 📚 Documentation - 说明文档 (精简版)
 
-本文件夹包含所有申请材料的详细说明文档。
-
----
-
-## 📄 文档列表
-
-### 1. **Notes_on_SoP.md** - Statement of Purpose 完整说明
-- 版本选择指南
-- 完整的结构详解
-- 与 Kondo Lab 技术差异的应对策略
-- 导师咨询邮件模板（中英文）
-
-**推荐阅读顺序**：准备或修改 SoP 时首先阅读
+本文件夹包含 PhD 转换方案的 **5 份核心文档**。
 
 ---
 
-### 2. **Notes_on_SoP_Final.md** - Final 版本优化说明 ⭐
-- **专门讲解** Final 版 (2 页) vs. 原始版 (6 页) 的区别
-- 详细的压缩策略（格式、内容、结构）
-- 逐段对比示例
-- LaTeX 格式优化技术细节
-- 给其他申请者的实用建议
+## 📖 核心文档 (5份)
 
-**推荐阅读顺序**：想了解压缩技巧或需要自己压缩文档时阅读
+### **🌟 主要方案文档**
 
----
+#### 1. **PhD_Conversion_Plan.md** ⭐⭐⭐
+- **类型**: 完整的Master → PhD转换方案与实施指南
+- **行数**: ~1200 行
+- **用途**: 从Kondo教授反馈到实际修改的完整蓝图
+- **核心内容**:
+  - 核心改进之处 (响应Kondo反馈)
+  - Part 1-6: RP和SoP修改方案详解
+  - **Part 7: 实施清单与修改步骤** (关键执行指南)
+  - 一致性检查与LaTeX编译指南
+- **推荐场景**: 开始修改应用材料时按Part顺序执行
 
-### 3. **Notes_on_SP.md** - Personal Statement 完整说明
-- 版本选择指南
-- 核心内容解析（研究成就、领导力、韧性）
-- 写作技巧与策略（Show, Don't Tell）
-- 与 Statement of Purpose 的区别
-
-**推荐阅读顺序**：准备或修改 Personal Statement 时阅读
-
----
-
-### 4. **Notes_on_RP.md** - Research Plan 完整说明
-- 导师审查标记系统（🔴 ADVISOR 🔵 VERIFY 🟠 TODO）
-- 关键问题与决策点（按优先级排序）
-- 完整修改历史（5 轮修改记录）
-- 参数验证记录
-- 使用指南（导师会议准备、文档更新工作流）
-
-**推荐阅读顺序**：准备导师会议前或修改 Research Plan 时阅读
+#### 2. **Progress_Report.md**
+- **类型**: 项目进度跟踪与反馈总结
+- **用途**: 记录修改进度与导师反馈
+- **内容**: 
+  - 完成情况追踪
+  - 关键决策记录
+  - 下一步行动计划
+- **推荐场景**: 与导师会议前准备、进度回顾
 
 ---
 
-## 🎯 快速导航
+### **📚 参考分析文档**
 
-### 按任务查找
+#### 3. **Kondo_Feedback_Analysis.md**
+- **类型**: 反馈深度分析
+- **行数**: 453 行
+- **用途**: 理解Kondo教授建议的深层含义
+- **核心内容**:
+  - 反馈翻译与深层解读
+  - "物理问题导向" vs "技术描述"本质差异
+  - Lab研究方向确认 (5/5能力指标)
+  - §7: **铜氧化物战略完整论证** (关键决策支撑)
+  - 具体修改映射与Action Items
+- **何时查阅**: 
+  - 需要理解"物理问题"真实含义时
+  - 论证Year 4铜氧化物聚焦合理性时
+  - 做出重大决策时
 
-| 任务 | 推荐文档 |
-|------|---------|
-| **准备提交申请** | 所有 Notes 中的"最终检查清单" |
-| **准备导师会议** | `Notes_on_RP.md` 的导师审查系统部分 |
-| **学习压缩技巧** | `Notes_on_SoP_Final.md` |
-| **理解文档区别** | `Notes_on_SoP.md` 和 `Notes_on_SP.md` 的区别对比表 |
-| **面试准备** | 所有 Notes 的结构详解部分 |
+#### 4. **Research_Insights_2024-2025.md**
+- **类型**: 突破研究集成
+- **行数**: 493 行
+- **用途**: 提供最新技术支撑与Citation
+- **核心内容**:
+  - 5大重大发现 (2024-2025年)
+    - 手性CDW (PRL 134, 096401)
+    - 相干声子对 (PRB 112, 125127)
+    - 全光学CDW操控 (PRB 107, 174303)
+    - HHG-trARPES进展 (Progress in Surface Science)
+    - ML应用 (PRR 7, 013025)
+  - 每个发现对PhD计划的影响
+  - Citation准确性确认 (已修正arXiv → PRB 112)
+  - 新增实验方向建议
+- **何时查阅**:
+  - 更新Abstract中的最新Citation时
+  - 论证技术可行性时
+  - 理解kagome金属最新研究方向时
+
+#### 5. **Measurable_Observables.md**
+- **类型**: 定量指标框架
+- **行数**: 263 行  
+- **用途**: 响应Kondo建议"Define measurable observables"
+- **核心内容**:
+  - 12+物理量精确定义与分类
+  - 四类物理量: 能量尺度(meV)、时间尺度(fs-ps)、耦合强度(无量纲)、动量空间
+  - 每量的定义、典型值、测量方法、精度要求、物理意义
+  - 与5个Objective的对应关系表
+- **何时查阅**:
+  - 设计具体实验时
+  - 制定成功标准时
+  - 评估实验可行性时
+- **关键内容**: 表1.1-1.4 (物理量精确参数)
 
 ---
 
-## 📊 文档特点
+## 🚀 快速导航
 
-| 文档 | 页数/长度 | 核心内容 |
-|------|---------|---------|
-| Notes_on_SoP.md | ~400 行 | 完整 SoP 说明 |
-| Notes_on_SoP_Final.md | ~800 行 | 压缩技巧详解 ⭐ |
-| Notes_on_SP.md | ~500 行 | 完整 PS 说明 |
-| Notes_on_RP.md | ~900 行 | 完整 RP 说明 |
+### 按需求查找
 
----
-
-## 💡 使用建议
-
-1. **首次使用**：从主目录的 `README.md` 开始，了解整体结构
-2. **准备特定文档**：直接查看对应的 Notes_on_XXX.md
-3. **学习压缩技巧**：重点阅读 `Notes_on_SoP_Final.md`
-4. **准备会议**：重点阅读 `Notes_on_RP.md`
+| 你想... | 查看文档 | 具体章节 |
+|--------|---------|--------|
+| 快速了解转换方案 | PhD_Conversion_Plan.md | §核心改进之处 (5 min) |
+| 开始修改RP/SoP | PhD_Conversion_Plan.md | §Part 7 实施清单 (30 min) |
+| 理解"物理问题"含义 | Kondo_Feedback_Analysis.md | §1.2-1.3 (15 min) |
+| 论证Cuprate战略 | Kondo_Feedback_Analysis.md | §7 Cuprate Strategy (20 min) |
+| 获取2024年Citation | Research_Insights_2024-2025.md | §1-3 主要发现 (15 min) |
+| 跟踪项目进度 | Progress_Report.md | 当前状态 + 下步计划 |
+| 一致性检查 | PhD_Conversion_Plan.md | §Part 7.4 检查表 |
 
 ---
 
-**返回**: [主目录 README](../README.md)
+## 📋 核心概念速查
+
+### Kondo两项反馈 → 改进映射
+
+| Kondo建议 | 原问题 | 改进方案 | 文档位置 |
+|----------|--------|---------|--------|
+| **"Clarify physical objective"** | ❌ "Track Fermi surface" | ✅ "Disentangle e-ph vs e-e" | PhD_Conversion_Plan §Part 1.2 |
+| | | ✅ "Correlation-topology interplay" | Kondo_Feedback_Analysis §1.3 |
+| **"Define measurable observables"** | ❌ "Measure dynamics" | ✅ ΔE(meV), τ_e-e(fs), λ, Z | PhD_Conversion_Plan Abstract |
+| | | ✅ 精度要求与测量方法 | 见Kondo_Feedback_Analysis补充 |
+
+### 五年Physics-driven Timeline
+
+```
+Yr 1-2 (Foundation): "What drives CDW?" 
+  → e-ph vs e-e disentanglement
+  
+Yr 3 (Core Physics): "Does topology matter?"
+  → Correlation-topology interplay
+  
+Yr 4 (Universality): "Is method universal?"
+  → Cuprates strategic focus (利用Kondo Lab 5/5核心)
+  
+Yr 5 (Synthesis): "Photo-induced phases?"
+  → Unified theory + Dissertation
+```
+
+---
+
+## 🎯 使用建议
+
+### 情景 1: "我要立即开始修改"
+```
+1. 打开 PhD_Conversion_Plan.md
+2. 阅读 §核心改进之处 (5 min理解逻辑)
+3. 按照 §Part 1.2 Abstract示例修改
+4. 按 §Part 7 优先级完成其他部分
+5. 用 §7.4 检查表验证一致性
+```
+
+### 情景 2: "我需要论证关键决策"
+```
+1. 查看 Kondo_Feedback_Analysis.md §7 Cuprate战略
+2. 参考 PhD_Conversion_Plan.md 中的相关论述
+3. 准备与导师的讨论要点
+```
+
+### 情景 3: "我需要最新的研究支撑"
+```
+1. 打开 Research_Insights_2024-2025.md
+2. 查看对应章节的Citation (PRL 134, PRB 112等)
+3. 复制到Abstract或Timeline中
+```
+
+### 情景 4: "我要跟踪项目进展"
+```
+1. 查看 Progress_Report.md
+2. 记录完成的任务
+3. 确认下一步行动项
+4. 准备导师会议内容
+```
+
+---
+
+## 📊 文档特点总结
+
+| 文档 | 大小 | 用途 | 关键强项 |
+|------|------|------|---------|
+| PhD_Conversion_Plan.md | 49KB | 完整方案 | 实施指南详细，一致性检查完整 |
+| Kondo_Feedback_Analysis.md | 17KB | 反馈分析 | 物理问题解读深入，战略论证完整 |
+| Research_Insights_2024-2025.md | 20KB | 技术支撑 | Citation准确，发现系统 |
+| Progress_Report.md | 18KB | 进度跟踪 | 决策记录清晰，下步明确 |
+
+---
+
+## 💡 关键决策要点
+
+### 1. 为什么从技术驱动改为物理问题驱动?
+**Kondo的观点**: PhD不只是"做"技术，而是"问"物理问题  
+**映射**: "I will measure X with technique Y" → "How does mechanism A affect phenomenon B?"  
+**详见**: Kondo_Feedback_Analysis.md §1.2-1.3
+
+### 2. 为什么Year 4重点做铜氧化物?
+**原因**: 
+- Kondo Lab 5/5 核心专长 (vs kagome只有3/5)
+- Dual-modality完美应用 (d-wave + pseudogap)
+- 学术社区大 (~2000研究者 vs kagome ~200)
+- 风险管理 (单一材料5年高风险)
+
+**详见**: Kondo_Feedback_Analysis.md §7
+
+### 3. 如何确保一致性?
+**使用**: PhD_Conversion_Plan.md §7.4 一致性检查表  
+**验证点**: Publication数、Language目标、Timeline结构、Career path
+
+---
+
+## 🔄 文档之间的关系
+
+```
+输入: Kondo教授两项反馈
+  ↓
+分析: Kondo_Feedback_Analysis.md
+      (理解本质、论证决策)
+      ↓
+技术支撑: Research_Insights_2024-2025.md
+         (提供Citation、证明可行性)
+      ↓
+综合方案: PhD_Conversion_Plan.md
+         (提供具体修改指导)
+      ↓
+进度跟踪: Progress_Report.md
+        (记录完成、下步计划)
+      ↓
+输出: 修改后的RP.tex + SoP_Final.tex
+```
+
+---
+
+## ✅ 最终文档清单 (精简版 - 5份核心文档)
+
+- ✅ **PhD_Conversion_Plan.md** (49KB) - 完整方案
+- ✅ **Kondo_Feedback_Analysis.md** (17KB) - 反馈分析  
+- ✅ **Measurable_Observables.md** (11KB) - 物理量框架
+- ✅ **Research_Insights_2024-2025.md** (20KB) - 技术支撑
+- ✅ **Progress_Report.md** (19KB) - 进度跟踪
+- ✅ **README.md** (本文件) - 导航
+
+---
+
+**最后更新**: 2025年10月23日  
+**版本**: 精简版 (5份核心文档)
+
+💡 **建议**: 从 `PhD_Conversion_Plan.md` 的文档导航部分开始，快速定位所需信息
