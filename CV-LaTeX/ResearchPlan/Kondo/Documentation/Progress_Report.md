@@ -1,11 +1,151 @@
 # PhD转换计划修改进度报告
 
-**日期**: 2025年10月23日
-**状态**: Phase 1核心修改完成 (~60%)，Phase 2待实施
+**日期**: 2025年10月23日  
+**最新更新**: 2025年10月23日 16:50 (完成RP和SoP_Final实际文件修改)  
+**状态**: ✅ **Phase 1-2完成 (100%)** - RP.tex和SoP_Final.tex已成功转换为PhD版本并编译通过
 
 ---
 
-## ✅ 已完成的关键修改
+## 🎉 最新完成：LaTeX文件实际修改 (2025-10-23 下午)
+
+### 完成的工作
+
+#### 1. **ResearchPlan.tex 完整转换** ✅
+
+**文件路径**: `/Users/zhengxiaoyang/Code/CV-LaTeX/ResearchPlan/Kondo/RP/ResearchPlan.tex`  
+**编译状态**: ✅ 成功 (15页, 161KB PDF)  
+**核心修改**:
+
+1. **Context Box**: Master → PhD (2年 → 5年)
+2. **Abstract**: 完全重写
+   - ❌ 删除: "This Master's research proposal outlines a two-year project..."
+   - ✅ 添加: "Core Physics Questions: Can we disentangle e-ph vs e-e interactions? How does correlation-topology interplay manifest in non-equilibrium?"
+   - ✅ 添加: 12+ measurable observables with precision (ΔE meV, τ fs-ps, λ 0.3-0.8, Z(k,t))
+   - ✅ 添加: Three-phase structure (Y1-2 Foundation, Y3-4 Platform, Y5 Frontier)
+   - ✅ 添加: Dual-modality strategy (reflectivity + trARPES)
+
+3. **Objectives**: 从3个简单目标扩展为3个深度物理问题
+   - **Objective 1**: "Disentangle e-ph vs e-e Interactions via Band-Selective Dynamics"
+     - 添加4类measurable observables: τ_e-e/τ_e-ph, Δ_CDW(t), λ coupling constant, momentum-resolved A_i(E_pump)
+     - 添加Success Criteria: >3σ significance, <20% error bars, quantitative coupling constants
+   - **Objective 2**: "Probe Correlation-Topology Interplay via Momentum-Resolved Dynamics"  
+     - 添加Z(k,t) renormalization, W(t) bandwidth, ΔE_vHS(t), n(k,t) population
+     - 添加Dual-modality approach (pump-probe + trARPES)
+   - **Objective 3**: "Ultrafast Probe of Chiral CDW and Time-Reversal Symmetry Breaking"
+     - 保留原内容，增加物理量精度描述
+
+4. **Timeline**: 2年Master → 5年PhD三阶段
+   - **Phase 1 (Y1-2 Foundation)**: 
+     - Y1: Lab integration, OPA mastery, pump-energy mapping, first JPS presentation
+     - Y2: Temperature/fluence mapping, τ extraction, trARPES initiation, first PRB paper submission
+   - **Phase 2 (Y3-4 Platform Extension)**:
+     - Y3: trARPES mastery, dual-modality experiments, platform comparison, high-impact paper (PRL/Nat.Comm.)
+     - Y4: **Cuprate strategic expansion** (leveraging Kondo Lab 5/5 expertise), pseudogap dynamics, PRX target
+   - **Phase 3 (Y5 Frontier)**:
+     - Frontier exploration (photo-induced/ML/new materials), dissertation writing, postdoc applications
+   - **Expected Publications**: 5-6 first-author papers (vs. 原1篇Master)
+
+5. **Risk Assessment**: Master级别 → PhD级别复杂性
+   - 添加Risk 3: trARPES technical challenges (承认技术难度，提供备选方案)
+   - 添加Risk 4: Cuprate complexity (时间管理策略)
+   - 添加Risk 5: Publication competition (差异化策略)
+   - 添加Risk 6: Career transition uncertainties (postdoc准备)
+
+6. **Integration Plan**: N3 (Master) → N1 (PhD Year 4)
+   - 添加Professional Development: fellowship applications, grant writing, mentorship
+   - 添加International Network Building: research visit, collaboration, postdoc networking
+
+7. **Expected Outcomes**: Master thesis → Doctoral dissertation
+   - Publications: 1篇 → 5-6篇 (including ≥1 PRL/Nature family)
+   - Dissertation: Comprehensive → 200-300 pages
+   - Career positioning: Postdoc at world-leading institutions, tenure-track faculty, national lab PI
+
+#### 2. **Statement_of_Purpose_Final.tex 完整转换** ✅
+
+**文件路径**: `/Users/zhengxiaoyang/Code/CV-LaTeX/ResearchPlan/Kondo/SoP/Statement_of_Purpose_Final.tex`  
+**编译状态**: ✅ 成功 (98KB PDF)  
+**核心修改**:
+
+1. **标题**: "Master's Program" → "Doctoral Program"
+
+2. **Academic Background**: 从技术描述 → 物理驱动
+   - ❌ 删除: "crystallizing my goal to transition from applied optics to fundamental quantum materials research"
+   - ✅ 添加: "**How can we disentangle the competing interactions—electron-phonon coupling, electron-electron correlations, and topological band structure—that govern exotic quantum phases?** This fundamental question, rather than mere technical fascination, motivates my commitment to a five-year doctoral program"
+   - 关键转变: "技能是工具,不是终点" (tools, not endpoints)
+
+3. **Research Plan**: 2年timeline → 5年physics-driven vision
+   - **Core Physics Questions** (新增3个深度问题):
+     1. Disentangle e-ph vs e-e (with quantitative τ, λ, Z)
+     2. Correlation-topology interplay in non-equilibrium (momentum-resolved dynamics)
+     3. Photo-induced metastable phases (Floquet, hidden order)
+   - **Five-year trajectory**:
+     - Y1-2 Foundation: CsV₃Sb₅, 1-2 PRB papers
+     - Y3-4 Platform: Cuprate (leverage 5/5 expertise), PRL/Nat.Comm.
+     - Y5 Frontier: Photo-induced/ML/new platforms, 200-300 page dissertation
+   - **Expected outcomes**: 5-6 papers (vs. 原1篇), international network, postdoc positioning
+
+4. **Career Aspirations**: Master考虑 → PhD commitment
+   - ❌ 删除: "I am strongly considering continuing to a doctoral program if my Master's work proves successful"
+   - ✅ 添加: **Doctoral training goals** (6项具体目标):
+     - Expert in band-selective spectroscopy
+     - 5-6 first-author papers (≥1 high-impact)
+     - Novel dual-modality techniques
+     - International collaborations
+     - Mentor 2-3 junior students
+     - JLPT N1 by Year 4
+   - ✅ 添加: **Long-term vision**: Postdoc (Stanford/MIT/Max Planck) → Tenure-track faculty/National lab PI
+     - Develop next-gen spectroscopies
+     - Bridge experiment-theory
+     - Mentor next generation
+     - Address quantum many-body far-from-equilibrium
+   - 关键语句: "The five-year doctoral training is **not merely a degree requirement—it is the essential foundation** for a research career"
+
+5. **Commitment**: Master成功 → PhD excellence
+   - N3 (Year 1) → N1 (Year 4)
+   - 添加: Research leadership transition (student → junior researcher → leader)
+   - 添加: Scientific communication at highest level (PRL/Nature, APS/MRS)
+   - 添加: Professional development (fellowship, grant writing, TA)
+   - 关键语句: "I seek **not just a doctoral degree, but a transformative five-year experience**"
+
+6. **Conclusion**: 技术准备 → 物理passion
+   - 保留技术基础描述
+   - 强化: "intellectual passion for understanding how e-ph, e-e, and topology conspire to produce exotic quantum phases"
+   - 强化: "commitment to this five-year doctoral journey... transition from student to research leader"
+
+---
+
+### 编译验证
+
+```bash
+# RP编译 (含biber处理参考文献)
+cd RP/
+xelatex ResearchPlan.tex
+biber ResearchPlan
+xelatex ResearchPlan.tex
+✅ Output: ResearchPlan.pdf (15页, 161KB)
+
+# SoP_Final编译
+cd SoP/
+xelatex Statement_of_Purpose_Final.tex
+✅ Output: Statement_of_Purpose_Final.pdf (98KB)
+```
+
+---
+
+### 关键决策记录
+
+| 决策点 | 原计划 | 最终选择 | 理由 |
+|--------|--------|----------|------|
+| **trARPES定位** | 确定的主线技术 | Dual-modality with flexibility | Kondo Lab状态不确定,保守处理 |
+| **Cuprate重要性** | 未明确 | **Year 4战略重点** | 利用Lab 5/5 core expertise |
+| **Publication目标** | 1篇PRB (Master) | 5-6篇 (≥1 PRL/Nat.Comm.) | PhD深度要求 |
+| **Timeline结构** | 2年线性 | 5年三阶段 (Foundation→Platform→Frontier) | 符合PhD progression |
+| **Language目标** | N3 (Year 1) | N1 (Year 4) | PhD文化融入要求 |
+| **Mentorship** | 未提及 | Supervise 2-3 juniors (Y3-5) | PhD leadership transition |
+
+---
+
+## ✅ 已完成的关键修改 (之前阶段)
 
 ### 1. 引文准确性核实 ✅
 

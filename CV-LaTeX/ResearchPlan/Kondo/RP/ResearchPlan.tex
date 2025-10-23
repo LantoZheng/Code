@@ -58,7 +58,7 @@
 \vspace{0.3cm}
 
 \begin{abstract}
-The AV$_3$Sb$_5$ kagome metals represent a unique solid-state platform where geometric frustration, electronic topology, and strong correlations converge to produce exotic quantum phases. Foundational ultrafast studies on this family have revealed the coherent oscillations of its charge density wave (CDW) order, yet these experiments, performed with fixed pump photon energies, have provided only a band-averaged view of the underlying dynamics. This Master's research proposal outlines a two-year project to contribute to understanding these dynamics by employing \textbf{pump-energy-tunable femtosecond spectroscopy} to achieve \textbf{band-selective photo-excitation} in CsV$_3$Sb$_5$. Under Professor Kondo's guidance, I will systematically tune the pump energy across key inter-band transitions—specifically targeting the van Hove singularities (vHS) at the M-point versus the topological Dirac-like states at the K-point—to map the momentum-resolved electron-phonon coupling landscape. My background in optical system design (diffractive neural networks, SLM-based beam shaping) has prepared me to quickly master the experimental techniques required for this project. The first year will focus on mastering ultrafast spectroscopy techniques and preliminary measurements, while the second year will pursue advanced experiments including fluence-dependent studies and circularly-polarized pump-probe measurements. This work will serve as a foundation for potential doctoral research while contributing meaningful data to the Kondo Lab's research program on quantum materials.
+The AV$_3$Sb$_5$ kagome metals represent a unique platform where geometric frustration, electronic topology, and strong correlations converge. Despite foundational ultrafast studies revealing coherent CDW oscillations, a fundamental question remains unresolved: \textbf{Can we disentangle the contributions of electron-phonon (e-ph) versus electron-electron (e-e) interactions in driving the CDW formation, and how does the interplay between electronic correlations and topological band structure manifest in non-equilibrium states?} This five-year doctoral research program proposes to answer these questions through \textbf{band-selective ultrafast spectroscopy} combined with momentum-resolved techniques. By systematically tuning pump photon energy across key inter-band transitions—targeting van Hove singularities at M-points versus Dirac-like states at K-points—and employing dual-modality measurements (pump-probe reflectivity for time resolution + time-resolved ARPES for momentum resolution), I will extract \textbf{quantitative observables}: transient energy shifts $\Delta E(t)$ (meV precision), carrier relaxation timescales $\tau_{e-e} \sim 50$--100 fs and $\tau_{e-ph} \sim 0.5$--2 ps, electron-phonon coupling strength $\lambda \sim 0.3$--0.8, and quasiparticle renormalization factor $Z(k,t)$ at topologically non-trivial points. The research is structured in three phases: (1) \textbf{Years 1--2 (Foundation)}: Establish band-selective methodology in CsV$_3$Sb$_5$, disentangle e-ph/e-e channels, achieve 1--2 publications (PRB); (2) \textbf{Years 3--4 (Platform Extension)}: Expand to cuprate superconductors (leveraging Kondo Lab's 5/5 expertise) to map pseudogap dynamics and test universality of correlation-topology interplay, target high-impact publication (PRL/Nature Communications); (3) \textbf{Year 5 (Frontier)}: Explore photo-induced metastable phases or develop machine-learning-accelerated spectroscopy. This program addresses Kondo Laboratory's strategic direction in ultrafast quantum materials while establishing band-selective spectroscopy as a quantitative tool for many-body physics. My optical systems background (D2NN, SLM wavefront control) provides direct technical preparation for OPA tuning and signal optimization in pump-probe experiments.
 \end{abstract}
 
 \section{Research Background}
@@ -69,13 +69,48 @@ Time-resolved optical spectroscopy is a powerful, all-optical technique capable 
 However, these pioneering works have a crucial limitation: they were performed using a fixed, non-resonant pump photon energy (typically 1.55 eV or 800 nm). This simultaneously excites electrons across a wide range of states and momentum space, yielding a \textit{band-integrated} response. The core innovation of this proposal is to transition from this band-integrated to a \textbf{band-selective} viewpoint. This methodology has been successfully employed to disentangle competing energy gaps and coupling channels in other strongly correlated systems, such as the high-temperature cuprate superconductors \cite{Coslovich2015, Giannetti2016}. By tuning the pump photon energy, we can directly test the central hypothesis that the CDW is predominantly coupled to the vHS at the M-points \cite{Miao2021, Liang2021}.
 
 \section{Proposed Research and Objectives}
-\textbf{Objective 1: Construct the Momentum-Resolved Electron-Phonon Coupling Landscape.} Under Prof. Kondo's guidance, I will perform pump-energy-dependent measurements of the transient reflectivity ($\Delta R/R$). By fitting the oscillatory component, $A(t) = \sum_{i} A_i e^{-t/\tau_i} \cos(\omega_i t + \phi_i)$, we will extract the initial amplitude ($A_i$) of the CDW mode. Plotting $A_i$ versus pump energy ($E_{pump}$) will yield its "excitation spectrum," mapping the coupling in momentum space.
 
-\textit{Theoretical Expectation:} If the CDW is predominantly driven by the vHS at the M-points (as suggested by ARPES \cite{Kang2022}), we expect $A_i$ to show a pronounced maximum when $E_{pump}$ matches the M-point inter-band transition energy. Recent DFT calculations and ARPES measurements \cite{Tan2021, Zhao2021, Cho2021} indicate that the M-point vHS lies approximately 0.1--0.3 eV below the Fermi level, with relevant optical transitions in the range of $\sim$1.0--1.5 eV depending on the initial and final state bands. In contrast, pumping at energies corresponding to the K-point Dirac states ($\sim$0.8--1.0 eV) should yield weaker coupling to the CDW amplitude mode. This momentum-selective response will provide direct evidence for the microscopic origin of the charge order. \textit{During the literature review phase (Months 1-3), I will work closely with Prof. Kondo to refine these energy estimates based on the most recent band structure calculations.}
+\subsection{Core Physics Questions}
 
-\textbf{Objective 2: Disentangle Band-Specific Energy Relaxation and Coupling Mechanisms.} At key pump energies, we will analyze the non-oscillatory background to extract electron-electron ($\tau_{e-e}$) and electron-phonon ($\tau_{e-ph}$) relaxation timescales. The phase ($\phi$) of the oscillation will reveal its generation mechanism (Displacive vs. Impulsive) \cite{Zeiger1992}. We will also analyze the Fourier spectrum for asymmetric \textbf{Fano lineshapes}, a direct measure of coupling strength \cite{Klein1983}. Fano asymmetry parameters ($q$) typically range from 1--10 for electron-phonon coupled systems, with values of 2--5 commonly observed in CDW materials. Stronger asymmetry indicates tighter electron-phonon coupling at specific momentum points.
+This doctoral research addresses two fundamental questions in quantum many-body physics:
 
-\textbf{Objective 3: Ultrafast Probe of Chiral CDW Dynamics via Circular Dichroism.} Recent scanning tunneling microscopy (STM) and X-ray scattering studies have provided tantalizing evidence for a time-reversal symmetry-breaking chiral charge order in AV$_3$Sb$_5$ \cite{Jiang2021, Shrestha2023}. However, direct dynamical evidence remains elusive. We propose to perform the first circularly-polarized pump-probe experiment on this system.
+\textbf{Question 1: How can we disentangle electron-phonon versus electron-electron interactions in correlated materials?} In the AV$_3$Sb$_5$ kagome metals, the CDW formation mechanism remains debated—is it driven by momentum-specific Fermi surface nesting (e-ph dominated) or by local Coulomb correlations (e-e dominated)? Conventional fixed-energy pump-probe studies cannot distinguish these channels because they excite all electronic states simultaneously.
+
+\textbf{Question 2: How does the interplay between electronic correlations and topological band structure manifest in non-equilibrium states?} The van Hove singularities and Dirac-like crossings in these materials provide momentum-space markers. Do correlation effects (many-body renormalization) and topological features (Berry curvature, orbital textures) exhibit different responses to ultrafast perturbations?
+
+\subsection{Objective 1: Disentangle Electron-Phonon and Electron-Electron Interactions via Band-Selective Dynamics}
+
+\textbf{Measurable Observables:}
+\begin{itemize}
+    \item \textbf{Carrier relaxation times}: $\tau_{e-e} \sim 50$--100 fs (electron-electron thermalization) vs.~$\tau_{e-ph} \sim 0.5$--2 ps (electron-phonon coupling), extracted from multi-exponential fits of $\Delta R/R(t)$
+    \item \textbf{CDW gap dynamics}: Transient gap magnitude $\Delta_{\text{CDW}}(t)$ with meV-scale precision, revealing order parameter melting timescale $\tau_{\text{CDW}} \sim 5$--50 ps
+    \item \textbf{Electron-phonon coupling constant}: Dimensionless $\lambda \sim 0.3$--0.8, extracted from Allen's formula using measured $\tau_{e-ph}$ and phonon density of states
+    \item \textbf{Momentum-resolved coupling strength}: Excitation spectrum $A_i(E_{\text{pump}})$ mapping CDW amplitude mode coupling across Brillouin zone
+\end{itemize}
+
+\textbf{Approach:} Perform pump-energy-dependent measurements of transient reflectivity ($\Delta R/R$) by tuning across 0.8--1.6 eV. By fitting the oscillatory component $A(t) = \sum_{i} A_i e^{-t/\tau_i} \cos(\omega_i t + \phi_i)$, we extract the CDW mode amplitude ($A_i$). Plotting $A_i$ versus $E_{\text{pump}}$ yields the "excitation spectrum," revealing momentum-selective coupling.
+
+\textit{Theoretical Expectation:} If CDW is driven by vHS at M-points (as ARPES suggests \cite{Kang2022}), $A_i$ should peak when $E_{\text{pump}}$ matches M-point inter-band transitions ($\sim$1.0--1.5 eV). Pumping at K-point Dirac states ($\sim$0.8--1.0 eV) should yield weaker coupling. The distinct timescales ($\tau_{e-e}$ vs.~$\tau_{e-ph}$) and their pump-energy dependence directly distinguish interaction channels.
+
+\textbf{Success Criteria:} (1) Map $A_i(E_{\text{pump}})$ across 10+ pump energies with statistical significance $>3\sigma$; (2) Extract $\tau_{e-e}$ and $\tau_{e-ph}$ with $<20\%$ error bars; (3) Determine dominant CDW driving mechanism with quantitative coupling constants.
+
+\subsection{Objective 2: Probe Correlation-Topology Interplay via Momentum-Resolved Dynamics}
+
+\textbf{Measurable Observables:}
+\begin{itemize}
+    \item \textbf{Quasiparticle renormalization}: $Z(k,t)$ at van Hove (M-point) and Dirac (K-point) regions, tracking many-body mass enhancement dynamics
+    \item \textbf{Transient bandwidth}: $W(t)$ evolution near topological features, revealing correlation-induced renormalization timescales
+    \item \textbf{Energy shift at van Hove singularity}: $\Delta E_{\text{vHS}}(t)$ with meV precision, directly measuring electronic temperature and chemical potential shifts
+    \item \textbf{Momentum-resolved carrier population}: $n(k,t)$ from time-resolved ARPES (dual-modality approach), mapping non-equilibrium distribution functions
+\end{itemize}
+
+\textbf{Approach:} Combine pump-probe reflectivity (time resolution) with time-resolved ARPES (momentum resolution) in a dual-modality strategy. At key pump energies identified in Objective 1, perform trARPES to directly observe band dispersion $E(k,t)$ and spectral function $A(k,\omega,t)$ evolution on femtosecond timescales.
+
+\textit{Physical Insight:} Topological features (Dirac cones, van Hove points) act as "momentum-space probes." If correlations are momentum-dependent, we expect: (1) Faster thermalization at flat-band regions (high density of states); (2) Different $Z$ renormalization near topological vs.~trivial bands; (3) Asymmetric dynamics above/below Fermi level revealing particle-hole asymmetry.
+
+\textbf{Success Criteria:} (1) Obtain trARPES spectra with $\Delta k < 0.05$ Å$^{-1}$ resolution and $<100$ fs time steps; (2) Quantify $Z(k)$ evolution with $<30\%$ uncertainty; (3) Establish correlation between band topology markers and dynamics timescales.
+
+\subsection{Objective 3: Ultrafast Probe of Chiral CDW and Time-Reversal Symmetry Breaking} Recent scanning tunneling microscopy (STM) and X-ray scattering studies have provided tantalizing evidence for a time-reversal symmetry-breaking chiral charge order in AV$_3$Sb$_5$ \cite{Jiang2021, Shrestha2023}. However, direct dynamical evidence remains elusive. We propose to perform the first circularly-polarized pump-probe experiment on this system.
 
 \textit{Physical Mechanism:} A chiral CDW, characterized by a complex order parameter $\Delta e^{i\phi(r)}$ with non-trivial Berry phase, couples differently to left- and right-handed circularly polarized light ($\sigma^+$ and $\sigma^-$) through orbital angular momentum selection rules \cite{Wang2020}. This circular dichroism should manifest as a differential transient reflectivity signal: $\Delta R_{\text{CD}} = (\Delta R/R)_{\sigma^+} - (\Delta R/R)_{\sigma^-}$.
 
@@ -96,160 +131,272 @@ My computational background (Python, MATLAB, and experience with signal processi
 
 \section{Research Timeline and Skill Development Plan}
 
-\subsection{Year 1 (Months 1-12): Foundation and Integration}
+The five-year doctoral program is structured in three progressive phases aligned with skill development, research depth, and publication goals:
 
-\textbf{Months 1-3: Laboratory Integration and Basic Training}
+\subsection{Phase 1: Foundation (Years 1--2)}
+
+\textbf{Year 1 Goals:} Laboratory integration, technique mastery, establish band-selective methodology in CsV$_3$Sb$_5$
+
+\textbf{Months 1--6:}
 \begin{itemize}
-    \item \textbf{Academic coursework:} Enroll in required GSGC courses (Advanced Quantum Mechanics, Experimental Methods in Condensed Matter Physics)
-    \item \textbf{Japanese language study:} Begin intensive Japanese classes (target: conversational fluency for daily lab interactions by Month 12)
-    \item \textbf{Lab safety and equipment training:} Complete laser safety certification; familiarize with Ti:Sapphire system, lock-in amplifiers, and cryogenic equipment
-    \item \textbf{Literature review:} Deep dive into ultrafast spectroscopy of kagome metals and correlated materials; weekly progress meetings with Prof. Kondo
-    \item \textbf{Preliminary experiments:} Perform room-temperature pump-probe measurements on reference materials (graphite, gold films) to understand signal acquisition and data analysis workflow
+    \item \textbf{Coursework:} Advanced Quantum Mechanics, Many-Body Physics, Experimental Methods in Condensed Matter
+    \item \textbf{Language:} Intensive Japanese (target JLPT N4 by Month 6, daily lab communication fluency)
+    \item \textbf{Lab training:} Laser safety, Ti:Sapphire/OPA systems, cryogenics, lock-in detection
+    \item \textbf{Literature mastery:} Systematic review of ultrafast spectroscopy in correlated materials (50+ papers)
+    \item \textbf{Preliminary experiments:} Room-temperature pump-probe on reference materials (Au, graphite)
 \end{itemize}
 
-\textbf{Months 4-8: Core Experimental Skills Development}
+\textbf{Months 7--12:}
 \begin{itemize}
-    \item \textbf{OPA system mastery:} Master wavelength tuning, power optimization, and spectral characterization using the laboratory's OPA system (leveraging my SLM experience for understanding optical alignment and Fourier-plane optics)
-    \item \textbf{Low-temperature measurements:} Gain hands-on experience with the cryostat operation and temperature-dependent spectroscopy
-    \item \textbf{Initial CsV$_3$Sb$_5$ measurements:} Begin pump-energy-dependent measurements at T = 10 K using 3-4 representative pump energies (0.9, 1.2, 1.5 eV) to establish baseline data
-    \item \textbf{Data analysis pipeline:} Develop Python scripts for multi-exponential fitting, Fourier analysis, and automated data processing (building on my computational physics background)
+    \item \textbf{OPA mastery:} Wavelength tuning, power optimization, spectral characterization across 0.8--1.6 eV
+    \item \textbf{CsV$_3$Sb$_5$ characterization:} Baseline reflectivity, verify $T_{\text{CDW}}$, optimize sample mounting
+    \item \textbf{Pump-energy mapping:} Systematic scan of $A_i(E_{\text{pump}})$ at T=10 K (10+ energies, establish excitation spectrum)
+    \item \textbf{Data pipeline:} Develop Python analysis suite for multi-exponential fitting, Fourier analysis, uncertainty quantification
+    \item \textbf{Milestone:} First conference presentation (JPS Annual Meeting), complete Objective 1 preliminary data
 \end{itemize}
 
-\textbf{Months 9-12: Systematic Mapping}
+\textbf{Year 2 Goals:} Complete e-ph/e-e disentanglement, begin trARPES collaboration, first major publication
+
+\textbf{Months 13--18:}
 \begin{itemize}
-    \item \textbf{Pump-energy scan:} Systematically map the excitation spectrum $A_i(E_{\text{pump}})$ across 0.8--1.6 eV (8-10 energy points) at fixed T = 10 K
-    \item \textbf{First manuscript preparation:} Draft internal report summarizing preliminary findings for lab group discussion
-    \item \textbf{Conference presentation:} Prepare poster for domestic Japanese physics conference (e.g., JPS meeting) to gain presentation experience
-    \item \textbf{Milestone 1:} Complete first-generation excitation spectrum showing momentum-selective coupling trends
+    \item \textbf{Temperature/fluence mapping:} Detailed $T$-dependent (10--120 K) and fluence-dependent (10--500 $\mu$J/cm$^2$) studies at key pump energies
+    \item \textbf{Timescale extraction:} Quantify $\tau_{e-e}$, $\tau_{e-ph}$, $\tau_{\text{CDW}}$ with $<20\%$ error, extract $\lambda$ coupling constant
+    \item \textbf{trARPES initiation:} Begin collaboration with Kondo Lab's trARPES system development, learn angle-resolved techniques
+    \item \textbf{Theory collaboration:} Work with theorists on band structure interpretation, DFT+DMFT comparison
 \end{itemize}
 
-\subsection{Year 2 (Months 13-24): Advanced Studies and Thesis Completion}
-
-\textbf{Months 13-17: Deep Characterization}
+\textbf{Months 19--24:}
 \begin{itemize}
-    \item \textbf{Temperature-dependent studies:} Detailed measurements at key pump energies (identified from Year 1) across 10--120 K to track CDW evolution
-    \item \textbf{Fluence-dependent measurements:} Map non-thermal melting threshold and analyze non-linear response regimes
-    \item \textbf{Fano lineshape analysis:} Extract coupling parameters from phonon spectral features
-    \item \textbf{Theory collaboration:} Work with Prof. Kondo's theory collaborators to interpret data within band structure framework
-    \item \textbf{Milestone 2:} Complete comprehensive dataset for primary publication
+    \item \textbf{Circular dichroism:} Attempt chiral CDW detection via polarization-resolved pump-probe
+    \item \textbf{Manuscript preparation:} Draft first major paper targeting \textit{Physical Review B}: "Band-Selective Disentanglement of Electron-Phonon and Electron-Electron Interactions in CsV$_3$Sb$_5$"
+    \item \textbf{International conference:} APS March Meeting presentation (oral or poster)
+    \item \textbf{Milestone:} Submit/publish first-author PRB paper, pass doctoral candidacy examination
 \end{itemize}
 
-\textbf{Months 18-20: Advanced Measurement (If Time Permits)}
+\subsection{Phase 2: Platform Extension and Research Leadership (Years 3--4)}
+
+\textbf{Year 3 Goals:} Expand technique to multiple material platforms, achieve momentum-resolved dynamics via trARPES, high-impact publication
+
+\textbf{Months 25--30:}
 \begin{itemize}
-    \item \textbf{Circular dichroism experiment:} Attempt circularly-polarized pump measurements as exploratory study for potential doctoral work
-    \item \textit{Note:} This is a stretch goal depending on progress in Months 13-17; negative or inconclusive results are acceptable for Master's thesis
+    \item \textbf{trARPES mastery:} Hands-on training with time-resolved ARPES system, achieve $<100$ fs temporal and $<0.05$ Å$^{-1}$ momentum resolution
+    \item \textbf{Dual-modality experiments:} Combine pump-probe reflectivity + trARPES on CsV$_3$Sb$_5$ to directly observe $E(k,t)$, $Z(k,t)$ evolution
+    \item \textbf{Correlation-topology mapping:} Quantify dynamics differences at van Hove (M-point) vs.~Dirac (K-point) features (Objective 2)
+    \item \textbf{Platform comparison:} Begin measurements on sister compound KV$_3$Sb$_5$ or related kagome metal to test universality
 \end{itemize}
 
-\textbf{Months 21-24: Publication and Thesis Finalization}
+\textbf{Months 31--36:}
 \begin{itemize}
-    \item \textbf{Manuscript writing:} Prepare journal article targeting \textit{Physical Review B} or \textit{Journal of the Physical Society of Japan} (realistic for Master's work)
-    \item \textbf{Master's thesis:} Write comprehensive thesis documenting methodology, results, and interpretation
-    \item \textbf{Defense preparation:} Prepare presentation for thesis defense committee
-    \item \textbf{Conference presentation:} Present at international conference (APS March Meeting or similar)
-    \item \textbf{Doctoral transition planning:} If continuing to doctoral program, outline extended research directions building on Master's work
+    \item \textbf{Advanced techniques:} Implement pump-pump-probe or coherent 2D spectroscopy (if equipment available)
+    \item \textbf{Manuscript 2:} Draft high-impact paper targeting \textit{Physical Review Letters} or \textit{Nature Communications}: "Momentum-Resolved Correlation-Topology Interplay in Non-Equilibrium Kagome Metals"
+    \item \textbf{Fellowship application:} Apply for JSPS DC2 fellowship (if eligible) or GSGC excellence scholarship
+    \item \textbf{Mentorship:} Begin supervising 1--2 undergraduate/Master's students on related projects
+    \item \textbf{Milestone:} Submit high-impact paper, achieve 3+ total publications (1 submitted/published PRL/Nat.Comm., 1--2 PRB)
+\end{itemize}
+
+\textbf{Year 4 Goals:} Strategic expansion to cuprate superconductors, leverage Kondo Lab core expertise, establish research independence
+
+\textbf{Rationale for Cuprate Focus:} Kondo Laboratory has world-leading expertise (5/5 rating) in cuprate ARPES and pseudogap physics. Applying band-selective ultrafast techniques to cuprates addresses fundamental questions (e-ph vs.~e-e in pseudogap formation, Cooper pair dynamics) while maximizing lab synergy and demonstrating technique transferability. This strategic choice balances novelty (new technique application) with feasibility (lab infrastructure + sample access).
+
+\textbf{Months 37--42:}
+\begin{itemize}
+    \item \textbf{Cuprate sample preparation:} Collaborate with synthesis groups for high-quality BSCCO, LSCO, or YBaCuO single crystals
+    \item \textbf{Pseudogap dynamics:} Apply band-selective pump-probe to map $\Delta_{\text{PG}}(T,k,t)$ evolution, distinguish pairing vs.~competing order scenarios
+    \item \textbf{Antinodal/nodal comparison:} Leverage momentum selectivity to compare dynamics at antinodal (strong correlation) vs.~nodal (weak correlation) regions
+    \item \textbf{Theory integration:} Collaborate with cuprate theorists on interpreting results within t-J model, Hubbard model frameworks
+\end{itemize}
+
+\textbf{Months 43--48:}
+\begin{itemize}
+    \item \textbf{Photo-doping experiments:} Explore transient superconductivity enhancement or photo-induced pairing via controlled carrier injection
+    \item \textbf{Manuscript 3:} Target \textit{Physical Review X} or \textit{npj Quantum Materials}: "Band-Selective Ultrafast Spectroscopy Reveals Pseudogap Dynamics in Cuprate Superconductors"
+    \item \textbf{International collaboration:} Research visit to collaborating group (1--2 months) for technique exchange or complementary measurements
+    \item \textbf{Milestone:} Establish band-selective spectroscopy as premier tool for cuprate dynamics, 4--5 total publications
+\end{itemize}
+
+\subsection{Phase 3: Frontier Exploration and Dissertation (Year 5)}
+
+\textbf{Year 5 Goals:} Explore high-risk/high-reward directions, complete dissertation, transition to postdoctoral career
+
+\textbf{Months 49--54:}
+\begin{itemize}
+    \item \textbf{Frontier direction (choose one based on prior results):}
+    \begin{itemize}
+        \item \textit{Option A - Photo-induced phases:} Systematically map light-induced metastable CDW/SC states, explore Floquet engineering
+        \item \textit{Option B - ML acceleration:} Develop machine learning models for real-time spectral analysis, automated phase classification
+        \item \textit{Option C - New materials:} Extend to twisted bilayer graphene, moiré superlattices, or other emerging platforms
+    \end{itemize}
+    \item \textbf{Final experiments:} Address committee feedback, fill remaining gaps in story
+    \item \textbf{Student mentorship:} Transfer knowledge to 2--3 junior lab members, ensure project continuity
+\end{itemize}
+
+\textbf{Months 55--60:}
+\begin{itemize}
+    \item \textbf{Dissertation writing:} Comprehensive 200--300 page thesis covering all three phases, emphasizing physics insights and methodological innovations
+    \item \textbf{Final manuscripts:} Complete any pending publications (target 5--6 total first-author papers)
+    \item \textbf{Defense preparation:} Practice presentation, prepare for committee questions
+    \item \textbf{Career transition:} Apply for postdoctoral positions at world-leading institutions (Stanford, MIT, Max Planck, etc.)
+    \item \textbf{Job talks:} Present research at target institutions
+    \item \textbf{Milestone:} Successfully defend PhD dissertation, accept postdoctoral offer
+\end{itemize}
+
+\subsection{Expected Publications and Impact}
+
+\textbf{Target Publications (5--6 first-author papers):}
+\begin{enumerate}
+    \item \textit{Physical Review B} (Year 2): Band-selective e-ph/e-e disentanglement in kagome metals
+    \item \textit{Physical Review Letters} or \textit{Nature Communications} (Year 3): Correlation-topology interplay from momentum-resolved dynamics
+    \item \textit{Physical Review B} (Year 3): Platform extension to sister compounds or related materials
+    \item \textit{Physical Review X} or \textit{npj Quantum Materials} (Year 4): Cuprate pseudogap dynamics with band-selective spectroscopy
+    \item \textit{Review of Scientific Instruments} or \textit{Physical Review Applied} (Year 4--5): Methodological paper on dual-modality techniques
+    \item \textit{Nature Physics/Materials} or high-impact specialized journal (Year 5): Frontier exploration (photo-induced phases or ML application)
+\end{enumerate}
+
+\textbf{Broader Impact:}
+\begin{itemize}
+    \item Establish band-selective ultrafast spectroscopy as quantitative tool for many-body physics (cited methodology)
+    \item Train 2--3 junior researchers in advanced techniques (mentorship legacy)
+    \item Build international collaboration network through conferences, visits, joint publications
+    \item Contribute to Kondo Lab's strategic direction in ultrafast quantum materials
 \end{itemize}
 
 \subsection{Integration and Cultural Adaptation Plan}
 
-\textbf{Language Development:}
+\textbf{Language Development (5-year progression):}
 \begin{itemize}
-    \item Months 1-6: Intensive Japanese language courses (JLPT N4 target)
-    \item Months 7-12: Conversational practice in lab environment (JLPT N3 target)
-    \item Months 13-24: Technical Japanese for scientific presentations
+    \item \textbf{Year 1:} Intensive Japanese courses, daily practice (target JLPT N4 by Month 6, N3 by Month 12)
+    \item \textbf{Year 2:} Conversational fluency in lab meetings, read Japanese physics papers (target N2 by Year 2 end)
+    \item \textbf{Years 3--4:} Technical presentation skills, seminar talks in Japanese (target N1 by Year 4)
+    \item \textbf{Year 5:} Full professional fluency for thesis defense, job interviews, teaching (if TA)
 \end{itemize}
 
-\textbf{Laboratory Culture Integration:}
+\textbf{Professional Development:}
 \begin{itemize}
-    \item Regular attendance at lab seminars and group meetings (even before full Japanese fluency)
-    \item Participate in lab social events and study group activities
-    \item Engage with senior Master's and doctoral students for mentorship
-    \item Contribute to lab maintenance and shared equipment responsibilities
+    \item \textbf{Leadership transition:} From student (Y1--2) → junior researcher (Y3--4) → research leader (Y5)
+    \item \textbf{Mentorship:} Supervise 2--3 undergraduates/Master's students starting Year 3
+    \item \textbf{Fellowship applications:} JSPS DC2, GSGC excellence scholarship, travel grants
+    \item \textbf{Teaching experience:} Serve as TA for undergraduate physics labs (Years 2--4)
+    \item \textbf{Grant writing:} Contribute to Prof.~Kondo's grant proposals (experience for future PI career)
 \end{itemize}
 
-\textbf{Academic Milestones:}
+\textbf{International Network Building:}
 \begin{itemize}
-    \item Year 1 End: Complete required coursework; pass any qualifying examinations
-    \item Year 2 End: Defend Master's thesis; have manuscript submitted or published
-    \item Continuous: Maintain good academic standing (GPA > 3.5 on 4.0 scale)
+    \item \textbf{Conferences:} Annual presentations at APS, MRS, ICSCE, JPS (domestic + international)
+    \item \textbf{Research visit:} 1--2 month visit to collaborating group (Year 4) for technique exchange
+    \item \textbf{Collaboration:} Co-author papers with theory groups, synthesis collaborators
+    \item \textbf{Postdoc networking:} Attend career workshops, connect with potential postdoc advisors at conferences
 \end{itemize}
 
 \section{Risk Assessment and Mitigation Strategies}
 
-\textbf{Risk 1: Weak or absent pump-energy dependence.} If the excitation spectrum $A_i(E_{\text{pump}})$ shows no clear resonance features, it could indicate that (i) the CDW is driven by local correlations rather than momentum-specific Fermi surface nesting, or (ii) the coupling is distributed across a broad energy range. \textit{Mitigation:} We will extend measurements to a wider energy range (down to 0.5 eV using a second OPA stage) and perform complementary fluence-dependent studies. Even a null result would be scientifically valuable, ruling out simple nesting scenarios and motivating more sophisticated theoretical models.
+\textbf{Risk 1: Weak or absent pump-energy dependence.} If the excitation spectrum $A_i(E_{\text{pump}})$ shows no clear resonance features, it could indicate local correlation dominance rather than momentum-specific nesting. \textit{Mitigation:} (1) Extend energy range down to 0.5 eV with second OPA stage; (2) Implement complementary fluence-dependent studies; (3) Pursue alternative Objective (correlation-topology via trARPES). A null result remains scientifically valuable, ruling out simple nesting and motivating advanced theoretical models—suitable for PRB publication and thesis chapter.
 
-\textbf{Risk 2: Sample degradation under laser irradiation.} High-fluence pump pulses may induce permanent damage or surface oxidation, especially at low temperatures. \textit{Mitigation:} We will systematically monitor the linear reflectivity spectrum before and after each measurement series. Samples will be continuously translated using a motorized XY stage to expose fresh areas. If necessary, we will reduce fluence and increase averaging time.
+\textbf{Risk 2: Sample availability challenges.} High-quality CsV$_3$Sb$_5$ or cuprate crystals may face synthesis delays. \textit{Mitigation:} (1) Leverage Kondo Lab's established collaborations and institutional networks; (2) Use sister compounds (KV$_3$Sb$_5$, RbV$_3$Sb$_5$) as backup platforms; (3) For cuprates, access multiple material families (BSCCO, LSCO, YBaCuO) through diverse collaborators; (4) 5-year timeline provides buffer to wait for high-quality samples rather than compromising on material quality.
 
-\textbf{Risk 3: No observable circular dichroism signal.} The absence of $\Delta R_{\text{CD}}$ could mean either (i) the chiral CDW does not exist or has negligible coupling to light, or (ii) our experimental sensitivity is insufficient. \textit{Mitigation:} We will benchmark our setup using known chiral materials (e.g., magnetic Weyl semimetals) to establish the detection limit. Alternative probes, such as second-harmonic generation (SHG) with polarization analysis, may be employed if time permits, as SHG is often more sensitive to broken inversion/time-reversal symmetry.
+\textbf{Risk 3: trARPES technical challenges.} Time-resolved ARPES requires simultaneous optimization of temporal ($<100$ fs), energy ($<50$ meV), and momentum ($<0.05$ Å$^{-1}$) resolution—technically demanding. \textit{Mitigation:} (1) Years 1--2 focus on pump-probe reflectivity (mature technique) to build foundation; (2) Collaborate closely with Kondo Lab's trARPES development team; (3) If technical hurdles persist, dual-modality strategy remains viable with separate static ARPES + time-resolved reflectivity correlation; (4) Consider alternative momentum-resolved probes (angle-resolved second-harmonic generation).
 
-\textbf{Risk 4: Technical challenges with OPA stability.} Tunable OPA systems can suffer from power fluctuations and spectral drift, complicating quantitative comparisons across pump energies. \textit{Mitigation:} We will implement real-time power normalization using a reference photodiode and perform wavelength calibration before each data set. Advanced stabilization techniques developed for OPA systems will be employed to ensure reliable long-term measurements.
+\textbf{Risk 4: Cuprate complexity exceeds timeline.} Cuprates involve multiple competing orders (CDW, pseudogap, superconductivity), complicating data interpretation. \textit{Mitigation:} (1) Focus on specific phase diagram region (e.g., underdoped pseudogap regime) rather than complete mapping; (2) Leverage Kondo Lab's extensive cuprate expertise for rapid interpretation; (3) Collaborate with established cuprate theorists; (4) Year 4 timing allows incorporating lessons from Years 1--3 kagome work; (5) Even partial cuprate results demonstrate technique transferability.
 
-\textbf{Risk 5: Limited sample availability.} High-quality CsV$_3$Sb$_5$ single crystals require specialized synthesis techniques. \textit{Mitigation:} I will rely on Prof. Kondo's existing collaborations and the University of Tokyo's institutional networks to secure samples. If CsV$_3$Sb$_5$ proves difficult to obtain, the closely related KV$_3$Sb$_5$ or RbV$_3$Sb$_5$ can serve as alternative platforms with nearly identical physics and CDW properties. As a Master's student, I will work within the constraints of available materials rather than attempting to establish new synthesis collaborations independently.
+\textbf{Risk 5: Publication competition.} Ultrafast spectroscopy is highly active field with potential for scooping. \textit{Mitigation:} (1) Band-selective methodology provides unique angle vs.~conventional fixed-energy studies; (2) Dual-modality (reflectivity + trARPES) offers differentiation; (3) Rapid publication strategy (Years 2, 3, 4, 5) maintains priority; (4) Diversified platform strategy (kagome + cuprates + frontier) reduces single-topic risk; (5) Close monitoring of arXiv and conference proceedings for competitive awareness.
+
+\textbf{Risk 6: Career transition uncertainties.} Postdoc job market competitiveness. \textit{Mitigation:} (1) Target 5--6 first-author publications with $\geq$1 high-impact (PRL/Nature family) for strong CV; (2) Build international network through conferences and research visit; (3) Develop versatile skillset (ultrafast + ARPES + ML/data science); (4) Pursue teaching experience as TA; (5) Apply to diverse postdoc opportunities (academia, national labs, industry research); (6) Year 5 timing allows job application cycles during dissertation writing.
 
 \section{Preparation and Fit with Kondo Laboratory}
 
 \subsection{How My Background Prepares Me for This Project}
 
-My undergraduate research experience has provided a strong foundation for ultrafast spectroscopy research:
+My undergraduate research experience provides strong technical foundation for this doctoral program:
 
 \textbf{Optical Systems Expertise:}
 \begin{itemize}
-    \item \textbf{D2NN Project:} Designed single-layer diffractive neural networks using SLM in 4f optical systems, giving me hands-on experience with Fourier-plane optics, phase modulation, and optical alignment—directly relevant to OPA tuning and pump-probe beam paths
-    \item \textbf{Self-Calibrating Beam Shaping:} Developed feedback-controlled wavefront correction systems with reflective SLMs, demonstrating competence in optical metrology and real-time optimization algorithms applicable to signal optimization in pump-probe experiments
+    \item \textbf{D2NN Project:} Designed single-layer diffractive neural networks using SLM in 4f optical systems—directly transferable to OPA tuning, pump-probe beam alignment, Fourier-plane optics
+    \item \textbf{Self-Calibrating Beam Shaping:} Developed feedback-controlled wavefront correction with reflective SLMs—applicable to real-time signal optimization, noise reduction, automated data acquisition
 \end{itemize}
 
 \textbf{Computational and Data Analysis Skills:}
 \begin{itemize}
-    \item Proficient in Python (PyTorch, SciPy) and MATLAB for signal processing, fitting algorithms, and data visualization
-    \item Experience with optimization algorithms (SGD, simulated annealing) transferable to extracting phonon parameters from transient reflectivity data
-    \item Strong background in computational physics (95/100 in coursework)
+    \item Proficient in Python (PyTorch, SciPy), MATLAB—ready for multi-exponential fitting, Fourier analysis, machine learning applications
+    \item Experience with optimization algorithms (SGD, simulated annealing)—transferable to parameter extraction, automated phase classification
+    \item Strong computational physics background (95/100)—foundation for numerical modeling, Monte Carlo simulations
 \end{itemize}
 
-\textbf{Materials Characterization:}
+\textbf{Research Mindset:}
 \begin{itemize}
-    \item Hands-on experience with SEM for nanostructure characterization in nanophotonics research
-    \item Understanding of optical spectroscopy from plasmon resonance studies
-    \item FDTD simulation experience for electromagnetic mode analysis
+    \item Top academic performance (2/23 ranking)—demonstrated ability to master complex material quickly
+    \item International experience (UC Berkeley program)—prepared for research environment, English proficiency
+    \item Interdisciplinary background (Physics + Economics double major)—broad perspective for problem-solving
 \end{itemize}
 
-\textbf{Academic Preparation:}
+\subsection{Why Kondo Laboratory and Five-Year Doctoral Program}
+
+The Kondo Laboratory represents the ideal environment for several reasons:
+
+\textbf{Technical Infrastructure:}
 \begin{itemize}
-    \item Strong foundation in quantum mechanics (89/100), solid-state physics (82/100), and optics (93/100)
-    \item Top of class (2/23 ranking) demonstrates work ethic and ability to master complex material
-    \item International experience through Berkeley Physics International Education Program
+    \item World-class ARPES systems with momentum resolution $<0.01$ Å$^{-1}$
+    \item Developing time-resolved capabilities (laser-ARPES, pump-probe)—perfect timing to contribute to frontier technique development
+    \item Access to synchrotron facilities through institutional partnerships
+    \item Established cryogenic, sample preparation, and characterization infrastructure
 \end{itemize}
 
-\subsection{Why Kondo Laboratory and This Research Direction}
-
-The Kondo Laboratory's focus on ultrafast spectroscopy of quantum materials represents the ideal environment to bridge my optical physics background with frontier condensed matter research. The laboratory's expertise in time-resolved techniques and correlated electron systems will provide mentorship to develop into an independent researcher. Moreover, the specific research direction proposed here—band-selective spectroscopy of kagome metals—combines:
-
+\textbf{Expertise Alignment:}
 \begin{itemize}
-    \item \textbf{Technical challenge:} Requiring precise optical control and data analysis skills I have begun developing
-    \item \textbf{Fundamental physics:} Addressing open questions about CDW mechanisms in topological materials
-    \item \textbf{Career development:} Providing exposure to cutting-edge experimental techniques valued in both academia and industry
+    \item Cuprate superconductors (5/5 expertise)—enables Year 4 strategic expansion
+    \item Topological materials (emerging strength)—aligns with kagome focus
+    \item Strong theory collaborations—essential for interpreting complex many-body dynamics
+    \item Materials synthesis networks—ensures sample access
 \end{itemize}
 
-If this Master's work proves successful, I am strongly interested in continuing to doctoral studies, potentially expanding into complementary techniques such as time- and angle-resolved photoemission spectroscopy (trARPES) or extending band-selective methods to other quantum material families.
+\textbf{Mentorship and Career Development:}
+\begin{itemize}
+    \item Prof.~Kondo's track record in high-impact publications (\textit{Nature}, \textit{Science})
+    \item Lab culture emphasizing both technical excellence and physics depth
+    \item International collaboration network for postdoc opportunities
+    \item Located at University of Tokyo ISSP—hub for condensed matter physics in Asia
+\end{itemize}
 
-\subsection{Expected Outcomes for Master's Degree}
+\textbf{Five-Year Commitment Rationale:}
+
+A five-year doctoral program is essential to achieve the research depth and breadth outlined in this proposal:
+\begin{itemize}
+    \item Years 1--2: Master foundational techniques (cannot be rushed)
+    \item Years 3--4: Expand to multiple platforms and high-impact publications (requires maturity)
+    \item Year 5: Explore frontier directions and complete comprehensive dissertation (distinguishes PhD from extended Master's)
+\end{itemize}
+
+This timeline allows transitioning from student to research leader, developing mentorship skills, and establishing myself as expert in band-selective ultrafast spectroscopy—positioning me for tenure-track or national lab PI career.
+
+\subsection{Expected Outcomes for Doctoral Degree}
 
 \textbf{Concrete Deliverables:}
 \begin{itemize}
-    \item \textbf{Primary publication:} First-author paper in \textit{Physical Review B} or \textit{Journal of the Physical Society of Japan} documenting momentum-resolved electron-phonon coupling in CsV$_3$Sb$_5$
-    \item \textbf{Master's thesis:} Comprehensive document detailing experimental methodology, data analysis, and physical interpretation
-    \item \textbf{Conference presentations:} At least 2 presentations (1 domestic, 1 international)
-    \item \textbf{Dataset:} Well-documented experimental data suitable for future doctoral research or collaborations
+    \item \textbf{Publications:} 5--6 first-author papers including $\geq$1 PRL/Nature family high-impact publication
+    \item \textbf{Doctoral dissertation:} Comprehensive 200--300 page thesis establishing band-selective ultrafast spectroscopy as quantitative tool for many-body physics
+    \item \textbf{Conference presentations:} 10+ talks/posters at major international conferences (APS, MRS, ICSCE, JPS)
+    \item \textbf{Dataset legacy:} Well-documented experimental databases for future lab members and collaborators
+    \item \textbf{Methodological innovations:} Dual-modality protocols, analysis pipelines, potentially patentable techniques
 \end{itemize}
 
 \textbf{Skills Acquired:}
 \begin{itemize}
-    \item Mastery of femtosecond laser systems, OPA operation, and cryogenic techniques
-    \item Advanced data analysis methods for time-resolved spectroscopy
-    \item Collaborative research experience with theory groups
-    \item Japanese language proficiency for scientific communication
-    \item Professional presentation and scientific writing skills
+    \item \textbf{Experimental mastery:} Femtosecond laser systems, OPA, trARPES, cryogenics, sample preparation
+    \item \textbf{Analytical expertise:} Advanced data analysis, statistical modeling, machine learning for spectroscopy
+    \item \textbf{Theoretical understanding:} Many-body physics, non-equilibrium dynamics, correlation effects
+    \item \textbf{Professional skills:} Scientific writing, presentation, grant writing, mentorship, collaboration
+    \item \textbf{Language proficiency:} Japanese (target JLPT N1), enabling full integration into academic culture
 \end{itemize}
 
-This Master's program will serve as both a standalone research contribution and a strong foundation for potential doctoral work, positioning me to pursue an academic or industrial research career in experimental quantum materials physics.
+\textbf{Career Positioning:}
+
+This doctoral program will position me as an internationally recognized expert in ultrafast quantum materials spectroscopy, qualified for:
+\begin{itemize}
+    \item \textbf{Postdoctoral research:} Top-tier institutions (Stanford, MIT, Max Planck, Berkeley, etc.)
+    \item \textbf{Tenure-track faculty:} Emphasis on experimental condensed matter physics programs
+    \item \textbf{National laboratory PI:} Staff scientist positions at facilities (Brookhaven, SLAC, NIST, etc.)
+    \item \textbf{Industry R\&D:} Quantum technology companies, advanced materials development
+\end{itemize}
+
+The five-year investment in this doctoral program is not merely degree completion—it is essential training to become a creative, rigorous, and collaborative research leader capable of addressing frontier questions in quantum materials physics.
 
 \newpage
 \printbibliography
