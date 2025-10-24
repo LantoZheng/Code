@@ -38,7 +38,7 @@
 **特点**：
 - 严格 2 页 A4
 - 包含：学术背景、研究对齐、**暂定研究计划**、职业目标
-- 明确标注意向导师：Professor Takao Kondo, ISSP
+- 明确标注意向导师：Professor Takeshi Kondo, ISSP
 - 强调灵活性和适应性
 
 ### 原始版 (6 页) - 参考版本
@@ -85,7 +85,7 @@ pdflatex Statement_of_Purpose.tex
 
 - [ ] 使用 **Final 版本** (2 页)
 - [ ] 页数严格 2 页以内
-- [ ] 明确提到意向导师：Professor Takao Kondo
+- [ ] 明确提到意向导师：Professor Takeshi Kondo
 - [ ] 包含 Tentative Research Plan
 - [ ] 展示研究方向灵活性
 - [ ] 无拼写和语法错误

@@ -7,6 +7,7 @@
 \geometry{margin=0.7in}
 \usepackage{setspace}
 \setstretch{0.95}
+\usepackage{amsmath}
 \usepackage{microtype}
 \usepackage{hyperref}
 \hypersetup{
@@ -52,97 +53,71 @@
 % --- 正文 ---
 \section{Academic Background and Motivation}
 
-I am a final-year undergraduate Physics major at Beijing Normal University (ranked 2/23, GPA 3.7/4.0) with research experience in optical physics and nanophotonics. My projects include diffractive neural networks (D2NN achieving 97\% MNIST accuracy), spatial light modulator (SLM)-based beam shaping with real-time optimization, and nanophotonics characterization using SEM/TEM and FDTD simulations. Currently at UC Berkeley through the Berkeley Physics International Education Program (Aug--Dec 2025), I have been exposed to cutting-edge condensed matter physics and ultrafast spectroscopy. This experience has crystallized my scientific passion: \textbf{How can we disentangle the competing interactions—electron-phonon coupling, electron-electron correlations, and topological band structure—that govern exotic quantum phases?} This fundamental question, rather than mere technical fascination, motivates my commitment to a five-year doctoral program in experimental quantum materials physics.
+I am a final-year undergraduate Physics major at Beijing Normal University (ranked 2/23, GPA 3.7/4.0) with research in optical physics (diffractive neural networks, SLM beam shaping) and nanophotonics. Currently at UC Berkeley (Aug--Dec 2025), I have been exposed to cutting-edge condensed matter physics and ultrafast spectroscopy. This crystallized my scientific passion: \textbf{How can we disentangle electron-phonon coupling, electron-electron correlations, and topological band structure that govern exotic quantum phases?} This fundamental question, rather than mere technical fascination, motivates my commitment to a five-year doctoral program in experimental quantum materials physics.
 
-My technical skills—precision optical alignment, wavefront control, signal optimization, computational methods (Python/PyTorch, MATLAB [95/100])—are tools, not endpoints. They position me to contribute meaningfully to addressing deep physics questions through advanced ultrafast spectroscopy at the University of Tokyo, where experiment meets theory to probe non-equilibrium many-body phenomena.
+My technical skills—precision optics, signal optimization, computational methods (Python/PyTorch, MATLAB)—are tools to address deep physics questions through advanced ultrafast spectroscopy, where experiment meets theory to probe non-equilibrium many-body phenomena.
 
 \section{Why School of Science, University of Tokyo, and Tentative Research Plan}
 
-\subsection{Research Alignment with Professor Takao Kondo's Laboratory (ISSP)}
+\subsection{Research Alignment with Professor Takeshi Kondo's Laboratory (ISSP)}
 
-I am strongly motivated to join Prof.~Kondo's laboratory due to exceptional research synergy. The lab's world-leading work in angle-resolved photoemission spectroscopy (ARPES) on topological materials and strongly correlated systems—including \textbf{recent development of time-, spin-, and angle-resolved ARPES using pump-probe femtosecond lasers}—represents precisely the intersection of ultrafast optics and quantum materials physics where I aspire to build my career.
+I am strongly motivated to join Prof.~Kondo's laboratory due to exceptional research synergy. The lab's world-leading ARPES work on topological materials and strongly correlated systems—\textbf{combined with strategic development of time-resolved and spin-resolved ARPES (as described in Section 7 of the laboratory website)}—represents the intersection of ultrafast optics and quantum materials physics where I aspire to build my career.
 
-\textbf{Key alignment between my background and laboratory techniques:}
-\begin{itemize}
-    \item My D2NN project in 4f optical systems trained me in Fourier-plane optics and phase control, directly applicable to laser-ARPES systems and OPA tuning for pump-probe experiments.
-    \item My SLM feedback control work (using SGD and simulated annealing algorithms) parallels signal optimization challenges in time-resolved spectroscopy.
-    \item My computational physics background enables contribution to high-dimensional ARPES data analysis and machine learning implementation for complex spectroscopic datasets.
-\end{itemize}
+My D2NN optical systems experience, SLM feedback control algorithms, and computational physics background directly apply to laser-ARPES, OPA tuning, and high-dimensional data analysis. The lab's discoveries (\textit{Nature} 2019, 2021 topological states; \textit{Science} 2020 cuprate mysteries) and ISSP resources (ultrahigh-resolution laser-ARPES, global synchrotron access, theory/synthesis networks) provide ideal environment.
 
-The laboratory's groundbreaking discoveries—direct observation of topological surface states (\textit{Nature} 2019, 2021), resolution of cuprate superconductor Fermi surface mysteries (\textit{Science} 2020), and microscopic observation of complex magnetic phases (\textit{Nature Communications} 2020)—demonstrate the power of advanced ARPES to address fundamental condensed matter physics questions. The University of Tokyo's ISSP offers unparalleled resources: multiple ultrahigh-resolution laser-ARPES systems, global synchrotron facility access, and collaborative networks with theory groups and materials synthesis teams.
+\textbf{Alignment with the laboratory's trARPES development:} The lab's time-resolved ARPES development complements my dual-modality approach. My pump-probe expertise enables rapid parameter screening (\textit{when/what conditions}), while trARPES collaboration (Years 3--5) reveals momentum-space dynamics (\textit{how}). This synergy contributes to technical development while advancing ultrafast many-body physics.
 
 \subsection{Tentative Research Plan: Band-Selective Ultrafast Spectroscopy for Many-Body Physics}
 
-\textbf{Core Physics Questions (5-year doctoral vision):}
-
-My proposed doctoral research addresses fundamental questions that require deep experimental and theoretical integration:
+\textbf{Core Physics Questions:}
 \begin{enumerate}
-    \item \textbf{Can we disentangle electron-phonon versus electron-electron interactions?} In correlated materials like kagome metals (CsV$_3$Sb$_5$) and cuprate superconductors, distinguishing these competing channels requires band-selective spectroscopy—tuning pump photon energy to probe specific momentum-space regions while extracting quantitative timescales ($\tau_{e-e} \sim 50$--100 fs vs.~$\tau_{e-ph} \sim 0.5$--2 ps) and coupling constants ($\lambda$, quasiparticle $Z$).
-    
-    \item \textbf{How does correlation-topology interplay manifest in non-equilibrium states?} Van Hove singularities and Dirac cones provide momentum-space markers. Do topological features modify many-body relaxation dynamics? Dual-modality measurements (pump-probe reflectivity for time resolution + time-resolved ARPES for momentum resolution) can map this interplay directly.
-    
-    \item \textbf{Can we access photo-induced metastable phases inaccessible in equilibrium?} Light-driven quantum state engineering (Floquet, hidden order) represents frontier territory requiring systematic fluence-dependent and wavelength-dependent studies.
+    \item \textbf{Can we disentangle electron-phonon versus electron-electron interactions?} Band-selective spectroscopy in kagome metals (CsV$_3$Sb$_5$) and cuprates extracts quantitative timescales ($\tau_{e-e} \sim 50$--100 fs vs.~$\tau_{e-ph} \sim 0.5$--2 ps) and coupling constants ($\lambda$, $Z$).
+    \item \textbf{How does correlation-topology interplay manifest in non-equilibrium?} Dual-modality measurements (pump-probe + trARPES) map Van Hove singularities and Dirac cone dynamics.
+    \item \textbf{Can we access photo-induced metastable phases?} Light-driven state engineering (Floquet, hidden order) via systematic fluence/wavelength studies.
 \end{enumerate}
 
-\textbf{Five-year research trajectory:}
+\textbf{Technical Approach and Feasibility:}
+My methodology builds directly on Kondo Lab's established platforms:
 \begin{itemize}
-    \item \textbf{Years 1--2 (Foundation):} Establish band-selective methodology in CsV$_3$Sb$_5$ kagome metal, extract quantitative observables (energy shifts $\Delta E$, timescales $\tau$, coupling $\lambda$), achieve 1--2 publications (\textit{Physical Review B}).
-    \item \textbf{Years 3--4 (Platform Extension):} Leverage Kondo Lab's 5/5 cuprate expertise to apply techniques to pseudogap dynamics in BSCCO/LSCO, comparing antinodal (strong correlation) vs.~nodal (weak correlation) regions. Target high-impact publication (\textit{PRL}/\textit{Nature Communications}).
-    \item \textbf{Year 5 (Frontier Exploration):} Pursue photo-induced phases, machine-learning-accelerated analysis, or extension to new platforms (twisted bilayer systems), completing comprehensive dissertation (200--300 pages) establishing band-selective spectroscopy as quantitative tool for many-body physics.
+    \item \textbf{Band-selective pump-probe (Y1--2):} Leverage lab's ultrahigh-resolution laser-ARPES ($\Delta E < 1$ meV) for momentum-resolved equilibrium mapping. Add tunable pump (OPA 1.2--6 eV, $<$100 fs) + broadband probe (white-light generation 1.5--3.5 eV) to track $\Delta R/R(k, \omega, t)$. Initial work on CsV$_3$Sb$_5$ exploits lab's topological material expertise.
+    \item \textbf{Dual-modality synergy (Y3--5):} Pump-probe identifies \textit{when/where} dynamics occur (fluence/wavelength parameter space, $\sim$100 conditions/week); collaborate with the lab's trARPES development to resolve \textit{how} ($k$-space evolution, quasiparticle lifetime). Cuprate focus (BSCCO, LSCO) leverages Kondo Lab's world-leading sample growth (\textit{Science} 2020) and antinodal/nodal ARPES mastery.
+    \item \textbf{Risk mitigation:} Strong electron-phonon screening (kagome)? $\to$ Switch to Bi$_2$Se$_3$/topological insulators (lab expertise). Pump-induced damage? $\to$ Cryogenic environments ($<$20 K), fluence optimization ($<$1 mJ/cm$^2$). Data complexity? $\to$ ML-based analysis (my PyTorch/computational background).
 \end{itemize}
 
-\textbf{Expected outcomes:} 5--6 first-author publications including $\geq$1 high-impact paper, methodological innovations in dual-modality spectroscopy, training of 2--3 junior researchers, international collaboration network, positioning for postdoctoral research at world-leading institutions.
+\textbf{Five-year trajectory with milestones:}
+\begin{itemize}
+    \item \textbf{Years 1--2 (Foundation):} CsV$_3$Sb$_5$ band-selective methodology development. Extract $\Delta E(t)$ (meV precision), $\tau_{e-e/e-ph}$ (fs/ps regime), $\lambda$ (0.1--0.5 range), $Z(k)$ at Van Hove singularities. \textit{Milestones:} First pump-probe setup (Month 6), initial kagome data (Month 12), 1--2 \textit{PRB} submissions (Month 18--24).
+    \item \textbf{Years 3--4 (Cuprate Focus):} Probe pseudogap dynamics in BSCCO/LSCO (antinodal vs.~nodal regions) using lab's cuprate samples (\textit{Science} 2020; 5/5 mastery rating). Map $\Delta_\text{PG}(k, t)$ collapse/recovery timescales, test competing order scenarios. \textit{Milestones:} Cuprate measurement campaign (Month 30--36), high-impact paper submission \textit{PRL}/\textit{Nature Communications} (Month 42--48).
+    \item \textbf{Year 5 (Frontier \& Dissertation):} Explore photo-induced phases (Floquet engineering, hidden order), implement ML-accelerated analysis pipelines, or extend to new platforms (nickelates, twisted bilayers). 200--300 page dissertation integrating all findings. \textit{Milestone:} Defense + postdoc applications (Month 60).
+\end{itemize}
 
-I am flexible to adapt based on laboratory priorities, sample availability, and evolving scientific opportunities. Alternative directions include spin dynamics in magnetic topological materials, photo-doping experiments, or coherent 2D spectroscopy development—all aligned with Kondo Lab's strategic directions in ultrafast quantum materials.
+\textbf{Expected outcomes:} 5--6 first-author papers ($\geq$1 high-impact \textit{PRL}/Nature-family), dual-modality technical innovations (potential patent/technique papers), mentorship of 2--3 junior students (Years 3--5), international collaborations (synchrotron beamtimes, theory groups), strong positioning for postdoc at world-leading institutions.
 
-\subsection{World-Class Environment and Career Development}
+\subsection{Career Goals}
 
-The GSGC program's interdisciplinary training framework and international collaboration emphasis align perfectly with my goal to become an experimental physicist addressing frontier problems at the interface of physics, materials science, and advanced instrumentation. Studying in Japan provides unique opportunities to immerse myself in a leading academic culture for condensed matter physics, develop Japanese language proficiency, and establish international research connections valuable for my long-term career in research (academia or national laboratory).
+The GSGC program's interdisciplinary training and international collaboration align with my goal to become an experimental physicist at the physics-materials-instrumentation interface. Studying in Japan offers immersion in leading condensed matter physics culture, Japanese language proficiency (target JLPT N1 by Year 4), and international research connections.
 
 \section{Career Aspirations and Commitment}
 
-\textbf{Doctoral training goals (Years 1--5):} My immediate objectives for the five-year program are to:
+\textbf{Doctoral goals:} Become expert in band-selective ultrafast spectroscopy; publish 5--6 papers ($\geq$1 \textit{PRL}/Nature-family); develop novel dual-modality techniques; build international collaborations; mentor 2--3 students (Years 3--5); achieve JLPT N1 for full integration.
+
+\textbf{Long-term vision:} Postdoc at world-leading institution (Stanford, MIT, Max Planck, Berkeley) developing advanced spectroscopies, then establish research group as tenure-track faculty or national lab PI, bridging experiment-theory through data-driven modeling and ML, mentoring next generation, addressing quantum many-body far-from-equilibrium physics.
+
+\textbf{My commitment:}
 \begin{itemize}
-    \item Establish myself as leading expert in band-selective ultrafast spectroscopy of quantum materials
-    \item Publish 5--6 first-author papers in top-tier journals, including $\geq$1 in \textit{Physical Review Letters} or Nature-family journal
-    \item Develop novel dual-modality techniques with applications beyond initial target systems
-    \item Build international collaborations through conferences, research visits, and joint publications
-    \item Acquire mentorship experience by supervising 2--3 undergraduate/Master's students (Years 3--5)
-    \item Achieve Japanese language proficiency (target JLPT N1 by Year 4) for full cultural and academic integration
+    \item \textbf{Full dedication:} Prepared for intensive research, thriving in challenges (double major Physics+Economics, rank 2/23), viewing obstacles as growth opportunities.
+    \item \textbf{Cultural integration:} Intensive Japanese study (JLPT N1 by Year 4), active university engagement beyond research.
+    \item \textbf{Leadership transition:} Student (Y1--2) $\to$ junior researcher (Y3--4) $\to$ research leader (Y5), taking ownership, mentoring, initiating collaborations.
+    \item \textbf{Scientific excellence:} Top-tier publications; annual international conferences (APS, MRS); competitive fellowships (JSPS DC2, GSGC); teaching/grant experience.
 \end{itemize}
-
-\textbf{Long-term vision (postdoctoral and beyond):} Upon PhD completion, I aim to pursue postdoctoral research at a world-leading institution (Stanford, MIT, Max Planck Institute, Berkeley, etc.) to further develop advanced spectroscopic techniques, with the ultimate goal of establishing my own research group as tenure-track faculty or principal investigator at a national laboratory. My research program would focus on:
-\begin{itemize}
-    \item Developing next-generation time-resolved spectroscopies with unprecedented momentum, energy, and time resolution
-    \item Bridging experiment and theory through close collaboration, data-driven modeling, and machine learning integration
-    \item Mentoring the next generation of experimental physicists through hands-on training and collaborative research
-    \item Addressing fundamental questions about quantum many-body systems far from equilibrium—how do competing interactions produce emergent phenomena?
-\end{itemize}
-
-The five-year doctoral training at the University of Tokyo is not merely a degree requirement—it is the essential foundation for a research career where I can contribute at the highest level to our understanding of quantum materials. This requires mastering not just techniques, but developing physical intuition, theoretical sophistication, collaborative skills, and research leadership.
-
-\textbf{My commitment to excellence in the five-year doctoral program:}
-\begin{itemize}
-    \item \textbf{Full dedication:} I am prepared for the long hours, intensive focus, and occasional setbacks inherent in frontier research. I thrive in challenging environments (demonstrated by simultaneous double major in Physics and Economics, class rank 2/23) and view obstacles as opportunities to develop problem-solving skills.
-  
-    \item \textbf{Japanese language and cultural integration:} Intensive study targeting JLPT N1 by Year 4, enabling full participation in lab discussions, seminar presentations in Japanese, and deep integration into Japanese academic culture. I will actively engage in university life beyond research (clubs, volunteer activities).
-  
-    \item \textbf{Research leadership transition:} From student (Years 1--2) to junior researcher (Years 3--4) to research leader (Year 5)—taking ownership of experimental setups, mentoring juniors, initiating collaborative projects, contributing to grant proposals.
-  
-    \item \textbf{Scientific communication at highest level:} Target publications in top-tier journals; present at major international conferences annually (APS, MRS, ICSCE); develop clear, compelling scientific narratives; participate in peer review and professional service.
-  
-    \item \textbf{Professional development:} Apply for competitive fellowships (JSPS DC2, GSGC excellence scholarship); build international network through collaborations and research visits; develop teaching skills as TA; gain grant writing experience.
-\end{itemize}
-
-I seek not just a doctoral degree, but a transformative five-year experience that will forge me into a creative, rigorous, and collaborative experimental physicist capable of leading frontier research programs in quantum materials.
 
 \section{Conclusion}
 
-The School of Science at the University of Tokyo, particularly Prof.~Takao Kondo's laboratory at ISSP, represents my ideal environment for pursuing a five-year doctoral program addressing fundamental physics questions in quantum materials through advanced ultrafast spectroscopy. The laboratory's world-leading ARPES expertise (topological surface states—\textit{Nature} 2019, 2021; cuprate mysteries—\textit{Science} 2020), active development of time-resolved and spin-resolved techniques, and focus on strongly correlated and topological materials align perfectly with my research vision of disentangling competing interactions through band-selective methods.
+The University of Tokyo's School of Science, particularly Prof.~Kondo's ISSP laboratory, represents my ideal environment for a five-year doctoral program addressing fundamental quantum materials physics through ultrafast spectroscopy. The lab's ARPES expertise (\textit{Nature} 2019, 2021; \textit{Science} 2020), time-resolved technique development, and focus on correlated/topological materials align perfectly with my vision of disentangling competing interactions via band-selective methods.
 
-My experience in optical system design (D2NN, SLM beam shaping), computational analysis (machine learning, optimization algorithms), and hands-on experimentation provides the technical foundation. More importantly, my intellectual passion for understanding how electron-phonon coupling, electron-electron correlations, and topological band structure conspire to produce exotic quantum phases drives my commitment to this five-year doctoral journey. I am prepared to invest the time, focus, and dedication required to transition from student to research leader, contributing transformative advances to ultrafast quantum materials physics.
+My optical systems experience (D2NN, SLM), computational skills (ML, optimization), and hands-on experimentation provide technical foundation. More importantly, my intellectual passion for understanding how electron-phonon coupling, electron-electron correlations, and topological structure produce exotic quantum phases drives my five-year commitment. I am prepared to transition from student to research leader, contributing transformative advances to ultrafast quantum materials physics.
 
-Thank you for considering my application. I am excited about the prospect of joining the University of Tokyo community and collaborating with Professor Kondo's group to push the frontiers of our understanding of quantum many-body phenomena.
+Thank you for considering my application. I am excited to join the University of Tokyo and collaborate with Professor Kondo's group to advance quantum many-body phenomena understanding.
 
 \vspace{0.5em}
 

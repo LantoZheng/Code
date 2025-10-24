@@ -27,7 +27,7 @@
   - Academic background and motivation
   - Scientific interests and objectives
   - **Tentative research plan**（重点突出）
-  - **Potential supervisor name**（明确标注：Professor Takao Kondo, ISSP）
+  - **Potential supervisor name**（明确标注：Professor Takeshi Kondo, ISSP）
   - Career aspirations and commitment
 - ✅ **格式规范**：Times New Roman, A4, 可导出为 .pdf
 
@@ -108,7 +108,7 @@
 
 ### Section 2: Why School of Science, University of Tokyo（~50%，最重要部分）
 
-#### 2.1 Research Alignment with Prof. Takao Kondo's Laboratory（15%）
+#### 2.1 Research Alignment with Prof. Takeshi Kondo's Laboratory（15%）
 
 **策略**: 展示技术匹配度
 
@@ -370,7 +370,7 @@ Phone: +86 13955190184
 提交前请确认：
 
 - [ ] 页数严格控制在 2 页以内
-- [ ] 明确提到意向导师：Professor Takao Kondo, ISSP
+- [ ] 明确提到意向导师：Professor Takeshi Kondo, ISSP
 - [ ] 包含 Tentative Research Plan
 - [ ] 展示研究方向灵活性
 - [ ] 强调技术背景匹配度

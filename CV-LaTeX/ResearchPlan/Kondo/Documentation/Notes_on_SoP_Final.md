@@ -100,7 +100,7 @@ Final 版采用了三大压缩策略：
 
 #### Final 版结构（约 1 页）
 ```
-2.1 Research Alignment with Prof. Takao Kondo's Laboratory (0.3 页)
+2.1 Research Alignment with Prof. Takeshi Kondo's Laboratory (0.3 页)
     ├─ 技术匹配度（精简为要点列表）
     └─ 实验室了解（引用核心论文）
 

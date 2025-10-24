@@ -27,7 +27,7 @@
 ### 项目定位
 - **类型**：2 年制 Master 项目（非博士）
 - **实验室**：Kondo Laboratory, ISSP
-- **意向导师**：Professor Takao Kondo
+- **意向导师**：Professor Takeshi Kondo
 
 ### 研究目标
 1. **Objective 1**：能带选择性光激发动力学

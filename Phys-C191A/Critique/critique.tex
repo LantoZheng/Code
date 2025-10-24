@@ -1,0 +1,87 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CRITIQUE OF FIRST REPORT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,10.5pt,twoside]{article}
+\hyphenpenalty=8000
+\textwidth=125mm
+\textheight=200mm
+\usepackage[top=3cm, bottom=3cm, inner=3cm, outer=3cm, includehead]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\raggedbottom
+\usepackage{xurl}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{braket}
+\usepackage[hidelinks, pdftex]{hyperref}
+\urlstyle{same}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{csquotes}
+\usepackage[notes, backend=biber]{biblatex-chicago}
+\bibliography{references}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\usepackage[english]{babel}
+
+\begin{document}
+\fancyhead[LE]{\thepage\ \ \ \ Ding, Ariyaratrangsee, and Zheng}
+\fancyhead[RO]{Critique of First Report \ \ \ \ \thepage}
+\begin{center}
+\LARGE
+\textbf{Critique: Quantum Money and Inflation Control}\\[6pt]
+\large
+\textit{A Critical Analysis of Our First Report}\\[11pt]
+\normalsize
+\textbf{Juncheng Ding, Tian Ariyaratrangsee, Xiaoyang Zheng}\\[4pt]
+\textit{PHYS-C191A: Quantum Information Science}\\[2pt]
+\textit{October 23, 2025}\\[8pt]
+\end{center}
+
+\section{Summary and Evaluation}
+
+Our first report examined quantum money as an alternative to Bitcoin, proposing four inflation control mechanisms: computational difficulty adjustment, state space restriction, chain-based validation, and hybrid approaches. While the report successfully articulated the conceptual shift from computational to physical security, it contained critical technical ambiguities and omitted practical considerations essential for implementation.
+
+\section{Critical Technical Issues}
+
+\subsection{Computational Difficulty Adjustment}
+
+The report's notation $H(\ket{\psi}) < D$ lacks precise definition. In quantum contexts, "quantum hash function" could mean either: (1) measurement-based hash—measure $\ket{\psi}$ to get classical outcomes $\vec{m}$, then compute $h(\vec{m}) < D$; or (2) unitary hash operator applied before measurement. Without specifying the measurement basis, the scheme's collision resistance remains unclear. Additionally, the difficulty adjustment formula assumes linear scaling between difficulty and generation time, but if quantum circuit depth is rate-limiting, this relationship may be nonlinear.
+
+\subsection{State Space Restriction}
+
+The report's claim that tokens are "coherent superpositions $\ket{\psi_{\text{valid}}} = \sum_{i=1}^{N} \alpha_i \ket{\phi_i}$" creates a fundamental contradiction: if arbitrary coefficients $\alpha_i$ are allowed, the state space is infinite (continuous manifold), not finite. \textbf{Resolution:} Tokens must be discrete orthogonal basis states $\ket{\phi_i}$, not arbitrary superpositions, to achieve a true hard cap of $N$ distinguishable tokens. The reference to "quantum fingerprinting" was also imprecise—quantum error-correcting codes provide the correct framework.
+
+\subsection{Chain-Based Validation}
+
+\textbf{Critical flaw:} The scheme $\ket{\psi_n} = U_n(\vec{m}_{n-1}) \ket{\phi_{\text{seed}}}$ requires measuring $\ket{\psi_{n-1}}$ to obtain $\vec{m}_{n-1}$, which destroys the previous state. This makes the system deflationary (each minting destroys a token) and creates a sequential bottleneck. \textbf{Solutions:} (1) entanglement-based chaining using EPR pairs; (2) quantum state tomography with partial measurements; or (3) Gottesman-Chuang quantum signatures allowing non-destructive verification.
+
+\subsection{Hybrid Mechanisms}
+
+The two-tier architecture lacks detail on redemption: how Layer 2 tokens convert to Layer 1 requires a burn-and-mint protocol with dynamic exchange rates—essentially quantum fractional reserve banking. This complexity demands careful economic modeling absent from the report.
+
+
+
+\section{Areas for Future Development}
+
+Several important practical considerations remain to be addressed in future revisions. \textbf{Decoherence and error correction}: A complete analysis should specify requirements for maintaining quantum state coherence over extended periods, including the threshold for logical error rates (estimated below $10^{-15}$ per operation) needed for practical implementation. \textbf{Quantum communication infrastructure}: The mechanisms for transferring quantum money tokens between parties—whether through quantum teleportation or direct quantum channels—warrant detailed discussion, as they determine the feasibility of transaction networks. \textbf{Game-theoretic security}: Future work should analyze potential attack vectors such as selfish mining and nothing-at-stake scenarios, establishing robustness against rational adversarial behavior.
+
+\subsection{Establishing and Maintaining Quantum Currency Value}
+
+An important direction for future work is understanding how quantum currency would acquire and maintain value once technically feasible. In classical and digital economies, value emerges from collective trust, scarcity, and exchange utility. For quantum money, scarcity is enforced by physical laws,\autocite{Wiesner_1983} yet market confidence and convertibility remain essential for any stable monetary system.
+
+Future iterations could explore several approaches: pegging initial token values to classical benchmarks (such as stablecoins or fiat currencies) to enable early liquidity through exchange markets;\autocite{Nakamoto_2008} allowing value to evolve independently based on transaction demand, verification costs, and infrastructure reliability;\autocite{Zhandry_2019} or anchoring value in the computational or physical resources required for minting—a "quantum energy cost" model.\autocite{Gheorghiu_2022}
+
+However, resource-based valuation alone may introduce volatility similar to early cryptocurrencies. A more robust framework might integrate multiple policy instruments—controlled redemption, staking incentives, or algorithmic stabilization mechanisms inspired by post-quantum cryptoeconomic systems.\autocite{Alagic_2023} Developing a comprehensive treatment of value establishment, transfer, and stabilization represents an essential next step toward transforming quantum money from theoretical construct to functioning economic system.
+
+\section{Conclusion}
+
+While the report successfully identified quantum money's conceptual foundation—reconciling physical unforgeability with economic scarcity—the technical details require substantial refinement. The measurement problem in chain-based validation is particularly critical, and the gap between theoretical mechanisms and practical implementation (decoherence, infrastructure, economic value) remains vast. Future work must address these issues through both theoretical clarification and experimental validation before quantum money can transition from elegant theory to practical reality.
+
+\printbibliography
+
+\end{document}
