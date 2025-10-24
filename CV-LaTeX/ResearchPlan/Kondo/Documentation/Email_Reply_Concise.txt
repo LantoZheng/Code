@@ -1,0 +1,24 @@
+Subject: Re: Statement of Purpose - Corrections and Revisions
+
+Dear Professor Kondo,
+
+Thank you for your detailed feedback. I sincerely apologize for the name error—I have corrected it to Professor Takeshi Kondo throughout all documents.
+
+Following your suggestions, I have revised the Statement of Purpose:
+
+1. **Clarified physical objectives**: Defined three core questions—disentangling e-ph vs. e-e interactions, understanding correlation-topology interplay in non-equilibrium states, and revealing hidden phases via transient band renormalization.
+
+2. **Defined measurable observables**: Specified ΔE(t), τ_e-ph, τ_e-e, τ_QP via trARPES Γ(k,t), Z(k,t), and n(k,t).
+
+3. **Added technical approach**: Described band-selective pump-probe methodology, dual-modality synergy with your lab's trARPES, and risk mitigation strategies.
+
+4. **Expanded timeline**: Included monthly milestones across the five-year program.
+
+I have attached the revised Statement of Purpose. If further refinements would help, I welcome your guidance.
+
+Regarding the other programs, I will research them independently and contact their offices as you recommended.
+
+Thank you for your mentorship. I am excited about contributing to your laboratory's research.
+
+Best regards,
+Xiaoyang Zheng
