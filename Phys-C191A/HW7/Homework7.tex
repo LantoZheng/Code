@@ -1,0 +1,152 @@
+\documentclass[11pt]{article}
+
+% PACKAGES
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{braket} % For quantum mechanics notation \ket{}, \bra{}, \braket{}
+\usepackage{hyperref}
+\usepackage{quantikz}
+
+% Custom commands
+\DeclareMathOperator{\Tr}{Tr} % Define \Tr for the Trace operation
+
+% DOCUMENT METADATA
+\title{Homework 7}
+\author{C191A: Introduction to Quantum Computing, Fall 2025}
+\date{Due: Monday, Oct. 27 2025, 10:00 pm}
+
+\begin{document}
+
+\maketitle
+
+% INSTRUCTIONS
+\section*{Instructions}
+Submit your homework to Gradescope (Entry Code: B3YK46) by 10:00 pm (Pacific time) on the due date listed above. No late submissions are accepted, since the solutions will be posted immediately after the deadline.
+
+You are encouraged to collaborate with your peers on problem sets, as well as the usage of AI tools (e.g., ChatGPT, Bard, etc.) for learning purposes such as asking for hints, clarifications, or alternative explanations but not as a substitute for doing the problems yourself. If an AI system or a peer significantly helps you in your problem-solving process, you should acknowledge them in your submission (e.g., by listing their name or the tool you used on that problem).
+
+However, one problem per homework (the first) is labeled \textbf{"solve individually"}, so that you can honestly gauge your grasp of the material. Ultimately, you are responsible for engaging with the coursework in the way that helps you learn most effectively.
+
+\clearpage
+
+% PROBLEM 1
+\section{Density Matrices and the Bloch Sphere [Solve Individually]}
+
+The density matrix $\rho$ for a general single-qubit system can be written as
+\begin{equation*}
+    \rho = \frac{1}{2}(I + \vec{r} \cdot \vec{\sigma}), \quad \vec{r} = \begin{pmatrix} r_x \\ r_y \\ r_z \end{pmatrix}, \quad \vec{\sigma} = \begin{pmatrix} X \\ Y \\ Z \end{pmatrix}
+\end{equation*}
+Where $\vec{r}$ specifies the (real-valued) Block-sphere coordinates, and we assume $\|\vec{r}\| \le 1$. $\vec{\sigma}$ simply indices the familiar Pauli matrices.
+
+\subsection{1.1}
+Write down the matrix representation of $\rho$ in the logical basis ($\ket{0}, \ket{1}$). In other words, write down
+\begin{equation*}
+    \rho = \begin{pmatrix} a & c \\ b & d \end{pmatrix}
+\end{equation*}
+where each entry is expressed in terms of $r_x, r_y$ and $r_z$.
+
+\subsection{1.2}
+Show that $\rho$ is Hermitian, has trace one, and is positive semi-definite (the three requirements for $\rho$ to be a valid density matrix).
+
+\textit{Hint: a matrix is positive semi-definite if all of its eigenvalues are greater than or equal to zero.}
+
+\subsection{1.3}
+Show that states on the surface of the Bloch sphere $(\|\vec{r}\| = 1)$ are pure states, and that states in the interior "Bloch ball" $(\|\vec{r}\| < 1)$ are mixed states.
+
+% PROBLEM 2
+\section{The Von Neumann Entropy of Quantum Mixed States}
+The von Neumann entropy of a density matrix $\rho$ is
+\begin{equation*}
+    S(\rho) = - \Tr(\rho \ln \rho).
+\end{equation*}
+where $\ln$ is the natural logarithm of the matrix. By diagonalizing $\rho,$ the above can be equivalently written as
+\begin{equation*}
+    S(\rho) = - \sum_{j} \lambda_j \ln \lambda_j
+\end{equation*}
+where $\lambda_j$ are the eigenvalues of $\rho$. Note that $0 \ln 0 = 0$. The von Neumann entropy quantifies the amount of classical uncertainty in a quantum state.
+
+Now, consider the following parameterized state, as a function of $x \in [0, 1]$
+
+\subsection{2.1}
+\begin{equation*}
+    \rho(x) = x \ket{00}\bra{00} + (1-x) \ket{\Phi^+}\bra{\Phi^+}
+\end{equation*}
+where
+\begin{equation*}
+    \ket{\Phi^+} = \frac{\ket{00} + \ket{11}}{\sqrt{2}}
+\end{equation*}
+Calculate the entropy $S(\rho(x))$.
+
+\subsection{2.2}
+What is the von Neumann entropy of a pure state?
+
+\textit{Hint: Evaluate $S(\rho(0))$ and $S(\rho(1))$, then generalize.}
+
+\subsection{2.3}
+Calculate the reduced density matrix $\rho(x)_B$ by tracing out the first subsystem $\rho(x)_B = \Tr_A(\rho(x))$.
+
+\subsection{2.4}
+What is the entropy of the subsystem B, $S(\rho(x)_B)$?
+
+\subsection{2.5}
+How does the idea that "complete knowledge of the whole does not imply complete knowledge of the parts" apply to entangled states?
+
+% PROBLEM 3
+\section{Purification of Mixed States and Uhlmann's Lemma}
+The Schmidt decomposition lets us write any pure state on a bipartite Hilbert space $\ket{\Psi} \in \mathcal{H}_A \otimes \mathcal{H}_B$ in terms of a linear combination of tensor products:
+\begin{equation}
+    \ket{\Psi} = \sum_i \sqrt{\lambda_i} \ket{\phi_i} \ket{\psi_i}
+\end{equation}
+where $\{\ket{\phi_i}\}$ and $\{\ket{\psi_i}\}$ form an orthonormal bases for $\mathcal{H}_A$ and $\mathcal{H}_B$ respectively. This is the well-known Singular-Value-Decomposition (SVD), but applied to quantum states. The coefficients $\lambda_i \ge 0$ are all real and non-negative.
+
+\subsection{3.1}
+Consider a density matrix $\rho_B \in \mathcal{H}_B$ with eigendecomposition $\rho_B = \sum_i \lambda_i \ket{\psi_i}\bra{\psi_i}$, where $\lambda_i$ are eigenvalues of $\rho_B$, and the $\ket{\psi_i}$, the corresponding eigenvectors. Recall that as set of eigenvectors of a Hermitian operator, the $\{\ket{\psi_i}\}$ also form an orthonormal basis for $\mathcal{H}_B$.
+
+Show that for any two pure states $\ket{\Psi_1}, \ket{\Psi_2} \in \mathcal{H}_A \otimes \mathcal{H}_B$ that both have $\rho_B$ as their reduced density matrix on B, that is
+\begin{equation}
+    \Tr_A(\ket{\Psi_1}\bra{\Psi_1}) = \Tr_A(\ket{\Psi_2}\bra{\Psi_2}) = \rho_B
+\end{equation}
+there exists a unitary $U_A = U \otimes I$ only on the subsystem A that relates the two states: $\ket{\Psi_1} = U_A \ket{\Psi_2}$.
+
+This is known as Uhlmann's lemma.
+
+% PROBLEM 4
+\section{The Repetition Code and Longitudinal Relaxation}
+Suppose we have 3 identical physical qubits, that each experience exponential longitudinal relaxation, with lifetimes of $T_1 = 1/\gamma$. What that means is that, as a function of time $t$, the probability of an X error (a bit-flip) being applied to a single qubit is $p(t) = 1 - e^{-\gamma t}$. For the sake of simplicity, we assume the relaxation process is symmetric w.r.t. $\ket{0}$ and $\ket{1}$.
+
+Our goal is to protect a qubit $\ket{\psi} = \ket{\psi_{\text{init}}}$ against this model of noise. For this purpose, we use the three-qubit bit-flip error correction code you learned about in lecture (see below). Subsequently, we wait for time $t$, and then attempt to decode to obtain $\ket{\psi_{\text{final}}}$.
+
+\textit{Note: For the entire problem, you can assume perfect initial state preparation at the start of the circuit, and instantaneous and error free gates throughout the circuit.}
+
+\begin{quantikz}
+  % Qubit 1 (Data)
+  \lstick{$|\psi_{\text{init}}\rangle$} & \ctrl{1} & \ctrl{2} & \gategroup[wires=3, steps=3, style={dashed, rounded corners, fill=gray!20, inner sep=6pt}, label style={label position=center, yshift=0cm}]{Evolution for time t} \qw & \ctrl{2} & \ctrl{1} & \rstick{$|\psi_{\text{final}}\rangle$} \qw \\
+  % Qubit 2 (Ancilla 1)
+  \lstick{$|0\rangle$} & \targ{} & \qw & \qw & \qw & \targ{} & \rstick{$|0\rangle$} \qw \\
+  % Qubit 3 (Ancilla 2)
+  \lstick{$|0\rangle$} & \qw & \targ{} & \qw & \targ{} & \qw & \rstick{$|0\rangle$} \qw
+\end{quantikz}
+
+
+\subsection{4.1}
+To lowest nonzero order, at approximately what wait time $t$ would any single un-encoded physical qubit have a 1\% probability of experiencing a bit-flip error?
+
+\textit{Hint: "To lowest nonzero order", means, use the approximation $p(t) \approx \gamma t$.}
+
+\subsection{4.2}
+To lowest nonzero order, at approximately what wait time $t$ would the logical qubit (before decoding) have a 1\% probability of experiencing a physical bit-flip error?
+
+\subsection{4.3}
+To lowest nonzero order, at approximately what wait time $t$ will the corrected logical state (after decoding) $\ket{\psi_{\text{final}}}$ have a 1\% probability of having experienced a logical bit-flip error?
+
+\subsection{4.4}
+At what wait time $t$ will the probability of a single physical qubit bit-flip error be equal to the probability of a bit-flip error on the decoded state $\ket{\psi_{\text{final}}}$?
+
+\textit{Note: since the probability is now large, the lowest non-zero approximation breaks down.}
+
+\subsection{4.5}
+If we define the $T_{1,L}$ lifetime of the encoded logical qubit, in the same way it is defined for single qubits -- meaning $T_{1,L}$ is the time at which the probability for $\ket{\psi_{\text{final}}}$ to not have experienced a bit-flip is equal to $1/e$ -- then is $T_{1,L}$ longer or shorter than the single qubit lifetime $T_1$?
+
+\end{document}

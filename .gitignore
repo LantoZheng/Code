@@ -30,3 +30,4 @@ E_norm.csv
 *.zip
 Office-Word-MCP-Server/mcp-config.json
 /RecLetter/
+.playwright-mcp/*.obj

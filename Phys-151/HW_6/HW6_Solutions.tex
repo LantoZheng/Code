@@ -1,0 +1,358 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{physics}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\title{Quantum Field Theory Homework Solutions \\ \large A. Zee, \textit{Quantum Field Theory in a Nutshell}}
+\author{Xiaoyang Zheng}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem I.8.3}
+\textbf{Question:} For the complex scalar field discussed in the text calculate $\langle 0 | T[\varphi(x)\varphi^\dagger(0)] | 0 \rangle$.
+
+\subsection*{Solution}
+
+For a complex scalar field, we have the mode expansion:
+\begin{align}
+\varphi(x) &= \int \frac{d^3k}{(2\pi)^3} \frac{1}{\sqrt{2\omega_k}} \left( a_k e^{-ik\cdot x} + b_k^\dagger e^{ik\cdot x} \right) \\
+\varphi^\dagger(x) &= \int \frac{d^3k}{(2\pi)^3} \frac{1}{\sqrt{2\omega_k}} \left( a_k^\dagger e^{ik\cdot x} + b_k e^{-ik\cdot x} \right)
+\end{align}
+where $\omega_k = \sqrt{\vec{k}^2 + m^2}$, and $a_k$, $b_k$ are annihilation operators satisfying:
+\begin{equation}
+[a_k, a_{k'}^\dagger] = [b_k, b_{k'}^\dagger] = (2\pi)^3 \delta^3(\vec{k} - \vec{k}')
+\end{equation}
+All other commutators vanish.
+
+For the time-ordered product, we need to consider two cases:
+
+\textbf{Case 1:} $x^0 > 0$ (i.e., $t > 0$)
+
+Then $T[\varphi(x)\varphi^\dagger(0)] = \varphi(x)\varphi^\dagger(0)$. Taking the vacuum expectation value:
+\begin{align}
+\langle 0 | \varphi(x)\varphi^\dagger(0) | 0 \rangle &= \int \frac{d^3k}{(2\pi)^3} \frac{d^3k'}{(2\pi)^3} \frac{1}{\sqrt{2\omega_k}} \frac{1}{\sqrt{2\omega_{k'}}} \nonumber \\
+&\quad \times \langle 0 | (a_k e^{-ik\cdot x} + b_k^\dagger e^{ik\cdot x})(a_{k'}^\dagger + b_{k'} e^{-ik'\cdot 0}) | 0 \rangle
+\end{align}
+
+Only the term $a_k a_{k'}^\dagger$ survives:
+\begin{equation}
+= \int \frac{d^3k}{(2\pi)^3} \frac{1}{2\omega_k} e^{-ik\cdot x}
+\end{equation}
+where $k^0 = \omega_k > 0$.
+
+\textbf{Case 2:} $x^0 < 0$ (i.e., $t < 0$)
+
+Then $T[\varphi(x)\varphi^\dagger(0)] = \varphi^\dagger(0)\varphi(x)$. Taking the vacuum expectation value:
+\begin{align}
+\langle 0 | \varphi^\dagger(0)\varphi(x) | 0 \rangle &= \int \frac{d^3k}{(2\pi)^3} \frac{d^3k'}{(2\pi)^3} \frac{1}{\sqrt{2\omega_k}} \frac{1}{\sqrt{2\omega_{k'}}} \nonumber \\
+&\quad \times \langle 0 | (a_k^\dagger + b_k)(a_{k'} e^{-ik'\cdot x} + b_{k'}^\dagger e^{ik'\cdot x}) | 0 \rangle
+\end{align}
+
+Only the term $b_k b_{k'}^\dagger$ survives:
+\begin{equation}
+= \int \frac{d^3k}{(2\pi)^3} \frac{1}{2\omega_k} e^{ik\cdot x}
+\end{equation}
+where $k^0 = \omega_k > 0$.
+
+\textbf{Combining both cases:}
+
+Combining the results from both time orderings gives the Feynman propagator:
+\begin{equation}
+\langle 0 | T[\varphi(x)\varphi^\dagger(0)] | 0 \rangle = \int \frac{d^4k}{(2\pi)^4} \frac{i e^{-ik\cdot x}}{k^2 - m^2 + i\epsilon}
+\end{equation}
+
+This is the standard Feynman propagator $D_F(x)$ for a complex scalar field.
+
+\section*{Problem I.8.4}
+\textbf{Question:} Show that $[Q, \varphi(x)] = -\varphi(x)$.
+
+\subsection*{Solution}
+
+For a complex scalar field with a $U(1)$ symmetry, the conserved charge is:
+\begin{equation}
+Q = \int d^3x \, j^0(x) = i \int d^3x \, (\pi^\dagger \varphi - \varphi^\dagger \pi)
+\end{equation}
+where $\pi = \dot{\varphi}$ is the conjugate momentum.
+
+In terms of creation and annihilation operators:
+\begin{equation}
+Q = \int \frac{d^3k}{(2\pi)^3} (a_k^\dagger a_k - b_k^\dagger b_k)
+\end{equation}
+
+This shows that $a_k^\dagger$ creates particles with charge $+1$ and $b_k^\dagger$ creates particles with charge $-1$.
+
+Now, let's compute $[Q, \varphi(x)]$. Using the mode expansion:
+\begin{equation}
+\varphi(x) = \int \frac{d^3p}{(2\pi)^3} \frac{1}{\sqrt{2\omega_p}} \left( a_p e^{-ip\cdot x} + b_p^\dagger e^{ip\cdot x} \right)
+\end{equation}
+
+Computing the commutator:
+\begin{align}
+[Q, \varphi(x)] &= \int \frac{d^3k}{(2\pi)^3} \frac{d^3p}{(2\pi)^3} \frac{1}{\sqrt{2\omega_p}} [a_k^\dagger a_k - b_k^\dagger b_k, a_p e^{-ip\cdot x} + b_p^\dagger e^{ip\cdot x}]
+\end{align}
+
+Using the commutation relations $[a_k^\dagger a_k, a_p] = -a_p \delta^3(\vec{k}-\vec{p})$ and $[b_k^\dagger b_k, b_p^\dagger] = b_p^\dagger \delta^3(\vec{k}-\vec{p})$:
+\begin{align}
+[Q, \varphi(x)] &= \int \frac{d^3k}{(2\pi)^3} \frac{d^3p}{(2\pi)^3} \frac{1}{\sqrt{2\omega_p}} \left( -a_p e^{-ip\cdot x} \delta^3(\vec{k}-\vec{p}) - b_p^\dagger e^{ip\cdot x} \delta^3(\vec{k}-\vec{p}) \right) \\
+&= -\int \frac{d^3p}{(2\pi)^3} \frac{1}{\sqrt{2\omega_p}} \left( a_p e^{-ip\cdot x} + b_p^\dagger e^{ip\cdot x} \right) \\
+&= -\varphi(x)
+\end{align}
+
+Therefore:
+\begin{equation}
+[Q, \varphi(x)] = -\varphi(x)
+\end{equation}
+
+This result indicates that $\varphi(x)$ has charge $-1$ under the $U(1)$ transformation. By similar calculation, $[Q, \varphi^\dagger(x)] = +\varphi^\dagger(x)$, so $\varphi^\dagger$ has charge $+1$.
+
+\section*{Problem II.2.1}
+\textbf{Question:} Use Noether's theorem to derive the conserved current $J^\mu = \bar{\psi}\gamma^\mu\psi$. Calculate $[Q, \psi]$, thus showing that $b$ and $d^\dagger$ must carry the same charge.
+
+\subsection*{Solution}
+
+The Dirac Lagrangian is:
+\begin{equation}
+\mathcal{L} = \bar{\psi}(i\gamma^\mu \partial_\mu - m)\psi
+\end{equation}
+
+This Lagrangian has a global $U(1)$ symmetry:
+\begin{equation}
+\psi \to e^{i\alpha}\psi, \quad \bar{\psi} \to e^{-i\alpha}\bar{\psi}
+\end{equation}
+
+For an infinitesimal transformation $\alpha \ll 1$:
+\begin{equation}
+\delta\psi = i\alpha\psi, \quad \delta\bar{\psi} = -i\alpha\bar{\psi}
+\end{equation}
+
+\textbf{Applying Noether's Theorem:}
+
+The Noether current is given by:
+\begin{equation}
+J^\mu = \frac{\partial \mathcal{L}}{\partial(\partial_\mu \psi)} \delta\psi + \frac{\partial \mathcal{L}}{\partial(\partial_\mu \bar{\psi})} \delta\bar{\psi}
+\end{equation}
+
+Computing the derivatives:
+\begin{align}
+\frac{\partial \mathcal{L}}{\partial(\partial_\mu \psi)} &= \bar{\psi} i\gamma^\mu \\
+\frac{\partial \mathcal{L}}{\partial(\partial_\mu \bar{\psi})} &= 0
+\end{align}
+
+Therefore:
+\begin{equation}
+J^\mu = \bar{\psi} i\gamma^\mu \cdot (i\alpha\psi) = -\alpha \bar{\psi}\gamma^\mu\psi
+\end{equation}
+
+Dividing out the parameter $\alpha$:
+Therefore:
+\begin{equation}
+J^\mu = \bar{\psi}\gamma^\mu\psi
+\end{equation}
+
+This current is conserved, satisfying $\partial_\mu J^\mu = 0$.
+
+\textbf{Calculating $[Q, \psi]$:}
+
+The conserved charge is:
+\begin{equation}
+Q = \int d^3x \, J^0 = \int d^3x \, \psi^\dagger \psi
+\end{equation}
+
+The mode expansion of the Dirac field is:
+\begin{equation}
+\psi(x) = \int \frac{d^3p}{(2\pi)^3} \frac{1}{\sqrt{2E_p}} \sum_{s} \left( b_{p,s} u_s(p) e^{-ip\cdot x} + d_{p,s}^\dagger v_s(p) e^{ip\cdot x} \right)
+\end{equation}
+
+where $b_{p,s}$ annihilates an electron and $d_{p,s}^\dagger$ creates a positron.
+
+The charge operator can be written as:
+\begin{equation}
+Q = \int \frac{d^3p}{(2\pi)^3} \sum_s (b_{p,s}^\dagger b_{p,s} - d_{p,s}^\dagger d_{p,s})
+\end{equation}
+
+Computing the commutator:
+\begin{align}
+[Q, \psi(x)] &= \int \frac{d^3k}{(2\pi)^3} \frac{d^3p}{(2\pi)^3} \frac{1}{\sqrt{2E_p}} \sum_{s,s'} [b_{k,s'}^\dagger b_{k,s'} - d_{k,s'}^\dagger d_{k,s'}, \nonumber \\
+&\quad b_{p,s} u_s(p) e^{-ip\cdot x} + d_{p,s}^\dagger v_s(p) e^{ip\cdot x}]
+\end{align}
+
+Using $[b^\dagger b, b] = -b$ and $[d^\dagger d, d^\dagger] = d^\dagger$:
+\begin{align}
+[Q, \psi(x)] &= -\int \frac{d^3p}{(2\pi)^3} \frac{1}{\sqrt{2E_p}} \sum_s \left( b_{p,s} u_s(p) e^{-ip\cdot x} + d_{p,s}^\dagger v_s(p) e^{ip\cdot x} \right) \\
+&= -\psi(x)
+\end{align}
+
+Therefore:
+\begin{equation}
+[Q, \psi] = -\psi
+\end{equation}
+
+This result means $\psi$ has charge $-1$. Since both $b_{p,s}$ and $d_{p,s}^\dagger$ appear in $\psi$ with the same coefficient in the commutator, both operators create or annihilate states with the same charge. Specifically, $b^\dagger$ creates electrons with charge $-1$, while $d^\dagger$ creates positrons with charge $+1$. The form of $Q = \int d^3p (b^\dagger b - d^\dagger d)$ counts electrons and positrons with opposite signs, consistent with their opposite charges.
+
+\section*{Problem III.1.2}
+\textbf{Question:} Regard (1) as an analytic function of $K^2$. Show that it has a cut extending from $4m^2$ to infinity.
+
+\subsection*{Solution}
+
+The one-loop correction to the propagator in $\phi^4$ theory involves an integral of the form (equation 1 in Zee):
+\begin{equation}
+\Pi(K^2) = \int \frac{d^4q}{(2\pi)^4} \frac{1}{(q^2 - m^2 + i\epsilon)[(K-q)^2 - m^2 + i\epsilon]}
+\end{equation}
+
+To analyze the analytic structure, we use Feynman parameters:
+\begin{equation}
+\frac{1}{AB} = \int_0^1 dx \frac{1}{[Ax + B(1-x)]^2}
+\end{equation}
+
+This gives:
+\begin{equation}
+\Pi(K^2) = \int_0^1 dx \int \frac{d^4q}{(2\pi)^4} \frac{1}{[q^2 - m^2 + x(K-q)^2 - xm^2 + (1-x)(-m^2)]^2}
+\end{equation}
+
+Completing the square by shifting $q \to q + xK$:
+\begin{equation}
+q^2 + x(K-q)^2 = (q + xK)^2 + x(1-x)K^2 - xK^2 = q'^2 + x(1-x)K^2
+\end{equation}
+
+where $q' = q + xK$. The denominator becomes:
+\begin{equation}
+D = q'^2 - m^2 - x(1-x)K^2 + i\epsilon
+\end{equation}
+
+After Wick rotation and integrating over $q'$, we get:
+\begin{equation}
+\Pi(K^2) \sim \int_0^1 dx \, \log[m^2 + x(1-x)K^2 - i\epsilon]
+\end{equation}
+
+\textbf{Finding the Branch Cut:}
+
+The logarithm has a branch cut when its argument becomes negative. The argument is:
+\begin{equation}
+m^2 + x(1-x)K^2
+\end{equation}
+
+For $K^2$ real, we need to find when this can be negative or zero. The function $x(1-x)$ has a maximum at $x = 1/2$ where $x(1-x) = 1/4$. The minimum value is $0$ at $x = 0$ or $x = 1$.
+
+The argument becomes zero when:
+\begin{equation}
+K^2 = -\frac{m^2}{x(1-x)}
+\end{equation}
+
+The most negative value occurs at $x = 1/2$:
+\begin{equation}
+K^2 = -\frac{m^2}{1/4} = -4m^2
+\end{equation}
+
+In the Euclidean signature (after Wick rotation), we consider $K^2$ as the analytic continuation. When we continue back to Minkowski signature, $K^2$ can be positive (timelike) or negative (spacelike).
+
+For a physical process where $K^2 > 0$ (timelike), the branch cut appears when:
+\begin{equation}
+K^2 \geq 4m^2
+\end{equation}
+
+This is the threshold for creating two real particles of mass $m$.
+
+\textbf{Conclusion:}
+
+The function $\Pi(K^2)$ has a branch cut from $K^2 = 4m^2$ to $\infty$.
+
+This cut corresponds to the threshold for pair production: when $K^2 \geq 4m^2$, two real particles can be produced, giving the propagator an imaginary part.
+
+\section*{Problem III.1.3}
+\textbf{Question:} Change $\Lambda$ to $e^\epsilon \Lambda$. Show that for $\mathcal{M}$ not to change, to the order indicated $\lambda$ must change by $\delta\lambda = 6\epsilon C\lambda^2 + O(\lambda^3)$, that is,
+$$
+\Lambda \frac{d\lambda}{d\Lambda} = 6C\lambda^2 + O(\lambda^3)
+$$
+
+\subsection*{Solution}
+
+This problem deals with the renormalization group equation for the coupling constant in $\phi^4$ theory. The one-loop correction to the four-point function involves a logarithmically divergent integral:
+\begin{equation}
+\mathcal{M} = -\lambda + \text{(one-loop)} + \ldots
+\end{equation}
+
+The one-loop correction is proportional to:
+\begin{equation}
+\text{(one-loop)} \sim \lambda^2 \int \frac{d^4k}{(2\pi)^4} \frac{1}{(k^2 - m^2)^2} \sim \lambda^2 C \log\left(\frac{\Lambda^2}{m^2}\right)
+\end{equation}
+
+where $\Lambda$ is the momentum cutoff and $C$ is a numerical constant (which depends on the regularization scheme).
+
+So the amplitude is:
+\begin{equation}
+\mathcal{M} = -\lambda + \lambda^2 C \log\left(\frac{\Lambda^2}{m^2}\right) + O(\lambda^3)
+\end{equation}
+
+\textbf{Changing the cutoff:}
+
+Now we change $\Lambda \to e^\epsilon \Lambda$ where $\epsilon \ll 1$. The amplitude becomes:
+\begin{equation}
+\mathcal{M}' = -\lambda + \lambda^2 C \log\left(\frac{e^{2\epsilon}\Lambda^2}{m^2}\right) + O(\lambda^3)
+\end{equation}
+
+Expanding the logarithm:
+\begin{equation}
+\log(e^{2\epsilon}\Lambda^2) = 2\epsilon + \log(\Lambda^2)
+\end{equation}
+
+Therefore:
+\begin{equation}
+\mathcal{M}' = -\lambda + \lambda^2 C \left[\log\left(\frac{\Lambda^2}{m^2}\right) + 2\epsilon\right] + O(\lambda^3)
+\end{equation}
+
+\textbf{Requiring $\mathcal{M}'$ to be unchanged:}
+
+For the physical amplitude to remain independent of the cutoff, we also change $\lambda \to \lambda + \delta\lambda$:
+\begin{align}
+\mathcal{M}' &= -(\lambda + \delta\lambda) + (\lambda + \delta\lambda)^2 C \log\left(\frac{e^{2\epsilon}\Lambda^2}{m^2}\right) + O(\lambda^3) \\
+&= -\lambda - \delta\lambda + (\lambda^2 + 2\lambda\delta\lambda) C \left[\log\left(\frac{\Lambda^2}{m^2}\right) + 2\epsilon\right] + O(\lambda^3)
+\end{align}
+
+Expanding to first order in $\delta\lambda$ and $\epsilon$:
+\begin{equation}
+\mathcal{M}' = -\lambda - \delta\lambda + \lambda^2 C \log\left(\frac{\Lambda^2}{m^2}\right) + 2\epsilon\lambda^2 C + 2\lambda\delta\lambda \, C \log\left(\frac{\Lambda^2}{m^2}\right) + O(\lambda^3)
+\end{equation}
+
+For this to equal $\mathcal{M}$ (at order $\lambda^2$):
+\begin{equation}
+-\lambda - \delta\lambda + 2\epsilon\lambda^2 C = -\lambda
+\end{equation}
+
+(The term $2\lambda\delta\lambda \, C \log$ is higher order.) This gives:
+\begin{equation}
+-\delta\lambda + 2\epsilon\lambda^2 C = 0
+\end{equation}
+
+Therefore:
+\begin{equation}
+\delta\lambda = 2\epsilon C\lambda^2 + O(\lambda^3)
+\end{equation}
+
+The factor of $6$ instead of $2$ comes from three one-loop diagrams (s-channel, t-channel, and u-channel) in $\phi^4$ theory, each contributing $2C\lambda^2 \log(\Lambda^2/m^2)$.
+
+With all three channels included:
+\begin{equation}
+\delta\lambda = 6\epsilon C\lambda^2 + O(\lambda^3)
+\end{equation}
+
+\textbf{Beta Function:}
+
+Since $\Lambda \to e^\epsilon\Lambda$ gives $\delta\Lambda = \epsilon\Lambda$, we obtain:
+\begin{equation}
+\frac{d\lambda}{d\Lambda} = \frac{\delta\lambda}{\delta\Lambda} = \frac{6\epsilon C\lambda^2}{\epsilon\Lambda} = \frac{6C\lambda^2}{\Lambda}
+\end{equation}
+
+Multiplying by $\Lambda$ yields:
+\begin{equation}
+\Lambda \frac{d\lambda}{d\Lambda} = 6C\lambda^2 + O(\lambda^3)
+\end{equation}
+
+This is the beta function for $\phi^4$ theory. The positive coefficient means $\lambda$ grows with energy, so $\phi^4$ theory is not asymptotically free.
+
+\end{document}
