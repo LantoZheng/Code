@@ -2,11 +2,11 @@
 % FINAL PROJECT PROPOSAL - COMPRESSED VERSION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[a4paper,11pt,twoside]{article}
+\documentclass[a4paper,10pt,twoside]{article}
 \hyphenpenalty=8000
-\textwidth=140mm
-\textheight=235mm
-\usepackage[top=1.5cm, bottom=1.5cm, inner=2cm, outer=2cm, includehead]{geometry}
+\textwidth=165mm
+\textheight=250mm
+\usepackage[top=1.2cm, bottom=1.2cm, inner=2.3cm, outer=2.3cm, includehead]{geometry}
 \usepackage{fancyhdr}
 \usepackage{physics}
 \usepackage{amsmath,amssymb}
@@ -15,60 +15,51 @@
 \fancyhead[LE,RO]{\thepage}
 \fancyhead[RE]{Final Project Proposal}
 \fancyhead[LO]{Quantum Money Inflation Control}
-\setlength{\headheight}{15pt}
-\setlength{\parskip}{3pt}
+\setlength{\headheight}{12pt}
+\setlength{\parskip}{2pt}
 \setlength{\parindent}{0pt}
+\setlength{\itemsep}{0pt}
+\setlength{\topsep}{0pt}
 
 \begin{document}
 
 \begin{center}
-{\Large \textbf{Quantum Money and Inflation Control}} \\[4pt]
-\textbf{Final Project Proposal for PHYS C191A}\\[2pt]
-\textit{Juncheng Ding, Tian Ariyaratrangsee, Xiaoyang Zheng}\\[2pt]
+{\large \textbf{Quantum Money and Inflation Control}} \\[2pt]
+\textbf{Final Project Proposal for PHYS C191A}\\[1pt]
+\textit{Juncheng Ding, Tian Ariyaratrangsee, Xiaoyang Zheng}\\[1pt]
 University of California, Berkeley – Fall 2025
 \end{center}
 
-\vspace{-8pt}
+\vspace{-6pt}
 \section*{1. Problem Statement}
-\vspace{-4pt}
+\vspace{-3pt}
 
-The quantum no-cloning theorem ($\nexists U: U\ket{\psi}\ket{0} = \ket{\psi}\ket{\psi}$) prevents copying but not unlimited generation of new quantum money states in Hilbert space $\mathcal{H} = \mathbb{C}^{2^n}$. As quantum computational power $Q(t)$ grows exponentially, generation rate $R \propto Q/D$ yields unbounded supply—\textbf{quantum inflation}. Zhandry (2017) demonstrated quantum lightning (QL) states satisfy cryptographic unforgeability but did not address supply control. Coladangelo \& Sattath (2020) proposed blockchain-based tracking but required classical infrastructure.
+The quantum no-cloning theorem ($\nexists U: U\ket{\psi}\ket{0} = \ket{\psi}\ket{\psi}$) prevents copying but not unlimited generation of new quantum money states. As quantum power $Q(t)$ grows exponentially, generation rate yields unbounded supply—\textbf{quantum inflation}. Zhandry (2017) proved quantum lightning (QL) unforgeability but lacked supply control. Coladangelo \& Sattath (2020) proposed blockchain tracking requiring classical infrastructure.
 
-\textbf{Our Approach:} We investigate whether \textit{intrinsic quantum resource constraints} can bound supply through: (1) \textbf{Resource Token (RT) mechanism} coupling generation to physical costs (gate count $G$, circuit depth $L$, coherence time $T_2$, ancilla entanglement $\chi$); (2) \textbf{Theoretical analysis} proving bounded equilibrium $M(t) \to M_{\max} = R_{\text{total}}/\langle\text{RT}\rangle$; (3) \textbf{Qiskit simulation} on classical hardware validating dynamics under realistic NISQ noise models, demonstrating $>99\%$ inflation suppression without requiring quantum hardware access.
+\textbf{Our Approach:} We investigate \textit{intrinsic quantum resource constraints} for bounded supply via: (1) \textbf{Resource Token (RT) mechanism} coupling generation to physical costs (gates $G$, depth $L$, coherence $T_2$, entanglement $\chi$); (2) \textbf{Theoretical proof} of equilibrium $M_{\infty} = R_{\text{total}}/\langle\text{RT}\rangle$; (3) \textbf{Qiskit simulation} on classical hardware validating $>99\%$ inflation suppression under realistic noise.
 
-\vspace{-4pt}
+\vspace{-3pt}
 \section*{2. Technical Approach}
-\vspace{-6pt}
+\vspace{-5pt}
 
-\subsection*{2.1 Quantum Lightning Framework \& Inflation Dynamics}
-\vspace{-4pt}
+\subsection*{2.1 Quantum Lightning \& Inflation}
+\vspace{-3pt}
 
-Zhandry's Quantum Lightning: each unit $\ket{\psi_y} = \frac{1}{\sqrt{N_y}}\sum_{x: H(x)=y} \ket{x}$ is superposition over polynomial hash pre-images with $H: \{0,1\}^m \to \{0,1\}^n$ degree-2 over $\mathbb{F}_2$. State purity: density matrix $\rho = \ket{\psi_y}\bra{\psi_y}$ has $S(\rho) = -\text{Tr}(\rho\log\rho) = 0$, distinguishing from counterfeit mixed states with $S(\rho_{\text{fake}}) > 0$. Verification protocol: measure in Hadamard basis, apply quantum Fourier transform $\mathcal{F}\ket{x} = 2^{-n/2}\sum_k e^{2\pi ixk/2^n}\ket{k}$, check polynomial constraints via phase estimation (success probability $P_{\text{verify}} \geq 1-\epsilon$ for $\epsilon = 2^{-\Omega(n)}$).
+Each unit $\ket{\psi_y} = N_y^{-1/2}\sum_{x: H(x)=y} \ket{x}$ is superposition over polynomial hash pre-images ($H: \{0,1\}^m \to \{0,1\}^n$, degree-2/$\mathbb{F}_2$). Pure state: $\rho = \ket{\psi_y}\bra{\psi_y}$, $S(\rho) = 0$. Verification via quantum Fourier transform, phase estimation ($P_{\text{verify}} \geq 1-2^{-\Omega(n)}$).
 
-\textbf{Inflation Dynamics:} Quantum capability growth $Q(t) = Q_0 e^{\lambda t}$ (e.g., logical qubit count scaling, $\lambda \in [0.1, 1.0]$ yr$^{-1}$). Generation success $P(y) \approx Q/2^D$ from Grover amplitude amplification. Lindblad master equation with decoherence:
-\vspace{-4pt}
-\[
-\frac{d\rho}{dt} = -i[\hat{H}, \rho] + \sum_k \gamma_k \left(L_k \rho L_k^\dagger - \frac{1}{2}\{L_k^\dagger L_k, \rho\}\right), \quad L_k \in \{\sigma_-, \sigma_z\} \text{ (amplitude damping, dephasing)}
-\]
-\vspace{-6pt}
-Unbounded regime ($R_{\text{total}} = \infty$): $\frac{dM}{dt} = \frac{Q_0 e^{\lambda t}}{2^D} \Rightarrow M(t) \sim \frac{Q_0}{\lambda 2^D}e^{\lambda t}$. For $\lambda = 0.5$ yr$^{-1}$, $M$ doubles every $\ln 2/\lambda \approx 1.4$ years.
+\textbf{Inflation:} Capability $Q(t) = Q_0 e^{\lambda t}$ ($\lambda \in [0.1, 1.0]$ yr$^{-1}$). Lindblad $\frac{d\rho}{dt} = -i[\hat{H}, \rho] + \sum_k \gamma_k (L_k \rho L_k^\dagger - \frac{1}{2}\{L_k^\dagger L_k, \rho\})$, $L_k \in \{\sigma_-, \sigma_z\}$. Unbounded: $\frac{dM}{dt} = Q_0 e^{\lambda t}/2^D \Rightarrow M(t) \sim e^{\lambda t}$, doubling time $\ln 2/\lambda$.
 
-\vspace{-4pt}
+\vspace{-3pt}
 \subsection*{2.2 Resource Token (RT) Mechanism}
-\vspace{-4pt}
+\vspace{-3pt}
 
-\textbf{Principle:} Couple generation to physical quantum resources. For state $\ket{\psi_y}$ requiring circuit $U$ with depth $L$, gate count $G$, qubit number $m$:
-\vspace{-4pt}
-\[
-\text{RT}_{\text{cost}} = \alpha G + \beta L + \gamma m, \quad M_{\max} = \frac{R_{\text{total}}}{\langle \text{RT}_{\text{cost}} \rangle}, \quad \frac{dM}{dt} = \min\left\{\frac{Q}{2^D}, \frac{R_{\text{avail}}}{\text{RT}_{\text{cost}}}\right\}
-\]
-\vspace{-6pt}
+\textbf{Principle:} $\text{RT}_{\text{cost}} = \alpha G + \beta L + \gamma m$, $M_{\max} = R_{\text{total}}/\langle \text{RT}_{\text{cost}} \rangle$, $\frac{dM}{dt} = \min\{Q/2^D, R_{\text{avail}}/\text{RT}_{\text{cost}}\}$.
 
-\textbf{Three Implementations:} (A) \textit{Gate-Count}: $\text{RT} = \alpha G + \beta L$ where $G$ counts single-qubit rotations $R_\theta(\phi) = \exp(-i\theta\sigma_\phi/2)$ and two-qubit CNOT gates (universal basis: $\{H, T, \text{CNOT}\}$ via Solovay-Kitaev, $G = O(\log^c(1/\epsilon))$ for precision $\epsilon$). Tracks computational complexity; robust to noise but ignores time. (B) \textit{Decoherence-Limited}: $\text{RT} = \gamma \int_0^T (1/T_1 + 1/T_2) dt$ where $T_1$ (amplitude damping), $T_2$ (dephasing) model realistic errors. Kraus operators $\{E_0 = \sqrt{1-p}\mathbb{I}, E_1 = \sqrt{p}\sigma_-\}$ with $p = 1-\exp(-t/T_1)$. Naturally enforces time limits but sensitive to calibration. (C) \textit{Ancilla Budget}: Finite entangled ancillas $\ket{\Phi^+} = (\ket{00} + \ket{11})/\sqrt{2}$ consumed for error syndrome extraction. Schmidt rank $\chi = \text{rank}(\rho_A)$ quantifies bipartite entanglement resource. NISQ constraint: $N_{\text{ancilla}} \sim 0.3 N_{\text{physical}}$.
+\textbf{Implementations:} (A) \textit{Gate-Count}: $\text{RT} = \alpha G + \beta L$, tracks rotations $R_\theta(\phi) = e^{-i\theta\sigma_\phi/2}$ + CNOT via Solovay-Kitaev ($G = O(\log^c(1/\epsilon))$); (B) \textit{Decoherence}: $\text{RT} = \gamma \int (1/T_1 + 1/T_2) dt$, Kraus $\{E_0 = \sqrt{1-p}\mathbb{I}, E_1 = \sqrt{p}\sigma_-\}$, $p = 1-e^{-t/T_1}$; (C) \textit{Ancilla}: entangled $\ket{\Phi^+}$, Schmidt rank $\chi$.
 
-\textbf{Protocol:} (1) Initialize $\ket{\phi_0} = \ket{0}^{\otimes m}$, check $R_{\text{avail}} \geq \text{RT}_{\text{cost}}$; (2) Apply $U_{\text{mint}} = \prod_{j=1}^L U_j$ (parameterized gates); (3) Measure hash $y$, verify via SWAP test: $|\braket{\psi_{\text{target}}|\psi_{\text{measured}}}|^2 \geq 1-\epsilon_{\text{thresh}}$; (4) Quantum process tomography: reconstruct channel $\mathcal{E}$ via Choi matrix $\rho_{\mathcal{E}} = (\mathcal{E}\otimes\mathbb{I})|\Phi^+\rangle\langle\Phi^+|$, extract $(G,L,m)$; (5) Deduct $R_{\text{avail}} \leftarrow R_{\text{avail}} - \text{RT}_{\text{cost}}$, adjust difficulty $D(t)$.
+\textbf{Protocol:} (1) Init $\ket{0}^{\otimes m}$, check $R_{\text{avail}}$; (2) Apply $U_{\text{mint}} = \prod_{j=1}^L U_j$; (3) SWAP test verify $|\braket{\psi_{\text{target}}|\psi}|^2 \geq 1-\epsilon$; (4) Process tomography via Choi $\rho_{\mathcal{E}} = (\mathcal{E}\otimes\mathbb{I})|\Phi^+\rangle\langle\Phi^+|$ extracts $(G,L,m)$; (5) Deduct RT, adjust $D(t)$.
 
-\textbf{Security Analysis:} Under $(2k+2)$-NAMCR (no-affine multi-collision resistance for degree-$k$ polynomials), RT preserves QL uniqueness. Adversarial barriers: (1) \textit{No-cloning} (Wootters-Zurek): universal cloner $\nexists$; (2) \textit{Multi-collision}: finding $2k+2$ independent pre-images requires $\Omega(2^{n/(2k+1)})$ queries (generalized birthday bound); (3) \textit{Circuit extraction}: obtaining $(G,L,m)$ without execution violates quantum query lower bounds $\Omega(n\log n)$ (proved via adversary method).
+\textbf{Security:} Under $(2k+2)$-NAMCR, RT preserves QL. Barriers: No-cloning (Wootters-Zurek); multi-collision $\Omega(2^{n/(2k+1)})$ queries; circuit extraction violates $\Omega(n\log n)$ lower bound (adversary method).
 
 \vspace{-4pt}
 \subsection*{2.3 Simulation Strategy}
