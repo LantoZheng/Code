@@ -1,0 +1,577 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FINAL PROJECT PROPOSAL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,10.5pt,twoside]{article}
+\hyphenpenalty=8000
+\textwidth=125mm
+\textheight=200mm
+\usepackage[top=3cm, bottom=3cm, inner=3cm, outer=3cm, includehead]{geometry}
+\usepackage{fancyhdr}
+\usepackage{physics}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{Final Project Proposal}
+\fancyhead[LO]{Quantum Money and Inflation Simulation}
+\setlength{\headheight}{15pt}
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{Quantum Money and Inflation Control}} \\[6pt]
+\textbf{Final Project Proposal for PHYS C191A}\\[3pt]
+\textit{Juncheng Ding, Tian Ariyaratrangsee, Xiaoyang Zheng}\\[3pt]
+University of California, Berkeley – Fall 2025
+\end{center}
+
+\section*{1. Introduction}
+
+Following our first report and critique, this proposal focuses on the simulation and theoretical modeling of \textbf{quantum money inflation}. Previous studies identified that while the no-cloning theorem prevents counterfeiting, it does not inherently prevent the \textit{unlimited issuance} of valid quantum states (``quantum inflation''). The project aims to quantitatively demonstrate this inflation effect through simulation and propose a physically realizable method to limit it.
+
+The work builds on Wiesner’s \textit{Conjugate Coding} and Zhandry’s \textit{Quantum Lightning} frameworks, as well as the complexity analysis described by Aaronson’s \textit{The Complexity of Quantum States and Transformations}. By examining how the minting difficulty of quantum tokens scales with quantum computational power, we will simulate the inflationary behavior and test improved models for stability.
+
+\section*{2. Project Objectives and Structure}
+
+We divide the project into four main parts, with corresponding submilestones:
+
+\subsection*{Part 1: Demonstrating Unlimited Inflation}
+We will create a simple numerical model simulating the inflationary dynamics of quantum money issuance. The model will assume that the rate of successful minting scales inversely with computational difficulty \( D \), but exponentially with quantum computational speed \( Q \), approximated by
+\[
+R \propto \frac{Q}{D}.
+\]
+As \( Q \) grows exponentially, we expect inflation \( I \to \infty \) unless compensating mechanisms are applied. This simulation will serve as a quantitative justification for the inflation problem.
+
+subsection*{Part 2: Model Design for Limiting Inflation}
+
+This section forms the theoretical and computational core of the project.  
+Our objective is to extend existing decentralized quantum money frameworks by introducing a mechanism that quantitatively limits inflation.  
+The design combines theoretical derivation with simulation, connecting system complexity, physical resource constraints, and quantum verification cost.
+
+\subsubsection*{2.1 Existing Model Analysis}
+We begin by formalizing the inflation dynamics of Zhandry’s \textit{Quantum Lightning} framework.  
+In this model, each unit of currency corresponds to a unique quantum state $\ket{\psi_i}$ whose validity is certified by a publicly verifiable quantum hash operator $\hat{H}$.  
+A state is accepted as genuine when its measurement outcome satisfies $H(\ket{\psi_i}) < D$, where $D$ denotes the difficulty threshold.
+
+However, as the available quantum computing power $Q$ (measured by qubit count or circuit depth) increases,  
+the probability of successfully generating a valid state scales approximately as $P \sim \frac{Q}{D}$.  
+If $D$ remains constant, the minting rate $R = \alpha P$ grows exponentially, leading to an unbounded monetary supply  
+$M(t) \sim e^{\beta t}$ and resulting in runaway ``quantum inflation.''  
+Our initial simulation will reproduce this scaling relationship and demonstrate the divergence that occurs when difficulty adjustment lags behind computational advances.
+
+\subsubsection*{2.2 Improved Model Proposal: Resource Token Mechanism}
+
+\textbf{This section constitutes the central technical innovation of our project.}  
+To mitigate the exponential inflation growth, we propose a \textbf{Resource Token (RT) mechanism} that couples quantum state generation to bounded physical resources, creating an economic scarcity layer independent of computational advances.
+
+\paragraph{Core Principle: Hilbert Space Dimensionality as Monetary Cost}
+
+The fundamental insight is to link minting cost directly to the intrinsic quantum complexity of the monetary state.  
+For Zhandry's Quantum Lightning construction with parameters $(n, k, m)$, each valid bolt $\ket{\psi_y}$ lives in a Hilbert space of dimension $d = 2^m$.  
+We propose that generating such a state must consume a \textbf{Resource Token (RT)} proportional to its information-theoretic content:
+\[
+\text{RT}_{\text{cost}}(\ket{\psi_y}) = \kappa \cdot \log_2(d) = \kappa \cdot m,
+\]
+where $\kappa > 0$ is a system-wide scaling constant governing monetary policy.
+
+The total RT supply is bounded: $\text{RT}_{\text{total}} = R_{\max}$, establishing a hard cap on concurrent monetary states.  
+The modified minting protocol becomes:
+\[
+\text{Accept } \ket{\psi} \iff \begin{cases}
+H(\ket{\psi}) < D & \text{(validity check)} \\
+\text{RT}_{\text{available}} \geq \text{RT}_{\text{cost}}(\ket{\psi}) & \text{(resource check)}
+\end{cases}
+\]
+
+\paragraph{Inflation Bound Analysis}
+
+Under this mechanism, the maximum achievable money supply satisfies:
+\[
+M_{\max} = \frac{R_{\max}}{\langle \text{RT}_{\text{cost}} \rangle} = \frac{R_{\max}}{\kappa \cdot m},
+\]
+where $\langle \text{RT}_{\text{cost}} \rangle$ is the average RT cost per bolt.  
+Critically, even if quantum computational power $Q(t)$ grows exponentially, the minting rate is bounded:
+\[
+R_{\text{bounded}}(t) \leq \frac{R_{\max}}{T_{\text{mint}}(Q)} \cdot \frac{1}{\text{RT}_{\text{cost}}} = O(1),
+\]
+where $T_{\text{mint}}(Q)$ is the wall-clock time per successful mint.  
+This achieves \textit{asymptotic inflation control}: $\lim_{t \to \infty} M(t) = M_{\max} < \infty$.
+
+\paragraph{Three Technical Implementation Pathways}
+
+We investigate three concrete mechanisms for enforcing RT consumption in quantum circuits:
+
+\textbf{Pathway A: Gate-Count-Dependent Penalty}
+
+Associate each quantum gate with a fixed RT cost $\epsilon_{\text{gate}}$.  
+For a minting circuit with total gate count $G$ and depth $L$, define:
+\[
+\text{RT}_{\text{cost}} = \alpha \cdot G + \beta \cdot L,
+\]
+where $\alpha, \beta$ are tunable parameters balancing spatial vs. temporal resource usage.  
+This approach is \textit{circuit-agnostic} and easily implementable in existing quantum frameworks (Qiskit, Cirq).
+
+\textit{Advantages:} Simple to track; compatible with existing compilers.  
+\textit{Limitations:} Does not capture semantic complexity; vulnerable to circuit optimization exploits.
+
+\textbf{Pathway B: Decoherence-Aware Token Consumption}
+
+Exploit quantum decoherence as a natural ``cost'' mechanism.  
+Define RT consumption as a function of cumulative decoherence probability:
+\[
+\text{RT}_{\text{cost}} = \gamma \cdot \int_0^{T_{\text{exec}}} \Gamma(t) \, dt,
+\]
+where $\Gamma(t)$ is the instantaneous decoherence rate and $T_{\text{exec}}$ is circuit execution time.  
+Longer, deeper circuits experience higher decoherence → consume more RT → naturally limit complex state generation.
+
+\textit{Advantages:} Physically grounded; automatically adapts to hardware quality.  
+\textit{Limitations:} Requires accurate noise modeling; may disadvantage low-quality hardware.
+
+\textbf{Pathway C: Ancilla Qubit Pool Depletion (Most Physically Realistic)}
+
+Introduce a finite, non-replenishable pool of $N_{\text{ancilla}}$ ancilla qubits.  
+Each minting operation permanently consumes $a$ ancilla qubits for error correction or state verification:
+\[
+\text{RT}_{\text{cost}} = a \cdot c_{\text{ancilla}},
+\]
+where $c_{\text{ancilla}}$ is the ``worth'' of each ancilla.  
+When the ancilla pool is exhausted ($N_{\text{remaining}} = 0$), no further minting is physically possible.
+
+\textit{Advantages:} Corresponds to real hardware constraints; unambiguous resource accounting.  
+\textit{Limitations:} Requires modified circuit architecture; ancilla reuse protocols complicate accounting.
+
+\paragraph{Comparative Evaluation Criteria}
+
+We will evaluate each pathway against:
+\begin{itemize}
+    \item \textbf{Enforceability:} Can the mechanism be reliably enforced without centralized oversight?
+    \item \textbf{Fairness:} Does it disadvantage certain hardware architectures or quantum algorithms?
+    \item \textbf{Robustness:} Is it resistant to gaming or circumvention strategies?
+    \item \textbf{Implementability:} Can it be deployed on near-term quantum devices (NISQ era)?
+\end{itemize}
+
+\paragraph{Algorithmic Protocol}
+
+The complete minting-with-RT protocol proceeds as follows:
+
+\begin{enumerate}
+    \item \textbf{Pre-Execution Check:}  
+    Query global RT ledger: $\text{RT}_{\text{avail}} \gets \text{Read}(\text{Ledger})$.  
+    Estimate circuit cost: $\text{RT}_{\text{est}} \gets \text{EstimateCost}(\text{Circuit})$.  
+    If $\text{RT}_{\text{avail}} < \text{RT}_{\text{est}}$, abort with \texttt{INSUFFICIENT\_RESOURCES}.
+    
+    \item \textbf{Quantum Execution:}  
+    Run bolt generation circuit $U_{\text{mint}}$ on quantum hardware.  
+    Measure output to obtain candidate bolt $\ket{\psi_{\text{cand}}}$ and serial number $s$.
+    
+    \item \textbf{Verification:}  
+    Apply Zhandry's verification protocol $V(\ket{\psi_{\text{cand}}}, s)$.  
+    If rejected, refund partial RT cost (e.g., $0.5 \cdot \text{RT}_{\text{est}}$) and terminate.
+    
+    \item \textbf{RT Consumption:}  
+    Compute actual cost: $\text{RT}_{\text{actual}} \gets \text{MeasureCost}(\text{Execution})$.  
+    Update ledger atomically: $\text{RT}_{\text{avail}} \gets \text{RT}_{\text{avail}} - \text{RT}_{\text{actual}}$.  
+    Broadcast new bolt $(s, \ket{\psi_{\text{cand}}})$ to network.
+    
+    \item \textbf{Difficulty Adjustment:}  
+    Every $\Delta T$ time units, adjust difficulty $D \gets f(R_{\text{observed}}, R_{\text{target}})$ to stabilize issuance rate.
+\end{enumerate}
+
+\paragraph{Security Preservation}
+
+A critical concern: does the RT mechanism introduce new attack vectors or weaken Zhandry's security proof?
+
+\textit{Theorem (Informal):} If the underlying Quantum Lightning scheme satisfies $(2k+2)$-NAMCR (non-affine multi-collision resistance),  
+then the RT-augmented scheme preserves uniqueness, provided:
+\begin{enumerate}
+    \item RT consumption is monotonic: more complex states cost more RT.
+    \item The RT ledger update is atomic and append-only (blockchain-enforced).
+    \item Adversaries cannot forge RT without quantum work.
+\end{enumerate}
+
+\textit{Proof Sketch:} An adversary producing two bolts with identical serial numbers must either:  
+(a) Clone an existing bolt (violates no-cloning),  
+(b) Generate $2(k+1)$ non-affine collisions (violates NAMCR), or  
+(c) Forge RT ledger entries (violates blockchain integrity).  
+None of these are computationally feasible under standard assumptions.
+
+We will formalize this argument and simulate potential attacks (RT exhaustion DoS, ledger manipulation) in Part 3.
+
+\subsubsection*{2.3 Physical Feasibility: Bridging Theory and NISQ Hardware}
+
+\textbf{This section addresses the practical implementability of our RT mechanism on near-term quantum devices.}
+
+\paragraph{Challenge: Mapping Abstract RT to Physical Constraints}
+
+Current quantum computers (IBM Quantum, Google Sycamore, IonQ) operate with:
+\begin{itemize}
+    \item Limited qubit counts: $n_q \in [50, 1000]$ (vs. theoretical requirement $m = 2n^2 \approx 200$ for $n=10$)
+    \item High error rates: $\epsilon_{\text{gate}} \sim 10^{-3}$ to $10^{-2}$ (vs. fault-tolerant threshold $\sim 10^{-4}$)
+    \item Finite coherence times: $T_2 \sim 100\mu s$ (limits circuit depth)
+    \item Non-uniform connectivity: constrains circuit topology
+\end{itemize}
+
+Our strategy: \textit{demonstrate proof-of-concept with miniaturized parameters}, then extrapolate scaling behavior.
+
+\paragraph{Miniaturized Quantum Lightning: Toy Implementation}
+
+For Qiskit simulation, we propose:
+\[
+\begin{cases}
+n = 3 & \text{(security parameter - toy value)} \\
+k = 2 & \text{(collision set size)} \\
+m = 12 & \text{(input dimension, manageable for simulation)}
+\end{cases}
+\]
+
+This yields:
+\begin{itemize}
+    \item Bolt Hilbert space dimension: $d = 2^{12} = 4096$
+    \item Number of bolt copies: $k+1 = 3$
+    \item Total qubits needed: $3 \times 12 = 36$ (within NISQ reach)
+    \item Estimated gate count: $G \sim O(n^2 m) \sim 100$ gates per mini-verification
+\end{itemize}
+
+\paragraph{RT Implementation: Three Concrete Protocols}
+
+\textbf{Protocol 1: Gate-Count Accumulator (Simplest)}
+
+Instrument Qiskit's transpiler to track gate operations:
+\begin{verbatim}
+class RTTracker:
+    def __init__(self, initial_budget):
+        self.budget = initial_budget
+        self.cost_map = {'cx': 10, 'u3': 1, 'measure': 5}
+    
+    def charge_gate(self, gate_name):
+        cost = self.cost_map.get(gate_name, 1)
+        if self.budget < cost:
+            raise InsufficientRTError
+        self.budget -= cost
+\end{verbatim}
+
+Execute minting circuit with RT tracking:
+\begin{verbatim}
+tracker = RTTracker(initial_budget=1000)
+qc = generate_bolt_circuit(n=3, k=2, m=12)
+transpiled = transpile(qc, basis_gates=['u3','cx'])
+for gate in transpiled.data:
+    tracker.charge_gate(gate[0].name)
+result = execute(transpiled, backend).result()
+\end{verbatim}
+
+\textit{Validation:} Compare RT consumption across different bolt generation attempts. Expected variance $\sigma_{\text{RT}} < 10\%$ (low variance confirms deterministic cost).
+
+\textbf{Protocol 2: Decoherence-Weighted RT}
+
+Model decoherence using Qiskit Aer's noise models:
+\begin{verbatim}
+from qiskit.providers.aer.noise import NoiseModel
+noise_model = NoiseModel.from_backend(ibmq_device)
+
+# RT cost = integrated decoherence probability
+def compute_RT_decoherence(circuit, noise_model):
+    noisy_result = execute(circuit, Aer.get_backend('qasm'),
+                          noise_model=noise_model).result()
+    fidelity = state_fidelity(ideal_state, noisy_result)
+    RT_cost = -log(fidelity) * gamma  # gamma: scaling factor
+    return RT_cost
+\end{verbatim}
+
+\textit{Key Insight:} Longer circuits → lower fidelity → higher RT cost → natural complexity penalty.
+
+\textbf{Protocol 3: Ancilla Budget Simulation}
+
+Simulate ancilla pool depletion:
+\begin{verbatim}
+class AncillaPool:
+    def __init__(self, total_ancillas):
+        self.remaining = total_ancillas
+    
+    def allocate_for_mint(self, num_ancillas):
+        if self.remaining < num_ancillas:
+            return None  # Minting impossible
+        self.remaining -= num_ancillas
+        return [Qubit(i) for i in range(num_ancillas)]
+
+ancilla_pool = AncillaPool(total_ancillas=100)
+for mint_attempt in range(max_attempts):
+    ancillas = ancilla_pool.allocate_for_mint(5)
+    if ancillas is None:
+        break  # Pool exhausted → inflation stops
+    bolt = mint_with_ancillas(ancillas)
+\end{verbatim}
+
+\paragraph{Hybrid Classical-Quantum Architecture}
+
+Since full quantum verification is resource-intensive, we propose a \textit{two-tier verification system}:
+
+\begin{enumerate}
+    \item \textbf{Light Classical Check (Fast):}  
+    Verify serial number format, timestamp, and RT ledger consistency.  
+    Computational cost: $O(\log M)$ where $M$ is current money supply.  
+    Rejection rate: $\sim 90\%$ of invalid bolts (spam/malformed).
+    
+    \item \textbf{Full Quantum Verification (Expensive):}  
+    Apply Zhandry's mini-verification protocol on quantum hardware.  
+    Only invoked for bolts passing classical checks.  
+    Computational cost: $O(n^3)$ quantum gates.  
+    Rejection rate: $\sim 100\%$ of remaining invalid bolts.
+\end{enumerate}
+
+This \textit{fast-path/slow-path} design reduces average verification cost by 10×, improving scalability.
+
+\paragraph{Decentralized RT Ledger: Blockchain Integration}
+
+The RT ledger must be:
+\begin{itemize}
+    \item \textbf{Append-only:} Prevents retroactive RT forgery.
+    \item \textbf{Consensus-driven:} Majority agreement on RT state prevents double-spending.
+    \item \textbf{Lightweight:} Classical blockchain (e.g., Ethereum smart contract) suffices.
+\end{itemize}
+
+\textit{Smart Contract Pseudocode:}
+\begin{verbatim}
+contract RTLedger {
+    uint256 public totalRT;
+    uint256 public remainingRT;
+    mapping(address => uint256) public balances;
+    
+    function mintBolt(bytes32 serialNumber, uint256 rtCost) 
+        public returns (bool) {
+        require(remainingRT >= rtCost, "Insufficient RT");
+        remainingRT -= rtCost;
+        emit BoltMinted(msg.sender, serialNumber, rtCost);
+        return true;
+    }
+}
+\end{verbatim}
+
+\paragraph{Temporal Ordering: Quantum-Classical Blockchain Hybrid}
+
+We explore a \textit{causally-ordered issuance} protocol where each bolt references its predecessor:
+\[
+\ket{\psi_n} = U_n(\text{hash}(s_{n-1})) \ket{\phi_{\text{seed}}},
+\]
+where $s_{n-1}$ is the previous bolt's serial number and $U_n$ is a parameterized unitary.
+
+\textit{Properties:}
+\begin{itemize}
+    \item \textbf{Chronological integrity:} Cannot mint bolt $n$ without knowledge of bolt $n-1$.
+    \item \textbf{Causal dependency:} Creates a directed acyclic graph (DAG) of monetary states.
+    \item \textbf{Fork prevention:} Multiple concurrent bolts with same index $n$ violate uniqueness.
+\end{itemize}
+
+This hybrid structure enables \textit{quantum-verified timestamps} without requiring a full quantum blockchain.
+
+\paragraph{Experimental Validation Plan}
+
+We will validate physical feasibility through:
+\begin{enumerate}
+    \item \textbf{Qiskit Simulation:}  
+    Run 100 minting attempts with RT tracking enabled.  
+    Measure: RT cost distribution, verification time, success rate.
+    
+    \item \textbf{IBM Quantum Hardware (if available):}  
+    Deploy miniaturized circuit ($n=2$, $m=8$) on \texttt{ibm\_brisbane} or similar.  
+    Compare: Ideal vs. noisy RT consumption, error correction overhead.
+    
+    \item \textbf{Scalability Extrapolation:}  
+    Fit power-law model: $\text{RT}_{\text{cost}}(m) = am^b + c$.  
+    Extrapolate to production parameters ($n=10$, $m=200$).  
+    Estimate: Total RT budget needed for 1 million bolts.
+\end{enumerate}
+
+\paragraph{Open Implementation Challenges}
+
+Despite feasibility, several challenges remain:
+\begin{itemize}
+    \item \textbf{RT Recharging:} Should consumed RT be permanently destroyed or recycled after bolt destruction? (Time-released cryptography may enable controlled recharging.)
+    \item \textbf{Cross-Platform Standardization:} Different quantum hardware (superconducting vs. ion trap) have different gate costs—how to normalize RT pricing?
+    \item \textbf{Adversarial Circuit Optimization:} Can attackers find circuit decompositions that artificially reduce measured RT cost while preserving functionality?
+    \item \textbf{Quantum Memory Overhead:} Storing bolts as quantum states (vs. classical serial numbers) requires persistent quantum memory—currently unavailable.
+\end{itemize}
+
+We will discuss these challenges and propose mitigation strategies in the final report.
+
+\subsubsection*{2.4 Comprehensive Validation Framework}
+
+Our validation methodology spans analytical derivation, numerical simulation, and experimental feasibility assessment.
+
+\paragraph{Stage 1: Mathematical Foundation}
+
+\textit{Objective:} Derive closed-form or approximate solutions for monetary supply evolution under RT constraints.
+
+\textbf{Differential Equation Model:}  
+The rate of change of money supply $M(t)$ depends on minting rate $R(t)$ and destruction rate $\mu M(t)$ (due to lost/destroyed bolts):
+\[
+\frac{dM}{dt} = R(t) - \mu M(t),
+\]
+where the minting rate is bounded by:
+\[
+R(t) = \min\left\{ \frac{Q(t)}{D(t)}, \; \frac{\text{RT}_{\text{remain}}(t)}{\text{RT}_{\text{cost}} \cdot T_{\text{mint}}} \right\}.
+\]
+
+For exponential quantum growth $Q(t) = Q_0 e^{\lambda t}$, we analyze two regimes:
+
+\textit{Regime I (RT-Unconstrained):}  
+When $\text{RT}_{\text{remain}} \gg 0$, minting is limited only by $Q/D$:
+\[
+M_{\text{unbound}}(t) \approx \frac{Q_0}{\lambda D} e^{\lambda t} \quad \Rightarrow \quad M \to \infty.
+\]
+
+\textit{Regime II (RT-Constrained):}  
+When $\text{RT}_{\text{remain}}$ becomes limiting:
+\[
+M_{\text{bound}}(t) \to M_{\max} = \frac{R_{\max}}{\kappa m} \left(1 - e^{-\mu t}\right) \quad \Rightarrow \quad M \to \text{const}.
+\]
+
+\textbf{Equilibrium Analysis:}  
+Setting $dM/dt = 0$ yields equilibrium condition:
+\[
+R_{\text{eq}} = \mu M_{\text{eq}} \quad \Rightarrow \quad M_{\text{eq}} = \frac{R_{\max}}{\kappa m \mu}.
+\]
+
+We will compute stability via linearization: $\delta M(t) = M(t) - M_{\text{eq}}$ and show that eigenvalues of Jacobian have negative real parts (ensuring stable equilibrium).
+
+\paragraph{Stage 2: Multi-Scenario Simulation}
+
+\textit{Objective:} Numerically verify theoretical predictions and explore parameter sensitivity.
+
+\textbf{Simulation Architecture:}
+\begin{enumerate}
+    \item \textbf{Classical Inflation Model (Baseline):}  
+    Implement Poisson process for minting: $P(\text{success}) = Q(t)/D$.  
+    Track cumulative supply $M(t) = \sum_{i=1}^{N(t)} 1$ over time.
+    
+    \item \textbf{RT-Constrained Model (Proposed):}  
+    Augment with RT budget tracking:  
+    \texttt{if RT\_remain < RT\_cost: reject\_mint()}  
+    After each successful mint: \texttt{RT\_remain -= RT\_cost}.
+    
+    \item \textbf{Qiskit Circuit Simulation (Quantum):}  
+    Implement miniaturized Quantum Lightning circuits ($n=3, m=12$).  
+    Use three RT protocols (gate-count, decoherence, ancilla) in parallel.  
+    Measure actual RT consumption per bolt.
+\end{enumerate}
+
+\textbf{Experimental Parameters:}
+\begin{itemize}
+    \item Quantum growth rates: $\lambda \in \{0.1, 0.5, 1.0\}$ (conservative to aggressive)
+    \item RT budgets: $R_{\max} \in \{10^3, 10^4, 10^5\}$ (scarcity levels)
+    \item Difficulty schedules: constant $D$, linear $D(t) = D_0 + \alpha t$, adaptive $D(t) = f(R_{\text{obs}})$
+\end{itemize}
+
+\textbf{Key Metrics to Extract:}
+\begin{enumerate}
+    \item \textbf{Inflation Rate:} $I(t) = \frac{1}{M(t)} \frac{dM}{dt}$  
+    Target: $I_{\text{bounded}} / I_{\text{unbounded}} < 0.01$ (99\% reduction).
+    
+    \item \textbf{Stability Index:} $S = 1 / \sigma_R$ where $\sigma_R$ is variance of minting rate.  
+    Target: $S_{\text{bounded}} > 10 \times S_{\text{unbounded}}$ (more stable).
+    
+    \item \textbf{Utilization Efficiency:} $\eta = M_{\text{actual}} / M_{\max}$  
+    Target: $\eta > 0.9$ (minimal waste of RT budget).
+    
+    \item \textbf{Time to Equilibrium:} $t_{\text{eq}}$ such that $|M(t > t_{\text{eq}}) - M_{\text{eq}}| < 0.05 M_{\text{eq}}$.  
+    Target: $t_{\text{eq}} < 100 \times T_{\text{mint}}$ (reasonable convergence time).
+\end{enumerate}
+
+\paragraph{Stage 3: Comparative Analysis and Visualization}
+
+\textit{Objective:} Produce publication-quality plots demonstrating the RT mechanism's efficacy.
+
+\textbf{Figure 1: Inflation Comparison}  
+Dual-axis plot showing:
+\begin{itemize}
+    \item $M_{\text{unbound}}(t)$ (exponential curve, blue, right axis)
+    \item $M_{\text{bound}}(t)$ (saturating curve, red, left axis)
+    \item Crossover point where RT constraint activates (dashed vertical line)
+\end{itemize}
+
+\textbf{Figure 2: RT Consumption Heatmap}  
+2D heatmap: $(n, m) \to \text{RT}_{\text{cost}}$ measured from Qiskit simulations.  
+Colormap intensity represents gate count; contour lines show iso-cost curves.
+
+\textbf{Figure 3: Verification Time Scaling}  
+Log-log plot: $\log(\text{VerifyTime}) $ vs. $\log(n)$.  
+Fit to $O(n^3)$ polynomial (should show straight line with slope $\approx 3$).
+
+\textbf{Figure 4: Stability Phase Diagram}  
+Phase space plot: $(\lambda, R_{\max}) \to \text{Stability Regime}$.  
+Color regions: "Stable" (green), "Marginal" (yellow), "Inflationary" (red).
+
+\paragraph{Stage 4: Security and Attack Resistance Testing}
+
+Beyond economic stability, we must verify the RT mechanism doesn't introduce vulnerabilities.
+
+\textbf{Attack Scenarios to Simulate:}
+\begin{enumerate}
+    \item \textbf{RT Exhaustion DoS:} Adversary mints bolts rapidly to deplete RT pool, preventing honest users from minting. \textit{Mitigation:} Per-user rate limiting or proof-of-work for RT allocation.
+    
+    \item \textbf{Circuit Optimization Exploit:} Adversary finds circuit decomposition that artificially lowers measured RT cost. \textit{Mitigation:} Use hardware-intrinsic metrics (physical gate count) rather than logical gate count.
+    
+    \item \textbf{Ledger Fork Attack:} Adversary creates conflicting RT ledger states to double-spend RT. \textit{Mitigation:} Byzantine fault-tolerant consensus (Practical Byzantine Fault Tolerance or blockchain).
+    
+    \item \textbf{Temporal Manipulation:} Adversary delays bolt announcement to game difficulty adjustment. \textit{Mitigation:} Timestamp verification and network-wide clock synchronization.
+\end{enumerate}
+
+For each attack, we will:
+\begin{itemize}
+    \item Implement adversarial strategy in simulation
+    \item Measure success probability and impact on $M(t)$
+    \item Propose and test countermeasure effectiveness
+\end{itemize}
+
+\textbf{Expected Deliverables for Part 2:}
+\begin{itemize}
+    \item Analytical closed-form solutions for $M(t)$ in both regimes
+    \item Simulation codebase with three RT implementation variants
+    \item Comprehensive plots (4 figures minimum) demonstrating efficacy
+    \item Security analysis report identifying 4+ attack vectors and mitigations
+    \item Parameter recommendation table: optimal $(n, k, m, \kappa, R_{\max})$ for target monetary policy
+\end{itemize}
+\subsection*{Part 3: Testing the Improved Model}
+Using the same simulation environment, we will reintroduce the improved model and test:
+\begin{itemize}
+    \item Whether inflation stabilizes under increasing computational power.
+    \item Whether the currency retains scarcity and uniqueness.
+    \item Whether the protocol remains verifiable in polynomial time.
+\end{itemize}
+The simulation results will be analyzed for both theoretical safety and practical stability.
+
+\subsection*{Part 4: Conclusion}
+We will summarize our findings and discuss whether the inflation-limited model can form a bridge between theoretical and physical realizations of quantum currency, addressing both security and economic stability.
+
+\section*{3. Expected Outcomes}
+\begin{itemize}
+    \item A simulation demonstrating uncontrolled inflation in existing models.
+    \item A modified issuance model that stabilizes monetary growth.
+    \item Discussion of physical constraints linking computational complexity and currency supply.
+\end{itemize}
+
+\section*{4. Timeline and Sub-Milestones}
+
+\begin{tabular}{|p{25mm}|p{90mm}|}
+\hline
+\textbf{Date} & \textbf{Milestone / Deliverable} \\
+\hline
+Oct 30 & Submit final proposal; finalize simulation framework selection (Python / Qiskit). \\
+Nov 10 & Implement base inflation simulation (Part 1). Validate unlimited inflation behavior. \\
+Nov 17 & Analyze Quantum Lightning model, identify inflation variables (Part 2.1). \\
+Nov 24 & Implement and test improved model (Part 2.2, 2.3). \\
+Nov 30 & Perform comparative simulation of inflation-limited vs. inflation-free models (Part 3). \\
+Dec 5 & Complete final report (Part 4) and prepare poster visualization. \\
+Dec 9 & Poster presentation and final defense of model results. \\
+\hline
+\end{tabular}
+
+\section*{5. References}
+\begin{itemize}
+    \item Wiesner, S. “Conjugate Coding.” \textit{ACM SIGACT News}, 15(1), 78–88 (1983).
+    \item Zhandry, M. “Quantum Lightning Never Strikes the Same State Twice.” \textit{arXiv:1711.02276v3}, 2019.
+    \item Aaronson, S. \textit{The Complexity of Quantum States and Transformations: From Quantum Money to Black Holes.} Bellairs Institute Lectures (2016).
+    \item Nakamoto, S. “Bitcoin: A Peer-to-Peer Electronic Cash System.” (2008).
+\end{itemize}
+
+\end{document}

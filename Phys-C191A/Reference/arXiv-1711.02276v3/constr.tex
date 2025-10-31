@@ -1,0 +1,175 @@
+\label{sec:constr}
+
+\subsection{Hardness Assumption}
+
+Consider a sequence of upper-triangular matrices $\Am_i\in\{0,1\}^{m\times m}$ where $m$ for $i=1,\dots,n$.  Here, $n<m$.  Let $\As=\{\Am_i\}_i$.  Define the function $f_\As:\{0,1\}^m\rightarrow\{0,1\}^n$ defined as $f_\As(x)=(x^T\cdot\Am_i\cdot x)_i$, where operations are taken mod 2.  Since $x^2=x\mod 2$, this captures general degree 2 functions over $\F_2$, with the terms coming from the diagonal being the linear terms.
+
+As shown by~\cite{DingYang08,ITCS:AHIKV17}, the function $f_\As$ is \emph{not} collision resistant when the matrices $\Am_i$ are random upper triangular, with reasonable probability.  Here, we recreate the proof, and also discuss the multi-collision resistance of the function.
+
+To find a collision for $f_\As$, choose a random $\Delta\in\{0,1\}^m$.  We will find a collision of the form $x,x-\Delta$.  The condition that $x,x-\Delta$ collide means \[x^T\cdot\Am_i x^T = (x-\Delta)\cdot \Am_i\cdot (x-\Delta)\]
+for all $i$.  Expanding out the right hand side and rearranging, this gives
+\[\Delta^T\cdot (\Am_i+\Am_i^T)\cdot x = \Delta^T\cdot\Am_i\cdot\Delta\]
+
+This forms a system of $n$ linear equations in $m$ unknowns for $x$.  Let $B_\Delta$ be the $n\times m$ matrix whose rows are $\Delta^T\cdot(\Am_i+\Am_i^T)$ for $i\in[n]$.  Then as long as $B_\Delta$ has rank $n$, a solution for $x$ is guaranteed.  For random (upper triangular) $\Am_i$ and random $\Delta$, this matrix will be rank $n$ with constant probability.
+
+This attack can be generalized to find multiple colliding inputs.  We consider two variants:
+\begin{itemize}
+	\item Notice that $k+1$ points will always lie in a $k$-dimensional affine space.  Suppose our goal is to $k+1$ colliding inputs, subject to the requirement that they do not lie in a $(k-1)$-dimensional affine space.  Choose random $\Delta_1,\dots,\Delta_k$.  We will compute and $x$ such that $x,x-\Delta_1,\dots,x-\Delta_k$ form $k+1$ colliding points.  Each $\Delta_j$ generates a system of $n$ equations for $x$ as described above.  Let $B=B_{\Delta_1,\dots,\Delta_k}$ be the matrix consisting of all the rows of $B_{\Delta_j}$ as $j$ varies.  As long as $B$ is full rank, a solution for $x$ is guaranteed.  Again, $B$ will be full rank with constant probability, provided $m\geq kn$, and with overwhelming probability if $m\geq kn+\omega(\log\lambda)$.
+	
+	Notice that because the $\Delta_j$ were chosen at random, with high probability the $k+1$ colliding inputs will form a $k$-dimensional affine space.  We call such a multi-collision a \emph{non-affine} multi-collision.  
+	
+	
+	
+	\item Many more colliding inputs are possible if we specifically search for affine spaces full of colliding inputs.  We will choose some $\Delta_1,\dots,\Delta_r$; the precise computation of these will be described later.  Our colliding inputs will have the form $x+\sum_s \alpha_s \Delta_s$ for arbitrary $\alpha_i\in\{0,1\}$.  Our goal is to compute an $x$ such that this holds.  We want that for each $i$,
+	
+	\[(x-\sum_s \alpha_s \Delta_s)^T\cdot\Am_i\cdot(x-\sum_s \alpha_s \Delta_s)\]
+
+	is constant, independent of the $\alpha_s$.  We therefore expand out the product, and group by monimials in the $\alpha_s$.  Notice that $\alpha_s^2=\alpha_s$.  Therefore, we have three kinds of monomials:
+	
+	\begin{itemize}
+		\item $\alpha_s \alpha_{s'}$.  The coefficient of such a monomial is $\Delta_s^T\cdot(\Am_i+\Am_i^T)\cdot\Delta_{s'}$.  
+		\item $\alpha_s$.  These occur in two ways, either by multiplying $\alpha_s$ by an $x$ term, or by squaring $\alpha_s$, since $\alpha_s^2=1$.  Therefore, we have that $\Delta_s^T\cdot\Am_i\cdot\Delta_s-\Delta_s\cdot (\Am_i+\Am_i^T)\cdot x$.
+		\item Constant monomial.  This is just $x^T\cdot\Am_i\cdot x$.
+	\end{itemize}
+	
+	For all points of the form $x-\sum_s \alpha_s \Delta_s$ to collide, we need all the coefficients of the monomials $\alpha_s\alpha_{s'}$ and $\alpha_s$ to be zero.  To make the coefficients of $\alpha_s\alpha_{s'}$ zero, we will choose the $\Delta_s$ as follows.  Choose a random $\Delta_1$.  Then choose a random $\Delta_2$ such that $\Delta_1^T\cdot(\Am_i+\Am_i^T)\cdot\Delta_{2}=0$ and $\Delta_2$ is linearly independent of $\Delta_1$.  The solution to the linear system has dimension at least $m-n$, and a solution that is independent of $\Delta_1$ exists if $m-n>1$ (equivalently, $m\geq n+2$).  
+	
+	Next, choose $\Delta_3$ such that $\Delta_1^T\cdot(\Am_i+\Am_i^T)\cdot\Delta_{3}=\Delta_2^T\cdot(\Am_i+\Am_i^T)\cdot\Delta_{3}=0$ and $\Delta_3$ is linearly independent of $\Delta_1,\Delta_2$.  Such a $\Delta_3$ can be found as long as $m\geq 2n+3$.  Repeat in this way until $\Delta_r$ has been computed.  $\Delta_r$ can be found as long as $m\geq (r-1)n+ r$.  
+	
+	Now we force the $\alpha_s$ coefficients to be 0 by solving for $x$.  These equations are linear in $x$.  There are $rn$ equations and $m$ unknowns, so if  $m\geq rn$ then the system is full rank with constant probability (and if $m\geq rn+\omega(\log\lambda)$ then the system if full rank with overwhelming probability) and a solution can be found.
+	
+	\medskip
+	
+	We can therefore have $2^r$ colliding inputs provided $m\geq r n + \max(0,r-n)$, many more than in the first attack.  However, these points will have many affine relationships.
+\end{itemize}
+
+\paragraph{Our Assumption.}  We therefore make the following hardness assumption.  
+
+We say a hash function $f$ is $(k+1)$-non-affine multi-collision resistant ($(k+1)$-NAMCR) if it is computationally infeasible to find $k+1$ non-affine colliding inputs.
+
+\begin{assumption}\label{assump:degreetwo} Let $k=\poly(n)$ and let $m<(k+1/2)n$.  Choose random upper triangular $\Am_i\in\{0,1\}^{m\times m}$ for $i=1,\dots,n$, and let $\As=(\Am_i)_i$.  Then the function $f_\As$ is $2(k+1)$-NAMCR.  More precisely, for any quantum adversary $A$, 
+	\[\Pr[(x_1,\dots,x_{2k+2})\text{ collide in $f_{\As}$ and are non-affine}:(x_1,\dots,x_{2k+2})\gets A(\As)]\]
+is negligible, where $\As$ is a sequence of random upper triangular matrices.
+\end{assumption}
+
+Note that it could even be possible to make a stronger assumption that $f_\As$ is $(k+2)$-NAMCR.  However, is is harder to compute a $2(k+1)$ non-affine multi-collision, so our assumption is weaker.  Nonetheless, it will be sufficient for our purposes.
+
+\subsection{Quantum Lightning}
+
+We now describe our quantum lightning construction.
+
+\paragraph{Parameters.} Our scheme will be parameterized by integers $n,k,m$, do be chosen later.
+
+\paragraph{Setup.}  To set up the quantum lightning scheme, simply choose $n$ random upper-diagonal matrices $\Am_i\in\{0,1\}^{m\times m}$, and set $\As=(\Am_i)_i$.  Output $\As$ as the public key.
+
+
+\paragraph{Bolt Generation.}  We generate a bolt in the following steps.
+
+\begin{itemize}
+	\item Generate the uniform superposition
+	\[|\phi_0\rangle=\frac{1}{2^{kn/2}}\sum_{\Delta_1,\dots,\Delta_k}|\Delta_1,\dots,\Delta_k\rangle\]
+	\item Write $\mathbf{\Delta}=(\Delta_1,\dots,\Delta_k)$ In superposition, run the computation above that maps $\mathbf{\Delta}$ to the affine space $S_\mathbf{\Delta}$ such that, for all $x\in S$, $f_\As(x)=f_\As(x+\Delta_j)$ for all $j$.  This will be an affine space of dimension at least $m-nk$.  Assuming $m-nk$ is super-logarithmic in $\lambda$, then with high probability over the choice of $\As$, the dimension will be exactly $m-nk$ for all but a negligible fraction of $\mathbf{\Delta}$.  Then construct a uniform superposition of elements in $S_\mathbf{\Delta}$.  The resulting state is then:
+	\[|\phi_1\rangle=\sum_{\mathbf{\Delta}}\sum_{x\in S_\mathbf{\Delta}}\frac{1}{2^{kn/2}\sqrt{|S_\mathbf{\Delta}|}}|\Delta,x\rangle\]
+		
+	\item Next, in superposition, compute $f_\As(x)$, and measure the result to get a string $y$.  The resulting state is
+	
+	\[|\phi_y\rangle\propto \sum_{\mathbf{\Delta},x\in S_\mathbf{\Delta}:f_\As(x)=y}\frac{1}{|S_\mathbf{\Delta}|}|x,\mathbf{\Delta}\rangle\]
+	
+	\item Finally, in superposition, compute the maps $(x,\Delta_1,\dots,\Delta_k)$ to $(x,x-\Delta_1,\dots,x-\Delta_k)$.  The resulting state is
+	
+	\[\qlightning[y]\propto\sum_{\mathbf{\Delta},x\in S_\mathbf{\Delta}:f_\As(x)=y}\frac{1}{|S_\mathbf{\Delta}|}|x,x-\Delta_1,\dots,x-\Delta_k\rangle\]
+	
+	Output this state as the bolt.
+\end{itemize}
+
+\begin{remark}\label{rem:1}We note that the support of this state is \emph{all} vectors $(x_0,\dots,x_k)$ such that $f_\As(x_i)=y$ for all $i\in[0,k]$.  Moreover, for all but a negligible fraction, the weight $|S_\mathbf{\Delta}|$ is the same, and so the weights for these components are the same.  Even more, the total weight of the other points is negligible.  Therefore, the bolt $\qlightning[y]$ is negligibly close to the state
+
+\[\sum_{x_0,\dots,x_k:f_\As(x_i)=y\forall i}|x_0,\dots,x_k\rangle=\left(\sum_{x:f_\As(x)=y}|x\rangle\right)^{\otimes(k+1)}\propto\qlightningp[y]^{\otimes (k+1)}\]
+ \[\text{where }\qlightningp[y]\propto\sum_{x:f_\As(x)=y}|x\rangle \]
+\end{remark}
+
+\paragraph{Verifying a bolt.}  Full verification of a bolt will run a mini verification on each of the $k+1$ sets of $m$ registers.  Each mini verification will output an element in $\{0,1\}^n\cup\{\bot\}$.  Full verification will accept and output $y$ if and only if each mini verification accepts and outputs the same string $y$.  We now describe the mini verification.
+
+Given Remark~\ref{rem:1}, we will assume that the mini verification, when run on a valid bolt, will be given the state $\qlightningp[y]$ for some $y$.  Out goal is to output $y$ in this case, and for any other state, reject.
+
+Mini verification on a state $|\phi\rangle$ will proceed in two steps.  In the first step, we verify that the $|\phi\rangle$ is in the space spanned by $\qlightningp[z]$ as $z$ varies.  We describe the procedure shortly.  
+
+Now notice that the $\qlightningp[z]$ vectors are all orthogonal.  Therefore, in the second step we determine which $\qlightningp[z]$ vector we have by evaluating $f_\As$ in superposition, and measuring the result to obtain $y$.  Notice that for $\qlightningp[y]$, this does not perturb the state.  Then output $y$ as the serial number
+
+We now turn to projecting onto the span of $\{\qlightning[z]\}_z$.  For $r\in\{0,1\}^n$, consider the state \[|\phi_r\rangle=\frac{1}{2^{m/2}}\sum_x (-1)^{r\cdot f_\As(x)}|x\rangle\]
+
+\begin{claim}\label{claim:equiv} The states $\qlightningp[z], z\in\{0,1\}^n$ and $|\phi_r\rangle, r\in\{0,1\}^n$ span the same subspace of states.
+\end{claim}
+\begin{proof} First, we show that each $|\phi_r\rangle$ lies in the span of the $\qlightningp[z]$.  Indeed,\[|\phi_r\rangle=\sum_z\frac{C_z}{2^{m/2}} (-1)^{r\cdot z}\qlightningp[z]\]
+	where $C_z$ is the normalization factor for $\qlightningp[z]$, namely $\sqrt{|\{x:f_\As(x)=z\}|}$.  This is true since the superposition places equal weight on each $x$, and moreover, the phase for each $x$ is exactly $r\cdot f_\As(x)$.
+	
+Next, we prove that each $\qlightningp[z]$ lies in the span of the $|\phi_r\rangle$.  First, we notice that \[\qlightning[0]\propto\sum_r |\phi_r\rangle\]
+since for $x$ where $f_\As(x)\neq 0$, we have that an equal number of $r$ place weight $1$ and $(-1)$ on $|x\rangle$, meaning the overall coefficient for $|x\rangle$ is 0.  Meanwhile, all $x$ where $f_\As(x)=0$ have equal positive weight.
+
+Next, we claim that \[C_z\qlightningp[z]+C_0\qlightning[0]\propto \sum_{r:r\cdot z=0}|\phi_r\rangle\]
+The sum on the left is a uniform superposition of $x$ such that $f_\As(x)\in\{0,z\}$.  For elements outside this set, the sum on the right places weight 0, since an equal number of $r$ contribute weight $1$ and $-1$.  Meanwhile, for $x$ in the set, the sum on the right places the same positive weight.  This completes the proof of the claim.
+\end{proof}
+
+Given Claim~\ref{claim:equiv}, it suffices to check that the state is in the span on the $|\phi_r\rangle$.  Consider the process of creating $|\phi_r\rangle$ given $r$.  Start with the state $|0\rangle$, and then perform the Hadamard gate qubit-by-qubit to obtain the uniform superposition of all $x\in\{0,1\}^m$.  Next, introduce a phase $(-1)^{r\cdot f_\As(x)}$ to each element $|x\rangle$ to arrive at $|\phi_r\rangle$.  Given a superposition $\sum_r \alpha_r |r\rangle|0\rangle$, this process can be used to construct the state $\sum_r \alpha_r |r\rangle|\phi_r\rangle$.
+
+Now, suppose we can, given $|\phi_r\rangle$ but not $r$, compute $r$.  This means in particular we can \emph{un}compute $r$.  Thus, the state above can be transformed into $\sum_r \alpha_r |\phi_r\rangle$, which represents an arbitrary state in the span of the $|\phi_r\rangle$.  
+
+Therefore, our verification procedure works as follows.  Given a state, it \emph{uncomputes} the computations above.  For a state in the span, the result is a state of the form $\sum_r \alpha_r |r\rangle|0\rangle$.  For a state not in the span, the last register will have come components that are non-zero.  Therefore, verification measures the last register, and accepts if and only if the result is 0.  If accepting, it recomputes the process above.  If the original state was in the span, the new state will be identical to the original state.
+
+\medskip
+
+Therefore, it suffices to compute $r$ from $|\phi_r\rangle$.  Let $R_i(x) = x^T\cdot\Am_i\cdot x$, which is a degree-2 polynomial in the components of $x$.  It is moreover multilinear since $x_i^2=x_i$.  With this notation, we have that \[|\phi_r\rangle=\sum_x (-1)^{\sum_i r_i R_i(x)}|x\rangle\]
+
+Write $x$ as $b,x'$ for $b\in\{0,1\},x'\in\{0,1\}^{m-1}$.  The phase $r\cdot f_\As(x)$ is a degree-2 polynomial in the components of $x$.  Therefore, we can write the phase as \[\left(\sum_i r_i P_i(x')\right)+\left(\sum_i r_i Q_i(x')\right)b\]
+where the $P_i(x')$ are multilinear degree-2 polynomials, and the $Q_i$ are \emph{linear} polynomials.  
+
+We therefore apply the Hadamard gate to the first qubit.  The resulting state is
+\[\sum_{x'\in\{0,1\}^{m-1}}(-1)^{\sum_i r_i P_i(x')}|\left(\sum_i r_i Q_i(x')\right),x'\rangle\]
+
+If we were to measure the entire state, we would obtain a random $x'$ (from which we could compute $Q_i(x')$), and the sum $\sum_i r_i Q_i(x')$.  This would give us a known linear combination of the $r_i$.  This of course is not enough to compute the entire $r$ vector.  
+
+Instead, we only measure the very first qubit, obtaining a bit $c_1$.  Without any additional measurements, $c_1$ is an unknown linear combination of the $r_i$.  We therefore, in superposition, compute and measure $Q_i(x')$ for each $i$, obtaining $\ell_i$.  Thus we know that $\sum_{i} \ell_i r_i = c_1$.
+
+The state collapses to 
+\[\sum_{x'\in\{0,1\}^{m-1}:Q_i(x')=\ell_i\forall i}(-1)^{\sum_i r_i P_i(x')}|x'\rangle\]
+
+This has almost the form of our original state $|\phi_r\rangle$, as it is a superposition over $x$ where the phase is a degree-2 polynomial in $x$.  We would therefore hope to repeat the process above to generate more constrains on $r$.  However, the support of this superposition is not full since $Q_i(x')=\ell_i$, so the above approach will not work.
+
+Instead, we notice that the support is an \emph{affine} subspace $S$ of $\{0,1\}^{m-1}$, since the equations $Q_i(x')=\ell_i$ are linear.  Therefore, any $x$ in $S$ can be written as $x_0+\sum_j a_j v_j$ for scalars $a_j$, and fixed vectors $v_j$, where $j=1,\dots d$ where $d$ is the dimension of the space.  Note that the vectors $v_j$ and $x_0$ can be computed from the $Q_i$ polynomials and the $\ell_i$, which are all known without any additional measurements.  Given that the equations $Q_i(x')=\ell_i$ are chosen at random, if we assume $m\geq n+\omega(\log\lambda)$, then with overwhelming probability the equations are are independent and therefore $d=m-1-n$.  
+
+We therefore perform the map $x\mapsto a$.  Now the superposition is over all strings of length $m-1-n$, and the phase for $a$ can be written as $(-1)^{\sum_i r_i P_i(x_0+\sum_j a_j v_j)}$.  Let $R_i'(a) = P_i(x_0+\sum_j a_j v_j)$, which is a degree-2 polynomial in $a$.  The resulting state has the form
+\[\sum_a (-1)^{\sum_i r_i R_i'(a)}|a\rangle\]
+
+This state does have the desired form to keep generating new linear constraints on $r$.  We therefore repeat the above process $u=n+\omega(\log \lambda)$ times.  Each time, we generate a random linear constrain on $r$ (which has dimension $n$), so with overwhelming probability in $n$, the $u$ constraints will be full rank, allowing us to determine $r$.
+
+Each constraint uses up $n+1$ qubits of the state.  Therefore, in order to carry out the above procedure, we need $m\geq u(n+1)$ (Actually, we need $m\geq u(n+1)+\omega(\log\lambda)$ to ensure success in the last repetition).  We therefore set, for example, $n=\lambda,k=2n$ and $m=kn=2n^2$, which allows for $u=\lfloor 2n^2/(n+1)\rfloor=2(n-1)$ for $n\geq 2$.  
+
+\medskip
+
+Putting everything together, mini verification projects onto the span of the $\qlightningp[z]$ (equivalently the span of the $|\phi_r\rangle$), and then measures $f_\As(x)$ in superposition, obtaining $y$.  Supposing the projection accepted, the state is in the span of $\qlightning[z]$, and after measuring $y$, the state at the end of verification must be exactly $\qlightningp[y]$. Full verification then does this for each of the $k+1$ registers, obtaining a list $y_1,\dots,y_{k+1}$.   Full verification, which operates on a state over $k+1$ registers, accepts if and only if none of the $y_i$ are $\bot$, and moreover if they are all equal to the same $y$.  Then this $y$ is the serial number for the overall bolt.  If full verification accepts and outputs serial number $y$, then the state that remains is the state $\qlightning[y]=\qlightningp[y]^{\otimes (k+1)}$.
+
+
+
+\paragraph{Security.} We now prove security.  Consider a quantum adversary $A$ that is given $\As$ and tries to construct two (possibly entangled) bolts $\qlightning[0],\qlightning[1]$.  Assume toward contradiction that with non-negligible probability, verification accepts on both bolts, and outputs the same serial number $y$.  
+
+By our above analysis, if acceptance happens, the resulting state is just $\qlightningp[y]^{\otimes 2(k+1)}$.  We therefore measure the state, obtaining $2(k+1)$ random pre-images of $y$.  Since these pre-images live in a space much larger than $2(k+1)$, we have that with overwhelming probability they are non-affine.  Therefore, if acceptance happens, we obtain a $2(k+1)$ non-affine multi-collision.  Since by assumption verification accepts with non-negligible probability, we are therefore able to obtain a $2(k+1)$ non-affine multi-collision with non-negligible probability.  This violates our hardness assumption.
+
+\begin{theorem} If Assumption~\ref{assump:degreetwo} holds, then the scheme above is a secure quantum lightning scheme.
+\end{theorem}
+
+
+\subsection{Collapse-non-binding Hash Functions}
+
+If $k=0$, our construction above simply has a single copy of $\qlightningp[y]$.  This says that the function $f_\As$ is collapse-non-binding, except that the function is not collision resistant.
+
+
+We can instead view our function as a collapse-non-binding hash function as follows.  Start with the function $f_\As^{\otimes(k+1)}$.  We now restrict the domain to $k+1$ non-affine collisions for $f_\As$.  On this domain, the function's output will always have the form $(y,y,\dots,y)$, so we can just take the output to be $y$.  Call this function $g$.
+
+On this domain, $g$ is almost collision resistant, except that the $k+1$ elements of the multi-collision input can be permuted to obtain a collision for $g$.  We therefore restrict to multi-collisions in sorted order.
+
+Now our input generation will generate the superposition of $k+1$ colliding inputs as before, and then sort.  Of course, soring is non-reversible, so we need to be careful.  Notice that the superposition of colliding inputs is symmetric, in the sense than any permutation on the $k+1$ inputs will result in the same superposition.  We will therefore actually apply the map $\sum_{\sigma} |x_{\sigma(1)},\dots,x_{\sigma(k+1)}\rangle \mapsto |x_1,\dots,x_{k+1}\rangle$, which is a unitary transformation, assuming the $x_1,\dots,x_{k+1}$ are sorted.  This gives us a superposition of inputs to $g$.  To verify that we are still in superpostion, we undo the map to make a symmetric state again, and then apply the bolt verification above.
+
+This gives a collapse-non-binding hash function $g$, albeit on a restricted domain.  We would like a function $h$ that is collapse-non-binding on $\{0,1\}^o$ for some $o$.  Toward that end, we first consider our inputs as the tuples $(\Delta_1,\dots,\Delta_k,x)$.  This is still a restricted domain, so we think of $x=x_0+\sum_i a_i v_i$, where $v_i$ span the space $S_\mathbf{\Delta}$.  The inputs will actually be $(\Delta_1,\dots,\Delta_k,a)$.  Now the domain is unrestricted.  Note that some care is needed, since the dimension of $S_\mathbf{\Delta}$ varies for some $\mathbf{\Delta}$.  This means the domain length varies somewhat.  However, this can be handled with some care; we omit the details.
+
+
+

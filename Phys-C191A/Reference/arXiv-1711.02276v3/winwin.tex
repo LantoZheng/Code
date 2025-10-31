@@ -1,0 +1,349 @@
+\label{sec:winwin}
+
+In this section, we give several win-win results for public key quantum money and quantum lightning.  
+
+Recently, Unruh~\cite{EC:Unruh16} and Garg, Yuen, and Zhandry~\cite{C:GarYueZha17} have shown limitations with prior definitions for commitment schemes, hash functions, and signatures\footnote{Technically, Garg et al. only study message authentication codes, but their discussion applies to signatures as well}.  The problem is that the prior definitions implicitly assume that an adversary capable of producing two objects is able to do so simultaneously.  However, in the quantum setting, it may be possible for an adversary to produce one of two objects, but impossible for it to simultaneously produce both.  
+
+For example, consider the case of signatures, which provide integrity over an insecure channel.  Classically, if an adversary intercepts a signed message and modifies it into a different signed message, it then has two signed messages, the one it received and the one it produced.  Inspired by this, Boneh and Zhandry give the first reasonable definition for security when the adversary sees a superposition of signed messages.  Their notion, roughly, says that such an adversary cannot produce two different signed messages.  Unfortunately, this definition allows for undesirable outcomes.  For example, if the original signed message always begins with the bit 0, it would be desirable for any signed message produced by the adversary to also have the first bit be 0.  However, the Boneh-Zhandry definition allows for an adversary to construct a signed message that begins with 1; since the adversary only ever produces a single signed message, this does not contradict Boneh-Zhandry security.  
+
+To combat such situations, Garg, Yuen, and Zhandry define a much stronger notion of security for signatures that rules out such attacks.  Similar situations arise for commitment schemes and hash functions, and Unruh~\cite{EC:Unruh16} similarly gives definitions that rule out these undesirable settings.  
+
+In this section, we show that these undesirable attacks, if they exist for a particular scheme, actually yield quantum money or quantum lightning.  Thus, any scheme that meets the weaker old security notions either (1) actually also meets the stronger security definitions, or (2) can be used to construct quantum money/lightning, in either case leading to a positive outcome.  Given the difficulty of constructing public key quantum money, we interpret our win-win results to suggest that most natural constructions of primitives actually meet the stronger security properties.
+
+\subsection{Infinity-Often Security} 
+
+Before describing our win-win results, we need to introduce a non-standard notion of security.  Typically, a security statement says that no polynomial-time adversary can win some game, except with negligible probability.  A violation of the security statement is a polynomial-time adversary that can win with \emph{non}-negligible probability; that is, some probability $\epsilon$ that is lower bounded by an inverse-polynomial \emph{infinitely often}.  
+
+Our win-win results are of the form ``either (A) is secure or (B) is secure.''  Unfortunately, one of the two security properties needs to be relaxed slightly.  The reason is that we will use a supposed attack for (A) to yield a verifier for (B) that allows us to prove security.  However, if the attack for (A) only succeeds with non-negligible probability, it's winning probability may frequently be too small to be useful for proving (B).  Instead, we will either treat a break for (A) as yielding an attack with an actual inverse polynomial winning probability (so that it will always be useful), or only guarantee security for (B) infinitely often (basically, in the cases where the attack for (A) was useful).
+
+This motivates the notion of \emph{infinitely often security}.  A scheme has infinitely-often security if, roughly, security holds for an infinite number of security parameters, but not necessarily all security parameters.  More precisely, instead of a poly-time adversary's advantage or success probability being upper-bounded by a negligible function, it is only guaranteed to be bounded infinitely often by a negligible function.  If a scheme is not infinitely-often secure, it means that there is an adversary that has an inverse polynomial advantage (as opposed to non-negligible).  It is straightforward to modify all security notions in this work to infinitely-often variants.
+
+Our win-win results will therefore be phrased as:
+\begin{itemize}
+	\item ``either (A) is secure or (B) is infinitely-often secure'', and 
+	\item ``either (A) is infinitely-often secure or (B) is secure.''
+\end{itemize}
+
+\subsection{Collision Resistant Hashing}
+
+A hash function is a function $H$ that maps large inputs to small inputs.  We will considered keyed functions, meaning it takes two inputs: a key $k\in\{0,1\}^\lambda$, and the actual input to be compressed, $x\in\{0,1\}^{m(\lambda)}$.  The output of $H$ is $n(\lambda)$ bits.  For the hash function to be useful, we will require $m(\lambda)\gg n(\lambda)$.
+
+The usual security property for a hash function is collision resistance, meaning it is computationally infeasible to find two inputs that map to the same output.
+\begin{definition}$H$ is collision resistant if, for any quantum polynomial time adversary $A$,
+	\[\Pr[H(x_0)=H(x_1)\wedge x_0\neq x_1:(x_0,x_1)\gets A(k),k\gets\{0,1\}^\lambda]<\negl(\lambda)\]
+\end{definition}
+
+Unruh~\cite{EC:Unruh16} points out weaknesses in the usual collision resistance definition, and instead defines a stronger notion called \emph{collapsing}.  Intuitively, it is easy for an adversary to obtain a superposition of pre-images of some output, by running $H$ on a uniform superposition and then measuring the output.  Collapsing requires, however, that this state is computationally indisitnguishable from a random input $x$.  More precisely, for an adversary $A$, consider the following experiment between $A$ and a challenger
+\begin{itemize}
+	\item The challenger has an input bit $b$.
+	\item The challenger chooses a random key $k$, which it gives to $A$.
+	\item $A$ creates a superposition $|\psi\rangle=\sum_x \alpha_x |x\rangle$ of elements in $\{0,1\}^{m(\lambda)}$.
+	\item In superposition, the challenger evaluates $H(k,\cdot)$ to get the state $|\psi'\rangle=\sum_x \alpha_x |x,H(k,x)\rangle$
+	\item Then, the challenger either:
+	\begin{itemize}
+		\item If $b=0$, measures the $H(k,x)$ register, to get a string $y$.  The state $|\psi'\rangle$ collapses to $|\psi_y\rangle\propto\sum_{x:H(k,x)=y}\alpha_x|x,y\rangle$
+		\item If $b=1$, measures the entire state, to get a string $x,H(k,x)$.  The state $|\psi'\rangle$ collapses to $|x,H(k,x)\rangle$
+	\end{itemize}
+	\item The challenger returns whatever state remains of $|\psi'\rangle$ (namely $|\psi_y\rangle$ or $|x,H(k,x)\rangle$) to $A$.
+	\item $A$ outputs a guess $b'$ for $b$.  Define $\collapseexp_b(A,\lambda)$ as the random variable $b'$.
+\end{itemize}
+
+\begin{definition}$H$ is collapsing if, for all quantum polynomial time adversaries $A$, \[|\Pr[\collapseexp_0(A,\lambda)=1]-\Pr[\collapseexp_1(A,\lambda)=1]|<\negl(\lambda)\]
+\end{definition}
+
+\begin{theorem}\label{thm:collision} Suppose $H$ is collision resistant.  Then both of the following are true:
+	\begin{itemize}
+		\item Either $H$ is collapsing, or $H$ can be used to build a quantum lightning scheme that is infinitely often secure.
+		\item Either $H$ is infinitely often collapsing, or $H$ can be used to build a quantum lightning scheme that is secure.
+	\end{itemize}
+\end{theorem}
+
+\begin{proof} Let $A$ be a collapsing adversary; the only difference between the two cases above are whether $A$'s advantage is non-negligible or actually inverse polynomial.  The two cases are nearly identical, but the inverse polynomial case will simplify notation.  We therefore assume that $H$ is not infinitely-often collapsing, and will design a quantum lightning scheme that is secure.
+	
+Let $A_0$ be the first phase of $A$: it receives a hash key $k$ as input, and produces a superposition of pre-images, as well as it's own internal state.  Let $A_1$ be the second phase of $A$: it receives the internal state from $A_0$, plus the superposition of input/output pairs returned by the challenger.  It outputs 0 or 1.	
+
+Define $q_b(\lambda)=\Pr[\collapseexp_b(A,\lambda)=1]$.  By assumption, we have that $|q_0(\lambda)-q_1(\lambda)|\geq 1/p(\lambda)$ for some polynomial $p$.  We will assume $q_0<q_1$, the other case handled analogously.  
+
+For an integer $r$, consider the function $H^{\otimes r}(k,\cdot)$ which takes as input a string $x\in(\{0,1\}^{m(\lambda)})^r$, and outputs the vector $(H(k,x_1),\dots,H(k,x_r))$.  The collision resistance of $H$ easily implies the collision resistance of $H^{\otimes r}$, for any polynomial $r$.  Moreover, we will use $A$ to derive a collapsing adversary $A^{\otimes r}$ for $H^{\otimes r}$ which has near-perfect distinguishing advantage.  $A^{\otimes r}$ works as follows.
+
+\begin{itemize}
+	\item First, it runs $A_0$ in parallel $r$ times to get $r$ independent states $|\psi_i\rangle$, where each $|\psi_i\rangle$ contains a superposition of internal state values, as well as inputs to the hash function.
+	\item It assembles the $r$ superpositions of inputs into a superposition of inputs for $H^{\otimes r}$, which it then sends to the challenger.
+	\item The challenger responds with a potential superposition over input/output pairs (through the output value in $(\{0,1\}^{n(\lambda)})^r$ is fixed).  
+	\item $A^{\otimes r}$ disassembles the input/output pairs into $r$ input/output pairs for $H$.  
+	\item It then runs $A_1$ in parallel $r$ times, on each of the corresponding state/input/output superpositions, to get bits $b_1',\dots,b_r'$.
+	\item $A^{\otimes r}$ then computes $f=(\sum_i b_i')/r$, the fraction of $b_i'$ that are 1.
+	\item If $f>(q_0+q_1)/2$ (in other words, $f$ is closer to $q_1$ than it is to $q_0$), $A$ outputs 1; otherwise it outputs 0.
+\end{itemize}
+
+Notice that if $A^{\otimes r}$'s challenger uses $b=0$ (so it only measures the output registers), this corresponds to each $A$ seeing a challenger with $b=0$.  In this case, each $b_i'$ with be 1 with probability $q_0$.  This means that $f$ will be a (normalized) Binomial distribution with expected value $q_0$.  Analogously, if $b=1$, each $b_i'$ will be 1 with probability $q_1$, so $f$ will be a normalized Binomial distribution with expected value $q_1$.  Since $q_1-q_0\geq 1/p(\lambda)$, we can use Hoeffding's inequality to choose $r$ large enough so that in the $b=0$ case, $f<(q_0+q_1)/2=q_0+1/2p(\lambda)$ except with probability $2^{-\lambda}$.  Similarly, in the $b=1$ case, $f>(q_0+q_1)/2=q_1-1/2p(\lambda)$ except with probably $2^{-\lambda}$.  This means $A^{\otimes r}$ outputs the correct answer except with probability $2^{-\lambda}$.
+
+We now describe a first attempt at a quantum lightning scheme:
+
+\begin{itemize}
+	\item $\qsetup_0$ simply samples and outputs a random hash key $k$.  This key will determine $\genbolt_0,\verbolt_0$ as defined below.
+	\item $\genbolt_0$ runs $A_0^{\otimes r}(k)$, where $r$ is as chosen above and $A_0^{\otimes r}$ represents the first phase of $A^{\otimes r}$.
+	
+	When $A^{\otimes r}_0$ produces a superposition $|\psi\rangle$ over inputs $x\in\{0,1\}^{rm}$ for $H^{\otimes r}(k,\cdot)$ as well as some private state, $\genbolt_0$ applies $H^{\otimes r}$ in superposition, and measures the result to get $y\in\{0,1\}^{rn}$.
+	
+	Finally, $\genbolt_0$ outputs the resulting state $\qlightning=|\psi_y\rangle$.
+	
+	\item $\verbolt_0$ on input a supposed bolt $\qlightning$, first applies $H^{\otimes r}(k,\cdot)$ in superposition to the input registers to obtain $y$, which it measures.  It saves $y$, which will be the serial number for the bolt.
+	
+	Next, consider two possible tests ${\sf Test}_0$ and ${\sf Test}_1$.  In ${\sf Test}_0$, run $A_1^{\otimes r}$ --- the second phase of $A^{\otimes r}$ --- on the $\qlightning$ and measure the result.  If the result is 1 (meaning $A^{\otimes r}$ guesses that the challenger measured the entire input/output registers), then abort and reject.  Otherwise if the result is 0 (meaning $A^{\otimes r}$ guess that the challenger only measured the output), then it un-computes $A_1^{\otimes r}$.  Note that since we measured the output of $A_1^{\otimes r}$, un-computing does not necessarily return the bolt to its original state. 
+	
+	${\sf Test}_1$ is similar to ${\sf Test}_0$, except that the input registers $x$ are measured before running $A_1^{\otimes r}$. This measurement is not a true measurement, but is instead performed by copying $x$ into some private registers.  Moreover, the abort condition is flipped: if the result of applying $A_1^{\otimes r}$ is 0, then abort and reject.  Otherwise un-compute $A_1^{\otimes r}$, and similarly ``un-measure'' $x$ by un-computing $x$ from the private registers.
+	
+	$\verbolt_0$ chooses a random $c$, and applies  ${\sf Test}_c$.  If the test accepts, then it outputs the serial number $y$, indicated that it accepts the bolt.
+\end{itemize}
+
+\paragraph{Correctness.}  For a valid bolt, ${\sf Test}_0$ corresponds to the $b=0$ challenger, in which case we know $A_1^{\otimes r}$ outputs 0 with near certainty.  This means $\verbolt$ continues, and when it un-computes, the result will be negligibly close to the original bolt. Similarly, ${\sf Test}_1$ corresponds to the $b=1$ challenger, in which case $A_1^{\otimes r}$ outputs 1 with near certainty.  Un-computing returns the bolt to (negligibly close to) its original state.  For a valid bolt, the serial number is always the same.  Thus, $\genbolt,\verbolt$ satisfy the necessary correctness requirements.  
+
+\paragraph{Security.}  Security is more tricky.  Suppose instead of applying a random ${\sf Test}_c$, $\verbolt_0$ applied both tests.  The intuition is that if $\verbolt$ accepts, it means that the two possible runs of $A_1^{\otimes r}$ would output different results, which in turn means that $A_1^{\otimes r}$ detected whether or not the input registers were measured.  For such detection to even be possible, it must be the case that the input registers are in superposition.  Then suppose an adversarial storm $\advlightning$ generates two bolts $\qlightning[0],\qlightning[1]$ that are potentially entangled such that both pass verification with the same serial number.  Then we can measure both states, and the result will (with reasonable probability) be two distinct pre-images of the same $y$, representing a collision.  By the assumed collision-resistance of $H$ (and hence $H^{\otimes r}$), this will means a contradiction.
+
+The problem with the above informal argument is that we do not know how $A_1^{\otimes r}$ will behave on non-valid bolts that did not come from $A_0^{\otimes r}$.  In particular, maybe it passes verification with some small, but non-negligible success probability.  It could be that after passing ${\sf Test}_0$, the superposition has changed significantly, and maybe is no longer a superposition over pre-images of $y$, but instead a single pre-image.  Nonetheless, if the auxiliary state registers are not those generated by $A_0^{\otimes r}$, it may be that the second test still accepts  --- for example, it may be that if $A^{\otimes r}$'s private state contains a particular string, it will always accept; normally this string would not be present, but the bolt that remains after performing one of ${\sf Test}_c$ may contain this string.  We have to be careful to show that this case cannot happen, or if it does there is still nonetheless a way to extract a collision.  
+
+Toward that end, we only choose a single test at random.  We will first show a weaker form of security, namely that an adversary cannot produce two bolts that are both accepted with probability close to 1 and have the same serial number.  Then we will show how to modify the scheme so that it is impossible to produce bolts that are even accepted with small probability.
+
+Consider a bolt where, after measuring $H(k,\cdot)$, the inputs registers are \emph{not} in superposition at all.  In this case, the measurement in ${\sf Test}_1$ is redundant, and we therefore know that both runs of ${\sf Test}_c$ are the same, except the acceptance conditions are flipped.  Since the choice of test is random, this means that such a bolt can only pass verification with probability at most $1/2$.  
+
+More generally, suppose the bolt was in superposition, but most of the weight  was on a single input $x_0$.  Precisely, suppose that when measuring the $x$ registers, $x_0$ is obtained with probability $1-\alpha$ for some relatively small $\alpha$.   We prove the following:
+\begin{claim}\label{claim:measurement} Consider a quantum state $|\phi\rangle$ and a projective partial measurement on some of the registers.  Let $|\phi_x\rangle$ be the state left after performing the measurement and obtaining $x$.  Suppose that some outcome of the measurement $x_0$ occurs with probability $1-\alpha$.  Then $\||\phi_{x_0}\rangle-|\phi\rangle\| < \sqrt{2\alpha}$
+\end{claim}
+\begin{proof} First, the $|\phi_x\rangle$ are all orthogonal since the measurement was projective.  Let $\Pr[x]$ be the probability that the partial measurement obtains $x$.  It is straightforward to show that $|\phi\rangle=\sum_y \sqrt{\Pr[x]}\beta_x|\phi_x\rangle$ for some $\beta_x$ of unit norm. The overall phase can be taken to be arbitrary, so we can set $\beta_{x_0}=1$.  Then we have $\langle\phi_{x_0}|\phi\rangle = \sqrt{1-\alpha}$.  
+		
+	This means $\||\phi_{x_0}\rangle -|\phi\rangle\|^2 = 2-2(\langle\phi_{x_0}|\phi\rangle) = 2-2\sqrt{1-\alpha}\leq 2\alpha$ for $\alpha\in[0,1]$.
+\end{proof}
+
+Now, suppose for the bolt that ${\sf Test}_0$ passes with probability $t$.  Suppose $\alpha\leq 1/200$.  Then ${\sf Test}_1$ can only pass with probability at most $3/2-t$.  This is because with probability at least $199/200$, the measurement in ${\sf Test}_1$ yields $x_0$.  Applying Claim~\ref{claim:measurement}, the result in this case is at most a distance $\sqrt{2/200}=\frac{1}{10}$ from the original bolt.  In this case, since the acceptance criteria for ${\sf Test}_1$ is the opposite of ${\sf Test}_0$, the probability ${\sf Test}_1$ passes is at most $1-t+\frac{4}{10}$ by Lemma~\ref{lemma:distance}.  Over all then, ${\sf Test}_1$ passes with probability at most $(199/200)\left(1-t+\frac{4}{10}\right)+(1/200)\leq \frac{3}{2}-t$.  
+
+Therefore, since the test is chosen at random, the probability of passing the test is the average of the two cases, which is at most $\frac{3}{4}$ regardless of $t$.  Therefore, for any candidate pair of bolts $\qlightning[0]\qlightning[1]$, either:
+\begin{itemize}
+	\item[(1)] If the bolts are measured, two different pre-images of the same $y$, and hence a collision for $H^{\otimes r}$, will be obtained with probability at least $1/200$
+	\item[(2)] The probability that both bolts accept and have the same serial number is at most $\frac{3}{4}$.  
+\end{itemize}
+
+Notice that if $\qlightning[0],\qlightning[1]$ are produced by an adversarial storm $\advlightning$, then event (1) can only happen with negligible probability, else we obtain a collision-finding adversary.  Therefore, we have that for any efficient $\advlightning$, except with negligible probability, the probability that both bolts produced by $\advlightning$ accept and have the same serial number is at most $\frac{3}{4}$.  
+
+In the full scheme, a bolt is simply a tuple of $\lambda$ bolts produced by $\genbolt_0$, and the serial number is the concatenation of the serial numbers from each constituent bolt.  The above analysis show that for any efficient adversarial storm $\advlightning$ that produces two bolt sequences $\qlightning[b]=(\qlightning[b,1],\dots,\qlightning[b,\lambda])$, the probability that both sequences completely accept and agree on the serial numbers is, except with negligible probability, at most $\left(\frac{3}{4}\right)^\lambda$, which is negligible.  Thus we obtain a valid quantum lightning scheme.
+
+\iffalse
+This allows us to construct our full scheme.  
+\begin{itemize}
+	\item $\qsetup(1^\lambda)=\qsetup_0(1^\lambda)$
+	\item $\genbolt$ runs $\lambda$ copies of $\genbolt_0$ to get $\lambda$ bolts $\qlightning=(\qlightning[1],\dots,\qlightning[\lambda])$.
+	\item $\verbolt$ does the following.  It runs $\verbolt_0$ on each $\qlightning[i]$.  If any run of $\verbolt_0$ rejects, $\verbolt$ aborts and rejects.  Otherwise, it collects the list of serial numbers $(y_i)_i$ as the overall serial number.
+\end{itemize}
+
+Now we have that for any candidate pair of bolts produced by an adversary, either:
+\begin{itemize}
+	\item[(1)] If the bolts are measured, for at least one $i$, with probability at least $1/200$, the result will be two different pre-images of the same $y$, and hence a collision for $H^{\otimes r}$.
+	\item[(2)] The probability both bolts are accepted and have the same serial number is at most $\left(\frac{3}{4}\right)^\lambda$, which is exponentially small.
+\end{itemize}
+
+Thus any efficient adversary that can with non-negligible probability produce two valid bolts with the same serial number gives an efficient collision-finding adversary.  This completes the proof.\fi\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{One-time Signatures}
+
+A signature scheme consists of three polynomial time classical algorithms $\gen,\sign,\ver$.  $\gen$ is a randomized procedure that takes as input the security parameter and produces a secret key and public key pair $(\pk,\sk)\gets\gen(1^\lambda)$.  $\sign$ takes as input the secret key and a message $m$, and produces a signature $\sigma\gets\sign(\sk,m)$.  Finally, $\ver$ takes as input the public key, a message $m$, and a supposed signature $\sigma$ on $m$, and either accepts or rejects.
+
+A signature scheme is correct if $\ver$ accepts signatures outputted by $\sign$: for \[\Pr[\ver(\pk,m,\sigma)=1:\sigma\gets\sign(\sk,m),(\sk,\pk)\gets\gen(1^\lambda)]\geq 1-\negl(\lambda)\]
+
+For security, we will for simplicity only consider one-time signature schemes where the adversary only receives a single superposition of messages.  Also, following Garg, Yuen, and Zhandry~\cite{C:GarYueZha17}, for this subsection only, we will consider the created response model of a quantum query, where the oracle supplies the response register.  Modeling security in the more common supplied response setting is a more complicated task.  Finally, again for simplicity we assume that the signing function is a deterministic function of the secret key and message; this can be made without loss of generality by using a pseudorandom function to generate the randomness.
+
+\paragraph{Boneh-Zhandry security.}  Boneh and Zhandry~\cite{C:BonZha13} give the following definition of security for signatures in the presence of quantum adversaries.  Let $A$ be a quantum adversary, and consider the following experiment between $A$ and a challenger:
+\begin{itemize}
+	\item The challenger runs $(\sk,\pk)\gets\gen(\lambda)$, and gives $\pk$ to $A$
+	\item $A$ makes a quantum superpositions query to the function $m\mapsto \sign(\sk,m)$
+	\item $A$ outputs two classical message/signature pairs $((m_0,\sigma_0),(m_1,\sigma_1))$.  
+	\item The challenger accepts and outputs 1 if and only if (1) $m_0\neq m_1$, and (2) $\ver(\pk,m_b,\sigma_b)$ for both $b\in\{0,1\}$.  Denote this output by $\wbzexp(A,\lambda)$.  
+\end{itemize}
+
+\begin{definition}[Boneh-Zhandry~\cite{C:BonZha13}] A signature scheme is one-time weakly BZ-secure if, for any quantum polynomial time adversary $A$, $\wbzexp(A,\lambda)$ is negligible.
+\end{definition}
+
+We can also consider a stronger variant, where the challenger accepts if $(m_0,\sigma_0)\neq(m_1,\sigma_1)$, ruling out the possibility of producing two signatures on a single message.  Denote the output of this modified experiment by $\sbzexp(A,\lambda)$.
+
+\begin{definition}[Boneh-Zhandry~\cite{C:BonZha13}] A signature scheme is one-time strongly BZ-secure if, for any quantum polynomial time adversary $A$, $\sbzexp(A,\lambda)$ is negligible.
+\end{definition}
+
+\paragraph{Garg-Yuen-Zhandry security.} Garg, Yuen, and Zhandry~\cite{C:GarYueZha17} recently give a strengthening of Boneh-Zhandry security, which rules out the types of attacks discussed above that are possible under Boneh-Zhandry security.
+
+Let $A$ be an adversary, and consider the following experiment:
+\begin{itemize}
+	\item The challenger runs $(\sk,\pk)\gets\gen(\lambda)$, and gives $\pk$ to $A$
+	\item $A$ makes a quantum superposition query to the function $m\mapsto \sign(\sk,m)$.  
+	\item $A$ outputs a superposition $|\psi\rangle=\sum_{m,\sigma,\aux}\alpha_{m,\sigma,\aux}|m,\sigma,\aux\rangle$ of message/tag pairs as well as auxiliary information.
+	\item The challenger runs $\ver$ on the $m,\sigma$ registers using the public key.  This is done in superposition.  The challenger then measures the output of $\ver$.
+	\begin{itemize}
+		\item If the output is 0, the challenger outputs $\bot$.
+		\item Otherwise, the challenger outputs what remains in the registers $m,\sigma,\aux$.  This is the state \[|\psi'\rangle\propto \sum_{\substack{m,\sigma,\aux:}{\ver(\pk,m,\sigma)=1)}}\alpha_{m,\sigma,\aux}|m,\sigma,\aux\rangle\]
+		Call this output $\gyzexp(A,\lambda)$.
+	\end{itemize}
+\end{itemize}
+
+We call $A$ \emph{$m$-respecting} if, after the signing query, $A$ cannot directly modify the $m$ registers, but is allowed to operate on the remaining registers, potentially based on the contents of $m$.  Alternatively, $A$ can replace all registers with a special symbol $\bot$.  This captures the ability of an adversary who intercepts a superposition of signed messages to measure the message, copy the message to some other register, and potentially operate on it's own private space.  Such operations will not affect verification.  Moreover, such an adversary can also throw away the entire superposition, and replace it with arbitrary junk.  However, in this case, verification will reject, so we might as well just have $A$ produce $\bot$.
+
+Analogously, we call $A$ \emph{$(m,\sigma)$-respecting} if we do not allow $A$ to directly modify the $m$ or $\sigma$ registers.  $A$ is still allowed to operate on its remaining registers, potentially based on the contents of $m,\sigma$.  Alternatively, $A$ can replace all registers with $\bot$.
+
+\begin{definition}[Garg-Yuen-Zhandry~\cite{C:GarYueZha17}] A signature scheme is one-time weakly GYZ-secure if, for any quantum polynomial time adversaries $A$, there exists an $m$-respecting quantum polynomial time $S$ such that the following two distributions on states are quantum polynomial-time indistinguishable:
+	\[\gyzexp(A,\lambda)\;\;\;\;\text{and}\;\;\;\;\gyzexp(S,\lambda)\]
+	
+\noindent The scheme is one-time strongly GYZ-secure if $S$ can be taken to be $(m,\sigma)$-respecting.  
+\end{definition}
+
+
+\begin{theorem} Suppose $(\gen,\sign,\ver)$ is one-time weakly (resp. strongly) BZ-secure.   Then both of the following are true:
+	\begin{itemize}
+		\item The scheme is either one-time weakly (resp. strongly) GYZ-secure, or can be used to build an \emph{infinitely-often} secure  public key quantum money scheme.
+		\item The scheme is either \emph{infinitely often} one-time weakly (resp. storngly) GYZ-secure, or can be used to build a secure public key quantum money scheme.
+	\end{itemize}
+\end{theorem}
+\begin{proof} We prove the strong setting, assuming the scheme is not infinitely-often GYZ-secure.  The weak setting is nearly identical, as is the case where the scheme is not (always) GYZ-secure.  Consider an adversary $A$ for one-time strong infinitely-often GYZ security.  Consider the following two algorithms derived from $A$:
+
+\begin{itemize}
+	\item Let $B$ be $A$, except that after receiving the result of the signing query, $B$ measures the $(m,\sigma)$ registers before continuing.
+	\item Let $S$ be the same as $A$, except for the following two changes.  First, $S$ also measures the $(m,\sigma)$ registers, obtaining $(m_0,\sigma_0)$, which it copies into its own private registers.  Second, 	once $A$ produces its final output, a superposition $|\psi\rangle$ over $m,\sigma,\aux$, $S$ tests if $(m,\sigma)=(m_0,\sigma_0)$.  If so, it outputs whatever state remains in $|\psi\rangle$.  Otherwise, it outputs $\bot$.
+\end{itemize}
+	
+Now, $S$ is a $(m,\sigma)$-respecting adversary.  Since we know $A$ is a one-time strong infinitely-often GYZ adversary, this means there is an efficient distinguisher $D$ such that \[|\Pr[D(\gyzexp(A,\lambda))=1]-\Pr[D(\gyzexp(S,\lambda))=1]|\]
+is inverse polynomial.  Define:
+\begin{itemize}
+	\item $q_0(\lambda)=	\Pr[D(\gyzexp(A,\lambda))=1]$
+	\item $q_1(\lambda)=	\Pr[D(\gyzexp(B,\lambda))=1]$
+	\item $q_2(\lambda)=	\Pr[D(\gyzexp(S,\lambda))=1]$
+\end{itemize}
+
+\begin{claim}$|q_1(\lambda)-q_2(\lambda)|$ is negligible
+\end{claim}
+\begin{proof} Suppose not, that $|q_1(\lambda)-q_2(\lambda)|\geq \delta(\lambda)$ for a non-negligible $\delta$.  Notice that the only instance in which the challenger outputs anything but $\bot$ is when $(m,\sigma,\aux)\neq\bot$ and if $(m,\sigma)$ is valid.  Moreover, if the output is not $\bot$, then the only different between $B$ and $S$ comes from $|m,\sigma,\aux\rangle$ where $(m,\sigma)\neq (m_0,\sigma_0)$.  Therefore, the final superposition produced by $B$ must have weight at least $\delta$ on $(m,\sigma,\aux)$ where $(m,\sigma)$ is valid and not equal to $(m_0,\sigma_0)$.  Thus, we obtain a one-time strong BZ adversary: simply run $B$, copying the post-signing message/signature pair $(m_0,\sigma_0)$ (which was measured by $B$) into a private register.  Then at the end, measure the state, to obtain $(m_1,\sigma_1)$.  With probability at least $\delta$, $(m_1,\sigma_1)$ is valid an not equal to $(m_0,\sigma_0)$.  Thus output $((m_0,\sigma_0),(m_1,\sigma_1))$ as the forgery.  This adversary has non-negligible probability $\delta$ of succeeding.
+\end{proof}
+
+Therefore, we have that $|q_0(\lambda)-q_1(\lambda)|$ is an inverse polynomial quantity $1/p(\lambda)$.  As in Theorem~\ref{thm:collision}, we can repeat the scheme many times in parallel to obtain a new signature scheme and adversary where $q_0(\lambda)\leq 2^{-\lambda}$ and $q_1(\lambda)\geq 1-2^{-\lambda}$.  We will abuse notation, and write $A,B,S$ as the algorithms corresponding to this new obtained adversary with almost perfect distinguishing advantage.  Let $A_0,A_1$ be the two phases of $A$, and similarly $B_0,B_1,S_0,S_1$.  Notice that $A_0=B_0=S_0$.  
+
+We now describe our basic  quantum money scheme $(\genmoney,\vermoney)$, assuming $q_0(\lambda)\leq 2^{-\lambda}$ and $q_1(\lambda)\geq 1-2^{-\lambda}$ as above:
+\begin{itemize}
+	\item $\genmoney_0(1^\lambda)$ samples $(\sk,\pk)\gets\gen(1^\lambda)$.  It then runs $A_0$ on $\pk$.  When $A_0$ outputs a superposition over internal state values and a signing query, $\genmoney_0$ signs the query with $\sk$, placing the output in newly created registers.  $\genmoney_0$ outputs the entire state of the adversary and result of the signing query, along with the public key, as the banknote $|\$\rangle$.
+	\item $\vermoney_0(|\$\rangle,\pk)$ first measures the $|\pk\rangle$ register to obtain $\pk'$.  If $\pk'\neq \pk$, $\vermoney$ rejects.
+
+	Then it runs $\ver$ on the $(m,\sigma)$ registers in superposition, and measures the result.  If $\ver$ rejects, then $\vermoney_0$ rejects.
+	
+	Next, consider two possible tests.  ${\sf Test}_0$ is the following.  Finish running $A$ by running $A_1$ on on the banknote to get a superposition over $(m,\sigma,\aux)$.  Then simulate the challenger by running $\ver(\pk_i,m,\sigma)$ in superposition; if the result is $0$, abort and reject.  If the result is 1, produce the whatever state $|\psi_i'\rangle$ remains.  Feed the result of the previous step into the distinguisher $D$, to get an output $b$. If $b=1$, then abort and reject.  Otherwise, un-compute all of the preceding steps. 
+	
+	${\sf Test}_1$ is similar, but modified analogously to the proof of Theorem~\ref{thm:collision}.  Instead of running $A_1$, run $B_1$, for which the only difference is that the $(m,\sigma)$ registers are measured at the beginning.  We also change the acceptance condition: if $b=0$, then abort and reject.  Otherwise, un-compute all of the preceding steps. 
+	
+	$\vermoney_0$ simply chooses a random $c$, and applies ${\sf Test}_c$.  If the test passes, then $\vermoney_0$ outputs the serial number $\pk$.
+\end{itemize}
+
+\paragraph{Correctness.} For a valid banknote, the serial number $\pk$ is clearly a deterministic function of the note.  Moreover, the step of $\vermoney$ where $\ver$ is run will always accept without modifying the quantum money state.  Finally, we claim that either test ${\sf Test}_c$ always accepts and negligibly affects the state.  This is true simply because ${\sf Test}_c$ corresponds to running the challenger on input $b=c$, and the the test accepts exactly if $A,D$ behave as guaranteed.
+
+\paragraph{Security.} Analogous to the proof of Theorem~\ref{thm:collision}, the scheme above is not secure.  However, the same arguments can be made to show that for any for any candidate pair of quantum money states $\qlightning[0]\qlightning[1]$, either:
+\begin{itemize}
+	\item[(1)] If the banknotes are measured, two different valid message/signature pairs for $\pk$ will be produced with probability at least $1/200$.
+	\item[(2)] The probability that both banknotes accept is at most $\frac{3}{4}$.  
+\end{itemize}
+
+Notice that case (1) can be used to obtain a BZ-forger.  The adversary gets a public key $\pk$ from the BZ challenger.  Then it constructs a quantum money state with serial number $\pk$; the only step it cannot perform for itself is the signing, which it accomplishes using the BZ signing oracle.  Then it runs the adversary to get two banknotes, which it measures.  Since the signature scheme is assumed to be BZ secure, the probability of (1) occurring must be negligible.  Therefore, for any efficient quantum money adversary, it must be the case that (2) happens, except with negligible probability.
+
+Just as in the proof of Theorem~\ref{thm:collision}, we can shrink the probability both banknotes accept to negligible by running multiple instances of the scheme in parallel.  This completes the proof.\end{proof}
+
+
+
+
+
+
+
+
+
+
+\subsection{Commitment Schemes}
+
+Next, we turn to commitment schemes.  An interactive commitment scheme consists of four interactive classical polynomial-time algorithms $\comm_S,\comm_R,\reveal_R$:
+\begin{itemize}
+	\item In the commit phase, the sender has a message $m$ and security parameter $\lambda$, and the receiver has no input (except the security parameter).  The sender runs $\comm_S(1^\lambda,m)$ and the receiver runs $\comm_R(1^\lambda)$, which may send multiple messages bank and forth.  At the end of the interaction, $\comm_S$ and $\comm_R$ produce some state $\state_S,\state_R$, respectively, which are the saved state for the next round of communication. 
+	\item In the reveal phase, the receiver is given the message $m$.  Then the sender sends an ``opening'' to the message $m$, which is just $\state_S$.  The receiver runs $\reveal_R(m,\state_R,\state_S)$, and either accepts or rejects.
+\end{itemize}
+
+We call a commitment scheme \emph{publicly verifiable} if, after the commit phase but before the reveal phase, the receiver publishes $\state_R$; in this case we will still require all of the security properties discussed below to hold even if the sender sees $\state_R$ at this point.  
+
+The classical definition of computational-binding for a commitment scheme is the following, adapted to the quantum setting.  consider an adversary, consisting of an algorithm $\comm_S'$.  Consider the following experiment between this adversary and a challenger:
+
+\begin{itemize}
+	\item The adversary runs $\comm_S'$ and challenger runs $\comm_R(1^\lambda)$; the two algorithms interact.  The challenger ensures that every message received is measured before responding, guaranteeing that $\comm_R$ is run classically. 
+	\item $\comm_S'$ produces two openings $\state_{S,0}',\state_{S,1}'$ and two messages $m_0,m_1$.  $\comm_R$ produces a state $\state_R$.
+	\item The challenger receives $(\state_{S,b}',m_b)$ for $b=\{0,1\}$.  For each $b$, it runs $\reveal_R(m_0,\state_R,\state_{S,b}')$.
+	\item The challenger outputs 1 if and only if both runs of $\reveal_R$ for $b=0,1$ accept.
+\end{itemize}
+
+
+\begin{definition} $(\comm_S,\comm_R,\reveal_R)$ is computationally binding if, for all quantum polynomial-time adversaries $\comm_S'$, the probability the challenger accepts in the above game is negligible.
+\end{definition}
+
+Recently, Unruh~\cite{EC:Unruh16} offers a stronger definition, called collapse-binding.  Here, consider the following experiment between an binding adversary $\comm_S'$ and a challenger.  Note that Unruh only considers non-interactive schemes, whereas we consider interactive schemes.  Therefore, our definition appears different than his.  However, in the case of non-interactive schemes, our definitions coincide.
+\begin{itemize}
+	\item The challenger is given an input $c\in\{0,1\}$.
+	\item The adversary runs $\comm_S'(1^\lambda)$ and the challenger runs $\comm_R(1^\lambda)$; the two algorithms interact.  The challenger ensures that every message received is measured before responding, guaranteeing that $\comm_R$ is run classically. 
+	\item $\comm_S'$ produces a superposition $\sum \alpha_{\state_S',m}|\state_S',m\rangle$ which it sends to the challenger.  It may also produce a private state that is entangled with this superposition.  $\comm_R$ produces a classical state $\state_R$.
+	\item The challenger then runs $\reveal_R$ \emph{in superposition} on $\state_R$ and the superposition produced by $\comm_S'$.  It measures the result of the computation.  If $\reveal_R$ rejects, the challenger aborts and rejects.
+	
+	\item Next, if $c=0$, the challenger does nothing.  If $c=1$, the challenger measures the $m$ register of the adversary's state.
+	\item Finally, the challenger outputs everything.  This includes the (potentially collapsed) superposition produced by $\comm_S'$, the adversary's private state (if any), and $\state_R$.  Denote this output by $\collapseexp_c(\comm_S',\lambda)$
+\end{itemize}
+
+\begin{definition} A commitment scheme $\comm_S,\comm_R,\reveal_R$ is collapse-binding if, for all polynomial time quantum adversaries $\comm_S'$, $\collapseexp_0(\comm_S',\lambda)$ is computationally indistinguishable from $\collapseexp_1(\comm_S',\lambda)$.
+\end{definition}
+
+\begin{theorem}\label{thm:comm} Suppose $(\comm_S,\comm_R,\reveal_R)$ is a \emph{publicly verifiable} computationally binding commitment scheme.  Then both of the following are true:
+	\begin{itemize}
+		\item The scheme is either collapse-binding, or can be used to build an \emph{infinitely-often} secure  public key quantum money scheme.
+		\item The scheme is either \emph{infinitely often} collapse-binding, or can be used to build a secure public key quantum money scheme.
+	\end{itemize}
+\end{theorem}
+
+\begin{proof}  The proof is analogous to the proofs for hash functions and signatures, and we only sketch the proof here.  
+Suppose the commitment scheme is computationally binding, but is not infinitely-often collapse-binding.  Then there is an adversary $\comm_S'$ and a distinguisher $D$ such that \[|\Pr[D(\collapseexp_0(\comm_S',\lambda))=1]-\Pr[D(\collapseexp_1(\comm_S',\lambda))=1]|\]
+is greater than an inverse polynomial.  For simplicity, assume that $\Pr[D(\collapseexp_0(\comm_S',\lambda))=1]\leq 2^{-\lambda}$ and $\Pr[D(\collapseexp_1(\comm_S',\lambda))=1]\geq 1-2^{-\lambda}$; the more general case can be handled analogously to the hash function/signature case by repeating many instances in parallel.
+
+To generate a quantum money state, run the experiment $\collapseexp$ with $\comm_S'$ until $\comm_S'$ outputs a superposition $\sum \alpha_{\state_S',m}|\state_S',m\rangle$, plus potentially a private state that is entangled with this superposition.  Output this superposition, the adversary's private state, if any, and $\state_R$ produced by $\comm_R$ (recall that the scheme is publicly verifiable, so binding will hold even if $\comm_R$ is public).
+
+To verify a banknote, choose a random $c\in\{0,1\}$.  Finish running $\collapseexp_c$ by running $\reveal_R$ in superposition on $\state_R$ and the superposition of $(\state_S',m)$ pairs; if $c=0$, this is all that happens, while if $c=1$, measure the message registers afterward.  Then take the output of the experiment, and feed it to $D$.  If the output of $D$ is not $c$, reject.  Otherwise, accept, and output $\state_R$ as the serial number.
+
+Similar to the proofs in the case of signatures and hash functions, if an adversary is able to produce two banknotes that have the same serial number $\state_R$, then one of two things happen:
+\begin{itemize}
+	\item[(1)] The superposition of messages in one of the banknotes has a noticeable weight on at least two messages.  In this case, measuring the message registers will give different answers with noticeable probability.
+	\item[(2)] The banknotes will fail verification with noticeable probability.
+\end{itemize}
+
+In the (1) case, we can use the two banknotes to produce two openings $\state_{S,0}',m_0,\state_{S,1}',m_1$ that can be used to reveal to two different messages simultaneously.  This gives a violation of computational binding.  Therefore, under the assumption that the scheme is computationally binding, it must be that (2) happens with overwhelming probability.
+
+This does not give us a full quantum money scheme, but by repeating $\lambda$ times in parallel, the probability a banknote accepts in the (2) case becomes exponentially small, giving a full quantum money scheme.\end{proof}
+
+
+
+\subsection{Non-interactive Commitments}
+
+A commitment scheme is non-interactive if the commit phase consists of a single message from the sender to receiver.  In this setting, we usually allow a setup phase before the commit phase, where a common random string $crs$ is chosen.  In such a scheme, there is no $\comm_R$, and $\state_R$ is just the sender's commit message together with the $crs$.  Notice here that a non-interactive scheme is automatically publicly verifiable.
+
+\begin{theorem} Suppose $(\comm_S,\reveal_R)$ is a computationally binding non-interactive commitment scheme.  Then both of the following are true:
+	\begin{itemize}
+		\item The scheme is either collapse-binding, or can be used to build an \emph{infinitely-often} secure quantum lightning scheme
+		\item The scheme is either \emph{infinitely often} collapse-binding, or can be used to build a secure quantum lightning scheme
+	\end{itemize}
+\end{theorem}
+
+The proof is essentially the same as Theorem~\ref{thm:comm}, and very similar to Theorem~\ref{thm:collision}.  The main difference is that $\qsetup$ generates the $crs$ for the commitment scheme.  This is then the common random string which is used to select $\genbolt,\verbolt$.
+
+We note that interactive commitments do not give bolts, since an adversarial bolt generator can generate bolts that deviate from how the  honest receiver would act.  This would potentially allow the bolt generator to set up the bolt in such a way that it can open the commitment to multiple values and hence create multiple valid bolts.  However, for a non-interactive commitment, the receiver plays no role in generating the bolt, so an adversarial storm has no chance of cheating in this way.  Two bolts with the same serial number in this case can be used to open the commitment to two values, breaking computational binding.  
+

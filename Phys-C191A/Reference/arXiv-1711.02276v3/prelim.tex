@@ -1,0 +1,95 @@
+\label{sec:prelim}
+
+\subsection{Notations}
+
+Throughout this paper, we will let $\lambda$ be a security parameter.  When inputted into an algorithm, $\lambda$ will be represented in unary.
+
+A function $\epsilon(\lambda)$ is \emph{negligible} if for any inverse polynomial $1/p(\lambda)$, $\epsilon(\lambda)<1/p(\lambda)$ for sufficiently large $\lambda$.  A function is \emph{non-negligible} if it is not negligible, that is there exists an inverse polynomial $1/p(\lambda)$ such that $\epsilon(\lambda)\geq 1/p(\lambda)$ infinitely often.
+
+
+
+\subsection{Quantum Computation}
+
+A quantum system $Q$ is defined over a finite set $B$ of classical states.  We will generally consider $B=\{0,1\}^n$.  A {\bf pure} state over $Q$ is an $L_2$-normalized vector in $\C^{|B|}$, which assigns a (complex) weight to each element in $B$.  Thus the set of pure states forms a complex Hilbert space.  A {\bf qubit} is a quantum system defined over $B=\{0,1\}$.  Given a quantum system $Q_0$ over $B_0$ and a quantum system $Q_1$ over $B_1$, we can define the product system $Q=Q_0\times Q_1$ over $B=B_0\times B_1=\{(b_0,b_1):b_0\in B_0,b_1\in B_1\}$.  Given a state $v_0\in Q_0$ and $v_1\in Q_1$, we define the product state $v_0\otimes v_1$ in the natural way.  An $n$-qubit system is then $Q=Q_0^{\oplus n}$ where $Q_0$ is a single qubit.
+%\vspace{-0.8em}
+\paragraph{Bra-ket notation.} We will think of pure states as column vectors.  The pure state that assigns weight 1 to $x$ and weight 0 to each $y\neq x$ is denoted $|x\rangle$.  The set $\{|x\rangle\}$ therefore gives an orthonormal basis for the Hilbert space of pure states.  We will call this basis the ``computational basis.''  If a state $|\phi\rangle$ is a linear combination of several $|x\rangle$, we say that $|\phi\rangle$ is in ``superposition.''  For a pure state $|\phi\rangle$, we will denote the conjugate transpose as the row vector $\langle\phi |$. 
+%\vspace{-0.8em}
+\paragraph{Entanglement.} In general, a pure state $|\phi\rangle$ over $Q_0\times Q_1$ cannot be expressed as a product state $|\phi_0\rangle\otimes|\phi_1\rangle$ where $|\phi_b\rangle\in Q_b$.  If $|\phi\rangle$ is not a product state, we say that the systems $Q_0,Q_1$ are {\bf entangled}.  If $|\phi\rangle$ is a product state, we say the systems are {\bf un-entangled}.
+%\vspace{-0.8em}
+\paragraph{Evolution of quantum systems.} A pure state $|\phi\rangle$ can be manipulated by performing a unitary transformation $U$ to the state $|\phi\rangle$.  We will denote the resulting state as $|\phi'\rangle=U|\phi\rangle$.
+%\vspace{-0.8em}
+\paragraph{Basic Measurements.} A pure state $|\phi\rangle$ can be measured; the measurement outputs the value $x$ with probability $|\langle x|\phi\rangle|^2$.  The normalization of $|\phi\rangle$ ensures that the distribution over $x$ is indeed a probability distribution.  After measurement, the state ``collapses'' to the state $|x\rangle$.  Notice that subsequent measurements will always output $x$, and the state will always stay $|x\rangle$.
+
+If $Q=Q_0\times Q_1$, we can perform a {\bf partial measurement} in the system $Q_0$ or $Q_1$.  If $|\phi\rangle=\sum_{x\in B_0,y\in B_1}\alpha_{x,y}|x,y\rangle$, partially measuring in $Q_0$ will give $x$ with probability $p_x=\sum_{y\in B_1}|\alpha_{x,y}|^2$.  $|\phi\rangle$ will then collapse to the state $\sum_{y\in B_1}\frac{\alpha_{x,y}}{\sqrt{p_x}}|x,y\rangle$.  In other words, the new state has support only on pairs of the form $(x,y)$ where $x$ was the output of the measurement, and the weight on each pair is proportional to the original weight in $|\phi\rangle$.  Notice that subsequent partial measurements over $Q_0$ will always output $x$, and will leave the state unchanged.
+
+The above corresponds to measurement in the computational basis.  Measurements in other bases are possible to, and defined analogously.  We will generally only consider measurements in the computational basis; measurements in other bases can be implemented by composing unitary operations with measurements in the computational basis.
+%\vspace{-0.8em}
+\paragraph{Efficient Computation.} A quantum computer will be able to perform a fixed, finite set $G$ of unitary transformations, which we will call {\bf gates}.  For concreteness, we will use so-called Hadamard, phase, CNOT and $\pi/8$ gates, but the precise choice is not important for this work, so long as the gate set is ``universal'' for quantum computing.
+
+Let $Q$ be a quantum system on $n$ qubits.  Each gate costs unit time to apply, and each partial measurement also costs unit time.  Therefore, an efficient quantum algorithm will be able to make a polynomial-length sequence of operations, where each operation is either a gate from $G$ or a partial measurement in the computational basis.  Here, ``polynomial'' will generally mean polynomial in $n$.
+%\vspace{-2em}
+\paragraph{Examples of Quantum Computations.}
+\begin{itemize}\setlength\itemsep{-0em}
+	\item {\bf Quantum Fourier Transform.} Let $Q_0$ be a quantum system over $B=\Z_q$ for some integer $q$.  Let $Q=Q_0^{\otimes n}$.  The Quantum Fourier Transform (QFT) performs the following operation efficiently: 
+	\[\mathsf{QFT}|x\rangle = \frac{1}{\sqrt{q^n}}\omega_q^{x\cdot y}\sum_{y\in\{0,1\}^n}|y\rangle\]
+
+	where $\omega_q=e^{2\pi i/q}$.
+	
+	\item {\bf Efficient Classical Computations.} Any function that can be computed efficiently classically can be computed efficiently on a quantum computer.  More specifically, if $f$ is computable by a polynomial-sized circuit, then there is a efficiently computable unitary $U_f$ on the quantum system $Q=Q_{in}\otimes Q_{out}\otimes Q_{work}$ with the property that: $U_f |x,y,0\rangle = |x,y+f(x),0\rangle$.
+	
+	Here, $Q_{in}$ is a quantum system over the set of possible inputs, $Q_{out}$ is a quantum system over the set of possible outputs, and $Q_{work}$ is another quantum system that is just used for workspace, and is reset after use.
+
+\end{itemize}
+\vspace{-1.6\topsep}
+\paragraph{Quantum Queries.} If a quantum algorithm makes queries to some function $f$, there are two scenarios we will consider.  In one, oracle accepts a quantum state consisting of input and response registers, creates it's own workspace registers initialized to $|0\rangle$, and applies the unitary $U_f$ as defined above to the joint state.  After the query, it returns the input and response registers and discards its workspace registers.  Following~\cite{ICITS:DFNS13}, we call this a \emph{supplied response} oracle.  In the other scenario, the oracle accepts a quantum state consisting of just input registers, creates it's own response and workspace registers initialized to $|0\rangle$, applies the unitary $U_f$, and returns the input and new response registers.  It discards its workspace registers.  We call this a \emph{created response} oracle.  Unless otherwise stated, we will use the supplied response version of every oracle.
+\vspace{-0.6em}
+\paragraph{Mixed states.} A quantum system may, for example, be in a pure state $|\phi\rangle$ with probability $1/2$, and a different pure state $|\psi\rangle$ with probability $1/2$.  This can occur, for example, if a partial measurement is performed on a product system.%, but then the output of the measurement is erased or forgotten.  
+
+This probability distribution on pure states cannot be described by a pure state alone.  Instead, we say that the system is in a {\bf mixed state}.  The statistical behavior of a mixed state can be captured by {\bf density matrix}.  If the system is in pure state $|\phi_i\rangle$ with probability $p_i$, then the density matrix for the system is defined as $\rho=\sum_i p_i |\phi_i\rangle\langle\phi_i|$.
+
+The density matrix is therefore a positive semi-definite complex  Hermitian matrix with rows and columns indexed by the elements of $B$.  The density matrix for a pure state $|\phi\rangle$ is given by the rank-1 matrix $|\phi\rangle\langle\phi|$.  Any probability distribution over classical states can also be represented as a density matrix, namely the diagonal matrix where the diagonal entries are the probability values.
+\vspace{-0.6em}
+\paragraph{Distance.}We define the Euclidean distance $\||\phi\rangle-|\psi\rangle\|$ between two states as the value $\left(\sum_x |\alpha_x-\beta_x|^2\right)^{\frac{1}{2}}$ where $|\phi\rangle=\sum_x \alpha_x|x\rangle$ and $|\psi\rangle=\sum_x\beta_x|x\rangle$. 	
+
+We will be using the following lemma:
+\begin{lemma}[\cite{BBBV97}]\label{lemma:distance} Let $|\varphi\rangle$ and $|\psi\rangle$ be quantum states with Euclidean distance at most $\epsilon$. Then, performing the same measurement on $|\varphi\rangle$ and $|\psi\rangle$ yields distributions with statistical distance at most
+	$4\epsilon$.\end{lemma}
+
+
+
+\subsection{Public Key Quantum Money}
+
+Here, we define public key quantum money.  We will slightly modify the usual definition~\cite{CCC:Aaronson09}, though the definition will be equivalent to the usual definition under simple transformations.
+\begin{itemize}
+	\item We only will consider what Aaronson and Christiano~\cite{STOC:AarChr12} call a quantum money \emph{mini-scheme}, where there is just a single valid banknote.  It is straightforward to extend to general quantum money using a signature scheme
+	\item We will change the syntax to more closely resemble our eventual quantum lightning definition, in order to clearly compare the two objects.
+\end{itemize}
+
+\noindent A quantum money scheme consists of two quantum polynomial time algorithms $\genmoney,\vermoney$.
+\begin{itemize}
+	\item $\genmoney$ takes as input the security parameter, and samples a quantum banknote $|\$\rangle$
+	\item $\vermoney$ verifies a banknote, and if the verification is successful, produces a serial number for the note.
+\end{itemize}
+
+\smallskip
+
+For correctness, we require that verification always accepts money produced by $\genmoney$.  We also require that verification does not perturb the money.  Finally, since $\vermoney$ is a quantum algorithm, we must ensure that multiple runs of $\vermoney$ on the same money will always produce the same serial number.  This is captured by the following two of requirements:
+\begin{itemize}
+	\item For a money state $|\$\rangle$, let \[H_\infty(|\$\rangle)=-\log_2 \min_s \Pr[\vermoney(|\$\rangle)=s]\] be the min-entropy of $\serialnumber$ produced by applying $\vermoney$ to $|\$\rangle$, were we do not count the rejecting output $\bot$ as contributing to the min-entropy.  We insist that $\E[H_\infty(|\$\rangle)]$ is negligible, where the expectation is over $|\$\rangle\gets\genmoney(1^\lambda)$.  This ensures the serial number is essentially a deterministic function of the money. 
+	\item For a money state $|\$\rangle$, let $|\psi\rangle$ be the state left over after running $\vermoney(|\$\rangle)$.  We insist that $\E[|\langle\psi|\$\rangle|^2]\geq 1-\negl(\lambda)$, where the expectation is over $|\$\rangle\gets\genmoney(1^\lambda)$, and any affect $\vermoney$ has on $|\psi\rangle$.  This ensures that verification does not perturb the money.
+\end{itemize}
+
+\begin{remark} We note that it is sufficient to only consider the first requirement.  Since the serial number is essentially a deterministic function of the money, we can always modify a $\vermoney$ that does not satisfy the second requirement into an algorithm $\vermoney'$ that does.  $\vermoney'$ runs $\vermoney$, and copies the output $\serialnumber$ into a separate register.  Since $\serialnumber$ is almost deterministic, the copying into a separate register only negligibly affects the money.  Therefore, we un-compute $\vermoney$, and the result will be negligibly close to the original state.
+\end{remark}
+
+\noindent For security, consider the following game between an adversary $A$ and a challenger
+\begin{itemize}
+	\item The challenger runs $\genmoney(1^\lambda)$ to get a banknote $|\$\rangle$.  It runs $\vermoney$ on the banknote to extract a serial number $\serialnumber$.
+	\item The challenger sends $|\$\rangle$ to $A$.
+	\item $A$ produces two candidate quantum money states $|\$_0\rangle,|\$_1\rangle$, which are potentially entangled. 
+	\item The challenger runs $\vermoney$ on both states, to get two serial numbers $s_0,s_1$.
+	\item The challenger accepts if and only if both runs of $\vermoney$ pass, and the serial numbers satisfy $s_0=s_1=s$.
+\end{itemize}
+
+\begin{definition} A quantum money scheme $(\genmoney,\vermoney)$ is secure if, for all quantum polynomial time adversaries $A$, the probability the challenger accepts in the above experiment is negligible.
+\end{definition}

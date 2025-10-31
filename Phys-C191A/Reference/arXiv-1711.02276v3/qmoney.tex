@@ -1,0 +1,212 @@
+\label{sec:qmoney}
+
+In this section, we show that, assuming injective one-way functions exist, applying indisitnguishability obfuscation to Aaronson and Christiano's abstract scheme~\cite{STOC:AarChr12} yields a secure quantum money scheme.  
+
+\subsection{Obfuscation}
+
+The following formulation of indistinguishability obfuscation is due to Garg et al.~\cite{FOCS:GGHRSW13}:
+
+\begin{definition}(Indistinguishability Obfuscation) An \emph{indistinguiability obfuscator} $\iO$ for a circuit class $\{\Cs_\lambda\}$ is a PPT uniform algorithm satisfying the following conditions:
+	\begin{itemize}
+		\item $\iO(\lambda,C)$ preserves the functionality of $C$.  That is, for any $C\in\Cs_\lambda$, if we compute $C'=\iO(\lambda,C)$, then $C'(x)=C(x)$ for all inputs $x$.
+		\item For any $\lambda$ and any two circuits $C_0,C_1\in\Cs_\lambda$ with the same functionality, the circuits $\iO(\lambda,C)$ and $\iO(\lambda,C')$ are indistinguishable.  More precisely, for all pairs of PPT adversaries $(\Samp,D)$, if there exists a negligible function $\alpha$ such that
+		\[ \Pr[\forall x, C_0(x)=C_1(x):(C_0,C_1,\sigma)\gets \Samp(\lambda)]>1-\alpha(\lambda) \]
+		then there exists a negligible function $\beta$ such that
+		\[  \big|\Pr[D(\sigma,\iO(\lambda,C_0))=1]-\Pr[D(\sigma,\iO(\lambda,C_1))=1]\big|<\beta(\lambda) \]
+	\end{itemize}
+\end{definition}
+
+The circuit classes we are interested in are polynomial-size circuits  ---  that is, when $\Cs_\lambda$ is the collection of all circuits of size at most $\lambda$.  We call an obfuscator for this class an \emph{indistinguishability obfuscator for $P/poly$}.  The first candidate construction of such obfuscators is due to Garg et al.~\cite{FOCS:GGHRSW13}.
+
+When clear from context, we will often drop $\lambda$ as an input to $\iO$ and as a subscript for $\Cs$.
+
+\begin{definition} A \emph{subspace hiding obfuscator} (shO) for a field $\F$ and dimensions $d_0,d_1$ is a PPT algorithm $\shO$ such that:
+	\begin{itemize}
+		\item {\bf Input.} $\shO$ takes as input the description of a linear subspace $S\subseteq\F^n$ of dimension $d\in\{d_0,d_1\}$.  For concreteness, we will assume $S$ is given as a matrix whose rows form a basis for $S$.
+		\item {\bf Output.} $\shO$ outputs a circuit $\hat{S}$ that computes membership in $S$.  Precisely, let $S(x)$ be the function that decides membership in $S$.  Then \[\Pr[\hat{S}(x)=S(x)\forall x:\hat{S}\gets\shO(S)]\geq 1-\negl(n)\]
+		\item {\bf Security.} For security, consider the following game between an adversary and a challenger, indexed by a bit $b$.
+		\begin{itemize}
+			\item The adversary submits to the challenger a subspace $S_0$ of dimension $d_0$
+			\item The challenger chooses a random subspace $S_1\subseteq \F^n$ of dimension $d_1$ such that $S_0\subseteq S_1$.  It then runs $\hat{S}\gets\shO(S_b)$, and gives $\hat{S}$ to the adversary
+			\item The adversary makes a guess $b'$ for $b$.
+		\end{itemize}
+		The adversary's advantage is the the probability $b'=b$, minus $1/2$.  $\shO$ is secure if, all PPT adversaries have negligible advantage.
+	\end{itemize}
+\end{definition}
+
+\begin{theorem}\label{thm:sho}If injective one-way functions exist, then any indistinguishability obfuscator, appropriately padded, is also a subspace hiding obfuscator for field $\F$ and dimensions $d_0,d_1$, as long as $|\F|^{n-d_1}$ is exponential.
+\end{theorem}
+
+\begin{proof} We first prove the case where $\F=\F_2$, the finite field on two elements, and where $d_1=d_0+1$.  Consider an adversary $\adv$.  Consider the following hybrid experiments:
+	\begin{itemize}
+		\item $H_0$: in this hybrid, $\adv$ receives $\iO(S_0)$ from the challenger, corresponding to $b=0$.  $S_0$ is appropriately padded before obfuscating so that all the programs received by $\adv$ in the following hybrids have the same length.
+		\item $H_1$: in this hybrid, $\adv$ receives an obfuscation of the following function.  Let $\hat{P}$ be an obfuscation under $\iO$ of the simple program $Z$ that always outputs 0 on inputs in $\F^{n-d_0}$.  Let $\Bm$ be a $(n-d_0)\times n$ matrix whose rows are a basis for $S^\bot$, the space orthogonal to $S$.  This basis can be computed by Gaussian elimination.  Then $\hat{S}$ is the obfuscation under $\iO$ of the function 
+		\[Q(x)=\begin{cases}1&\text{if }\Bm\cdot x = 0\\1&\text{if }\hat{P}(\Bm\cdot x)=1\\0&\text{Otherwise}\end{cases}\]
+		Since $\hat{P}$ always outputs 0, this program still accepts if and only if the input is in $S$.  Therefore, $H_0$ and $H_1$ are indistinguishable by the security of the outer $\iO$ invocation.
+		\item $H_2$: this hybrid is the same as $H_1$, except that $\hat{P}$ is the obfuscation under $\iO$ of the function \[P_y(x)=\begin{cases}1&\text{if }\owf(x)=y\\0&\text{Otherwise}\end{cases}\]
+		Here, $\owf$ is an injective one-way function, and $y=\owf(x^*)$ for a random $x^*\in\F^{n-d_0}$.  By our assumption that $|\F|^{n-d_1}$ is exponential, and that $d_0=d_1-1$, we have that the bit-length of $x^*$, namely $n-d_0$, is linear in the security parameter.  Therefore, we can invoke the security of $\owf$.  
+		
+		Notice that the only point on which $Z$ and $P_y$ differ is $x^*$, and finding $x^*$ requires inverting $\owf$.  Therefore, if $\iO$ was a \emph{differing inputs obfuscator}, the obfuscations of $Z$ and $P_y$ would be indistinguishable.  Since $Z$ and $P_y$ differ in only a single input, the results of~\cite{TCC:BoyChuPas14} show that $\iO$ \emph{is} a differing inputs obfuscator for these circuits.  
+		
+		Therefore, $H_1$ and $H_2$ are computationally indistinguishable.
+		
+		Notice now, since $\F=\F_2=\{0,1\}$, that $Q(x)$ decides membership in the subspace $S_1$ of vectors $x$ such that $\Bm\cdot x$ is in the span of $x^*$ (which is just $\{0,x^*\}$).  Except with negligible probability, $x^*\neq 0$, and so $S_1$ has dimension $d_0+1=d_1$ and contains $S_0$.  Moreover the set of dimension-$d_1$ spaces containing $S_0$ is in bijection with the set of non-zero $x^*$.
+		
+		\item $H_3$.  In this hybrid, a random $x^*$ is chosen, $S_1$ is constructed as above, and then obfuscated.  Since $Q(x)$ decides membership in $S_1$, the programs being obfuscated in $H_2$ and $H_3$ are the same, so these two hybrids are indistinguishable by $\iO$.  
+		
+		
+		\item $H_4$.  Here, we choose $x^*$ at random, except not equal to 0.  Since $x^*$ comes from a set of size $|\F|^{n-d_0}$ which by assumption is exponential, the two distributions are negligibly close.  Now, the set $S_1$ is a random dimension-$d_1$ space containing $S_0$, so $H_4$ corresponds to the case $b=1$.
+	\end{itemize}
+
+
+	
+	Over larger fields, we have to change the proof.  The reason is that $\{0,x^*\}$ is no longer the same as the span of $x^*$.  This means that the function obfuscated in $H_2$ is not a linear subspace, but the union of two parallel affine spaces.  Instead, assume for simplicity that the first digit of $x^*$ is non-zero.  Over large fields, this happens with overwhelming probability; over small fields, we still know that \emph{some} digit is non-zero with overwhelming probability.  The discussion below can be modified easily to work with any other bit.
+
+	For an input $y=(b,y')$ for a bit $y$, let ${\rm Reduce}(y)=y'/b$ if $b\neq 0$ and ${\rm Reduce}(0,y')=\infty$.  
+
+	In the hybrids above, we modify $Q(x)$ to be 
+
+	\[Q(x)=\begin{cases}1&\text{if }\Bm\cdot x = 0\\1&\text{if }\hat{P}({\rm Normalize}(\Bm\cdot x))=1\\0&\text{Otherwise}\end{cases}\]
+
+	In $H_2$, we will choose a random $x'$ such that the first bit is non-zero.  Then we set $x^*={\rm Reduce}(x')$.  Notice that ${\rm Reduce}(x^*)$ is a random string, so we can still invoke the security of $\owf$.  Moreover, now in $H_2$, $Q(x)$ accepts if and only if ${\rm Reduce}(\Bm\cdot x)\in\{0,x^*\}$, which is the same condition as $\Bm\cdot x\in {\rm Span}(x')$.  
+	
+	If $x'$ was chosen truly randomly, this would correspond to obfuscating a random space of dimension $d_1$ containing $S_0$.  Unfortunately, we did not choose $x'$ uniformly at random, but conditioned on the first digit being non-zero.  To fix this, we choose $i$ from a geometric distribution with probability $1-\frac{1}{|\F|}$, and then choose a random $x'$ such that the first $i-1$ digits are 0, and the $i$th digit is non-zero.   With overwhelming probability, $i$ will be in $[n]$, and the distribution on $x'$ is therefore statistically close to uniform.  We then modify ${\rm Reduce}$ to divide out by the $i$th digit instead of the first.  The same analysis as above applies in the case of more general $i$; now $S_1$ is (statistically close) to a random subspace containing $S_0$.
+	
+	\medskip
+	
+	Finally, to handle more general $d_0,d_1$, we perform a sequence of hybrids, first invoking the above on dimensions $(d_0,d_0+1)$, then $(d_0+1,d_0+2)$, etc.  This completes the proof.\end{proof}
+
+\subsection{New No-Conversion and No-Cloning Theorems}
+
+\paragraph{No-Conversion.} Here, we consider the following general task.  Fix a dimension $d$, two sequences $\Ss_1,\Ss_2$ of states $|\psi_i\rangle$ and $|\phi_i\rangle$ of dimension $d$ for $i=[n]$.  Finally, fix a probability distribution $\Ds$ over $[n]$.  
+
+The goal in the $(\Ss_1,\Ss_2,\Ds)$-Conversion problem is to, given a state $|\psi_i\rangle$ for $i$ sampled from $\Ds$, produce the state $|\phi_i\rangle$.  Consider a mechanism $\Ms$ for this task.  We will use the following measure for how well $\Ms$ solves the conversion problem: let $F^2_{\Ss_1,\Ss_2,\Ds}(\Ms)$ denote the expectation of $|\langle \phi_i | \xi \rangle |^2$ where $i\gets \Ds$, and $\xi\gets \Ms(|\psi_i\rangle)$.  In other words, $F_2$ measures the expected fidelity (squared) between the state $\Ms$ produces and the desired output state.
+
+For a set of vectors $\Ss$, let $\Am_{\Ss}$ be the matrix of inner products between the vectors.  For a probability distribution $\Ds$ over $[n]$, let $\Bm_{\Ds}$ be the $n\times n$ matrix where the $(i,j)$ entry is $\sqrt{p_i p_j}$ where $p_i$ is the probability of $i$.  Then let $\Cm_{\Ss_1,\Ss_2,\Ds}=\Am_{\Ss_1}\circ \Am_{\Ss_2}\circ \Bm_\Ds$, where $\circ$ denotes the Hadamard (point-wise) product.  In other words, the $(i,j)$ entry of $\Cm_{\Ss_1,\Ss_2,\Ds}$ is $\sqrt{p_i p_j}\langle \psi_i | \psi_j \rangle \langle \phi_i | \phi_j \rangle$.  For a positive semi-definite Hermitian matrix $\Cm$, let $\lambda_1(\Cm)$ be the spectral radius (that is, maximum eigenvalue) of $\Cm$.
+
+\begin{theorem}[No-Conversion]\label{thm:noconv} For any CPTP operator $\Ms$, we have that $F^2_{\Ss_1,\Ss_2,\Ds}(\Ms)\leq d\times \lambda_1(\Cm_{\Ss_1,\Ss_2,\Ds})$. \end{theorem}
+
+\begin{proof} Pick a basis $\{|x\rangle\}$ for the system, and write 
+\[	|\psi_i\rangle=\sum_x a_{i,x}|x\rangle \;\;\;\;\;\;\;\;\;\;\; |\phi_i\rangle=\sum_x b_{i,x}|x\rangle\]
+
+We will think of $\Ms$ as outputting a mixed state $\rho$.  Then for a fixed $i$, we can write the expectation of $|\langle \phi_i | \xi \rangle |^2$ as $\langle \phi_i|\rho|\phi_i\rangle$.  $\Ms$ is linear, so we write $\Ms(|x\rangle\langle x'|)=\sum_{y,y'}\Mm_{(x,y),(x',y')} |y\rangle\langle y'|$ for coefficients $\Mm_{(x,y),(x',y')}$.  By Choi's theorem, the requirement that $\Ms$ is completely positive is equivalent to $\Mm$ being a positive matrix.  Since $\Ms$ is trace preserving, $\Tr(\Ms(|x\rangle\langle x|))=1$, and therefore $\Tr(\Mm)=d$.  
+
+Thus we have that $F^2_{\Ss_1,\Ss_2,\Ds}(\Ms)$ can be written as 
+\[F^2_{\Ss_1,\Ss_2,\Ds}(\Ms)=\sum_i p_i \langle \phi_i |\Ms(|\psi_i\rangle\langle\psi_i|)|\phi_i\rangle=\sum_{i,x,x',y,y'}p_i \Mm_{(x,y),(x',y')}a_{i,x}a_{i,x'}^* b_{i,y}^* b_{i,y'}\]
+
+Notice that this expression is linear in $\Mm$.  Consider the space of positive $\Mm$ with trace $d$, which is a convex space containing the set of valid $\Mm$.  This space is the convex hull of the set of $\Mm$ of the form $\Mm_{(x,y),(x',y')}=d v_{x,y'}v^*_{x',y'}$ such that $\sum_{x,y}|v_{x,y}|^2=1$.  Therefore, it suffices to bound the value of $F^2$ for such matrices:
+
+\[\sum_i p_i \langle \phi_i |\Ms(|\psi_i\rangle\langle\psi_i|)|\phi_i\rangle=d\sum_{i,x,x',y,y'}p_i v_{(x,y')}v^*_{(x,y')}a_{i,x}a_{i,x'}^* b_{i,y}^* b_{i,y'}=d\vv^\dagger\cdot\Em^\dagger\Em\cdot\vv\]
+
+Where $\vv$ is the vector of the $v_{(x,y')}$, and $\Em$ is the matrix \[\Em_{i,(x,y')}=\sqrt{p_i}a_{i,x}b_{i,y'} \]
+
+This expression is bounded by $\lambda_1(d\Em^\dagger\cdot\Em)=d \lambda_1(\Em^\dagger\cdot\Em)$.  Notice that the set of eigenvalues for $\Em^\dagger\cdot\Em$ is the same as $\Em\cdot\Em^\dagger=\Cm_{\Ss_1,\Ss_2,\Ds}$, so $F^2$ is bounded by $d\lambda_1(\Cm_{\Ss_1,\Ss_2,\Ds})$ as desired.  \end{proof}
+
+\paragraph{No-Cloning.} Cloning is the special case of conversion where $|\phi_i\rangle=|\psi_i\rangle\otimes|\psi_i\rangle$.  Thus $\Am_{S_2}=\Am_{S_1}\circ\Am_{S_1}$.  This means $\Cm_{\Ss_1,\Ss_2,\Ds}=\Am_{\Ss_1}^{\circ 3}\circ \Bm_\Ds$, where $\Am^{\circ 3}$ means the 3-times Hadamard product of $\Am$.  Assume the probabilities of each state are equal, so that $\Bm_{\Ds}$ is just $1/n$ in every coordinate.  Then $F^2$ is bounded by $\frac{d}{n}\lambda_1(\Am^{\circ 3})$.  More generally, for the process of duplicating a given state $k$ times, $F^2$ will be bounded by $\frac{d}{n}\lambda_1(\Am^{\circ (k+1)})$.  If we assume $n>d$ and that no two states in the set are the same, then $\Am$ will be a matrix with $1$'s on the diagonal, and entries with norm less than 1 off diagonal.  This means, as we increase $k$, $\Am^{\circ (k+1)}$ will asymptotically approach the $n\times n$ identity matrix.  Thus, as $k$ goes to infinity, $F^2$ approaches $\frac{d}{n}$, which is less than 1.  Note if perfect cloning is possible, then it is possible to make $k$ perfect copies, meaning $F_2$ should be 1.  Thus, we re-cast the traditional no-cloning theorem using our theorem.  Moreover, for any set of states, by analyzing $\Am^{\circ 3}$, it is possible to give concrete bounds on the success probability of cloning.
+
+\paragraph{Example.} Consider the following task.  Let $\F$ be a field.  A random subspace $S\subseteq \F^n$ of dimension $n/2$ is chosen, for an even integer $n$.  Let $|\psi_S\rangle=\frac{1}{|\F|^{n/4}}\sum_{x\in S}|x\rangle$ be the uniform superposition over $S$.  The goal is, given $|\psi_S\rangle$ for a random subset $S$, to copy the state.  We would like to upper-bound $F^2$ for this problem.  
+
+Let $N_{a,b}$ count the number of subspaces of dimension $a$ there are inside $\F^b$.  The matrix $\Bm$ is just the matrix that has $1/N_{n/2,n}$ in ever position.  Meanwhile, $\Am_{\Ss_1}$ is the matrix with rows and columns indexed by subspaces $S$, where \[(\Am_{\Ss_1})_{S,T}=\langle\psi_S|\psi_T\rangle=|\F|^{\dim(S\cap T)-n/2}\]
+
+Then the matrix $\Cm$ is:
+\[(\Cm)_{S,T}=\frac{1}{N_{n/2,n}} |\F|^{3\dim(S\cap T)-3n/2}\]
+
+We now seek to upper-bound the maximum eigenvalue $\lambda_1$ of this matrix.  It is not hard to see that the maximum eigenvalue corresponds to the unit vector $v = \frac{1}{\sqrt{N_{n/2,n}}}(1\;\;1\;\;\dots\;\;1)$ that places an equal positive weight on each subspace.  Then $\lambda_1(\Cm)$ is just 
+\[\lambda_1(\Cm)=\frac{1}{N_{n/2,n}^2}\sum_{S,T}|\F|^{3\dim(S\cap T)-3n/2}=\frac{1}{N_{n/2,n}}\sum_T |\F|^{3\dim(S_0\cap T)-3n/2}\]
+Where $S_0$ is any fixed $n/2$-dimensional subspace $S$.  This last inequality follows due to symmetry: the sum over $T$ for any two different subspaces $S_0,S_1$ is the same.  
+
+Now, the number of $T$ such that $\dim(S_0,T)=k$ is upper bounded by $N_{k,n/2}N_{n/2-k,n}$; this is because any such $T$ is the direct sum of a $T_0\subset S$ of dimension $k$, and a $T_1\subset |\F|^n$ of dimension $n/2-k$.  
+
+Thus, we can upper bound $\lambda_1$ as 
+
+\[\lambda_1(\Cm)\leq \sum_{k=0}^{n/2} |\F|^{3k-3n/2} N_{k,n/2}N_{n/2-k,n}/N_{n/2,n}\]
+
+Now we observe that \[N_{a,b}=(|\F|^b-1)(|\F|^b-|\F|)\cdots(|\F|^b-|\F|^{a-1})= |\F|^{ab}\prod_{i=b-a+1}^b(1-|\F|^{-i})\]
+
+Therefore, \begin{align*}N_{k,n/2}N_{n/2-k,n}/N_{n/2,n}&=|\F|^{-kn/2}\frac{\prod_{i=n/2-k+1}^{n/2}(1-|\F|^{-i})\prod_{i=n/2+k+1}^{n}(1-|\F|^{-i})}{\prod_{i=n/2+1}^{n}(1-|\F|^{-i})}\\
+&=|\F|^{-kn/2}\frac{\prod_{i=n/2-k+1}^{n/2}(1-|\F|^{-i})}{\prod_{i=n/2+1}^{n/2+k}(1-|\F|^{-i})}\leq |\F|^{-kn/2}
+\end{align*}
+
+Therefore, \[\lambda_1(\Cm)\leq \sum_{k=0}^{n/2} |\F|^{3k-3n/2-kn/2}=|\F|^{-3n/2}\sum_{\ell=0}^{n/2}|\F|^{-\ell (n+1)}\leq 2|\F|^{-3n/2}\]
+
+Now, the dimension $d$ that the state $|\psi_S\rangle$ lives in is $|\F|^n$.  Therefore, applying Theorem~\ref{thm:noconv}, we have that $F^2$ is at most $|\F|^n\times \lambda_1(\Cm)\leq 2\times |\F|^{-n/2}$.
+
+\subsection{Quantum Money from Obfuscation}
+
+Here, we recall Aaronson and Christiano's~\cite{STOC:AarChr12} construction, when instantiated with a subspace-hiding obfuscator.  
+
+\paragraph{Generating Banknotes.} Let $\F=\Z_q$ for some prime $q$.  Let $\lambda$ be the security parameter.  To generate a banknote, choose $n$ a random even integer that is sufficiently large; we will choose $n$ later, but it will depend on $q$ and $\lambda$.  Choose a random subspace $S\subseteq \F^n$ of dimension $n/2$.  Let $S^\bot=\{x:x\cdot y=0\forall y\in S\}$ be the dual space to $S$.  
+
+Let $|\$_S\rangle=\frac{1}{|\F|^{n/4}}\sum_{x\in S}|x\rangle$.  Let $P_0=\shO(S)$ and $P_1=\shO(S^\bot)$.  Output $|\$_S\rangle,P_0,P_1$ as the quantum money state.
+
+\paragraph{Verifying banknotes.} Given a banknote state, first measure the program registers, obtaining $P_0,P_1$.  These will be the serial number.  Let $|\$\rangle$ be the remaining registers.  First run $P_0$ in superposition, and measure the output.  If $P_0$ outputs 0, reject.  Otherwise continue.  Notice that if $|\$\rangle$ is the honest banknote state $|\$_S\rangle$ and $P_0$ is the obfuscation of $S$, then $P_0$ will output 1 with certainty.  
+
+Next, perform the quantum Fourier transform (QFT) to $|\$\rangle$.  Notice that if $|\$\rangle=|\$_S\rangle$, now the state is $|\$_{S^\bot}\rangle$.  
+
+Next, apply $P_1$ in superposition and measure the result.  In the case of an honest banknote, the result is 1 with certainty.  
+
+Finally, perform the inverse QFT to return the state.  In the case of an honest banknote, the state goes back to being exactly $|\$_S\rangle$.
+
+
+\medskip
+
+The above shows that the scheme is correct.  Next, we argue security:
+
+\begin{theorem}\label{thm:qmoney} If $\shO$ is a secure subspace-hiding obfuscator for $d_0=n/2$ and some $d_1$ such that both $|\F|^{n-d_1}$ and $|\F|^{d_1-n/2}$ are exponentially-large, then the construction above is a secure quantum money scheme.
+\end{theorem}
+
+\begin{corollary} If injective one-way functions and iO exist, then quantum money exists
+\end{corollary}
+
+\noindent We now prove Theorem~\ref{thm:qmoney}
+
+\begin{proof} We prove security through a sequence of hybrids
+\begin{itemize}
+	\item $H_0$ is the normal security experiment for quantum money.  Suppose the adversary, given a valid banknote, is able to produce two banknotes that pass verification with probability $\epsilon$.
+	\item $H_1$: here, we recall that Aaronson and Christiano's scheme is \emph{projective}, so verification is equivalent to projecting onto the valid banknote state.  Verifying two states is equivalent to projecting onto the product of two banknote states.  Therefore, in $H_1$, instead of running verification, the challenger measures in the basis containing $|\$_S\rangle\times|\$_S\rangle$, and accepts if and only if the output is $|\$_S\rangle\times|\$_S\rangle$.  The adversary's success probability is still $\epsilon$.
+	\item $H_2$: Here we invoke the security of $\shO$ to move $P_0$ to a higher-dimensional space.  $P_0$ is moved to a random $d_1$ dimensional space containing $S_0$.
+	
+	We prove that the adversary's success probability in $H_2$ is negligibly close to $\epsilon$.  Suppose not.  Then we construct an adversary $B$ that does the following.  $B$ chooses a random $d_0=n/2$-dimensional space $S_0$.  It queries the challenger on $S_0$, to obtain a program $P_0$.  It then obfuscates $S_0^\bot$ to obtain $P_1$.  $B$ constructs the quantum state $|\$_{S_0}\rangle$, and gives $P_0,P_1,|\$_{S_0}\rangle$ to $A$.  $A$ produces two (potentially entangled) quantum states $|\$_0\rangle|\$_1\rangle$.  $B$ measures in a basis containing $|\$_{S_0}\rangle\otimes|\$_{S_0}\rangle$, and outputs 1 if and only if $|\$_{S_0}\rangle\otimes|\$_{S_0}\rangle$.
+	
+	If $B$ is given $P_0$ which obfuscates $S_0$, then $A$ outputs 1 with probability $\epsilon$, since it perfectly simulates $A$'s view in $H_1$.  If $P_0$ obfuscates a random space containing $S_0$, then $B$ simulates $H_2$.  By the security of $\shO$, we must have that $B$ outputs 1 with probability at least $\epsilon-\negl$.  Therefore, in $H_2$, $A$ succeeds with probability $\epsilon-\negl$.
+	
+	\item $H_3$: Here we invoke security of $\shO$ to move $P_1$ to a random $d_1$-dimensional space containing $S_0^\bot$.  By an almost identical analysis to he above, we have that $A$ still succeeds with probability at least $\epsilon-\negl$.
+	
+	\item $H_4$.  Here, we change how the subspaces are constructed.  First, a random space $T_0$ of dimension $d_1$ is constructed.  Then a random space $T_1$ of dimension $d_1$ is constructed, subject to $T_0^\bot\subseteq T_1$.  These spaces are obfuscated using $\shO$ to get programs $P_0,P_1$.  Next, a random $n/2$-dimensional space $S_0$ is chosen such that $T_1^\bot\subseteq S_0\subseteq T_0$.  $S_0$ is used to construct the state $|\$_{S_0}\rangle$, which is given to $A$ along with $P_0,P_1$.  Then during verification, the space $S_0$ is used again.
+	
+	The distribution on spaces is identical to that in $H_3$, to $A$ succeeds in $H_4$ with probability $\epsilon-\negl$.  
+\end{itemize}
+
+Since on average over $T_0,T_1$, $A$ succeeds with probability $\epsilon-\negl$, there exist fixed $T_0,T_1, T_0^\bot\subseteq T_1$, such that the adversary succeeds for these $T_0,T_1$ with probability at least $\epsilon-\negl$.
+
+We now construct a no-cloning adversary $C$.  $C$ is given a state $|\$_{S_0}\rangle$ for a random $S_0$ such that $T_1^\bot\subseteq S_0\subseteq T_0$, and it tries to clone $|\$_{S_0}\rangle$.  To do so, it constructs obfuscations $P_0,P_1$ of $T_0,T_1$ using $\shO$, and gives them along with $|\$_{S_0}\rangle$ to $A$.  $C$ then outputs whatever $A$ outputs.  $C$'s probability of cloning, $F^2$, is exactly the probability $A$ succeeds in $H_4$, which is $\epsilon-\negl$.
+
+We therefore seek to bound $F^2$ for this instance of the cloning problem.  For simplicity, we will assume $T_0$ is the space of vectors where the last $n-d_1$ components are 0, and $T_1$ is the space where the first $n-d_1$ components are 0.  The other cases are handled analogously.  $T_1^\bot$ is the space where the final $d_1$ components are 0.  Therefore, $S$ is a random space of dimension $n/2$, subject to the last $n-d_1$ components being zero, and the first $n-d_1$ components are free.  We can therefore ignore the first and last $n-d_1$ components (since the final components are always 0, and the initial components will always be uniform superpositions).  Define $n'=2d_1-n$.  Therefore, we can think of choosing a random subset $W$ of dimension $d_1-n/2=n'/2$ out of a space of dimension $2d_1-n=n'$.   
+
+Our states will be indexed by $W$, and we overload notation and write \[|\$_{W}\rangle=\frac{1}{|\F|^{n'/4}}\sum_{x\in W}|x\rangle\]
+
+This is exactly the example worked out above, so the probability that $A$ succeeds is at most $2|\F|^{-n'/2}=2|\F|^{d_1-n/2}$.  By the assumptions of the theorem, this is exponentially small.  Hence $\epsilon-\negl$ is exponentially small, and therefore $\epsilon$ is negligible.\end{proof}
+
+
+\subsection{A Signature Scheme}
+
+We also note that the construction above gives rise to a particular signature scheme.  On input a message $m$, choose a random subspace $S$ containing $m$.  Construct the programs $P_0,P_1$ obfuscating $S,S^\bot$, using randomness derived from $S$ (say using a PRF).  Then sign the obfuscated programs using an arbitrary signature scheme to obtain $\sigma$.  Output $P_0,P_1,\sigma$ as the signature on $m$.  
+
+If the underlying signature scheme satisfies the Boneh-Zhandry definition of security, then so does the derived signature scheme.  However, consider the following ``attack.''  Create a uniform superposition of messages, ask the signing oracle for a signature, and then measure the signature.  The result is a tuple $P_0,P_1,\sigma$ representing a subspace $S$, along with a (statistically close to) uniform superposition over all messages $m\in S$.  Using the quantum Fourier transform, it is possible to verify this state $S$ using $P_0,P_1$ as in the quantum money scheme.  In particular, it is possible to distinguish this state from the state obtained by measuring the entire message/tag pair.  This violates the Garg-Yuen-Zhandry security notion.  Thus, we give the first example separating the two definitions for signatures.
+
+\subsection{A simplified Proof in the Black Box Setting}
+
+Aaronson and Christiano~\cite{STOC:AarChr12} prove their scheme secure if the subspaces are given as quantum-accessible oracles.  In order to prove security they had to develop a new adversary method, called the inner-product adversary method.
+
+Here, we show that our proof above can be adapted to give a much simpler proof of security for their scheme in the black-box setting.  
+
+First, we going through the hybrids in Theorem~\ref{thm:sho}, we see that the transitions invoking $\iO$ (namely $H_0$ to $H_1$ and $H_2$ to $H_3$), we just use the fact that identical oracles are indistinguishable.  The only difference between $H_1$ and $H_2$ is that the function $\hat{P}$  goes from being all-zeros to accepting a single random input.  Thus, by the lower bound for Grover search~\cite{BBBV97}, we have that $H_1$ and $H_2$ are indistinguishable, except with probability at most $O(q^2/|\F|^{n-d_0})$, where $q$ is the number of quantum queries.  Finally, $H_3$ and $H_4$ are indistinguishable except with probability $1/|\F|^{n-d_0}$.
+
+This shows that for a $d_0$-dimensional subspace $S$, an oracle for $S$ is indisitnguishable from an oracle for $T$ where $T$ is a random $d_0+1$-dimension space containing $S$.  By indistinguishable, we mean that a $q$ query algorithm has at most a probability $O(q^2 |\F|^{d_0-n})$ of distinguishing.  Now, the constant in the Big-Oh is independent of $d_0$.  Therefore, by performing a simple hybrid, we have that $S$ is indistinguishable from a random $T$ of dimension $d_1$ containing $S$, except with probability \[O\left(\sum_{i=d_0}^{d_1-1}q^2 |\F|^{i-n}\right)\leq O(q^2 |\F|^{d_1-1-n})\]
+
+Next, we plug this result into the proof of Theorem~\ref{thm:qmoney}.  Suppose the adversary copies a quantum state with probability $\epsilon$.  The proof of Theorem~\ref{thm:qmoney} shows that $\epsilon$ is at most $O(q^2|\F|^{-(n+1-d_1)}+|\F|^{-(d_1-n/2)}$.  
+	
+For $|\F|=2$, this gives $\epsilon\leq O(q^2 2^{n-d_1}+2^{d_1-n/2})$.  The quantity on the right can be minimized by choosing the right value for $d_1$, namely $d_1=\frac{3n}{4}+\log_2(q)$.  This gives $\epsilon\leq O(2^{n/4}q)$.  In other words, we have that $q\geq \Omega(\epsilon 2^{-n/4})$.  Compare this to Aaronson and Christiano's result, which says that $q\geq \Omega(\sqrt{\epsilon}2^{-n/4})$.  
+ Thus, our bound matches their bound for constant $\epsilon$, though is slightly worse for small $\epsilon$.  However, the advantage of our proof is its simplicity, only requiring the lower bound for Grover search, and a quantitative version of the no-cloning theorem.
+
+

@@ -1,0 +1,105 @@
+\documentclass[letterpaper,11pt]{article} 
+%\documentclass{llncs}
+\usepackage[letterpaper,hmargin=1in,vmargin=1in]{geometry} 
+\usepackage{fullpage}
+\usepackage[pdfstartview=FitH,colorlinks,linkcolor=blue,citecolor=blue]{hyperref} 
+
+\usepackage[T1]{fontenc}
+\usepackage{amsthm} 
+\usepackage{color} 
+\usepackage{times} 
+\usepackage{microtype,pdfsync} 
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{url} 
+\usepackage{xspace,paralist}
+\usepackage{lmodern}
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+\usepackage{multirow}
+\usepackage{savesym}
+\usepackage[weather]{ifsym}
+\savesymbol{Sun}
+\savesymbol{Lightning}
+\usepackage{marvosym}
+\usepackage{graphicx}
+
+
+%\usepackage{algpseudocode}
+%\usepackage{algorithm}
+%\usepackage{makecell}
+
+\usepackage{xfrac}
+%\usepackage{natbib}
+%\setlength{\bibsep}{0pt}
+
+\input{macros}
+
+\floatstyle{plain}
+\restylefloat{figure}
+
+\setlength{\intextsep}{5pt}
+\setlength{\abovecaptionskip}{0pt}
+
+\begin{document}
+
+\title{Quantum Lightning Never Strikes the Same State Twice \\\vspace{0.3em} \large{Or: Quantum Money from Cryptographic Assumptions}}
+\author{{\sc Mark Zhandry} \\
+Princeton University\\
+    	{\tt mzhandry@princeton.edu} }
+
+\date{}
+\maketitle
+
+\begin{abstract} Public key quantum money can be seen as a version of the quantum no-cloning theorem that holds even when the quantum states can be verified by the adversary.  In this work, investigate \emph{quantum lightning}, a formalization of ``collision-free quantum money'' defined by Lutomirski et al. [ICS'10], where no-cloning holds \emph{even when the adversary herself generates the quantum state to be cloned}.  We then study quantum money and quantum lightning, showing the following results:
+
+\begin{itemize}
+	\item We demonstrate the usefulness of quantum lightning beyond quantum money by showing several potential applications, such as generating random strings with a proof of entropy, to completely decentralized cryptocurrency without a block-chain, where transactions is instant and local.
+	
+	\item We give win-win results for quantum money/lightning, showing that either signatures/hash functions/commitment schemes meet very strong recently proposed notions of security, or they yield quantum money or lightning.  Given the difficulty in constructing public key quantum money, this gives some indication that natural schemes do attain strong security guarantees.
+	
+	\item We construct quantum lightning under the assumed multi-collision resistance of random degree-2 systems of polynomials.  Our construction is inspired by our win-win result for hash functions, and yields the first plausible standard model instantiation of a \emph{non-collapsing} collision resistant hash function.  This improves on a result of Unruh [Eurocrypt'16] that requires a quantum oracle.  
+	
+	\item We show that instantiating the quantum money scheme of Aaronson and Christiano [STOC'12] with \emph{indistinguishability obfuscation} that is secure against quantum computers yields a secure quantum money scheme.  This construction can be seen as an instance of our win-win result for signatures, giving the first separation between two security notions for signatures from the literature.  
+\end{itemize}
+
+Thus, we provide the first constructions of public key quantum money from several cryptographic assumptions.  Along the way, we develop several new techniques including a new precise variant of the no-cloning theorem.
+\end{abstract}
+
+\clearpage
+\setcounter{page}{1}
+
+\section{Introduction}
+
+\input{intro}
+
+\section{Preliminaries}
+
+\input{prelim}
+
+\section{Quantum Lightning}
+
+\input{qlightning}
+
+\section{Win-win Results}
+
+\input{winwin}
+
+\section{Constructing Quantum Lightning}
+
+\input{constr}
+
+\section{Quantum Money from Obfuscation}
+
+\input{qmoney}
+
+\bibliographystyle{alpha}
+\bibliography{abbrev0,crypto,bib}
+
+\appendix
+
+
+
+\end{document}
+
+

@@ -1,0 +1,173 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FINAL PROJECT PROPOSAL - COMPRESSED VERSION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,11pt,twoside]{article}
+\hyphenpenalty=8000
+\textwidth=140mm
+\textheight=235mm
+\usepackage[top=1.5cm, bottom=1.5cm, inner=2cm, outer=2cm, includehead]{geometry}
+\usepackage{fancyhdr}
+\usepackage{physics}
+\usepackage{amsmath,amssymb}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{Final Project Proposal}
+\fancyhead[LO]{Quantum Money Inflation Control}
+\setlength{\headheight}{15pt}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{Quantum Money and Inflation Control}} \\[4pt]
+\textbf{Final Project Proposal for PHYS C191A}\\[2pt]
+\textit{Juncheng Ding, Tian Ariyaratrangsee, Xiaoyang Zheng}\\[2pt]
+University of California, Berkeley – Fall 2025
+\end{center}
+
+\vspace{-8pt}
+\section*{1. Problem Statement}
+\vspace{-4pt}
+
+The quantum no-cloning theorem ($\nexists U: U\ket{\psi}\ket{0} = \ket{\psi}\ket{\psi}$) prevents copying but not unlimited generation of new quantum money states in Hilbert space $\mathcal{H} = \mathbb{C}^{2^n}$. As quantum computational power $Q(t)$ grows exponentially, generation rate $R \propto Q/D$ yields unbounded supply—\textbf{quantum inflation}. Zhandry (2017) demonstrated quantum lightning (QL) states satisfy cryptographic unforgeability but did not address supply control. Coladangelo \& Sattath (2020) proposed blockchain-based tracking but required classical infrastructure.
+
+\textbf{Our Approach:} We investigate whether \textit{intrinsic quantum resource constraints} can bound supply through: (1) \textbf{Resource Token (RT) mechanism} coupling generation to physical costs (gate count $G$, circuit depth $L$, coherence time $T_2$, ancilla entanglement $\chi$); (2) \textbf{Theoretical analysis} proving bounded equilibrium $M(t) \to M_{\max} = R_{\text{total}}/\langle\text{RT}\rangle$; (3) \textbf{Qiskit simulation} on classical hardware validating dynamics under realistic NISQ noise models, demonstrating $>99\%$ inflation suppression without requiring quantum hardware access.
+
+\vspace{-4pt}
+\section*{2. Technical Approach}
+\vspace{-6pt}
+
+\subsection*{2.1 Quantum Lightning Framework \& Inflation Dynamics}
+\vspace{-4pt}
+
+Zhandry's Quantum Lightning: each unit $\ket{\psi_y} = \frac{1}{\sqrt{N_y}}\sum_{x: H(x)=y} \ket{x}$ is superposition over polynomial hash pre-images with $H: \{0,1\}^m \to \{0,1\}^n$ degree-2 over $\mathbb{F}_2$. State purity: density matrix $\rho = \ket{\psi_y}\bra{\psi_y}$ has $S(\rho) = -\text{Tr}(\rho\log\rho) = 0$, distinguishing from counterfeit mixed states with $S(\rho_{\text{fake}}) > 0$. Verification protocol: measure in Hadamard basis, apply quantum Fourier transform $\mathcal{F}\ket{x} = 2^{-n/2}\sum_k e^{2\pi ixk/2^n}\ket{k}$, check polynomial constraints via phase estimation (success probability $P_{\text{verify}} \geq 1-\epsilon$ for $\epsilon = 2^{-\Omega(n)}$).
+
+\textbf{Inflation Dynamics:} Quantum capability growth $Q(t) = Q_0 e^{\lambda t}$ (e.g., logical qubit count scaling, $\lambda \in [0.1, 1.0]$ yr$^{-1}$). Generation success $P(y) \approx Q/2^D$ from Grover amplitude amplification. Lindblad master equation with decoherence:
+\vspace{-4pt}
+\[
+\frac{d\rho}{dt} = -i[\hat{H}, \rho] + \sum_k \gamma_k \left(L_k \rho L_k^\dagger - \frac{1}{2}\{L_k^\dagger L_k, \rho\}\right), \quad L_k \in \{\sigma_-, \sigma_z\} \text{ (amplitude damping, dephasing)}
+\]
+\vspace{-6pt}
+Unbounded regime ($R_{\text{total}} = \infty$): $\frac{dM}{dt} = \frac{Q_0 e^{\lambda t}}{2^D} \Rightarrow M(t) \sim \frac{Q_0}{\lambda 2^D}e^{\lambda t}$. For $\lambda = 0.5$ yr$^{-1}$, $M$ doubles every $\ln 2/\lambda \approx 1.4$ years.
+
+\vspace{-4pt}
+\subsection*{2.2 Resource Token (RT) Mechanism}
+\vspace{-4pt}
+
+\textbf{Principle:} Couple generation to physical quantum resources. For state $\ket{\psi_y}$ requiring circuit $U$ with depth $L$, gate count $G$, qubit number $m$:
+\vspace{-4pt}
+\[
+\text{RT}_{\text{cost}} = \alpha G + \beta L + \gamma m, \quad M_{\max} = \frac{R_{\text{total}}}{\langle \text{RT}_{\text{cost}} \rangle}, \quad \frac{dM}{dt} = \min\left\{\frac{Q}{2^D}, \frac{R_{\text{avail}}}{\text{RT}_{\text{cost}}}\right\}
+\]
+\vspace{-6pt}
+
+\textbf{Three Implementations:} (A) \textit{Gate-Count}: $\text{RT} = \alpha G + \beta L$ where $G$ counts single-qubit rotations $R_\theta(\phi) = \exp(-i\theta\sigma_\phi/2)$ and two-qubit CNOT gates (universal basis: $\{H, T, \text{CNOT}\}$ via Solovay-Kitaev, $G = O(\log^c(1/\epsilon))$ for precision $\epsilon$). Tracks computational complexity; robust to noise but ignores time. (B) \textit{Decoherence-Limited}: $\text{RT} = \gamma \int_0^T (1/T_1 + 1/T_2) dt$ where $T_1$ (amplitude damping), $T_2$ (dephasing) model realistic errors. Kraus operators $\{E_0 = \sqrt{1-p}\mathbb{I}, E_1 = \sqrt{p}\sigma_-\}$ with $p = 1-\exp(-t/T_1)$. Naturally enforces time limits but sensitive to calibration. (C) \textit{Ancilla Budget}: Finite entangled ancillas $\ket{\Phi^+} = (\ket{00} + \ket{11})/\sqrt{2}$ consumed for error syndrome extraction. Schmidt rank $\chi = \text{rank}(\rho_A)$ quantifies bipartite entanglement resource. NISQ constraint: $N_{\text{ancilla}} \sim 0.3 N_{\text{physical}}$.
+
+\textbf{Protocol:} (1) Initialize $\ket{\phi_0} = \ket{0}^{\otimes m}$, check $R_{\text{avail}} \geq \text{RT}_{\text{cost}}$; (2) Apply $U_{\text{mint}} = \prod_{j=1}^L U_j$ (parameterized gates); (3) Measure hash $y$, verify via SWAP test: $|\braket{\psi_{\text{target}}|\psi_{\text{measured}}}|^2 \geq 1-\epsilon_{\text{thresh}}$; (4) Quantum process tomography: reconstruct channel $\mathcal{E}$ via Choi matrix $\rho_{\mathcal{E}} = (\mathcal{E}\otimes\mathbb{I})|\Phi^+\rangle\langle\Phi^+|$, extract $(G,L,m)$; (5) Deduct $R_{\text{avail}} \leftarrow R_{\text{avail}} - \text{RT}_{\text{cost}}$, adjust difficulty $D(t)$.
+
+\textbf{Security Analysis:} Under $(2k+2)$-NAMCR (no-affine multi-collision resistance for degree-$k$ polynomials), RT preserves QL uniqueness. Adversarial barriers: (1) \textit{No-cloning} (Wootters-Zurek): universal cloner $\nexists$; (2) \textit{Multi-collision}: finding $2k+2$ independent pre-images requires $\Omega(2^{n/(2k+1)})$ queries (generalized birthday bound); (3) \textit{Circuit extraction}: obtaining $(G,L,m)$ without execution violates quantum query lower bounds $\Omega(n\log n)$ (proved via adversary method).
+
+\vspace{-4pt}
+\subsection*{2.3 Simulation Strategy}
+\vspace{-4pt}
+
+\textbf{Parameters:} Miniaturized toy model $(n=3, k=2, m=12)$ for classical simulation (full statevector $2^{12} = 4096$ amplitudes). Polynomial hash $H(x) = \sum_{i<j} a_{ij}x_ix_j + \sum_i b_i x_i \pmod{2}$ over $\mathbb{F}_2$. Security: $2^n = 8$ hash values, $\approx 2^{m/2} \approx 64$ pre-images per valid $y$ (birthday bound saturation).
+
+\textbf{Circuit Design:} \textit{Generation}: (1) Hadamard superposition $H^{\otimes m}\ket{0}^{\otimes m} = \ket{+}^{\otimes m}$ ($m$ gates); (2) Oracle $U_f\ket{x}\ket{b} = \ket{x}\ket{b \oplus f(x)}$ implements polynomial via CNOT cascade (depth $O(m^2)$, gate count $G_{\text{oracle}} \sim m(m-1)/2 \approx 66$ for quadratic terms); (3) Grover diffusion $D = 2\ket{+}\bra{+}^{\otimes m} - \mathbb{I} = H^{\otimes m}(2\ket{0}\bra{0}^{\otimes m} - \mathbb{I})H^{\otimes m}$. Iterations: $O(\sqrt{2^m/N_y}) \approx \sqrt{64} = 8$. Total complexity: $G \sim O(m^2\sqrt{2^m/N_y})$, $L \sim O(\sqrt{2^m/N_y})$ depth. \textit{Verification}: (1) Measure in $Z$-basis, collapse to $\ket{\psi_y}$; (2) HHL algorithm (Harrow-Hassidim-Lloyd): solve $A\vec{x} = \vec{b}$ for constraint matrix $A$ via quantum phase estimation + controlled rotations, complexity $O(\kappa(A)\log N)$ where $\kappa$ is condition number (assume $\kappa \sim 10$ for well-conditioned polynomial systems); (3) SWAP test: $|\braket{\psi|\phi}|^2 = \frac{1 + \langle\text{SWAP}\rangle}{2}$ via controlled-SWAP + ancilla measurement.
+
+\textbf{Noise Models (Qiskit AerSimulator):} (1) \textit{Thermal relaxation}: Kraus $E_0 = \begin{pmatrix}1 & 0\\0 & \sqrt{1-p}\end{pmatrix}$, $E_1 = \begin{pmatrix}0 & \sqrt{p}\\0 & 0\end{pmatrix}$, $p = 1-\exp(-t_{\text{gate}}/T_1)$. Typical: $T_1 = 100\mu s$, $t_{\text{gate}} = 50ns \Rightarrow p \sim 5\times10^{-4}$. (2) \textit{Depolarizing}: $\mathcal{E}(\rho) = (1-p)\rho + \frac{p}{3}\sum_{i=x,y,z}\sigma_i\rho\sigma_i$, single-qubit $p_1 = 10^{-3}$, two-qubit $p_2 = 10^{-2}$. (3) \textit{Readout error}: confusion matrix $M_{ij} = P(\text{measure } j|\text{state } i)$, off-diagonal $\sim 1\%$.
+
+\textbf{Comparative Study:} Scenarios: $\lambda \in \{0.1, 0.5, 1.0\}$ yr$^{-1}$, $R_{\text{total}} \in \{10^3, 10^5\}$ tokens. Track: (i) Supply $M(t)$ (unbounded: exponential, RT-bounded: logistic saturation); (ii) RT depletion $R_{\text{avail}}(t)$; (iii) Quantum metrics: fidelity $\mathcal{F}(\rho,\sigma) = [\text{Tr}\sqrt{\sqrt{\rho}\sigma\sqrt{\rho}}]^2$, purity $\text{Tr}(\rho^2)$, concurrence $C(\rho) = \max\{0, \sqrt{\lambda_1} - \sqrt{\lambda_2} - \sqrt{\lambda_3} - \sqrt{\lambda_4}\}$ (eigenvalues of $\rho\tilde{\rho}$ where $\tilde{\rho} = (\sigma_y\otimes\sigma_y)\rho^*(\sigma_y\otimes\sigma_y)$), entanglement entropy $S_{\text{ent}} = -\text{Tr}(\rho_A\log\rho_A)$ for bipartition. Validation: Pauli tomography $\rho = \frac{1}{2^m}\sum_{\vec{\alpha}} \text{Tr}(\sigma_{\vec{\alpha}}\rho)\sigma_{\vec{\alpha}}$ reconstructs $\rho$ from $4^m$ measurements ($m=2$ subsystem: 16 Pauli strings).
+
+\vspace{-4pt}
+\subsection*{2.4 Theoretical Validation \& Analysis}
+\vspace{-4pt}
+
+\textbf{Mathematical Model:} System of coupled ODEs:
+\vspace{-4pt}
+\[
+\frac{dM}{dt} = R_{\text{gen}}(Q, D, R_{\text{avail}}), \quad \frac{dR_{\text{avail}}}{dt} = -\langle\text{RT}_{\text{cost}}\rangle \cdot R_{\text{gen}}, \quad \frac{d\rho}{dt} = -i[\hat{H}, \rho] + \sum_k \gamma_k \mathcal{D}[L_k]\rho
+\]
+\vspace{-6pt}
+where $R_{\text{gen}} = \min\{Q/2^D, R_{\text{avail}}/\text{RT}_{\text{cost}}\}$, $\mathcal{D}[L]\rho = L\rho L^\dagger - \frac{1}{2}\{L^\dagger L, \rho\}$ (Lindblad dissipator), $L_k \in \{\sigma_-, \sigma_z\}$ (jump operators). Solve via: (1) Classical ODE solver (scipy.integrate.odeint) for $M(t)$, $R(t)$ deterministic trajectories; (2) Quantum trajectory Monte Carlo for stochastic $\rho(t)$ including measurement backaction.
+
+\textbf{Equilibrium Analysis:} RT-bounded regime reaches fixed point $(M_*, R_*)$ satisfying $R_{\text{gen}}(M_*, R_*) = 0$. Stability: Lyapunov function $V(M,R) = \frac{1}{2}[(M-M_*)^2 + (R-R_*)^2]$ with $\dot{V} = (M-M_*)\dot{M} + (R-R_*)\dot{R} < 0$ for all $(M,R) \neq (M_*,R_*)$ (proven via Jacobian eigenvalue analysis: $\lambda_{\text{max}} < 0$). Convergence rate $\tau^{-1} \sim |\lambda_{\text{max}}|$ determines relaxation time. Prediction: $M_{\infty} = R_{\text{total}}/\langle\text{RT}_{\text{cost}}\rangle$ independent of $\lambda$; time to reach $M_{\infty}(1-e^{-1}) \approx 0.63M_{\infty}$ is $\tau \sim (\lambda + \gamma_{\text{diss}})^{-1}$.
+
+\textbf{Metrics:} (1) \textit{Inflation suppression}: $I_{\text{ratio}} = M_{\text{RT}}(t_f)/M_{\text{unbound}}(t_f) < 0.01$ (target: $99\%$ reduction at $t_f = 10$ yr). (2) \textit{Circuit scaling}: Log-log regression confirms $G(m) \sim Am^{3+\delta}$ ($\delta < 0.1$ acceptable), compare to Grover theoretical $\Omega(\sqrt{N})$, Shor $O(\log^3 N)$. (3) \textit{Fidelity decay}: $\mathcal{F}(t) = \mathcal{F}_0 \exp(-\Gamma t)$ where $\Gamma = p_1 G_1 + p_2 G_2$ ($G_{1,2}$ are single/two-qubit gate counts), diamond norm $\|\mathcal{E} - \mathcal{I}\|_\diamond = \sup_{\rho}\|\mathcal{E}(\rho) - \rho\|_1 \leq \epsilon_{\text{thresh}}$. (4) \textit{Entanglement evolution}: Concurrence $C(t)$ decay rate $\propto 1/T_2$, entropy production $\Delta S = S(\rho_{\text{final}}) - S(\rho_{\text{initial}}) \geq 0$ (second law). (5) \textit{Fisher information}: $\mathcal{F}_Q[\rho,\hat{A}] = 2\sum_n \frac{(\partial_\theta p_n)^2}{p_n}$ quantifies parameter estimation precision (Cramér-Rao bound: $\text{Var}(\theta) \geq 1/\mathcal{F}_Q$).
+
+\vspace{-4pt}
+\subsection*{2.5 Deliverables}
+\vspace{-4pt}
+
+(1) Analytical solutions: closed-form $M(t)$ for unbounded ($M \sim Q_0 e^{\lambda t}/(\lambda 2^D)$) and RT-bounded ($M \to R_{\text{total}}/\langle\text{RT}\rangle$) with Lyapunov stability proof; (2) Qiskit simulation code: complete circuit implementations (Grover generation, HHL verification, SWAP test) with noise models, transpilation to gate basis $\{R_x, R_y, R_z, \text{CNOT}\}$, depth optimization $L \leq 20$; (3) Comparative analysis: supply curves $M(t)$ vs. $t$ for 9 scenarios ($3\times\lambda \times 3\times R_{\text{total}}$), fidelity surfaces $\mathcal{F}(p_1, p_2, T_1)$, concurrence decay $C(t)$, parameter sensitivity via Fisher information; (4) Complexity validation: log-log plots confirming $G \sim O(m^3)$ scaling, comparison to lower bounds; (5) Report sections: theoretical framework (no-cloning under RT, Lindblad dynamics), numerical results (convergence rates, suppression ratios), feasibility discussion (classical simulation limits $m \leq 16$, error mitigation strategies).
+
+\vspace{-4pt}
+\section*{3. Expected Outcomes}
+\vspace{-4pt}
+
+\begin{itemize}
+    \item \textbf{Inflation characterization:} Quantify unbounded growth $M(t) \sim e^{\lambda t}$ with extracted rates $\lambda \in [0.1, 1.0]$ yr$^{-1}$ from Liouvillian eigenspectrum; demonstrate supply doubling times $\tau_2 = \ln 2/\lambda$
+    \item \textbf{RT stabilization proof:} Show bounded equilibrium $M_{\infty} = R_{\text{total}}/\langle\text{RT}\rangle$ with convergence time $\tau \sim 1/(\lambda + \gamma_{\text{diss}})$; Lyapunov stability guarantees; verify no-cloning preservation
+    \item \textbf{Simulation validation:} Complete QL protocols on Qiskit AerSimulator (statevector/density matrix modes); $m=12$ qubits ($2^{12}=4096$ dimensions); noise with $T_1/T_2 \in [50, 200]\mu s$, $p_{1,2} \in [10^{-4}, 10^{-2}]$; diamond norm $\|\mathcal{E}_{\text{ideal}} - \mathcal{E}_{\text{noisy}}\|_\diamond < 0.15$
+    \item \textbf{Mechanism comparison:} Three RT variants: (1) Gate-count ($\text{Cost} \propto m^3$, robust); (2) Decoherence ($\text{Cost} \propto L/T_2$, time-limited); (3) Ancilla ($\text{Cost} \propto \chi$, entanglement-based)
+    \item \textbf{Theoretical insights:} Connect to quantum information: Holevo bound $\chi(\mathcal{N}) \leq S(\rho)$, complexity class $\text{BQP}^{\text{NP}}$, channel capacity $C(\mathcal{N}_{\text{RT}}) < C(\mathcal{N}_{\text{ideal}})$
+\end{itemize}
+
+\vspace{-4pt}
+\section*{4. Timeline}
+\vspace{-4pt}
+\begin{center}
+\begin{tabular}{|l|p{10.5cm}|}
+\hline
+\textbf{Date} & \textbf{Milestone} \\
+\hline
+Oct 30 - Nov 3 & Literature review (Zhandry, Coladangelo-Sattath); setup Qiskit 1.0+, Python 3.10+, Jupyter; GitHub repo \\
+\hline
+Nov 4 - Nov 10 & \textbf{[Ding]} Derive analytical $M(t)$, implement ODE solver (scipy); \textbf{[Zheng]} No-cloning proof under RT, Lindblad master equation derivation \\
+\hline
+Nov 11 - Nov 17 & \textbf{[Tian]} Circuit design: polynomial hash oracle, Grover iteration; \textbf{[Zheng]} HHL \& SWAP test in Qiskit; gate basis decomposition \\
+\hline
+Nov 18 - Nov 24 & \textbf{[All]} Implement 3 RT variants with noise models (thermal, depolarizing, readout); test on AerSimulator; validate complexity $O(m^3)$ \\
+\hline
+Nov 25 - Nov 30 & \textbf{[Ding]} Run 9 comparative scenarios ($\lambda$, $R_{\text{total}}$ sweep); \textbf{[Tian]} Complexity plots, Fisher information; \textbf{[Zheng]} Tomography, concurrence analysis \\
+\hline
+Dec 1 - Dec 5 & \textbf{[Zheng]} Draft report (theory, results, figures); \textbf{[Tian]} Poster design; \textbf{[Ding]} Finalize Lyapunov stability proofs \\
+\hline
+Dec 6 - Dec 8 & Team review, presentation rehearsal, Q\&A preparation (quantum complexity, simulation limits) \\
+\hline
+Dec 9 & Poster presentation \& defense; submit final report \\
+\hline
+\end{tabular}
+\end{center}
+\vspace{-4pt}
+\section*{5. Division of Labor}
+\vspace{-4pt}
+
+\textbf{Xiaoyang Zheng:} Theoretical development (no-cloning under RT, Lindblad dynamics, Lyapunov stability), quantum algorithm simulation in Qiskit (Grover, HHL, SWAP test, noise modeling), project integration, LaTeX report writing. \\
+\textbf{Tian Ariyaratrangsee:} Poster design and presentation, quantum circuit complexity calculations (gate counts, depth analysis, scaling verification), circuit implementation (oracle construction, gate decomposition, transpilation), Fisher information analysis. \\
+\textbf{Juncheng Ding:} Inflation dynamics modeling (ODE derivation, scipy numerical integration), mathematical analysis (equilibrium computation, convergence rates, Jacobian eigenvalues), comparative simulation (9-scenario parameter sweep), RT mechanism feasibility studies.
+
+\vspace{-4pt}
+\section*{6. Evaluation \& Risk Mitigation}
+\vspace{-4pt}
+
+\textbf{Success Criteria:} (1) $>99\%$ inflation reduction: $M_{\text{RT}}(10\text{ yr})/M_{\text{unbound}}(10\text{ yr}) < 0.01$; (2) Stable equilibrium reached: $|M(t_f) - M_{\infty}|/M_{\infty} < 0.05$; (3) Polynomial scaling confirmed: $R^2 > 0.95$ for $\log G$ vs. $\log m$ regression with slope $3 \pm 0.2$; (4) Simulations complete on classical hardware within computational limits (statevector $m \leq 16$, density matrix $m \leq 8$).
+
+\textbf{Risks \& Mitigation:} (1) \textit{Memory limits for large $m$}: Start with $m=12$ (4096 amplitudes, $\sim$32 KB); if exceeded, reduce to $m=6$ (64 amplitudes) toy model. (2) \textit{RT mechanism weakens security}: Formal proof that RT tracking doesn't violate no-cloning; adversary cannot extract $(G,L,m)$ without executing circuit (query complexity lower bound). (3) \textit{Time constraints}: Priority order: (a) Unbounded baseline + analytical solution (minimum viable); (b) One RT variant (gate-count preferred); (c) Full comparison if time permits. (4) \textit{Noise model accuracy}: Validate against published IBM/IonQ calibration data; sensitivity analysis on $T_1, T_2, p_{1,2}$ variations $\pm 50\%$.
+
+\vspace{-4pt}
+\section*{7. References}
+\vspace{-4pt}
+
+\begin{itemize}
+    \item Wiesner, S. "Conjugate Coding." \textit{ACM SIGACT News}, 15(1), 78–88 (1983).
+    \item Zhandry, M. "Quantum Lightning Never Strikes the Same State Twice." \textit{EUROCRYPT 2019}, arXiv:1711.02276v3.
+    \item Coladangelo, A. \& Sattath, O. "A Quantum Money Solution to the Blockchain Scalability Problem." \textit{Quantum}, 4, 297 (2020).
+    \item Aaronson, S. \& Christiano, P. "Quantum Money from Hidden Subspaces." \textit{STOC 2012}.
+    \item Lutomirski, A. et al. "Breaking and Making Quantum Money." \textit{ICS 2010}, arXiv:0912.3825.
+\end{itemize}
+
+\end{document}

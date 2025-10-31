@@ -1,0 +1,194 @@
+\theoremstyle{plain} 
+
+\newtheorem{theorem}{Theorem}[section] 
+\newtheorem{lemma}[theorem]{Lemma} 
+\newtheorem{proposition}[theorem]{Proposition} 
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{fact}[theorem]{Fact}
+
+
+\theoremstyle{definition} 
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark} 
+\newtheorem{example}[theorem]{Example}
+\newtheorem{assumption}[theorem]{Assumption}
+
+%\numberwithin{equation}{section}
+
+
+\newcommand{\fingerprint}{\ensuremath{%
+		\mathchoice{\raisebox{-2pt}{\includegraphics[height=2.5ex]{fingerprint.png}}}
+		{\raisebox{-2pt}{\includegraphics[height=2.5ex]{fingerprint.png}}}
+		{\includegraphics[height=1.5ex]{fingerprint.png}}
+		{\includegraphics[height=1ex]{fingerprint.png}}
+}}
+
+\newcommand{\horns}{\ensuremath{%
+		\mathchoice{\raisebox{-2pt}{\includegraphics[height=2ex]{horns.png}}}
+		{\raisebox{-2pt}{\includegraphics[height=2ex]{horns.png}}}
+		{\includegraphics[height=1.5ex]{horns.png}}
+		{\includegraphics[height=1ex]{horns.png}}
+}}
+
+\newcommand{\tail}{\ensuremath{%
+		\mathchoice{\raisebox{-2pt}{\includegraphics[height=2ex]{tail.png}}}
+		{\raisebox{-2pt}{\includegraphics[height=2ex]{tail.png}}}
+		{\includegraphics[height=1.5ex]{tail.png}}
+		{\includegraphics[height=1ex]{tail.png}}
+}}
+
+\newcommand{\thunderstorm}{\ensuremath{%
+		\mathchoice{\raisebox{-2pt}{\includegraphics[height=2ex]{thunderstorm.png}}}
+		{\raisebox{-2pt}{\includegraphics[height=2ex]{thunderstorm.png}}}
+		{\includegraphics[height=1.5ex]{thunderstorm.png}}
+		{\includegraphics[height=1ex]{thunderstorm.png}}
+}}
+
+\newcommand{\badthunderstorm}{\ensuremath{%
+		\mathchoice{\raisebox{-2pt}{\includegraphics[height=2ex]{badthunderstorm.png}}}
+		{\raisebox{-2pt}{\includegraphics[height=2ex]{badthunderstorm.png}}}
+		{\includegraphics[height=1.5ex]{badthunderstorm.png}}
+		{\includegraphics[height=1ex]{badthunderstorm.png}}
+}}
+
+
+%fields and groups
+\newcommand{\F}{{\mathbb F}} 
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\Z}{\mathbb{Z}} 
+\newcommand{\N}{\mathbb{N}} 
+\newcommand{\R}{\mathbb{R}} 
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\G}{\mathbb{G}} 
+\newcommand{\U}{\mathbb{U}} 
+\newcommand{\Sb}{\mathbb{S}} 
+
+%vectors
+\newcommand{\av}{{\mathbf{a}}}
+\newcommand{\bv}{{\mathbf{b}}}
+\newcommand{\cv}{{\mathbf{c}}}
+\newcommand{\dv}{{\mathbf{d}}}
+\newcommand{\ev}{{\mathbf{e}}}
+\newcommand{\fv}{{\mathbf{f}}}
+\newcommand{\gv}{{\mathbf{g}}}
+\newcommand{\hv}{{\mathbf{h}}}
+\newcommand{\iv}{{\mathbf{i}}}
+\newcommand{\ov}{{\mathbf{o}}}
+\newcommand{\rv}{{\mathbf{r}}}
+\newcommand{\sv}{{\mathbf{s}}}
+\newcommand{\tv}{{\mathbf{t}}}
+\newcommand{\uv}{{\mathbf{u}}}
+\newcommand{\vv}{{\mathbf{v}}}
+\newcommand{\wv}{{\mathbf{w}}}
+\newcommand{\xv}{{\mathbf{x}}}
+\newcommand{\yv}{{\mathbf{y}}}
+\newcommand{\zv}{{\mathbf{z}}}
+\newcommand{\betav}{{\boldsymbol\beta}}
+\newcommand{\xiv}{{\boldsymbol\xi}}
+\newcommand{\omegav}{{\boldsymbol\omega}}
+
+%matrices
+\newcommand{\zerom}{{\boldsymbol{0}}}
+\newcommand{\Ident}{{\mathbf{I}}}
+\newcommand{\Am}{{\mathbf{A}}}
+\newcommand{\Bm}{{\mathbf{B}}}
+\newcommand{\Cm}{{\mathbf{C}}}
+\newcommand{\Dm}{{\mathbf{D}}}
+\newcommand{\Em}{{\mathbf{E}}}
+\newcommand{\Fm}{{\mathbf{F}}}
+\newcommand{\Gm}{{\mathbf{G}}}
+\newcommand{\Hm}{{\mathbf{H}}}
+\newcommand{\Jm}{{\mathbf{J}}}
+\newcommand{\Lm}{{\mathbf{L}}}
+\newcommand{\Mm}{{\mathbf{M}}}
+\newcommand{\Om}{{\mathbf{O}}}
+\newcommand{\Pm}{{\mathbf{P}}}
+\newcommand{\Rm}{{\mathbf{R}}}
+\newcommand{\Sm}{{\mathbf{S}}}
+\newcommand{\Tm}{{\mathbf{T}}}
+\newcommand{\Um}{{\mathbf{U}}}
+\newcommand{\Vm}{{\mathbf{V}}}
+\newcommand{\rhom}{{\boldsymbol\rho}}
+\newcommand{\sigmam}{{\boldsymbol\sigma}}
+
+\newcommand{\Tr}{{\sf Tr}}
+
+%sets
+\newcommand{\As}{{\mathcal{A}}}
+\newcommand{\Bs}{{\mathcal{B}}}
+\newcommand{\Cs}{{\mathcal{C}}}
+\newcommand{\Ds}{{\mathcal{D}}}
+\newcommand{\Es}{{\mathcal{E}}}
+\newcommand{\Fs}{{\mathcal{F}}}
+\newcommand{\Gs}{{\mathcal{G}}}
+\newcommand{\Hs}{{\mathcal{H}}}
+\newcommand{\Ks}{{\mathcal{K}}}
+\newcommand{\Ms}{{\mathcal{M}}}
+\newcommand{\Os}{{\mathcal{O}}}
+\newcommand{\Qs}{{\mathcal{Q}}}
+\newcommand{\Rs}{{\mathcal{R}}}
+\newcommand{\Ss}{{\mathcal{S}}}
+\newcommand{\Ts}{{\mathcal{T}}}
+\newcommand{\Us}{{\mathcal{U}}}
+\newcommand{\Vs}{{\mathcal{V}}}
+\newcommand{\Ws}{{\mathcal{W}}}
+\newcommand{\Xs}{{\mathcal{X}}}
+\newcommand{\Ys}{{\mathcal{Y}}}
+\newcommand{\Zs}{{\mathcal{Z}}}
+\newcommand{\IDs}{{\mathcal{ID}}}
+\newcommand{\VKs}{{\mathcal{VK}}}
+
+\newcommand{\adv}{{\As}}
+%\newcommand{\advlightning}{\resizebox{1.3em}{1em}{\mbox{\text{\rlap{\raisebox{-2pt}{\rlap{\raisebox{8.5pt}{\horns}}\hspace{5.5pt}\RainCloud}}\hspace{13pt}\raisebox{6.2pt}{\tail}}}}}
+
+\newcommand{\advlightning}{\text{\resizebox{1em}{1em}{\badthunderstorm}}}
+
+\newcommand{\genbolt}{\text{\raisebox{0pt}{\thunderstorm}}}
+\newcommand{\verbolt}{{\sf Ver}}
+\newcommand{\serialnumber}{{s}}
+\newcommand{\qsetup}{{\sf SetupQL}}
+\newcommand{\qlightning}[1][{}]{{|\text{\Lightning}_{#1}\rangle}}
+\newcommand{\qlightningp}[1][{}]{{|\text{\Lightning}'_{#1}\rangle}}
+
+\newcommand{\genmoney}{{\sf Gen}}
+\newcommand{\vermoney}{{\sf Ver}}
+
+\newcommand{\setup}{{\sf Setup}}
+\newcommand{\params}{{\sf Params}}
+\newcommand{\owf}{{\sf OWF}}
+\newcommand{\iO}{{\sf iO}}
+\newcommand{\shO}{{\sf shO}}
+\newcommand{\Samp}{{\sf Samp}}
+
+\newcommand{\poly}{{\sf poly}}
+\newcommand{\negl}{{\sf negl}}
+
+\newcommand{\sk}{{\sf sk}}
+\newcommand{\pk}{{\sf pk}}
+\newcommand{\aux}{{\sf aux}}
+\newcommand{\gen}{{\sf Gen}}
+\newcommand{\ver}{{\sf Ver}}
+\newcommand{\sign}{{\sf Sign}}
+
+\newcommand{\comm}{{\sf Commit}}
+\newcommand{\reveal}{{\sf Reveal}}
+\newcommand{\state}{{\sf State}}
+\newcommand{\trans}{{\sf Trans}}
+\newcommand{\open}{{\sf Open}}
+
+\newcommand{\qstate}[2]{{\left|\psi_{#1}^{#2}\right\rangle}}
+
+\def\E{\mathop{\mathbb E}}
+
+
+
+\newcommand{\wbzexp}{{\tt{W\text{-}BZ\text{-}Exp}}}
+\newcommand{\sbzexp}{{\tt{S\text{-}BZ\text{-}Exp}}}
+\newcommand{\gyzexp}{{\tt{GYZ\text{-}Exp}}}
+
+\newcommand{\collapseexp}{{\tt{Collapse\text{-}Exp}}}
+
+\newcommand{\ignore}[1]{} 
+\newcommand{\todo}[1]{{{\PackageWarning{MyPackage}{TODO: #1}\color{red}(#1)}}}

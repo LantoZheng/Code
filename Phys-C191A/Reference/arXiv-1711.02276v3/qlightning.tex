@@ -1,0 +1,110 @@
+\label{sec:qlightning}
+
+\subsection{Definitions}
+
+The central object in a quantum lightning system is a lightning bolt, a quantum state that we will denote as $\qlightning$.  Bolts are produced by a storm, $\genbolt$, a polynomial time quantum algorithm which takes as input a security parameter $\lambda$ and samples new bolts.  Additionally, there is a quantum  polynomial-time bolt verification procedure, $\verbolt$, which serves two purposes.  First, it verifies that a supposed bolt is actually a valid bolt; if not it rejects and outputs $\bot$.  Second, if the bolt is valid, it extracts a fingerprint/serial number of the bolt, denoted $\serialnumber$.  
+
+Rather than having a single storm $\genbolt$ and single verifier $\verbolt$, we will actually have a family $\Fs_\lambda$ of $(\genbolt,\verbolt)$ pairs for each security parameter.  We will have a setup procedure $\qsetup(1^\lambda)$ which samples a $(\genbolt,\verbolt)$ pair from some distribution over $\Fs_\lambda$.
+
+%We will generally think of $\genbolt,\verbolt$ as not being fixed, but instead being generated during a setup procedure $\qsetup$.  $\qsetup$ is a polynomial-time algorithm that takes as input the security parameter, and produces an instance of the quantum lightning system, namely classical descriptions of $\genbolt,\verbolt$.  
+
+\smallskip
+
+For correctness, we have essentially the same requirements as quantum money.  We require that verification always accepts bolts produced by $\genbolt$.  We also require that verification does not perturb the bolt.  Finally, since $\verbolt$ is a quantum algorithm, we must ensure that multiple runs of $\verbolt$ on the same bolt will always produce the same fingerprint.  This is captured by the following two of requirements:
+\begin{itemize}
+	\item For a bolt $\qlightning$, let \[H_\infty(\qlightning,\verbolt)=-\log_2 \min_s \Pr[\verbolt(\qlightning)=s]\] be the min-entropy of $\serialnumber$ produced by applying $\verbolt$ to $\qlightning$, were we do not count the rejecting output $\bot$ as contributing to the min-entropy.  We insist that $\E[H_\infty(\qlightning,\verbolt)]$ is negligible, where the expectation is over $(\genbolt,\verbolt)\gets\qsetup(\lambda)$ and $\qlightning\gets\genbolt$.  This ensures the serial number is essentially a deterministic function of the bolt. 
+	\item For a bolt $\qlightning$, let $|\psi\rangle$ be the state left over after running $\verbolt(\qlightning)$.  We insist that $\E[|\langle\psi\qlightning|^2]\geq 1-\negl(\lambda)$, where the expectation is over $(\genbolt,\verbolt)\gets\qsetup(\lambda)$, $\qlightning\gets\genbolt$, and any affect $\verbolt$ has on $|\psi\rangle$.  This ensures that verification does not perturb the bolt.
+\end{itemize}
+
+\begin{remark} We note that it is sufficient to only consider the first requirement.  Since the serial number is essentially a deterministic function of the bolt, we can always modify a $\verbolt$ that does not satisfy the second requirement into an algorithm $\verbolt'$ that does.  $\verbolt'$ runs $\verbolt$, and copies the output $\serialnumber$ into a separate register.  Since $\serialnumber$ is almost deterministic, the copying into a separate register only negligibly affects the bolt.  Therefore, we un-compute $\verbolt$, and the result will be negligibly close to the original state.
+\end{remark}
+
+
+\noindent For security, informally, we ask that no adversarial storm $\advlightning$ can produce two bolts with the same serial number.  More precisely, consider the following experiment between a challenger and a malicious bolt generation procedure $\advlightning$:
+\begin{itemize}
+	\item The challenger runs $(\genbolt,\verbolt)\gets\qsetup(1^\lambda)$, and sends $(\genbolt,\verbolt)$ to $\advlightning$.
+	\item $\advlightning$ produces two (potentially entangled) quantum states $\qlightning[0],\qlightning[1]$, which it sends to the challenger
+	\item The challenger runs $\verbolt$ on each state, obtaining two fingerprints $\serialnumber_0,\serialnumber_1$.  The challenger accepts if and only if $\serialnumber_0=\serialnumber_1\neq\bot$.
+\end{itemize}
+
+\begin{definition} A quantum lightning scheme has \emph{uniqueness} if, for all polynomial time adversarial storms $\advlightning$, the probability the challenger accepts in the game above is negligible in $\lambda$.
+\end{definition}
+
+\paragraph{Comparison to Public Key Quantum Money.} We note that our quantum lightning definition is very similar to the quantum money notion, except that the security notion is strengthened, and we allow a family of generation/verification procedures.  The differences are analogous to the various notions of security for hash functions $H$:
+\begin{itemize}
+	\item Quantum money can be seen as an analog of second-pre-image resistance.  Here, a random input $x$ is sampled, hashed to get $y$, and $(x,y)$ are sent to the adversary.  The adversary has to find a second $x'$ that hashes to $y$.  In quantum money, a random note is created, a serial number is extracted, and the adversary must find a second note with the same serial number.
+	\item Quantum lightning can then be seen as the analog of collision-resistance.  Here, the adversary just tries to devise two arbitrary distinct  inputs $x,x'$ that hash to the same value.  In quantum lightning, the adversary tries to construct two bolts with the same serial number.  Just as in the collision resistance setting, there are definitional issues with collision resistance that lead the usual (theoretical) definitions to consist of families of hash functions.  Most theoretical constructions of collision-resistant hash functions are also function families.  For similar reasons, we define quantum lightning as a family of storm/verifier pairs.
+	\item One can also consider one-wayness, where the adversary is given a random $y$ (but not the pre-image $x$), and the goal is to find an arbitrary pre-image (potentially $x$ itself).  For quantum lightning/money, this would correspond to giving the adversary a random serial number, and then asking the adversary to find some state belonging to that serial number.  We note that this version is trivial without relying on no-cloning: we define the serial number for a state $|x\rangle$ to simply be the hash of $x$.  Then one-wayness already immediately implies that it is hard to find a state with a given serial number.  Therefore, in the context of this paper, such a notion for quantum money/lightning is uninteresting.
+\end{itemize}
+
+
+\paragraph{Variations.}  We consider several variations of the above notion
+\begin{itemize}
+	\item {\bf No setup.} Here, the set $\Fs_\lambda$ contains only a single $(\genbolt,\verbolt)$ pair.  This means $\qsetup$ simply needs to output the security parameter, and $\genbolt,\verbolt$ are deterministically derived from the security parameter.  
+	\item {\bf Common random string.}  Here, each member of $\Fs_\lambda$ is indexed by a bit string $r$ of length $n(\lambda)$.  In this case, $\qsetup$ simply outputs a random string of length $n(\lambda)$, and $\genbolt,\verbolt$ are deterministically derived from this string.
+	
+	This is in contrast to general $\Fs_\lambda$, where the generation of $(\genbolt,\verbolt)$ may involve secrets that are subsequently discarded.
+
+	\item {\bf Min-entropy.} Here, we consider a slightly different, but closely related, security notion, which basically says that any for any malicious sampling procedure for bolts, the min-entropy of the serial number must be high.  Consider a malicious bolt generator $\advlightning$.  Define \[H_\infty(\advlightning,\verbolt)=-\log \max_\serialnumber\Pr[\verbolt(\qlightning)=\serialnumber:\qlightning\gets\advlightning]\]
+	
+	to be the min-entropy of serial numbers among the valid bolts generated by $\advlightning$ (bolts that are rejected by $\verbolt$ do not count toward min-entropy).  Note that this is different that $H_\infty(\qlightning,\verbolt)$, which measures the min-entropy of the serial number for a single bolt.  
+	
+	We say a quantum lightning scheme has \emph{min-entropy} if, for all efficient quantum $\adv$, which takes as input $\genbolt,\verbolt$ and outputs a classical description of $\advlightning$, and for all polynomials $p$
+	
+	\[\Pr[H_\infty(\advlightning,\verbolt])\leq\log p(\lambda):\advlightning\gets\adv(\genbolt,\verbolt),(\genbolt,\verbolt)\gets\qsetup(1^\lambda)] < \negl(\lambda)\]
+		
+	In other words, except with negligible probability, serial numbers produced by $\advlightning$ have super-logarithmic min-entropy.  
+	
+	\medskip
+	
+	We can modify the above definition to \emph{$p$-min-entropy}, where we insist on a particular amount of min-entropy: for any efficient quantum $\adv$:
+	
+	\[\Pr[H_\infty(\advlightning,\verbolt])\leq p(\lambda):\advlightning\gets\adv(\genbolt,\verbolt),(\genbolt,\verbolt)\gets\qsetup(1^\lambda)] < \negl(\lambda)\]
+		
+	With $p$-min-entropy, we can consider $p$ anywhere from super-logarithmic to slightly less than $n$, the bit-length of serial numbers.  We cannot insist on $n$-min-entropy, since an adversarial storm can run $\genbolt$ several times, until, say, the first bit of the serial number is 0, and then only output this bolt.  The adversarial storm will run $\genbolt$ twice in expectation, is guaranteed to produce a valid bolt, and moreover only outputs serial numbers beginning with a 0.  More generally, an efficient generation procedure can always sample bolts with serial numbers from a distribution of min-entropy $n-O(\log \lambda)$, where $n$ is the length of the serial numbers.  Our requirement will be that this is essentially the only strategy.
+	
+	We say a quantum lightning scheme has \emph{full min-entropy} if this is essentially the only strategy possible for reducing min-entropy: for all efficient quantum $\adv$, there exists a polynomial $p$ such that
+	
+	\[\Pr[H_\infty(\advlightning,\verbolt])\leq n(\lambda)-\log p(\lambda):\advlightning\gets\adv(\genbolt,\verbolt),(\genbolt,\verbolt)\gets\qsetup(1^\lambda)] < \negl(\lambda)\]
+\end{itemize}
+
+Note that a min-entropy adversary easily gives a uniqueness adversary: simply run the min-entropy storm many times, saving all of the valid bolts that are produced.  Since the min-entropy is logarithmic, after a polynomial number of samples, there will be two with the same serial number; simply output these bolts.  This gives the following theorem:
+
+\begin{theorem} If a quantum lightning scheme has uniqueness, then it also has min-entropy.
+\end{theorem}
+
+From now on, we will usually only consider the uniqueness security property.  Therefore, when we say that a quantum lightning scheme is ``secure'', we mean that it has uniqueness.  We will only use the other terms when we need to disambiguate the different security notions.
+
+
+\subsection{Applications}
+
+
+\paragraph{Quantum Money.} Quantum lightning easily gives quantum money.  To generate a new banknote, simply run $\genbolt$ and output the obtained bolt $\qlightning$ as the quantum money state.  In the case where $\genbolt$ actually comes from a family, first run $\qsetup$ to get $(\genbolt,\verbolt)$, and then run $\genbolt$ to get $\qlightning$.  The quantum money state is $\qlightning,\genbolt,\verbolt$, and it's serial number is $s,\genbolt,\verbolt$, where $s$ is the serial number of $\qlightning$.
+
+Technically, this just gives a quantum money ``mini-scheme'' where there is a single valid banknote.  This can be converted to a full quantum money scheme using signatures~\cite{STOC:AarChr12}.  
+
+\paragraph{Provable Randomness.} Quantum lightning also gives a way to generate a random string, and prove that it has min-entropy.  Assume that $\qsetup$ has already been run in a trusted way (say, by several organizations running $\qsetup$ using an MPC protocol).  
+
+To generate a new random string, simply run $\genbolt$ to get a bolt $\qlightning$.  The random string will be the serial number of the bolt, obtained using $\verbolt$.  $\qlightning$ will be the ``proof'' that the string has min-entropy.
+
+Suppose that an adversarial storm $\advlightning$ can produce strings and valid proofs where the strings have logarithmic min-entropy.  Then, by running $\advlightning$ a polynomial number of times, eventually one will obtain two identical strings, along with two valid proofs.  This violates the security of the quantum lightning scheme.  Hence, we really do obtain a proof of min-entropy.
+
+Notice that $\qsetup$ was run only once, but can then be used to generate arbitrarily many strings along with proofs of min-entropy.
+
+\medskip
+
+Unfortunately, the min-entropy bound obtained is weak; we can only guarantee a super-logarithmic amount of min-entropy.  If we assume sub-exponential hardness of the quantum lightning scheme (that is, even a sub-exponential-time adversary cannot produce two bolts with the same serial number), then we can get a proof of polynomial min-entropy, though the min-entropy may still be much smaller than the overall length of the random string.
+
+We leave obtaining higher min-entropy as an interesting open problem for future work.  One may hope to use randomness extraction, but analyzing appears difficult.  The reason is that randomness extraction usually assumes a random seed that is independent of distribution being extracted.  For quantum lightning, however, the random seed would be part of the description for $\verbolt$, and therefore known to the adversary.  The adversary can potentially craft its distribution on serial numbers so that the extractor fails with the given seed.
+
+\paragraph{Blockchain-less Cryptocurrency.} Finally, we consider using quantum lightning to obtain blockchain-less cryptocurrency.  A coin is simply a bolt, except that the serial number must hash to a value that begins with a certain number of zeros.  To generate a new coin, simply keep generating bolts until the serial number's hash has the prescribed number of zeros.  
+
+Treating the hash function as a random oracle means that the only way to generate a coin is to actually keep generating bolts until the serial number hashes correctly.  The number of zeros is set so that it takes a moderate amount of time to generate new coins.  This ensures scarcity, a crucial feature of any cryptocurrency.
+
+This cryptocurrency is unlikely to be useful in practice due to a very important limitation.  Namely, as technology gets better, it will be easier and easier to create new coins.  Without any modifications, this will lead to an exponentially increasing supply of coins, and hence rampant inflation.  One option is to keep requiring the hashes to contain more and more zeros, but this will render old coins invalid; with our scheme, it is impossible to distinguish coins made today with coins made last week or last year.  In either case, the result is highly undesirable.  
+
+Notice that current cryptocurrency instantiations avoid these problems, essentially, because it is possible to distinguish new coins from old, due to all coins being recorded on a blockchain.  Hence, it is possible to increase the number of 0's required in a hash to combat inflation.
+
+We leave it as an interesting open problem to fix our protocol.  One hope is to combine quantum lightning with some form of time-released cryptography.  The hope is to actually provide a way to prove that a coin was minted some time in the past, so that it can be accepted using the verification procedure from the time it was minted.
+
+
