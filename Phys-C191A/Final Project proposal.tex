@@ -1,0 +1,111 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FINAL PROJECT PROPOSAL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,10.5pt,twoside]{article}
+\hyphenpenalty=8000
+\textwidth=125mm
+\textheight=200mm
+\usepackage[top=3cm, bottom=3cm, inner=3cm, outer=3cm, includehead]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{Final Project Proposal}
+\fancyhead[LO]{Quantum Money and Inflation Simulation}
+\setlength{\headheight}{15pt}
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{Quantum Money and Inflation Control}} \\[6pt]
+\textbf{Final Project Proposal for PHYS C191A}\\[3pt]
+\textit{Juncheng Ding, Tian Ariyaratrangsee, Xiaoyang Zheng}\\[3pt]
+University of California, Berkeley – Fall 2025
+\end{center}
+
+\section*{1. Introduction}
+
+Following our first report and critique, this proposal focuses on the simulation and theoretical modeling of \textbf{quantum money inflation}. Previous studies identified that while the no-cloning theorem prevents counterfeiting, it does not inherently prevent the \textit{unlimited issuance} of valid quantum states (``quantum inflation''). The project aims to quantitatively demonstrate this inflation effect through simulation and propose a physically realizable method to limit it.
+
+The work builds on Wiesner’s \textit{Conjugate Coding} and Zhandry’s \textit{Quantum Lightning} frameworks, as well as the complexity analysis described by Aaronson’s \textit{The Complexity of Quantum States and Transformations}. By examining how the minting difficulty of quantum tokens scales with quantum computational power, we will simulate the inflationary behavior and test improved models for stability.
+
+\section*{2. Project Objectives and Structure}
+
+We divide the project into four main parts, with corresponding submilestones:
+
+\subsection*{Part 1: Demonstrating Unlimited Inflation}
+We will create a simple numerical model simulating the inflationary dynamics of quantum money issuance. The model will assume that the rate of successful minting scales inversely with computational difficulty \( D \), but exponentially with quantum computational speed \( Q \), approximated by
+\[
+R \propto \frac{Q}{D}.
+\]
+As \( Q \) grows exponentially, we expect inflation \( I \to \infty \) unless compensating mechanisms are applied. This simulation will serve as a quantitative justification for the inflation problem.
+
+\subsection*{Part 2: Model Design for Limiting Inflation}
+
+\subsubsection*{2.1 Existing Model Analysis:} 
+\vspace{-5pt}
+We will analyze the current Quantum Lightning framework and show, through simulation and mathematical reasoning, that it can exhibit unbounded inflation when the quantum circuit complexity of token generation decreases faster than verification cost.  
+
+\subsubsection*{2.2 Improved Model Proposal:} 
+\vspace{-5pt}
+We propose adding a \textit{complexity-based issuance control}, in which each minting operation consumes a quantized ``energy token’’ proportional to the Hilbert-space dimensionality of the generated state. This couples money creation to physical cost, ensuring bounded growth even with exponential hardware gains.
+
+\subsubsection*{2.3 Physical Feasibility:}
+\vspace{-5pt}
+ We will discuss whether the improved model could be implemented via quantum circuits using current architectures—e.g., through gate-count-dependent penalties or decoherence-aware token generation.
+
+\subsection*{Part 3: Testing the Improved Model}
+Using the same simulation environment, we will reintroduce the improved model and test:
+\begin{itemize}
+    \item Whether inflation stabilizes under increasing computational power.
+    \item Whether the currency retains scarcity and uniqueness.
+    \item Whether the protocol remains verifiable in polynomial time.
+\end{itemize}
+The simulation results will be analyzed for both theoretical safety and practical stability.
+
+\subsection*{Part 4: Conclusion}
+We will summarize our findings and discuss whether the inflation-limited model can form a bridge between theoretical and physical realizations of quantum currency, addressing both security and economic stability.
+
+\section*{3. Expected Outcomes}
+\begin{itemize}
+    \item A simulation demonstrating uncontrolled inflation in existing models.
+    \item A modified issuance model that stabilizes monetary growth.
+    \item Discussion of physical constraints linking computational complexity and currency supply.
+\end{itemize}
+
+\section*{4. Timeline and Sub-Milestones}
+
+\begin{tabular}{|p{25mm}|p{90mm}|}
+\hline
+\textbf{Date} & \textbf{Milestone / Deliverable} \\
+\hline
+Oct 30 & Submit final proposal; finalize simulation framework selection (Python / Qiskit). \\
+Nov 10 & Implement base inflation simulation (Part 1). Validate unlimited inflation behavior. \\
+Nov 17 & Analyze Quantum Lightning model, identify inflation variables (Part 2.1). \\
+Nov 24 & Implement and test improved model (Part 2.2, 2.3). \\
+Nov 30 & Perform comparative simulation of inflation-limited vs. inflation-free models (Part 3). \\
+Dec 5 & Complete final report (Part 4) and prepare poster visualization. \\
+Dec 9 & Poster presentation and final defense of model results. \\
+\hline
+\end{tabular}
+
+\section*{5. Division of Labor}
+
+\textbf{Xiaoyang Zheng:} Theoretical foundations and framework development; simulation of quantum algorithms and circuits; overall project structure and integration.
+
+\textbf{Tian Ariyaratrangsee:} Poster design and visualization; implementation and calculation of quantum algorithms and circuits; Qiskit circuit construction.
+
+\textbf{Juncheng Ding:} Simulation and calculation of inflation dynamics; theoretical analysis of economic models; mathematical modeling of supply evolution.
+
+\textit{Note:} All team members will contribute to report writing, debugging, and collaborative discussions throughout the project timeline.
+
+\section*{6. References}
+\begin{itemize}
+    \item Wiesner, S. “Conjugate Coding.” \textit{ACM SIGACT News}, 15(1), 78–88 (1983).
+    \item Zhandry, M. “Quantum Lightning Never Strikes the Same State Twice.” \textit{arXiv:1711.02276v3}, 2019.
+    \item Aaronson, S. \textit{The Complexity of Quantum States and Transformations: From Quantum Money to Black Holes.} Bellairs Institute Lectures (2016).
+    \item Nakamoto, S. “Bitcoin: A Peer-to-Peer Electronic Cash System.” (2008).
+\end{itemize}
+
+\end{document}

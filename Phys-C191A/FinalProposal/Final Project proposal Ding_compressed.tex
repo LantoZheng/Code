@@ -1,0 +1,202 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FINAL PROJECT PROPOSAL - COMPRESSED VERSION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,11pt,twoside]{article}
+\hyphenpenalty=8000
+\textwidth=130mm
+\textheight=220mm
+\usepackage[top=2cm, bottom=2cm, inner=2.5cm, outer=2.5cm, includehead]{geometry}
+\usepackage{fancyhdr}
+\usepackage{physics}
+\usepackage{amsmath,amssymb}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{Final Project Proposal}
+\fancyhead[LO]{Quantum Money Inflation Control}
+\setlength{\headheight}{15pt}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{Quantum Money and Inflation Control}} \\[4pt]
+\textbf{Final Project Proposal for PHYS C191A}\\[2pt]
+\textit{Juncheng Ding, Tian Ariyaratrangsee, Xiaoyang Zheng}\\[2pt]
+University of California, Berkeley – Fall 2025
+\end{center}
+
+\vspace{-8pt}
+\section*{1. Problem Statement}
+\vspace{-4pt}
+
+The quantum no-cloning theorem prevents copying quantum states but does \textit{not} prevent unlimited generation of \textit{new} valid quantum money states. As quantum computational power $Q(t)$ grows, the generation rate $R \propto Q/D$ leads to unbounded supply $M(t) \to \infty$—a \textbf{quantum inflation} problem identified by Zhandry (2017).
+
+\textbf{Physical Context:} Recent work (Coladangelo \& Sattath 2020) showed that coupling quantum states to classical information systems can theoretically control supply, but left open the question of \textit{physical implementation} using quantum resource constraints.
+
+\textbf{Our Approach:} We investigate whether \textbf{quantum computational resources}—measured by circuit complexity—can naturally limit state generation. Specifically, we: (1) model inflation dynamics using quantum circuit parameters; (2) design a Resource Token (RT) mechanism based on physical constraints (gate count, coherence time, ancilla qubits); (3) implement and benchmark this on NISQ hardware to demonstrate bounded $M(t) \to M_{\max}$.
+
+\vspace{-4pt}
+\section*{2. Technical Approach}
+\vspace{-6pt}
+
+\subsection*{2.1 Quantum Lightning Framework \& Inflation Dynamics}
+\vspace{-4pt}
+
+We study Zhandry's Quantum Lightning where each currency unit is a quantum state $\ket{\psi_i}$ in a superposition over polynomial-degree hash pre-images. Verification uses public hash $H$ with acceptance criterion $H(\ket{\psi_i}) < D$ (difficulty threshold).
+
+\textbf{Unbounded Case:} With fixed difficulty $D$ and growing quantum capability $Q(t) = Q_0 e^{\lambda t}$ (Moore's law for quantum), generation probability $P \sim Q/2^D$ yields exponential supply:
+\vspace{-6pt}
+\[
+\frac{dM}{dt} = \frac{Q_0 e^{\lambda t}}{2^D} \quad \Rightarrow \quad M(t) \sim e^{\lambda t}.
+\]
+\vspace{-8pt}
+
+This reproduces the inflation divergence noted in recent literature.
+
+\vspace{-4pt}
+\subsection*{2.2 Resource Token (RT) Mechanism — Quantum Complexity Constraints}
+\vspace{-4pt}
+
+\textbf{Principle:} Couple state generation to \textit{physical quantum resources}. For a bolt $\ket{\psi_y}$ requiring circuit of depth $L$ with $G$ gates on $m$ qubits:
+\vspace{-6pt}
+\[
+\text{RT}_{\text{cost}} = \alpha G + \beta L + \gamma m, \quad M_{\max} = \frac{R_{\text{total}}}{\langle \text{RT}_{\text{cost}} \rangle}.
+\]
+\vspace{-8pt}
+
+This enforces $\lim_{t \to \infty} M(t) = M_{\max} < \infty$ by depleting a finite resource pool.
+
+\textbf{Three Physical Implementations:}
+
+\textit{(A) Gate-Count Metric:} $\text{RT} = \alpha G + \beta L$ where $G$ counts all gates, $L$ is circuit depth. Tracks computational complexity; easily measured via Qiskit transpilation.
+
+\textit{(B) Decoherence-Limited:} $\text{RT} = \gamma \int_0^T \Gamma(t) \, dt$ where $\Gamma(t)$ is error rate. Models real hardware: longer circuits $\Rightarrow$ more decoherence $\Rightarrow$ higher cost. Physically motivated by $T_1, T_2$ times.
+
+\textit{(C) Ancilla Budget:} Finite pool of $N_{\text{ancilla}}$ auxiliary qubits; each generation consumes $a$ ancillas. Corresponds to NISQ hardware limits. Most realistic constraint for near-term implementation.
+
+\textbf{Quantum Protocol:}
+\vspace{-4pt}
+\begin{enumerate}
+    \item \textbf{Initialize:} Prepare seed state $\ket{\phi_0}$ and allocate RT budget.
+    \item \textbf{Generate:} Apply quantum circuit $U_{\text{mint}} = U_n \cdots U_1$ to create candidate $\ket{\psi_{\text{cand}}}$.
+    \item \textbf{Measure \& Verify:} Measure to get serial number $s$; apply Zhandry verification protocol checking $|\braket{\psi_{\text{cand}}|\psi_s}|^2 > 1 - \epsilon$.
+    \item \textbf{Consume RT:} Deduct $\text{RT}_{\text{actual}} = f(G, L, m)$ from available pool. Track gates via circuit analysis.
+    \item \textbf{Adjust Difficulty:} If $R_{\text{obs}} > R_{\text{target}}$, increase $D$ to compensate for quantum improvements.
+\end{enumerate}
+
+\textbf{Security Analysis:} Under multi-collision resistance assumptions ($(2k+2)$-NAMCR for degree-2 polynomials), RT depletion preserves quantum lightning security. Adversaries cannot: (1) clone states (no-cloning theorem); (2) generate multi-collisions without affine relations (NAMCR); (3) bypass RT counting (enforced by circuit measurement).
+
+\vspace{-4pt}
+\subsection*{2.3 NISQ Implementation Strategy}
+\vspace{-4pt}
+
+\textbf{Miniaturized Quantum Lightning:} Use toy parameters $(n=3, k=2, m=12)$ requiring $\sim$36 qubits—accessible on IBM/IonQ backends. Degree-2 polynomial hash over $\mathbb{F}_2$, implementing Zhandry's verification via Hadamard transforms and linear algebra.
+
+\textbf{Circuit Design:}
+\vspace{-4pt}
+\begin{itemize}
+    \item \textit{Generation Circuit:} Random seed $\to$ polynomial evaluation $\to$ superposition of pre-images via Grover-like amplitude amplification.
+    \item \textit{Verification Circuit:} Measure hash $y$; apply Hadamard to extract derivatives; solve linear system to confirm superposition structure.
+    \item \textit{RT Tracking:} Qiskit transpiler outputs gate counts $(G, L)$; noise model estimates $\Gamma(t)$ from hardware calibration data.
+\end{itemize}
+
+\textbf{Comparative Study:} Implement both unbounded (fixed $D$) and RT-bounded (adaptive $R_{\text{avail}}$) versions. Run 1000 generation attempts; measure:
+\vspace{-4pt}
+\begin{itemize}
+    \item Supply evolution $M(t)$ vs. quantum circuit execution count
+    \item RT depletion rate under different $(G, L, m)$ costs
+    \item Verification success probability vs. circuit fidelity
+\end{itemize}
+
+\vspace{-4pt}
+\subsection*{2.4 Validation Framework}
+\vspace{-4pt}
+
+\textbf{Mathematical Model:} Derive coupled differential equations:
+\vspace{-6pt}
+\[
+\frac{dM}{dt} = R(Q, D, R_{\text{avail}}), \quad \frac{dR_{\text{avail}}}{dt} = -\langle \text{RT}_{\text{cost}} \rangle \cdot R,
+\]
+\vspace{-8pt}
+where $R = \min\{Q/2^D, R_{\text{avail}}/\text{RT}_{\text{cost}}\}$. Solve numerically; show equilibrium $M_{\infty} = R_{\text{total}}/\langle\text{RT}\rangle$ is stable.
+
+\textbf{Qiskit Simulation:} Compare quantum growth scenarios $\lambda \in \{0.1, 0.5, 1.0\}$ (annual doubling to monthly) across RT budgets $R_{\text{total}} \in \{10^3, 10^5\}$. Implement all three RT variants (gate, decoherence, ancilla) with realistic noise models from IBM hardware.
+
+\textbf{Physics Metrics:}
+\vspace{-4pt}
+\begin{itemize}
+    \item \textbf{Inflation reduction:} $I_{\text{RT}} / I_{\text{unbounded}} < 0.01$ (target: 99\% suppression)
+    \item \textbf{Circuit complexity:} Verify $O(n^3)$ gate scaling via log-log regression
+    \item \textbf{Fidelity dependence:} Measure success rate vs. hardware error rates $(10^{-2}, 10^{-3}, 10^{-4})$
+    \item \textbf{Resource efficiency:} Compare RT costs across three implementations; identify optimal for NISQ
+\end{itemize}
+
+\vspace{-4pt}
+\subsection*{2.5 Expected Deliverables}
+\vspace{-4pt}
+
+(1) Analytical solutions for $M(t)$ in all three regimes with stability analysis; (2) Python/Qiskit codebase implementing three RT variants + Solidity smart contract for hybrid model; (3) Comparative plots (inflation curves, cost-security trade-offs, sync frequency optimization); (4) Security analysis identifying attack vectors in sync gaps; (5) \textbf{Design recommendations:} When to use pure RT vs. hybrid based on network size, transaction volume, and trust assumptions.
+
+\vspace{-4pt}
+\section*{3. Expected Outcomes \& Contributions}
+\vspace{-4pt}
+
+\begin{itemize}
+    \item \textbf{Baseline validation:} Simulation demonstrating uncontrolled $M(t) \sim e^{\beta t}$ inflation
+    \item \textbf{Literature extension:} First comparative study of pure QL (2017) vs. blockchain-hybrid (2020) vs. RT-bounded (novel) approaches
+    \item \textbf{Practical implementation:} NISQ-compatible Qiskit circuits + Ethereum testnet smart contracts bridging theory to practice
+    \item \textbf{Design space exploration:} Quantitative analysis of decentralization-efficiency trade-offs; optimal sync frequency derivation
+    \item \textbf{Open problems:} Identification of remaining challenges (quantum network latency, cross-system interoperability, regulatory compatibility)
+\end{itemize}
+
+\vspace{-4pt}
+\section*{4. Timeline}
+\vspace{-4pt}
+
+\begin{tabular}{|l|p{9.5cm}|}
+\hline
+\textbf{Date} & \textbf{Milestone} \\
+\hline
+Oct 30 & Finalize proposal; select Python/Qiskit + Solidity framework \\
+Nov 10 & Implement baseline \& blockchain models; validate divergence \\
+Nov 17 & Analyze Quantum Lightning \& Coladangelo-Sattath hybrid; comparative study \\
+Nov 24 & Implement three RT protocols + hybrid sync mechanism \\
+Nov 30 & Comparative simulation across all models; generate metrics \\
+Dec 5 & Complete report with trade-off analysis; prepare poster \\
+Dec 9 & Poster presentation \& defense \\
+\hline
+\end{tabular}
+
+\vspace{-4pt}
+\section*{5. Division of Labor}
+\vspace{-4pt}
+
+\textbf{Juncheng Ding:} Mathematical modeling of all three systems, analytical derivations, security proofs for hybrid model. \\
+\textbf{Tian Ariyaratrangsee:} Qiskit circuit implementation, RT protocol coding, Solidity smart contract development, performance benchmarking. \\
+\textbf{Xiaoyang Zheng:} Simulation framework, comparative analysis, trade-off optimization, visualization, report writing.
+
+\vspace{-4pt}
+\section*{6. Evaluation Criteria \& Risk Mitigation}
+\vspace{-4pt}
+
+\textbf{Success Criteria:} (1) $I_{\text{reduction}} > 99\%$ in both blockchain and RT models; (2) $M_{\max}$ achieved within 100 minting cycles; (3) RT-hybrid shows $<5\%$ security degradation vs. full blockchain with $>90\%$ cost reduction; (4) No new exploits under adversarial testing.
+
+\textbf{Risks:} Qiskit circuit too large (mitigation: use $n=2$ toy model); Smart contract exceeds gas limit (mitigation: off-chain computation with on-chain verification); Time constraints (priority: Models 1-3 core comparison; hybrid optimization as stretch goal).
+
+\vspace{-4pt}
+\section*{7. References}
+\vspace{-4pt}
+
+\begin{itemize}
+    \item Wiesner, S. "Conjugate Coding." \textit{ACM SIGACT News}, 15(1), 78–88 (1983).
+    \item Zhandry, M. "Quantum Lightning Never Strikes the Same State Twice." \textit{EUROCRYPT 2019}, arXiv:1711.02276v3.
+    \item \textbf{Coladangelo, A. \& Sattath, O. "A Quantum Money Solution to the Blockchain Scalability Problem." \textit{Quantum}, 4, 297 (2020).}
+    \item Aaronson, S. \textit{The Complexity of Quantum States and Transformations.} Bellairs Lectures (2016).
+    \item Nakamoto, S. "Bitcoin: A Peer-to-Peer Electronic Cash System." (2008).
+    \item \textbf{Hull, I., Sattath, O., et al. "Quantum Technology for Economists." \textit{SSRN} (2020).}
+\end{itemize}
+
+\end{document}
