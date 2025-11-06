@@ -1,0 +1,163 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{booktabs} % For tables
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{Homework 8 Solutions (Concise)}
+\author{C191A: Introduction to Quantum Computing, Fall 2025 \\ Xiaoyang Zheng}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\setlist{nosep} % Reduce space in lists
+
+\section*{1 The Repetition Code and Longitudinal Relaxation}
+
+\subsection*{1.1}
+We know that $p(t) = 1 - e^{-\gamma t} \approx \gamma t$ when $t$ is small.
+If we want $p(t) = 0.01$, then we get $\gamma t = 0.01$, so $t = 0.01 / \gamma$, which means $t = 0.01 T_1$.
+
+\subsection*{1.2}
+The error probability is $P_{\text{err}} = P(\text{at least 1 flip}) = 1 - P(\text{no flips}) = 1 - (1 - p(t))^3$.
+Because $p(t) \approx \gamma t$, we can write $P_{\text{err}} \approx 1 - (1 - \gamma t)^3 \approx 1 - (1 - 3\gamma t) = 3\gamma t$.
+Setting $P_{\text{err}} = 0.01$ gives us $3\gamma t = 0.01$, so $t = \frac{0.01}{3\gamma} = \frac{0.01}{3} T_1$.
+
+\subsection*{1.3}
+The logical error probability is $P_L = P(2 \text{ flips}) + P(3 \text{ flips}) = \binom{3}{2} p^2(1-p) + p^3$, where we let $p = p(t)$.
+Using the approximation $p \approx \gamma t$, we get $P_L \approx 3(\gamma t)^2(1-\gamma t) + (\gamma t)^3 \approx 3(\gamma t)^2$.
+If we set $P_L = 0.01$, then $3(\gamma t)^2 = 0.01$, which gives $\gamma t = \sqrt{0.01/3} = 0.1/\sqrt{3}$.
+Therefore, $t = \frac{0.1}{\sqrt{3}\gamma} \approx 0.0577 T_1$.
+
+\subsection*{1.4}
+We need to set $p = P_L$, which means $p = 3p^2 - 2p^3$.
+If $p \neq 0$, we can divide both sides by $p$ to get $1 = 3p - 2p^2$, or $2p^2 - 3p + 1 = 0$.
+This factors as $(2p-1)(p-1) = 0$, so $p=1$ (trivial solution) or $p=1/2$.
+Using $p(t) = 1/2$, we have $1 - e^{-\gamma t} = 1/2$, which gives $e^{-\gamma t} = 1/2$.
+Taking the natural logarithm: $-\gamma t = -\ln(2)$, so $t = \frac{\ln(2)}{\gamma} = \ln(2) T_1$.
+
+\subsection*{1.5}
+For the physical qubit, the no-flip probability is $P_S(t) = e^{-\gamma t}$. By definition, $P_S(T_1) = 1/e$.
+For the logical qubit, the no-flip probability is $P_L(t) = 1 - (3p^2 - 2p^3)$ where $p = 1 - e^{-\gamma t}$.
+When $t$ is small:
+$P_S(t) \approx 1 - \gamma t$ (decays proportional to $t$).
+$P_L(t) \approx 1 - 3(\gamma t)^2$ (decays proportional to $t^2$).
+Since $3(\gamma t)^2 \ll \gamma t$ for small $t$, we can see that $P_L(t)$ decays much more slowly than $P_S(t)$.
+This means that $T_{1,L}$ (the time when $P_L(t)$ reaches $1/e$) is \textbf{longer} than $T_1$.
+
+\section*{2 Pauli Commutation Relations}
+We use this rule: If there's an even number of anti-commuting (AC) pairs, then the operators commute. If there's an odd number of AC pairs, they anti-commute.
+
+\subsection*{2.1 $X_1, Y_1$}
+On qubit 1, we have AC. Total: 1 (Odd), so they \textbf{Anti-commute}.
+
+\subsection*{2.2 $Z_1 Z_2, Y_1 Y_2$}
+On Q1 we have AC, on Q2 we have AC. Total: 2 (Even), so they \textbf{Commute}.
+
+\subsection*{2.3 $Z_1 X_3 Y_4, Y_1 Z_2 Y_4$}
+Q1 (AC), Q2 (C), Q3 (C), Q4 (C). Total: 1 (Odd), so they \textbf{Anti-commute}.
+
+\subsection*{2.4 $Z_1 \dots Y_8, X_1 \dots X_8$}
+Q1(AC), Q2(C), Q3(AC), Q4(C), Q5(C), Q6(C), Q7(AC), Q8(AC).
+Total: 4 (Even), so they \textbf{Commute}.
+
+\section*{3 9-qubit Shor code}
+
+\subsection*{3.1}
+The distance is $d = \min(\text{weight}(L))$ for any logical operator $L$.
+Let's consider $Z_L = Z_1 Z_4 Z_7$.
+We need to check if $[Z_L, S_i] = 0$ for all stabilizers $S_i$:
+\begin{itemize}
+    \item $[Z_L, Z\text{-stabs}] = 0$ (all $Z$ operators commute).
+    \item $[Z_L, S_7 = X_1 \dots X_6] = 0$ (AC on $X_1, X_4$ means 2 ACs, so they commute).
+    \item $[Z_L, S_8 = X_4 \dots X_9] = 0$ (AC on $X_4, X_7$ means 2 ACs, so they commute).
+\end{itemize}
+Yes, so $Z_L$ is a logical operator. Since $\text{weight}(Z_L) = 3$, we have $d \le 3$.
+The code can correct $t=1$ error, which means $d \ge 2t+1 = 3$.
+Therefore, $d=3$.
+Also, $Z_1 Z_4 Z_7 |0\rangle_L \to C \cdot (|0\rangle_a-|1\rangle_a)(|0\rangle_b-|1\rangle_b)(|0\rangle_c-|1\rangle_c) = |1\rangle_L$.
+
+\subsection*{3.2}
+The syndrome has $s_i = 1$ if the error anti-commutes with $S_i$. The order is $(S_1 \dots S_6, S_7, S_8)$.
+The errors $Z_1, Z_2, Z_3$ all commute with $S_1 \dots S_6$ (because they're all Z-type).
+\begin{itemize}
+    \item $Z_1$: anti-commutes with $S_7$ (on $X_1$), but commutes with $S_8$.
+    \item $Z_2$: anti-commutes with $S_7$ (on $X_2$), but commutes with $S_8$.
+    \item $Z_3$: anti-commutes with $S_7$ (on $X_3$), but commutes with $S_8$.
+\end{itemize}
+So all three errors $Z_1, Z_2, Z_3$ give the same syndrome: \textbf{00000010}.
+
+\subsection*{3.3}
+\textbf{Effect:} The errors $Z_1, Z_2, Z_3$ all act on block 1, which is $(|000\rangle + |111\rangle)$. Each acts as $Z$, mapping it to $(|000\rangle - |111\rangle)$. So they have the same effect on $|\psi_L\rangle$.
+\textbf{Correction:} The syndrome `00000010' tells us to apply correction $C=Z_1$.
+\begin{itemize}
+    \item If the error is $E=Z_1$, then $C E = Z_1 Z_1 = I$. (This corrects the error)
+    \item If the error is $E=Z_2$, then $C E = Z_1 Z_2 = S_1$. (This is correct because $S_1$ is a stabilizer)
+    \item If the error is $E=Z_3$, then $C E = Z_1 Z_3 = (Z_1 Z_2)(Z_2 Z_3) = S_1 S_2$. (This is correct because $S_1 S_2$ is also a stabilizer)
+\end{itemize}
+This phenomenon is called "degeneracy": multiple different errors can map to the same syndrome.
+
+\section*{4 7-qubit Steane code}
+The syndrome order is: $(S_x^{(1)}, S_x^{(2)}, S_x^{(3)}, S_z^{(1)}, S_z^{(2)}, S_z^{(3)})$.
+
+\subsection*{4.1 Syndromes for $Z_i$}
+For $Z_i$ errors, we have $s_z^{(k)} = 0$. We need to check if they anti-commute with $S_x^{(j)}$.
+\begin{center}
+\begin{tabular}{c|c} \toprule Error & Syndrome \\ \midrule
+$Z_1$ & \textbf{100000} \\ $Z_2$ & \textbf{110000} \\ $Z_3$ & \textbf{111000} \\
+$Z_4$ & \textbf{101000} \\ $Z_5$ & \textbf{010000} \\ $Z_6$ & \textbf{011000} \\
+$Z_7$ & \textbf{001000} \\ \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{4.2 Syndromes for $X_i$}
+For $X_i$ errors, we have $s_x^{(j)} = 0$. We need to check if they anti-commute with $S_z^{(k)}$.
+\begin{center}
+\begin{tabular}{c|c} \toprule Error & Syndrome \\ \midrule
+$X_1$ & \textbf{000100} \\ $X_2$ & \textbf{000110} \\ $X_3$ & \textbf{000111} \\
+$X_4$ & \textbf{000101} \\ $X_5$ & \textbf{000010} \\ $X_6$ & \textbf{000011} \\
+$X_7$ & \textbf{000001} \\ \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{4.3}
+Let's define $S = \{ Z_i^a X_j^b \mid a,b \in \{0,1\}, i,j \in [1,7] \}$.
+\begin{itemize}
+    \item When $a=0, b=0$, we get $I$, which is 1 operator.
+    \item When $a=1, b=0$, we get $Z_i$, which gives us 7 operators.
+    \item When $a=0, b=1$, we get $X_j$, which gives us 7 operators.
+    \item When $a=1, b=1$, we get $Z_i X_j$, which gives us $7 \times 7 = 49$ operators.
+\end{itemize}
+The total number is $1 + 7 + 7 + 49 = \textbf{64}$.
+
+\subsection*{4.4}
+We have $n=7$ qubits and $k=1$ logical qubit, which means $n-k = 6$ stabilizers.
+The number of syndromes is $2^{n-k} = 2^6 = \textbf{64}$.
+
+\subsection*{4.5}
+I think the question has a typo. The set $Z_i^a X_j^b$ has 64 operators, which is not the same as the correctable set (must be $\le 64$).
+Let me assume the question meant single-qubit errors: $E_{1Q} = \{ Z_i^a X_i^b \mid a,b \in \{0,1\}, i \in [1,7] \}$.
+This set is just $\{ I, X_i, Z_i, Y_i \}$ and has $1 + 7 + 7 + 7 = 22$ errors.
+The Steane code is $[[7, 1, 3]]$, which means $d=3$ and $t=1$. So it can correct all single-qubit errors.
+\begin{itemize}
+    \item $S(I) = \text{`000000'}$
+    \item $S(X_i)$ gives 7 unique non-zero syndromes (from part 4.2)
+    \item $S(Z_i)$ gives 7 unique non-zero syndromes (from part 4.1)
+    \item $S(Y_i) = S(X_i) + S(Z_i)$ gives 7 unique non-zero syndromes (for example, $S(Y_1) = \text{`100100'}$)
+\end{itemize}
+All 22 errors in $E_{1Q}$ map to 22 unique syndromes.
+Because the code is non-degenerate, this one-to-one mapping means all of them can be corrected.
+"No more" means we cannot correct all weight-2 errors.
+For example, $S(X_1 X_5) = S(X_1) + S(X_5) = \text{`000100'} + \text{`000010'} = \text{`000110'}$.
+But this is the same as $S(X_2)$. The correction algorithm will see syndrome `000110' and apply $X_2$.
+If the actual error was $X_1 X_5$, then applying $X_2$ gives $X_2 X_1 X_5$, which is a logical error. So the correction fails.
+
+\vspace{1em}
+\noindent\textit{Note: This document was laid out by Gemini 2.5 based on hand-written homework.}
+
+\end{document}

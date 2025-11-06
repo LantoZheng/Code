@@ -1,0 +1,136 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Zee QFT Chapter VI.8 Problems 1 and 2}
+\author{Xiaoyang Zheng}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem VI.8.1}
+
+\textbf{Problem:} Show that the solution of $dg/dt = -bg^3 + \cdots$ is given by
+$$\frac{1}{\alpha(t)} = \frac{1}{\alpha(0)} + 8\pi b t + \cdots$$
+where we defined $\alpha(t) = g(t)^2/4\pi$.
+
+\vspace{1em}
+
+\textbf{Solution:}
+
+Given $\alpha(t) = g^2/4\pi$, differentiate with respect to $t$:
+\begin{equation}
+\frac{d\alpha}{dt} = \frac{g}{2\pi}\frac{dg}{dt} = \frac{g}{2\pi}(-bg^3) = -\frac{bg^4}{2\pi}
+\end{equation}
+
+Since $g^4 = (4\pi\alpha)^2 = 16\pi^2\alpha^2$:
+\begin{equation}
+\frac{d\alpha}{dt} = -8\pi b\alpha^2
+\end{equation}
+
+Separating variables and integrating:
+\begin{equation}
+\int_{\alpha(0)}^{\alpha(t)} \frac{d\alpha'}{\alpha'^2} = -8\pi b \int_0^t dt' \quad \Rightarrow \quad -\frac{1}{\alpha(t)} + \frac{1}{\alpha(0)} = -8\pi b t
+\end{equation}
+
+Therefore:
+\begin{equation}
+\boxed{\frac{1}{\alpha(t)} = \frac{1}{\alpha(0)} + 8\pi b t + \cdots}
+\end{equation}
+
+\textbf{Interpretation:} For $b > 0$, $\alpha$ decreases with $t$ (\textbf{asymptotic freedom}); for $b < 0$, $\alpha$ grows with $t$.
+
+\newpage
+
+\section*{Problem VI.8.2}
+
+\textbf{Problem:} Study the threshold effect when the renormalization scale $\mu$ crosses a particle mass $m$. In the crude approximation, particles with $m < \mu$ contribute to RG flow (set $m=0$) while those with $m > \mu$ decouple (set $m=\infty$). Investigate how particles actually decouple smoothly as $\mu$ decreases below $m$.
+
+\vspace{1em}
+
+\textbf{Solution (QED):}
+
+\subsection*{Beta Function with Threshold Effects}
+
+For QED with $N_f$ fermions of mass $m_i$, the beta function is:
+\begin{equation}
+\beta(e) = \frac{e^3}{12\pi^2}\sum_{i=1}^{N_f} f(m_i/\mu)
+\end{equation}
+
+The threshold function $f(r)$ with $r = m/\mu$ satisfies:
+\begin{equation}
+f(r) \to \begin{cases}
+1 & r \to 0 \quad (\mu \gg m) \\
+0 & r \to \infty \quad (\mu \ll m)
+\end{cases}
+\end{equation}
+
+\subsection*{Explicit Form}
+
+From vacuum polarization calculations:
+\begin{equation}
+f(r) \approx \begin{cases}
+1 - \frac{10}{3}r^2 + \mathcal{O}(r^4) & r \ll 1 \\
+\text{smooth drop to 0} & r \sim \frac{1}{2} \\
+0 & r > \frac{1}{2}
+\end{cases}
+\end{equation}
+
+\subsection*{Physical Regimes}
+
+\begin{itemize}
+\item \textbf{High energy} ($\mu \gg m$): Fermion effectively massless, full contribution to vacuum polarization, $f \approx 1$.
+
+\item \textbf{Threshold} ($\mu \sim 2m$): Pair production becomes kinematically suppressed, smooth transition.
+
+\item \textbf{Low energy} ($\mu \ll m$): Fermion decouples, virtual pairs cannot be produced, $f \approx 0$ (\textbf{decoupling theorem}).
+\end{itemize}
+
+\subsection*{Crude vs. Smooth Approximation}
+
+\textbf{Crude:} $f(r) = \Theta(1/r - 1)$ (step function at $\mu = m$)
+
+\textbf{Reality:} Smooth interpolation with characteristic width $\Delta\mu \sim m$ around threshold.
+
+\subsection*{Running Coupling}
+
+For QED with leptons ($m_e, m_\mu, m_\tau$):
+\begin{equation}
+\frac{d\alpha}{d\ln\mu} = \frac{\alpha^2}{3\pi}\sum_{\ell=e,\mu,\tau} f(m_\ell/\mu)
+\end{equation}
+
+In crude approximation between thresholds:
+\begin{align}
+\mu < m_e: &\quad \beta = 0 \\
+m_e < \mu < m_\mu: &\quad \beta = \frac{\alpha^2}{3\pi} \\
+m_\mu < \mu < m_\tau: &\quad \beta = \frac{2\alpha^2}{3\pi} \\
+\mu > m_\tau: &\quad \beta = \frac{\alpha^2}{\pi}
+\end{align}
+
+\subsection*{QCD Application}
+
+Critical for strong coupling $\alpha_s(\mu)$. The number of active quark flavors changes at mass thresholds:
+\begin{equation}
+\beta_{\text{QCD}} = -\frac{\alpha_s^2}{2\pi}\left(\frac{33-2N_f}{12}\right)
+\end{equation}
+
+$N_f$ changes: 6 flavors at $\mu > m_t$, down to 3 flavors ($u,d,s$) at $\mu \sim 1$ GeV. Each threshold modifies the running.
+
+\subsection*{Matching Condition}
+
+At threshold $\mu = m_i$, continuity requires:
+\begin{equation}
+\alpha^{(N_f)}(m_i^-) = \alpha^{(N_f-1)}(m_i^+) + \mathcal{O}(\alpha^2)
+\end{equation}
+
+Higher-order corrections come from threshold loop diagrams.
+
+\vspace{1em}
+
+
+\end{document}
