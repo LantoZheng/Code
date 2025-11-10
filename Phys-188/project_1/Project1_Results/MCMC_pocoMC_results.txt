@@ -1,0 +1,26 @@
+================================================================================
+MARKOV CHAIN MONTE CARLO (pocoMC) RESULTS
+================================================================================
+
+Log Evidence: -24.6842 +/- 0.0685
+
+MCMC Parameter Estimates (weighted mean):
+--------------------------------------------------------------------------------
+$\log M_{min}$                           = 12.23781 +/- 0.17944
+$\sigma_{\log M}$                        = 0.72371 +/- 0.25651
+$\log M_0$                               = 11.44399 +/- 0.91073
+$\log M_1$                               = 13.31556 +/- 0.09062
+$\alpha$                                 = 1.08730 +/- 0.06721
+$A_c$                                    = 0.78292 +/- 0.20342
+$A_s$                                    = 0.00528 +/- 0.26000
+
+
+Comparison with MLE:
+--------------------------------------------------------------------------------
+$\log M_{min}$                           : MLE is 0.45 sigma from MCMC mean
+$\sigma_{\log M}$                        : MLE is 0.22 sigma from MCMC mean
+$\log M_0$                               : MLE is 0.81 sigma from MCMC mean
+$\log M_1$                               : MLE is 0.53 sigma from MCMC mean
+$\alpha$                                 : MLE is 0.40 sigma from MCMC mean
+$A_c$                                    : MLE is 1.07 sigma from MCMC mean
+$A_s$                                    : MLE is 0.26 sigma from MCMC mean

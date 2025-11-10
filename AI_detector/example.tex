@@ -1,0 +1,45 @@
+% 示例 LaTeX 文档用于测试 AI 检测器
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{AI Content Detection Example}
+\author{Test Author}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+This is a sample document to demonstrate the AI content detection system. 
+The tool analyzes each word and calculates its perplexity based on the preceding context.
+
+\section{Methodology}
+
+The detection algorithm works by computing the likelihood of each token given the previous tokens.
+Lower perplexity indicates higher predictability, which often correlates with AI-generated content.
+
+\subsection{Technical Details}
+
+We use the OpenAI API to estimate token probabilities. The formula for perplexity is:
+
+\[
+\text{Perplexity} = \frac{1}{P(\text{token}|\text{context})}
+\]
+
+where $P(\text{token}|\text{context})$ represents the conditional probability.
+
+\section{Results}
+
+The system successfully identifies patterns that are characteristic of language model outputs.
+Color-coded highlighting makes it easy to visualize which portions may have been AI-generated.
+
+\section{Conclusion}
+
+This tool provides a useful heuristic for detecting AI-generated text in academic documents.
+However, it should be used as one of several indicators rather than definitive proof.
+
+\end{document}
