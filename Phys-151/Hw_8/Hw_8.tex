@@ -1,0 +1,148 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{slashed}
+\geometry{margin=1in}
+
+\title{Zee QFT Chapter II.1 Problems}
+\author{Xiaoyang Zheng}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem II.1.1}
+
+\textbf{Problem:} Show that the bilinears $\bar{\psi}\psi$, $\bar{\psi}\gamma^\mu\psi$, $\bar{\psi}\sigma^{\mu\nu}\psi$, $\bar{\psi}\gamma^\mu\gamma^5\psi$, and $\bar{\psi}\gamma^5\psi$ transform as scalar, vector, tensor, axial vector, and pseudoscalar respectively.
+
+\vspace{1em}
+
+\textbf{Solution:}
+
+Under Lorentz: $\psi \to (1 - \frac{i}{4}\omega_{\rho\sigma}\sigma^{\rho\sigma})\psi$, $\bar{\psi} \to \bar{\psi}(1 + \frac{i}{4}\omega_{\rho\sigma}\sigma^{\rho\sigma})$ where $\sigma^{\mu\nu} = \frac{i}{2}[\gamma^\mu, \gamma^\nu]$.
+
+Under parity: $\psi \to \gamma^0\psi$, $\bar{\psi} \to \bar{\psi}\gamma^0$.
+
+\subsection*{1. Scalar: $\bar{\psi}\psi$}
+
+Lorentz invariant to first order. Under parity: $\bar{\psi}\psi \to \bar{\psi}\gamma^0\gamma^0\psi = \bar{\psi}\psi$. ✓
+
+\subsection*{2. Vector: $\bar{\psi}\gamma^\mu\psi$}
+
+Using $[\sigma^{\rho\sigma}, \gamma^\mu] = 2i(g^{\rho\mu}\gamma^\sigma - g^{\sigma\mu}\gamma^\rho)$, transforms as $\bar{\psi}\gamma^\mu\psi \to \Lambda^\mu_{\phantom{\mu}\nu}\bar{\psi}\gamma^\nu\psi$ under Lorentz.
+
+Under parity: $\gamma^0\gamma^i\gamma^0 = -\gamma^i$ gives $\bar{\psi}\gamma^0\psi \to +\bar{\psi}\gamma^0\psi$ and $\bar{\psi}\gamma^i\psi \to -\bar{\psi}\gamma^i\psi$. ✓
+
+\subsection*{3. Tensor: $\bar{\psi}\sigma^{\mu\nu}\psi$}
+
+Since $\sigma^{\mu\nu}$ generates Lorentz transformations:
+\begin{equation}
+\bar{\psi}\sigma^{\mu\nu}\psi \to \Lambda^\mu_{\phantom{\mu}\rho}\Lambda^\nu_{\phantom{\nu}\sigma}\bar{\psi}\sigma^{\rho\sigma}\psi
+\end{equation}
+Transforms as antisymmetric rank-2 tensor. ✓
+
+\subsection*{4. Axial Vector: $\bar{\psi}\gamma^\mu\gamma^5\psi$}
+
+Since $[\sigma^{\rho\sigma}, \gamma^5] = 0$: $\bar{\psi}\gamma^\mu\gamma^5\psi \to \Lambda^\mu_{\phantom{\mu}\nu}\bar{\psi}\gamma^\nu\gamma^5\psi$ under Lorentz.
+
+Using $\gamma^0\gamma^5\gamma^0 = -\gamma^5$: under parity $\bar{\psi}\gamma^0\gamma^5\psi \to -\bar{\psi}\gamma^0\gamma^5\psi$ and $\bar{\psi}\gamma^i\gamma^5\psi \to +\bar{\psi}\gamma^i\gamma^5\psi$. This is a pseudovector. ✓
+
+\subsection*{5. Pseudoscalar: $\bar{\psi}\gamma^5\psi$}
+
+Lorentz invariant. Under parity: $\bar{\psi}\gamma^5\psi \to \bar{\psi}\gamma^0\gamma^5\gamma^0\psi = -\bar{\psi}\gamma^5\psi$. ✓
+
+\newpage
+
+\section*{Problem II.1.6}
+
+\textbf{Problem:} Solve the massless Dirac equation.
+
+\vspace{1em}
+
+\textbf{Solution:}
+
+The massless Dirac equation $i\slashed{\partial}\psi = 0$ becomes for plane waves:
+\begin{equation}
+\slashed{p}\,u(p) = 0
+\end{equation}
+
+In the Weyl basis with $\psi = \begin{pmatrix} \psi_L \\ \psi_R \end{pmatrix}$ and $\gamma^\mu = \begin{pmatrix} 0 & \sigma^\mu \\ \bar{\sigma}^\mu & 0 \end{pmatrix}$, where $\sigma^\mu = (1, \vec{\sigma})$ and $\bar{\sigma}^\mu = (1, -\vec{\sigma})$, the equation decouples:
+\begin{align}
+\bar{\sigma}^\mu \partial_\mu \psi_R &= 0 \\
+\sigma^\mu \partial_\mu \psi_L &= 0
+\end{align}
+
+Left and right-handed Weyl fermions are independent when $m=0$. For momentum along $z$-axis with $E = |\vec{p}|$, the helicity eigenstates are:
+\begin{equation}
+u_R = \sqrt{E}\begin{pmatrix} 0 \\ 0 \\ 1 \\ 0 \end{pmatrix} \text{ (right-handed)}, \quad u_L = \sqrt{E}\begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix} \text{ (left-handed)}
+\end{equation}
+
+For massless fermions, helicity equals chirality and is conserved.
+
+\newpage
+
+\section*{Problem II.1.11}
+
+\textbf{Problem:} Work out the Dirac equation in (1+1)-dimensional spacetime.
+
+\vspace{1em}
+
+\textbf{Solution:}
+
+Need two $\gamma$ matrices satisfying $\{\gamma^\mu, \gamma^\nu\} = 2g^{\mu\nu}$ with $g^{\mu\nu} = \text{diag}(1, -1)$. Use Pauli matrices:
+\begin{equation}
+\gamma^0 = \sigma^1 = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad \gamma^1 = i\sigma^2 = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}
+\end{equation}
+
+The Dirac equation $(i\gamma^\mu\partial_\mu - m)\psi = 0$ gives for $\psi = \begin{pmatrix} \psi_1 \\ \psi_2 \end{pmatrix}$:
+\begin{align}
+i\partial_t\psi_2 + i\partial_x\psi_2 &= m\psi_1 \\
+i\partial_t\psi_1 - i\partial_x\psi_1 &= m\psi_2
+\end{align}
+
+In light-cone coordinates $x^\pm = t \pm x$ with $\partial_\pm = \partial_t \pm \partial_x$:
+\begin{equation}
+i\partial_+\psi_2 = \frac{m}{2}\psi_1, \quad i\partial_-\psi_1 = \frac{m}{2}\psi_2
+\end{equation}
+
+For $m=0$, the components decouple: $\psi_1 = \psi_1(x^+)$ (right-mover), $\psi_2 = \psi_2(x^-)$ (left-mover). In (1+1)D, the two components represent chirality, not spin.
+
+\newpage
+
+\section*{Problem II.1.12}
+
+\textbf{Problem:} Work out the Dirac equation in (2+1)-dimensional spacetime. Show that the mass term violates parity and time reversal.
+
+\vspace{1em}
+
+\textbf{Solution:}
+
+Use three Pauli matrices for $\gamma$ matrices satisfying $\{\gamma^\mu, \gamma^\nu\} = 2g^{\mu\nu}$ with $g^{\mu\nu} = \text{diag}(1, -1, -1)$:
+\begin{equation}
+\gamma^0 = \sigma^3 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \quad \gamma^1 = i\sigma^1 = \begin{pmatrix} 0 & i \\ i & 0 \end{pmatrix}, \quad \gamma^2 = i\sigma^2 = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}
+\end{equation}
+
+The Dirac equation $(i\gamma^\mu\partial_\mu - m)\psi = 0$ gives for $\psi = \begin{pmatrix} \psi_1 \\ \psi_2 \end{pmatrix}$:
+\begin{align}
+i\partial_t\psi_1 - \partial_x\psi_2 + i\partial_y\psi_2 &= m\psi_1 \\
+-i\partial_t\psi_2 - \partial_x\psi_1 - i\partial_y\psi_1 &= m\psi_2
+\end{align}
+
+\subsection*{Parity and Time Reversal Violation}
+
+The mass term is $m\bar{\psi}\psi = m\psi^\dagger\gamma^0\psi$. With $\gamma^0 = \sigma^3$:
+\begin{equation}
+m\bar{\psi}\psi = m(|\psi_1|^2 - |\psi_2|^2)
+\end{equation}
+
+This is a Chern-Simons-type topological mass. Under parity $(t,x,y) \to (t,-x,y)$ with $\psi \to P\psi$ where $P = \gamma^0$, we verify $P\gamma^1 P^{-1} = -\gamma^1$ but the two spinor components transform oppositely. The mass term changes sign:
+\begin{equation}
+m\bar{\psi}\psi \to -m\bar{\psi}\psi
+\end{equation}
+
+Similarly under time reversal. Thus the mass term violates both $\mathcal{P}$ and $\mathcal{T}$ symmetry. This is the parity anomaly in (2+1)D - the mass acts like a magnetic flux through the plane.
+
+\end{document}
