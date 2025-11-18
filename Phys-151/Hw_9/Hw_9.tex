@@ -1,0 +1,146 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{slashed}
+\geometry{margin=1in}
+
+\title{Zee QFT Chapter Problems for HW 9}
+\author{Xiaoyang Zheng}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1: Noether Current and Charge Commutator}
+
+\subsection*{(a) Derivation of the Conserved Current using Noether's Theorem}
+
+The Dirac Lagrangian density is given by:
+\[
+\mathcal{L} = \bar{\psi}(i\gamma^\mu\partial_\mu - m)\psi
+\]
+
+Consider a global $U(1)$ transformation:
+\[
+\psi \to e^{i\alpha}\psi, \quad \bar{\psi} \to \bar{\psi}e^{-i\alpha}
+\]
+
+For infinitesimal transformations:
+\[
+\delta\psi = i\alpha\psi, \quad \delta\bar{\psi} = -i\alpha\bar{\psi}
+\]
+
+According to Noether's theorem, the conserved current is:
+\[
+J^\mu = \frac{\partial\mathcal{L}}{\partial(\partial_\mu\psi)}\delta\psi + \frac{\partial\mathcal{L}}{\partial(\partial_\mu\bar{\psi})}\delta\bar{\psi}
+\]
+
+Computing the derivatives:
+\[
+\frac{\partial\mathcal{L}}{\partial(\partial_\mu\psi)} = i\bar{\psi}\gamma^\mu, \quad \frac{\partial\mathcal{L}}{\partial(\partial_\mu\bar{\psi})} = 0
+\]
+
+Therefore:
+\[
+J^\mu = (i\bar{\psi}\gamma^\mu)(i\alpha\psi) + 0 = \alpha\bar{\psi}\gamma^\mu\psi
+\]
+
+Setting $\alpha=1$, we obtain the standard form:
+\[
+J^\mu = \bar{\psi}\gamma^\mu\psi
+\]
+
+The conserved charge is:
+\[
+Q = \int d^3x\, J^0 = \int d^3x\, \psi^\dagger\psi
+\]
+
+\subsection*{(b) Calculation of $[Q, \psi]$ and Charge Properties}
+
+Using the equal-time anticommutation relations for the Dirac field:
+\[
+\{\psi_a(\mathbf{x}), \psi_b^\dagger(\mathbf{y})\} = \delta_{ab}\delta^3(\mathbf{x}-\mathbf{y})
+\]
+\[
+\{\psi_a(\mathbf{x}), \psi_b(\mathbf{y})\} = \{\psi_a^\dagger(\mathbf{x}), \psi_b^\dagger(\mathbf{y})\} = 0
+\]
+
+We compute the commutator:
+\[
+[Q, \psi(\mathbf{y})] = \int d^3x\, [\psi^\dagger(\mathbf{x})\psi(\mathbf{x}), \psi(\mathbf{y})]
+\]
+
+Using the identity $[AB, C] = A\{B,C\} - \{A,C\}B$:
+\[
+[\psi^\dagger(\mathbf{x})\psi(\mathbf{x}), \psi(\mathbf{y})] = \psi^\dagger(\mathbf{x})\{\psi(\mathbf{x}), \psi(\mathbf{y})\} - \{\psi^\dagger(\mathbf{x}), \psi(\mathbf{y})\}\psi(\mathbf{x})
+\]
+\[
+= 0 - \delta^3(\mathbf{x}-\mathbf{y})\psi(\mathbf{x}) = -\delta^3(\mathbf{x}-\mathbf{y})\psi(\mathbf{y})
+\]
+
+Thus:
+\[
+[Q, \psi(\mathbf{y})] = -\psi(\mathbf{y})
+\]
+
+This shows that $\psi$ carries charge $-1$. Similarly:
+\[
+[Q, \psi^\dagger(\mathbf{y})] = \psi^\dagger(\mathbf{y})
+\]
+
+This shows that $\psi^\dagger$ carries charge $+1$. Although the specific charge values differ, both fields carry non-zero $U(1)$ charge, demonstrating they must share the same charge property.
+
+\section*{Problem 2: Trouble with Commutation Relations}
+
+\subsection*{Calculation of $[J^0(\mathbf{x},0), J^0(\mathbf{0})]$ with Commutation Relations}
+
+If we incorrectly quantize the Dirac field using commutation relations instead of anticommutation relations:
+\[
+[\psi_a(\mathbf{x}), \psi_b^\dagger(\mathbf{y})] = \delta_{ab}\delta^3(\mathbf{x}-\mathbf{y})
+\]
+\[
+[\psi_a(\mathbf{x}), \psi_b(\mathbf{y})] = [\psi_a^\dagger(\mathbf{x}), \psi_b^\dagger(\mathbf{y})] = 0
+\]
+
+The charge density is:
+\[
+J^0(\mathbf{x}) = \psi^\dagger(\mathbf{x})\psi(\mathbf{x})
+\]
+
+We compute the commutator:
+\[
+[J^0(\mathbf{x}), J^0(\mathbf{0})] = [\psi^\dagger(\mathbf{x})\psi(\mathbf{x}), \psi^\dagger(\mathbf{0})\psi(\mathbf{0})]
+\]
+
+Using the identity $[AB, CD] = A[B,C]D + AC[B,D] + [A,C]DB + C[A,D]B$:
+\begin{align*}
+[\psi^\dagger(\mathbf{x})\psi(\mathbf{x}), \psi^\dagger(\mathbf{0})\psi(\mathbf{0})] &= \psi^\dagger(\mathbf{x})[\psi(\mathbf{x}), \psi^\dagger(\mathbf{0})]\psi(\mathbf{0}) \\
+&\quad + \psi^\dagger(\mathbf{x})\psi^\dagger(\mathbf{0})[\psi(\mathbf{x}), \psi(\mathbf{0})] \\
+&\quad + [\psi^\dagger(\mathbf{x}), \psi^\dagger(\mathbf{0})]\psi(\mathbf{0})\psi(\mathbf{x}) \\
+&\quad + \psi^\dagger(\mathbf{0})[\psi^\dagger(\mathbf{x}), \psi(\mathbf{0})]\psi(\mathbf{x})
+\end{align*}
+
+Using the commutation relations:
+\[
+[\psi(\mathbf{x}), \psi^\dagger(\mathbf{0})] = \delta^3(\mathbf{x}), \quad
+[\psi(\mathbf{x}), \psi(\mathbf{0})] = 0
+\]
+\[
+[\psi^\dagger(\mathbf{x}), \psi^\dagger(\mathbf{0})] = 0, \quad
+[\psi^\dagger(\mathbf{x}), \psi(\mathbf{0})] = -\delta^3(\mathbf{x})
+\]
+
+Substituting these results:
+\begin{align*}
+[J^0(\mathbf{x}), J^0(\mathbf{0})] &= \psi^\dagger(\mathbf{x})\delta^3(\mathbf{x})\psi(\mathbf{0}) + 0 + 0 + \psi^\dagger(\mathbf{0})(-\delta^3(\mathbf{x}))\psi(\mathbf{x}) \\
+&= \delta^3(\mathbf{x})[\psi^\dagger(\mathbf{x})\psi(\mathbf{0}) - \psi^\dagger(\mathbf{0})\psi(\mathbf{x})]
+\end{align*}
+
+This result does not vanish for $\mathbf{x} \neq 0$, violating causality. In contrast, with the correct anticommutation relations, this commutator vanishes for spacelike separations, ensuring causal behavior of the theory.
+
+This demonstrates why Dirac fields must be quantized using anticommutation relations (fermionic statistics) rather than commutation relations, to maintain causality and consistency of the quantum field theory.
+
+\end{document}
