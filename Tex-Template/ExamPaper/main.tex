@@ -1,0 +1,40 @@
+\documentclass[12pt, a4paper]{article}
+
+
+
+% 页面设置
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=1.5cm, bottom=1.5cm}
+
+% 页眉页脚设置
+\usepackage{fancyhdr}
+\usepackage{lastpage} % 用于获取总页数
+
+% 定义下划线填空命令
+\newcommand{\blank}[1]{\underline{\makebox[#1][c]{}}}
+
+% 设置页眉页脚样式
+\pagestyle{fancy}
+\fancyhf{} % 清空默认设置
+
+% --- 页眉设置 (姓名填写点) ---
+\lhead{Exam：\blank{4cm}}
+\rhead{Name：\blank{3cm} \quad ID：\blank{3cm}}
+
+% --- 页脚设置 (页码填写点) ---
+\cfoot{Page \blank{1.5cm} of \blank{1.5cm}} % 总页数填写点
+
+% 装饰线宽度
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\begin{document}
+
+% 标题区域
+\begin{center}
+    \bfseries Answer Sheet
+\end{center}
+
+\vspace{1cm}
+
+\end{document}

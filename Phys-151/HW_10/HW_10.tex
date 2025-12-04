@@ -1,0 +1,161 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{slashed}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Zee QFT Chapter Problems for HW 10}
+\author{Xiaoyang Zheng}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1: Parity Violation (II.1.7)}
+
+Show explicitly that equation (25) violates parity:
+\[
+\mathcal{L} = G \bar{\psi}_{1L} \gamma^\mu \psi_{2L} \bar{\psi}_{3L} \gamma_\mu \psi_{4L} \quad (25)
+\]
+
+\subsection*{Transformation of Left-Handed Fields under Parity}
+
+The left-handed projection is defined as:
+\[
+\psi_L = P_L \psi = \frac{1-\gamma^5}{2}\psi
+\]
+
+Under a parity transformation ($\vec{x} \to -\vec{x}$), a Dirac spinor transforms as:
+\[
+\psi \xrightarrow{P} \gamma^0 \psi
+\]
+
+Using the anticommutation relation $\{\gamma^0, \gamma^5\} = 0$, we compute the transformation of $\psi_L$:
+\[
+\psi_L \xrightarrow{P} \frac{1-\gamma^5}{2} (\gamma^0 \psi) = \gamma^0 \frac{1+\gamma^5}{2} \psi = \gamma^0 \psi_R
+\]
+
+This shows that parity transforms a left-handed field into a right-handed field.
+
+\subsection*{Parity Transformation of the Lagrangian}
+
+Applying the parity transformation to the Lagrangian in (25), which consists entirely of left-handed fields ($LLLL$ interaction):
+\[
+\mathcal{L}(\vec{x}) \sim (\dots \psi_L \dots \psi_L) \xrightarrow{P} \mathcal{L}'(-\vec{x}) \sim (\dots \psi_R \dots \psi_R)
+\]
+
+Since the transformed Lagrangian $\mathcal{L}'$ describes interactions between right-handed particles and contains no left-handed terms to preserve the form of the original $\mathcal{L}$, we have:
+\[
+\mathcal{L}(\vec{x}) \neq \mathcal{L}(-\vec{x})
+\]
+
+Therefore, the theory explicitly violates parity.
+
+\section*{Problem 2: The Rarita-Schwinger Field (II.3.4)}
+
+Show that a spin $\frac{3}{2}$ particle can be described by a vector-spinor $\Psi_{\alpha\mu}$. Find the corresponding equations of motion.
+
+\subsection*{Representation Analysis}
+
+A vector-spinor $\Psi_{\alpha\mu}$ carries both a spinor index $\alpha$ (4 components) and a Lorentz vector index $\mu$ (4 components), totaling $16$ components.
+
+In group theory terms, the tensor product of spin 1 and spin 1/2 decomposes as:
+\[
+1 \otimes \frac{1}{2} = \frac{3}{2} \oplus \frac{1}{2}
+\]
+
+A massive spin-$\frac{3}{2}$ particle requires $2s+1 = 4$ degrees of freedom. To isolate the spin-$\frac{3}{2}$ part and remove the spin-$\frac{1}{2}$ component and unphysical degrees of freedom, we impose constraints.
+
+\subsection*{The Rarita-Schwinger Equation}
+
+The equation of motion combines the Dirac equation with projection constraints:
+\[
+\epsilon^{\mu\nu\rho\sigma} \gamma_5 \gamma_\nu \partial_\rho \Psi_\sigma - m \Psi^\mu = 0
+\]
+
+This equation implies the following constraints that reduce the degrees of freedom to 4:
+\begin{enumerate}
+    \item $(i \slashed{\partial} - m) \Psi_\mu = 0$ \quad (Dirac equation for each vector component)
+    \item $\gamma^\mu \Psi_\mu = 0$ \quad (Vanishing gamma trace to remove spin-1/2 sector)
+    \item $\partial^\mu \Psi_\mu = 0$ \quad (Vanishing divergence)
+\end{enumerate}
+
+\section*{Problem 3: Feynman Amplitude for Scalar Theory (II.5.1)}
+
+Write down the Feynman amplitude for the diagram in Figure II.5.1 for the scalar theory.
+
+\subsection*{Setup}
+
+The diagram represents the self-energy correction to a fermion via a scalar loop. The interaction Lagrangian is:
+\[
+\mathcal{L}_{int} = f\varphi\bar{\psi}\psi
+\]
+
+This yields a vertex factor of $if$.
+
+\subsection*{Feynman Rules}
+
+Using the standard Feynman rules:
+\begin{itemize}
+    \item \textbf{Vertices:} Two vertices, each contributing $if$.
+    \item \textbf{Scalar Propagator:} Momentum $k$, mass $\mu$: $D(k) = \frac{i}{k^2 - \mu^2}$.
+    \item \textbf{Fermion Propagator:} Momentum $p+k$, mass $m$: $S_F(p+k) = \frac{i(\slashed{p} + \slashed{k} + m)}{(p+k)^2 - m^2}$.
+    \item \textbf{Loop Integral:} $\int \frac{d^4k}{(2\pi)^4}$.
+\end{itemize}
+
+\subsection*{Calculation of the Amplitude}
+
+The amplitude $-i\Sigma(p)$ is:
+\[
+-i\Sigma(p) = \int \frac{d^4k}{(2\pi)^4} (if) \frac{i(\slashed{p} + \slashed{k} + m)}{(p+k)^2 - m^2} (if) \frac{i}{k^2 - \mu^2}
+\]
+
+Simplifying the constants ($i^3 = -i$):
+\[
+\Sigma(p) = -if^2 \int \frac{d^4k}{(2\pi)^4} \frac{\slashed{p} + \slashed{k} + m}{((p+k)^2 - m^2)(k^2 - \mu^2)}
+\]
+
+\section*{Problem 4: Feynman Amplitude for Vector Theory (II.5.2)}
+
+Show that the amplitude for the diagram in Figure II.5.3 (Vector theory) matches equation (26).
+
+\subsection*{Setup}
+
+We consider the self-energy of a fermion interacting with a massive vector boson (Proca field).
+
+The relevant Feynman rules are:
+\begin{itemize}
+    \item \textbf{Vertex:} $ie\gamma^\mu$.
+    \item \textbf{Vector Propagator:} $D_{\mu\nu}(k) = \frac{-i(g_{\mu\nu} - k_\mu k_\nu/\mu^2)}{k^2 - \mu^2}$.
+\end{itemize}
+
+\subsection*{Construction of the Amplitude}
+
+Tracing backwards along the fermion line, the amplitude is:
+\[
+\mathcal{M} = \int \frac{d^4k}{(2\pi)^4} \left[ \bar{u}(p) (ie\gamma^\nu) \frac{i(\slashed{p} + \slashed{k} + m)}{(p+k)^2 - m^2} (ie\gamma^\mu) u(p) \right] \left[ \frac{-i(g_{\mu\nu} - \frac{k_\mu k_\nu}{\mu^2})}{k^2 - \mu^2} \right]
+\]
+
+\subsection*{Simplification to Match Eq. (26)}
+
+To match the form of Eq (26), we manipulate the vector propagator term. Absorbing the minus sign from the numerator into the tensor term:
+\[
+-i\left(g_{\mu\nu} - \frac{k_\mu k_\nu}{\mu^2}\right) = i\left(\frac{k_\mu k_\nu}{\mu^2} - g_{\mu\nu}\right)
+\]
+
+Collecting the constants:
+\[
+(ie) \times (ie) \times i \text{ (fermion)} \times i \text{ (vector)} = (ie)^2 i^2
+\]
+
+Substituting back yields the target expression:
+\[
+\mathcal{M} = (ie)^2 i^2 \int \frac{d^4k}{(2\pi)^4} \frac{1}{k^2 - \mu^2} \left( \frac{k_\mu k_\nu}{\mu^2} - g_{\mu\nu} \right) \bar{u}(p) \gamma^\nu \frac{\slashed{p} + \slashed{k} + m}{(p+k)^2 - m^2} \gamma^\mu u(p)
+\]
+
+This matches the form given in equation (26).
+
+\end{document}
