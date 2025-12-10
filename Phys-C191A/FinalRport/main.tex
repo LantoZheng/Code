@@ -54,9 +54,11 @@
     {\large Author:}\\[0.3cm]
     {\large xxx}\\[0.3cm]
 
-    {\large UC Berkeley}\\[2cm]  
+    {\large UC Berkeley}\\[2cm]  
     {\large date:}\\
 \end{titlepage}
+
+\pagenumbering{roman}  % 摘要和目录使用罗马数字
 
 % ------------------- 摘要 -------------------
 \begin{abstract}
@@ -68,6 +70,8 @@ Quantum money leverages the no-cloning theorem to create unforgeable digital cur
 % ------------------- 目录 -------------------
 \tableofcontents
 \newpage
+
+\pagenumbering{arabic}  % 正文使用阿拉伯数字
 
 % ==========================================================
 %                   正文部分
@@ -414,472 +418,88 @@ In summary, the collision geometry induced by random degree-2 hash functions is 
 
 \section{The Inflation Problem: Unlimited Generation in Public-Key Quantum Money}
 
-The previous sections established the cryptographic security of quantum lightning---specifically its resistance to cloning (uniqueness). However, a fundamental economic limitation arises when attempting to use this primitive as a decentralized currency: \emph{there is no inherent mechanism to limit the rate or total amount of money generation}. This section provides a rigorous analysis of why public-key quantum money schemes, including quantum lightning, suffer from unbounded generation capabilities.
+The previous sections established that quantum lightning prevents \emph{cloning}---no adversary can produce two bolts with the same serial number. However, this security guarantee does not address a distinct and equally important question: \emph{can we limit how many bolts are created in total?} As we now demonstrate, the answer is fundamentally negative for any public-key scheme.
 
-\subsection{The Fundamental Asymmetry: Cloning vs.\ Generation}
+\subsection{The Core Theorem: Unbounded Generation}
 
-The security of quantum money rests on the \emph{no-cloning theorem} and its computational extensions. However, there is a crucial asymmetry that must be understood:
-
-\begin{quote}
-\textbf{No-cloning prevents duplication of existing money, but does not prevent creation of new money.}
-\end{quote}
-
-Let us formalize this distinction. A quantum money scheme provides two algorithms:
-\begin{align}
-    \mathsf{Gen}(1^\lambda) &\to |\$\rangle, \label{eq:gen}\\
-    \mathsf{Ver}(\rho) &\to s \in \{0,1\}^* \cup \{\bot\}. \label{eq:ver}
-\end{align}
-
-The security property (uniqueness/unforgeability) states that for any QPT adversary $\mathcal{A}$:
-\[
-\Pr\left[
-    \mathsf{Ver}(\rho_1) = \mathsf{Ver}(\rho_2) = s \neq \bot
-    \;:\;
-    (\rho_1, \rho_2) \gets \mathcal{A}(|\$\rangle)
-\right] = \mathrm{negl}(\lambda).
-\]
-
-Critically, this definition says nothing about the following scenario:
-\[
-\Pr\left[
-    \mathsf{Ver}(\rho_i) \neq \bot \text{ for } i = 1, \ldots, N
-    \;:\;
-    (\rho_1, \ldots, \rho_N) \gets \mathcal{A}^{\mathsf{Gen}}
-\right],
-\]
-where $\mathcal{A}$ is allowed to invoke $\mathsf{Gen}$ polynomially many times. In fact, this probability is \emph{overwhelming} by the correctness of the scheme.
+The central result of this section shows that unlimited generation is not a bug but an inherent feature of public-key quantum money.
 
 \begin{theorem}[Unbounded Generation]\label{thm:unbounded}
-Let $(\mathsf{Gen}, \mathsf{Ver})$ be any public-key quantum money scheme with correctness error $\epsilon$. Then for any polynomial $N = N(\lambda)$, there exists a QPT algorithm that produces $N$ valid, pairwise-distinct banknotes with probability at least $(1 - \epsilon)^N - \mathrm{negl}(\lambda)$.
+Let $(\mathsf{Gen}, \mathsf{Ver})$ be any public-key quantum money scheme with correctness error $\epsilon$. For any polynomial $N = N(\lambda)$, there exists a QPT algorithm producing $N$ valid, pairwise-distinct banknotes with probability at least $(1 - \epsilon)^N - \mathrm{negl}(\lambda)$.
 \end{theorem}
 
 \begin{proof}
-Consider the algorithm that simply invokes $\mathsf{Gen}(1^\lambda)$ independently $N$ times, obtaining states $|\$_1\rangle, \ldots, |\$_N\rangle$. By correctness, each state passes verification with probability at least $1 - \epsilon$.
+The algorithm simply invokes $\mathsf{Gen}(1^\lambda)$ independently $N$ times. By correctness, each state passes verification with probability $\geq 1 - \epsilon$.
 
-For distinctness, observe that each invocation of $\mathsf{Gen}$ samples a serial number from a distribution with high min-entropy. More precisely, the min-entropy security property of quantum lightning (which follows from uniqueness) guarantees that:
+For distinctness, we use the fact that uniqueness implies high min-entropy of serial numbers:
 \[
-H_\infty(\mathsf{Ver}(\mathsf{Gen}(1^\lambda))) \geq n(\lambda) - O(\log \lambda),
+H_\infty(\mathsf{Ver}(\mathsf{Gen}(1^\lambda))) \geq n(\lambda) - O(\log \lambda).
 \]
-where $n(\lambda)$ is the bit-length of serial numbers. Therefore, the probability of collision among $N = \mathrm{poly}(\lambda)$ serial numbers is at most:
+The collision probability among $N = \mathrm{poly}(\lambda)$ serial numbers is therefore:
 \[
 \binom{N}{2} \cdot 2^{-n + O(\log \lambda)} = \mathrm{negl}(\lambda).
 \]
-By a union bound, all $N$ states are valid and pairwise distinct with probability at least $(1-\epsilon)^N - \mathrm{negl}(\lambda)$.
 \end{proof}
 
-\subsection{Why Public Verification Implies Public Generation}
+\subsection{Why This Is Unavoidable: Public Verification Implies Public Generation}
 
-A key insight is that in any public-key quantum money scheme, the generation algorithm must be publicly executable. This is not merely a design choice but a consequence of the security model.
+One might hope that some clever protocol design could restrict who can generate money. The following proposition shows this is impossible in any public-key setting.
 
-\begin{proposition}[Public Generation is Inherent]\label{prop:public-gen}
-In any public-key quantum money scheme where $\mathsf{Ver}$ is public, any party with access to $\mathsf{Ver}$ can efficiently generate valid banknotes.
+\begin{proposition}[Public Generation is Inherent]
+In any public-key quantum money scheme where $\mathsf{Ver}$ is public, any party can efficiently generate valid banknotes.
 \end{proposition}
 
 \begin{proof}
-Consider the following strategy. The generation algorithm $\mathsf{Gen}$ consists of:
-\begin{enumerate}
-    \item Prepare some initial quantum state $|\phi_0\rangle$.
-    \item Apply a sequence of operations (possibly including measurements).
-    \item Output a state $|\$\rangle$ that passes $\mathsf{Ver}$.
-\end{enumerate}
-
-Since $\mathsf{Ver}$ is public, any party can simulate this procedure. The only constraint is computational efficiency. In Zhandry's construction, $\mathsf{Gen}$ runs in polynomial time, and all operations are publicly specified. Therefore, generation is inherently a public capability.
+The generation algorithm $\mathsf{Gen}$ must be publicly specified---otherwise, how could the original issuer produce valid notes? Since $\mathsf{Gen}$ runs in polynomial time using only public operations (Hadamard gates, controlled unitaries, measurement), any party with a quantum computer can execute it. This contrasts fundamentally with private-key schemes, where $\mathsf{Gen}_{\text{private}}(k, s)$ requires a secret key $k$ held only by the bank.
 \end{proof}
 
-This stands in stark contrast to \emph{private-key} schemes (e.g., Wiesner, BBBW), where generation requires secret information:
-\[
-\mathsf{Gen}_{\text{private}}(k, s) \to |\$_{k,s}\rangle,
-\]
-and only the bank possessing the secret key $k$ can produce valid notes.
+\subsection{The Cloning-Generation Dichotomy}
 
-\subsection{Formal Analysis: The Economics of Unlimited Supply}
+Combining the above results, we see a fundamental asymmetry in quantum money security:
 
-We now provide a formal economic analysis of the inflation problem. Let $M(t)$ denote the total money supply at time $t$, and let $C(t)$ denote the computational capacity (in operations per unit time) available to all participants.
-
-\begin{definition}[Marginal Cost of Generation]
-The marginal cost of generating one unit of currency is:
-\[
-\mathcal{C}_{\text{marginal}} = \frac{\text{(computational cost per } \mathsf{Gen} \text{ invocation)}}{\text{(expected value of generated bolt)}}.
-\]
-\end{definition}
-
-For quantum lightning, each invocation of $\mathsf{Gen}$ requires $T_{\mathsf{Gen}} = \mathrm{poly}(\lambda)$ quantum operations. As quantum computing technology advances:
-\begin{enumerate}
-    \item The cost per quantum operation decreases (Moore's law analogue for quantum).
-    \item The total available computational capacity $C(t)$ increases exponentially.
-\end{enumerate}
-
-This leads to the following dynamics:
-\[
-\frac{dM}{dt} = \frac{C(t)}{T_{\mathsf{Gen}}},
-\]
-where we assume rational actors generate money whenever $\mathcal{C}_{\text{marginal}}$ is below the market value.
-
-\begin{theorem}[Inflation Dynamics]\label{thm:inflation}
-In a quantum lightning-based currency without external supply constraints, if computational capacity grows as $C(t) = C_0 e^{\gamma t}$ for some growth rate $\gamma > 0$, then:
-\[
-M(t) = M_0 + \frac{C_0}{T_{\mathsf{Gen}} \cdot \gamma} \left( e^{\gamma t} - 1 \right).
-\]
-In particular, $M(t) \to \infty$ exponentially fast.
-\end{theorem}
-
-This exponential growth in money supply, without corresponding growth in economic value, constitutes \emph{hyperinflation}.
-
-\subsection{The Mechanism: Why Each Generation Succeeds}
-
-To understand why generation is unrestricted, we examine the concrete mechanism in Zhandry's degree-2 polynomial construction.
-
-\paragraph{Step 1: Superposition over preimage space.}
-The $\mathsf{Storm}$ algorithm begins by preparing a superposition:
-\[
-|\phi_0\rangle = \frac{1}{2^{m/2}} \sum_{x \in \{0,1\}^m} |x\rangle.
-\]
-
-\paragraph{Step 2: Computation and measurement.}
-The algorithm computes $f_{\mathcal{A}}(x)$ in superposition and measures the output register:
-\[
-|\phi_0\rangle \xrightarrow{U_{f_{\mathcal{A}}}} \frac{1}{2^{m/2}} \sum_{x} |x\rangle |f_{\mathcal{A}}(x)\rangle
-\xrightarrow{\text{measure}} |\psi_y\rangle = \frac{1}{\sqrt{|S_y|}} \sum_{x: f_{\mathcal{A}}(x)=y} |x\rangle,
-\]
-where the measurement outcome $y$ becomes the serial number.
-
-\paragraph{Step 3: Tensor product structure.}
-A valid bolt consists of $k+1$ copies:
-\[
-\mathbf{B}_y = |\psi_y\rangle^{\otimes (k+1)}.
-\]
-
-The crucial observation is that each invocation of this procedure:
 \begin{itemize}
-    \item Succeeds with probability 1 (up to negligible error).
-    \item Produces a uniformly random serial number $y \in \{0,1\}^n$.
-    \item Requires only $\mathrm{poly}(\lambda)$ quantum operations.
-    \item Is independent of all previous generations.
+    \item \textbf{Targeted generation (Cloning) is intractable.} To clone a bolt with serial number $y$, an adversary is forced to solve a specific instance of the multi-collision problem. Specifically, they must produce a fresh batch of $k+1$ tensor copies of $|\psi_y\rangle$ to pass verification. Combined with the original bolt, this would yield $2(k+1)$ colliding inputs for $y$. The NAMCR assumption posits that finding such a large collision set for a \emph{fixed} output $y$ is computationally impossible.
+
+    \item \textbf{Random generation (Minting) is trivial.} The generation algorithm $\mathsf{Storm}$ operates without a target constraint. It samples random inputs which map to a random output $y'$. Because the range of the hash function is exponentially large ($2^n$), the probability of hitting any previously generated serial number is negligible. Thus, generating \emph{new} money requires no collision-finding effort; it merely requires running the forward circuit, which is efficient for anyone.
 \end{itemize}
 
-\begin{proposition}[Independence of Generations]
-Let $y_1, y_2, \ldots, y_N$ be the serial numbers obtained from $N$ independent invocations of $\mathsf{Storm}$. Then:
+The uniqueness property guarantees that for any QPT adversary:
 \[
-\Pr[y_i = y_j \text{ for some } i \neq j] \leq \frac{N^2}{2^n} = \mathrm{negl}(\lambda)
+\Pr\left[\mathsf{Ver}(\rho_1) = \mathsf{Ver}(\rho_2) \neq \bot\right] = \mathrm{negl}(\lambda).
 \]
-for $N = \mathrm{poly}(\lambda)$.
-\end{proposition}
+But this says nothing about generating $N$ \emph{distinct} valid notes, which succeeds with overwhelming probability by Theorem~\ref{thm:unbounded}.
 
-This independence is precisely what prevents any form of ``congestion'' or ``saturation'' in the generation process. Unlike Bitcoin, where miners compete for the same block reward and difficulty adjusts to maintain a target block time, quantum lightning generators operate in complete isolation.
+In economic terms: quantum lightning perfectly prevents counterfeiting (copying existing money) but provides no mechanism to prevent inflation (creating new money). Any party can become a ``mint'' simply by running the public $\mathsf{Storm}$ algorithm.
 
-\subsection{Comparison with Classical Cryptocurrencies}
+\section{Prospective Approaches to Supply Limitation}
 
-To highlight the severity of the inflation problem, we compare quantum lightning with Bitcoin's difficulty adjustment mechanism.
+Several cryptographic approaches could potentially introduce supply constraints:
 
-\begin{center}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Property} & \textbf{Bitcoin} & \textbf{Quantum Lightning} \\
-\midrule
-Generation rate & Difficulty-adjusted & Unbounded \\
-Global state & Blockchain & None \\
-Difficulty function & $H(\text{block}) < T_{\text{target}}$ & None \\
-Supply cap & 21 million BTC & $\infty$ \\
-Consensus required & Yes (proof-of-work) & No \\
-\bottomrule
-\end{tabular}
-\end{center}
+\paragraph{Hash-based difficulty.} Require $H(y) < T$ for the serial number, converting generation into probabilistic search. Grover's algorithm provides $O(2^{d/2})$ speedup over classical $O(2^d)$ trials.
 
-In Bitcoin, the difficulty target $T_{\text{target}}$ is recalculated every 2016 blocks based on the time taken to mine the previous 2016 blocks:
-\[
-T_{\text{new}} = T_{\text{old}} \times \frac{\text{actual time}}{\text{target time (2 weeks)}}.
-\]
+\paragraph{Verifiable Delay Functions.} VDFs certify that time $T$ has elapsed, preventing parallel mining. Quantum security of current VDF constructions remains open.
 
-This feedback mechanism ensures that regardless of total network hashrate, the average block time remains approximately 10 minutes. Quantum lightning lacks any analogous mechanism because:
-\begin{enumerate}
-    \item There is no global state to track total generation rate.
-    \item Verification is local and instantaneous.
-    \item There is no ``competition'' between generators.
-\end{enumerate}
+\paragraph{Quantum memory bounds.} Exploit physical scarcity of coherent quantum storage. Verification of actual storage (vs.~regeneration) is an open problem.
 
-\section{The Inflation Problem in Decentralized Quantum Lightning}
+\paragraph{Entanglement-based certificates.} Use monogamy of entanglement to bound supply, but this reintroduces trusted authorities.
 
-While the previous sections established the cryptographic security of the Degree-2 Polynomial construction—specifically its resistance to cloning (uniqueness)—a major limitation arises when applying this primitive to decentralized currency. Unlike classical cryptocurrencies which utilize dynamic difficulty adjustments to regulate supply, Quantum Lightning, in its raw form, suffers from unbounded generation capabilities.
-
-\subsection{Theoretical Absence of Supply Caps}
-In standard public-key quantum money schemes (e.g., Aaronson-Christiano), the supply of currency is centralized; the bank holds the secret parameters required to generate valid states $|\$_{s}\rangle$. However, Zhandry's definition of Quantum Lightning inherently requires the generation procedure, denoted as $\mathcal{S}$ (Storm), to be public.
-
-Formally, the scheme consists of public algorithms:
-\begin{equation}
-    \mathcal{S}(1^\lambda) \to |\xi\rangle, \quad \mathcal{V}(|\xi\rangle) \to s \in \{0,1\}^* \cup \{\perp\}
-\end{equation}
-The security definition (Uniqueness) ensures that it is computationally infeasible to produce two bolts $|\xi_1\rangle, |\xi_2\rangle$ such that $\mathcal{V}(|\xi_1\rangle) = \mathcal{V}(|\xi_2\rangle) = s$. However, this definition imposes no limit on the generation of distinct bolts $|\xi_1\rangle, \dots, |\xi_N\rangle$ with distinct serial numbers $s_1, \dots, s_N$.
-
-In a decentralized setting without a global ledger (blockchain), there is no mechanism to throttle the execution of $\mathcal{S}$. Consequently, the rate of money supply $R$ is strictly a function of available computational power $P$:
-\begin{equation}
-    R \propto P \cdot \frac{1}{T_{\mathcal{S}}}
-\end{equation}
-where $T_{\mathcal{S}}$ is the time complexity of the bolt generation algorithm. As hardware technology improves, the marginal cost of producing a unit of currency approaches zero, leading to inevitable inflation.
-
-\subsection{The Mechanism of Infinite Generation}
-To understand the mechanics of this infinite generation, we examine the instantiation of the bolt generation procedure using Degree-2 polynomials. The procedure generates a serial number effectively at random from an exponentially large space.
-
-Recalling the generation steps from Section 3:
-\begin{enumerate}
-    \item The Storm algorithm creates a superposition over inputs and random offsets $\Delta$:
-    \begin{equation}
-        |\phi_0\rangle = \sum_{\Delta} \sum_{x \in S_\Delta} |x, \Delta\rangle
-    \end{equation}
-    \item The algorithm computes the hash function $f_{\mathcal{A}}(x)$ in superposition and measures the result to obtain a serial number $y$:
-    \begin{equation}
-        |\phi_0\rangle \xrightarrow{\text{Measure } f_{\mathcal{A}}} |\psi_y\rangle \propto \sum_{x: f_{\mathcal{A}}(x)=y} |x\rangle
-    \end{equation}
-\end{enumerate}
-
-The measurement outcome $y$ serves as the serial number. Because $f_{\mathcal{A}}: \{0,1\}^m \to \{0,1\}^n$ maps to a space of size $2^n$, and the measurement outcome is probabilistic, repeated invocations of the algorithm yield distinct serial numbers with overwhelming probability. 
-
-Unlike Bitcoin, where finding a valid block requires iterating through nonces to satisfy a difficulty target that adjusts globally, the Quantum Lightning generation is constant-time (polynomial in $\lambda$). An adversary can simply run $\mathcal{S}$ in parallel loops, generating valid, unique bolts $|\psi_{y_1}\rangle, |\psi_{y_2}\rangle, \dots$ ad infinitum. Since the validity of a bolt is self-contained (verified solely by $\mathcal{V}$ without a public ledger), there is no mechanism to declare that the ``space'' of serial numbers is saturated.
-
-\section{Prospective Solutions: Toward Scarcity in Quantum Money}
-
-The inflation problem identified in Section 4 presents a fundamental challenge for deploying quantum lightning as a practical currency. This section surveys potential solutions, analyzing their theoretical soundness and practical feasibility. We emphasize that all proposed solutions involve trade-offs, and achieving true scarcity without centralization remains an open problem.
-
-\subsection{Approach 1: Static Difficulty via Hash Constraints}
-
-The most straightforward approach, suggested by Zhandry himself, is to impose a proof-of-work constraint on the serial number.
-
-\begin{definition}[Difficulty-Constrained Coin]
-A valid coin is a bolt $|\xi\rangle$ such that:
-\[
-\mathsf{ValidCoin}(|\xi\rangle) \iff \mathsf{Ver}(|\xi\rangle) = y \neq \bot \;\land\; H(y) < T_{\text{target}},
-\]
-where $H: \{0,1\}^* \to \{0,1\}^k$ is a cryptographic hash function and $T_{\text{target}} = 2^{k-d}$ for difficulty parameter $d$.
-\end{definition}
-
-To generate a valid coin, one must repeatedly invoke $\mathsf{Storm}$ until obtaining a serial number $y$ with $H(y) < T_{\text{target}}$. The expected number of attempts is:
-\[
-\mathbb{E}[\text{attempts}] = \frac{2^k}{T_{\text{target}}} = 2^d.
-\]
-
-\paragraph{Limitations.}
-As Zhandry explicitly notes in the original paper:
-\begin{quote}
-``This cryptocurrency is unlikely to be useful in practice due to a very important limitation. Namely, as technology gets better, it will be easier and easier to create new coins. Without any modifications, this will lead to an exponentially increasing supply of coins, and hence rampant inflation.''
-\end{quote}
-
-The fundamental flaw is that $d$ must be fixed at system genesis. Let $C(t)$ denote the computational capacity at time $t$. The coin generation rate is:
-\[
-R(t) = \frac{C(t)}{2^d \cdot T_{\mathsf{Storm}}}.
-\]
-
-If $C(t)$ grows exponentially (as expected for quantum computing), then $R(t)$ also grows exponentially, regardless of the initial choice of $d$.
-
-\begin{proposition}[Impossibility of Static Difficulty]
-For any fixed difficulty $d$ and any desired constant inflation rate $r > 0$, there exists a time $t^*$ such that for all $t > t^*$, the actual inflation rate exceeds $r$.
-\end{proposition}
-
-\begin{proof}
-Let $C(t) = C_0 e^{\gamma t}$ for growth rate $\gamma > 0$. The inflation rate at time $t$ is proportional to $R(t) = C_0 e^{\gamma t} / (2^d T_{\mathsf{Storm}})$. For any target rate $r$, solving $R(t) > r$ gives:
-\[
-t > t^* := \frac{1}{\gamma} \ln\left(\frac{r \cdot 2^d \cdot T_{\mathsf{Storm}}}{C_0}\right).
-\]
-Since $t^*$ is finite, the claim follows.
-\end{proof}
-
-\paragraph{The Fungibility Dilemma.}
-One might suggest increasing $d$ over time. However, this creates a \emph{fungibility} problem: coins minted under old (easier) difficulty would need to be invalidated or exchanged, which:
-\begin{enumerate}
-    \item Requires a central authority to manage the transition.
-    \item Cannot distinguish ``old legitimate coins'' from ``recently minted easy coins.''
-    \item Violates the trustless nature of the system.
-\end{enumerate}
-
-\subsection{Approach 2: Verifiable Delay Functions (VDFs)}
-
-A more sophisticated approach uses \emph{verifiable delay functions} to bind coin validity to physical time.
-
-\begin{definition}[Verifiable Delay Function]
-A VDF is a function $f: \mathcal{X} \to \mathcal{Y}$ with the following properties:
-\begin{enumerate}
-    \item \textbf{Sequential:} Computing $f(x)$ requires $T$ sequential operations, even with polynomial parallelism.
-    \item \textbf{Efficiently verifiable:} Given $(x, y)$, one can verify $y = f(x)$ in time $\ll T$.
-    \item \textbf{Unique output:} For each $x$, there is a unique valid $y$.
-\end{enumerate}
-\end{definition}
-
-The key property is that VDFs cannot be parallelized. This means that regardless of an adversary's computational power, computing $f(x)$ takes at least time $T$ in wall-clock time.
-
-\paragraph{Time-Locked Coins.}
-We can define a time-locked coin as:
-\[
-\mathsf{ValidCoin}(|\xi\rangle, \pi, t) \iff 
-\begin{cases}
-\mathsf{Ver}(|\xi\rangle) = y \neq \bot, \\
-\pi \text{ is a valid VDF proof for } (y, t), \\
-H(y \| t) < T_{\text{target}}(t).
-\end{cases}
-\]
-
-Here, $T_{\text{target}}(t)$ is a difficulty schedule that increases over time. The VDF proof $\pi$ certifies that the coin was generated at time $t$, allowing the verifier to apply the appropriate difficulty level.
-
-\paragraph{Challenges.}
-\begin{enumerate}
-    \item \textbf{Trusted time source:} Who determines the current time $t$? Without consensus, different parties may disagree.
-    \item \textbf{VDF security:} Current VDF constructions rely on assumptions (e.g., RSA group structure) that may not hold against quantum adversaries.
-    \item \textbf{Bootstrapping:} The system requires an initial trusted setup or reference point.
-\end{enumerate}
-
-\subsection{Approach 3: Hybrid Blockchain-Quantum Systems}
-
-A pragmatic approach is to combine quantum lightning with a classical blockchain, using each component's strengths.
-
-\paragraph{Architecture.}
-\begin{enumerate}
-    \item \textbf{Quantum layer:} Provides unforgeable physical tokens (bolts).
-    \item \textbf{Classical layer:} Provides global consensus on which tokens are valid and prevents double-spending.
-\end{enumerate}
-
-\begin{definition}[Blockchain-Registered Quantum Coin]
-A coin consists of a bolt $|\xi\rangle$ and a blockchain entry $(y, \text{block}_i)$ where:
-\begin{itemize}
-    \item $y = \mathsf{Ver}(|\xi\rangle)$ is the serial number.
-    \item $\text{block}_i$ is the block in which $y$ was first registered.
-\end{itemize}
-A coin is valid if and only if $(y, \text{block}_i)$ appears in the blockchain and no later block contains a transfer or invalidation of $y$.
-\end{definition}
-
-This hybrid approach allows:
-\begin{itemize}
-    \item \textbf{Dynamic difficulty:} The blockchain can implement difficulty adjustment based on global generation rate.
-    \item \textbf{Supply cap:} The blockchain can enforce a maximum number of registrable coins.
-    \item \textbf{Timestamping:} Each coin has a verifiable creation time.
-\end{itemize}
-
-\paragraph{Trade-offs.}
-The hybrid approach reintroduces some centralization concerns:
-\begin{itemize}
-    \item Requires miners/validators for the blockchain.
-    \item Subject to 51\% attacks on the classical layer.
-    \item Loses the ``blockchain-less'' property that motivated quantum lightning.
-\end{itemize}
-
-However, it retains the key quantum advantage: the physical token cannot be copied, even if the blockchain is compromised. This provides defense-in-depth that purely classical systems lack.
-
-\subsection{Approach 4: Proof-of-Space and Storage Costs}
-
-Another approach ties coin generation to scarce physical resources rather than computational time.
-
-\begin{definition}[Storage-Bound Generation]
-To generate a coin, one must:
-\begin{enumerate}
-    \item Commit to a large random string $R$ of size $S$ bits.
-    \item Store $R$ for a duration $T$.
-    \item Prove storage via a \emph{proof of space-time} protocol.
-    \item Only after successful proof, invoke $\mathsf{Storm}$ with seed derived from $R$.
-\end{enumerate}
-\end{definition}
-
-The scarcity arises because storage capacity is physically limited and cannot grow as rapidly as computational power.
-
-\paragraph{Quantum Considerations.}
-An important observation is that quantum memory is significantly more expensive and fragile than classical storage. A system requiring quantum memory commitment would naturally limit generation rate due to hardware constraints.
-
-\subsection{Approach 5: Economic Mechanisms (Burning and Demurrage)}
-
-Rather than preventing unlimited generation, one can design economic mechanisms that make generation costly or discourage hoarding.
-
-\paragraph{Coin Burning for Registration.}
-Require that to register a new coin, one must ``burn'' (provably destroy) existing coins of comparable value. This creates a zero-sum dynamic where new coin creation reduces existing supply.
-
-\paragraph{Demurrage (Negative Interest).}
-Coins could lose value over time unless ``renewed'' through some costly process. This:
-\begin{itemize}
-    \item Discourages hoarding and encourages circulation.
-    \item Creates a natural ``decay'' that offsets unlimited generation.
-    \item Has historical precedent (Gesell's ``stamp scrip'' currency).
-\end{itemize}
-
-\subsection{Summary: The State of the Art}
-
-\begin{center}
-\begin{tabular}{lccc}
-\toprule
-\textbf{Approach} & \textbf{Decentralized?} & \textbf{Quantum-Safe?} & \textbf{Practical?} \\
-\midrule
-Static difficulty & Yes & Yes & No (inflation) \\
-VDF-based & Partially & Unknown & Limited \\
-Hybrid blockchain & No & Partially & Yes \\
-Proof-of-space & Partially & Yes & Limited \\
-Economic mechanisms & Varies & Yes & Experimental \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\begin{remark}[Fundamental Tension]
-There appears to be a fundamental tension between three desirable properties:
-\begin{enumerate}
-    \item \textbf{Decentralization:} No trusted parties or central authorities.
-    \item \textbf{Scarcity:} Bounded or controlled money supply.
-    \item \textbf{Simplicity:} No complex consensus mechanisms.
-\end{enumerate}
-Classical cryptocurrencies achieve (1) and (2) by sacrificing (3)---they require sophisticated consensus protocols. Quantum lightning achieves (1) and (3) but sacrifices (2). Whether all three can be achieved simultaneously remains a major open problem.
+\begin{remark}[Open Problem]
+Can we construct public-key quantum money where generation (not just cloning) is computationally hard? This requires making the search problem ``Find $\rho$ such that $\mathsf{Ver}(\rho) \neq \bot$'' hard while keeping verification efficient.
 \end{remark}
-
-\subsection{Open Problems}
-
-We conclude with several open problems suggested by this analysis:
-
-\begin{enumerate}
-    \item \textbf{Quantum VDFs:} Can we construct verifiable delay functions secure against quantum adversaries?
-    
-    \item \textbf{Decentralized Time:} Is there a way to achieve consensus on time without a blockchain?
-    
-    \item \textbf{Physical Scarcity:} Can quantum money be tied to some inherently scarce quantum resource (e.g., entanglement)?
-    
-    \item \textbf{Alternative Security Definitions:} Could a modified security definition for quantum money naturally incorporate supply constraints?
-    
-    \item \textbf{Hybrid Optimality:} For hybrid systems, what is the minimal amount of classical infrastructure needed to achieve scarcity?
-\end{enumerate}
-
-Until these problems are resolved, public-key quantum money serves primarily as a cryptographic primitive demonstrating ``no-cloning with public verification'' rather than a practical monetary system. Nevertheless, the theoretical insights from quantum lightning---particularly the win-win framework and the degree-2 polynomial construction---represent significant advances in our understanding of quantum cryptography.
 
 \section{Conclusion}
 
-This report has explored the theoretical foundations of quantum money, from Wiesner's original private-key construction to Zhandry's quantum lightning framework. We have examined both the remarkable security properties enabled by quantum mechanics and the fundamental limitations that arise when attempting to use these constructions as practical currencies.
+We have analyzed the fundamental tension in public-key quantum money between \emph{unclonability} and \emph{unlimited generation}:
 
-\paragraph{Key Contributions of Quantum Lightning.}
-Zhandry's quantum lightning represents a significant conceptual advance in several ways:
-\begin{enumerate}
-    \item \textbf{Stronger security:} The uniqueness property---that no adversary can produce two bolts with the same serial number---is strictly stronger than traditional quantum money security, paralleling the distinction between collision resistance and second-preimage resistance in classical cryptography.
-    
-    \item \textbf{The win-win framework:} By connecting quantum lightning to the collapsing property of hash functions, Zhandry establishes a powerful dichotomy: either most natural hash functions satisfy a strong quantum security notion, or quantum lightning can be constructed unconditionally.
-    
-    \item \textbf{Concrete instantiation:} The degree-2 polynomial construction provides the first candidate quantum lightning scheme based on a plausible classical hardness assumption (NAMCR), moving beyond oracle-based security proofs.
-\end{enumerate}
-
-\paragraph{The Inflation Problem.}
-Despite these achievements, we have demonstrated that public-key quantum money inherently lacks supply constraints. The core issue is fundamental: security definitions focus on preventing \emph{duplication} of existing money, not \emph{creation} of new money. Since the generation procedure must be public (to enable decentralization), anyone can mint new currency at will, subject only to computational resources.
-
-This stands in stark contrast to private-key schemes, where the bank's secret key acts as a natural rate limiter. The tension between public verifiability (desirable for decentralization) and controlled supply (desirable for monetary stability) appears to be fundamental.
-
-\paragraph{Toward Practical Solutions.}
-We surveyed several approaches to introducing scarcity:
 \begin{itemize}
-    \item Static difficulty constraints, while simple, fail to adapt to technological progress.
-    \item Verifiable delay functions offer theoretical promise but face quantum security challenges.
-    \item Hybrid blockchain systems sacrifice full decentralization but may offer the best practical trade-off.
-    \item Economic mechanisms (burning, demurrage) remain largely unexplored.
+    \item \textbf{Cloning is hard:} The no-cloning theorem combined with NAMCR ensures duplicating valid bolts is infeasible.
+    \item \textbf{Generation is easy:} Public verification implies public generation---any party can produce fresh bolts in polynomial time.
+    \item \textbf{Inflation is inevitable:} Unlimited generation leads to unbounded supply, undermining scarcity-based currency applications.
 \end{itemize}
 
-\paragraph{Broader Implications.}
-The study of quantum money illuminates fundamental questions at the intersection of physics, computer science, and economics:
-\begin{itemize}
-    \item What physical resources can serve as the basis for unforgeable tokens?
-    \item How do cryptographic security definitions interact with economic desiderata?
-    \item What is the minimal infrastructure needed to achieve both security and scarcity?
-\end{itemize}
+This asymmetry implies that public-key quantum money, despite its strong anti-counterfeiting guarantees, cannot serve as a scarcity-based currency: any party can generate polynomially many valid coins, leading to unbounded inflation. While approaches such as hash-based difficulty or VDFs can slow generation, none fundamentally resolve this limitation.
 
-While quantum lightning may not immediately yield a practical blockchain-less cryptocurrency, its theoretical contributions---demonstrating that public verification is compatible with unclonability, and providing concrete constructions based on plausible assumptions---advance our understanding of what is possible at the quantum-classical boundary.
-
-\paragraph{Future Directions.}
-The most pressing open problems include: (1) constructing quantum-secure VDFs, (2) finding mechanisms for decentralized time consensus, (3) exploring alternative security models that naturally incorporate supply constraints, and (4) investigating whether quantum resources themselves (such as entanglement or quantum memory) can serve as the basis for scarcity.
-
-As quantum computing technology matures, these questions will transition from purely theoretical concerns to practical engineering challenges. The foundations laid by Wiesner, Aaronson, Christiano, Zhandry, and others provide the conceptual tools needed to navigate this transition.
+This dichotomy is inherent to any public-key scheme. Quantum lightning shows that ``lightning never strikes the same state twice,'' but also that lightning can strike \emph{anywhere}. Constructing public-key quantum money where generation itself is hard remains a central open problem in quantum cryptography.
 
 % ------------------- 参考文献 -------------------
 \begin{thebibliography}{99}

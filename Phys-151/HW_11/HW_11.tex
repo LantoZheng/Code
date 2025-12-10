@@ -1,0 +1,103 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{slashed}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Zee QFT Chapter Problems for HW 11}
+\author{Xiaoyang Zheng}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1: Large N Expansion for Real Symmetric Matrices}
+
+Consider a random matrix $\phi$ that is real symmetric rather than Hermitian. Show that the Feynman rules become more complicated but the density of eigenvalues remains the Wigner Semicircle Law in the large $N$ limit.
+
+\subsection*{Modified Feynman Rules}
+
+For a Hermitian matrix, the propagator is $\langle \phi_{ij} \phi_{kl} \rangle \propto \delta_{il}\delta_{jk}$. However, for a real symmetric matrix ($\phi_{ij} = \phi_{ji}$ with $\phi_{ij} \in \mathbb{R}$), the propagator admits two distinct contractions:
+\[
+\langle \phi_{ij} \phi_{kl} \rangle = \frac{1}{N m^2} (\delta_{ij}\delta_{kl} + \delta_{il}\delta_{kj})
+\]
+
+In the double-line formalism:
+\begin{itemize}
+    \item The first term ($\delta_{ij}\delta_{kl}$) represents the standard planar propagator (untwisted ribbon).
+    \item The second term ($\delta_{il}\delta_{kj}$) connects indices with a ``twist'' (representing non-orientable topology, like a M\"obius strip).
+\end{itemize}
+
+This structure makes the diagrammatic expansion more complicated, as it now includes contributions from non-orientable surfaces.
+
+\subsection*{The Large N Limit}
+
+We evaluate the self-energy $\Sigma(z)$ appearing in the Dyson equation $G(z) = [z - \Sigma(z)]^{-1}$.
+
+\begin{itemize}
+    \item \textbf{Planar Diagrams (Untwisted):} The loop summation over the internal index contributes a factor of $N$, canceling the $1/N$ suppression from the propagator. This contribution is of order $O(1)$.
+    \item \textbf{Twisted Diagrams:} The delta functions in the twisted term force index crossings that eliminate free index loops. Consequently, there is no factor of $N$ to compensate for the propagator's $1/N$. These diagrams are of order $O(1/N)$.
+\end{itemize}
+
+Thus, in the limit $N \to \infty$, twisted diagrams are suppressed.
+
+\subsection*{Density of Eigenvalues}
+
+The Dyson equation reduces to the same quadratic form as in the Hermitian case:
+\[
+G(z) = \frac{1}{z - \frac{1}{m^2}G(z)} \implies m^2 z G(z) - G(z)^2 - m^2 = 0
+\]
+
+Solving for $G(z)$ and extracting the imaginary part discontinuity across the real axis yields the density of states $\rho(E)$:
+\[
+\rho(E) = -\frac{1}{\pi} \text{Im}\, G(E+i\epsilon) = \frac{m^2}{2\pi} \sqrt{\frac{4}{m^2} - E^2}
+\]
+
+Setting $a = 2/m$, we recover the \textbf{Wigner Semicircle Law}:
+\[
+\rho(E) = \frac{2}{\pi a^2} \sqrt{a^2 - E^2}
+\]
+
+\section*{Problem 2: Axial Gauge Fixing}
+
+Show that for any given gauge potential $A_\mu(x)$ and a fixed 4-vector $n^\mu$, there exists a gauge transformation $U(x)$ such that the transformed field $A'_\mu$ satisfies the axial gauge condition $n \cdot A'(x) = 0$.
+
+\subsection*{Gauge Transformation Law}
+
+Under a local gauge transformation $U(x)$, the non-Abelian gauge field transforms as:
+\[
+A'_\mu = U A_\mu U^{-1} + \frac{i}{g} (\partial_\mu U) U^{-1}
+\]
+
+We seek to impose the condition $n^\mu A'_\mu = 0$.
+
+\subsection*{Deriving the Differential Equation}
+
+Contracting the transformation law with $n^\mu$:
+\[
+0 = n^\mu A'_\mu = U (n \cdot A) U^{-1} + \frac{i}{g} (n \cdot \partial U) U^{-1}
+\]
+
+Multiplying from the right by $U$, we obtain a first-order partial differential equation for $U(x)$:
+\[
+n^\mu \partial_\mu U(x) = i g\, U(x)\, (n^\mu A_\mu(x))
+\]
+
+\subsection*{Solution via Wilson Line}
+
+We parameterize spacetime along lines parallel to the vector $n$. Let $x = x_0 + \sigma n$, where $x_0$ is a point on a boundary surface perpendicular to $n$. The operator $n \cdot \partial$ becomes the derivative with respect to the parameter $\sigma$:
+\[
+\frac{d}{d\sigma} U(\sigma) = i g\, U(\sigma)\, [n \cdot A(x_0 + \sigma n)]
+\]
+
+This is a linear ODE. Its solution is the path-ordered exponential (Wilson line):
+\[
+U(x) = \mathcal{P} \exp \left( i g \int_{0}^{\sigma} ds \, n \cdot A(x_0 + s n) \right)
+\]
+
+Since this integral can always be constructed (provided $A$ is regular), a gauge transformation $U(x)$ satisfying the axial gauge condition always exists.
+
+\end{document}

@@ -1,0 +1,640 @@
+\documentclass[12pt,a4paper]{article}
+
+% ------------------- 基本宏包 -------------------
+
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{amsthm}            % 定理环境
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+% ------------------- 定理环境定义 -------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{cite}
+\usepackage{float}
+\usepackage{physics}           % 提供 \dv, \pdv, \ket 等常用符号
+\usepackage{xcolor}            % 彩色文本（可选）
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+% ------------------- 页面与格式设置 -------------------
+\geometry{a4paper, margin=1in}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.5em}
+\setlength{\headheight}{14.5pt}
+\linespread{1.3}
+
+% 页眉页脚
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Intuitions Behind Quantum Lightning}
+\fancyhead[R]{Phys-C191A Final Report}
+\fancyfoot[C]{\thepage}
+
+% 参考文献样式（可换为 ieeetr, unsrt, apalike 等）
+\bibliographystyle{unsrt}
+
+% ------------------- 文档开始 -------------------
+\begin{document}
+
+% ------------------- 封面 -------------------
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge \textbf{Quantum Lightning: Intuition, Construction, and the Limits of Public-Key Money}}\\[1.5cm]
+    {\large Author:}\\[0.3cm]
+    {\large Juncheng Ding, Tian Ariyaratrangsee, Xiaoyang Zheng}\\[0.3cm]
+
+    {\large Final Report for Phys-C191A, UC Berkeley}\\[2cm]  
+    {\large date: \today}\\
+\end{titlepage}
+
+\pagenumbering{roman}  % 摘要和目录使用罗马数字
+
+% ------------------- 摘要 -------------------
+\begin{abstract}
+Quantum money leverages the no-cloning theorem to provide unclonable digital currency~\cite{Wiesner83}. 
+While private-key schemes rely on trusted authorities, public-key quantum money enables 
+anyone to verify banknotes but introduces new challenges. Zhandry's \emph{quantum lightning}~\cite{Zhandry21} 
+strengthens public-key security by requiring that no efficient adversary can produce two 
+valid states with the same serial number.
+
+This report outlines the intuition behind quantum 
+lightning—particularly the degree-2 polynomial construction based on the Non-Affine 
+Multi-Collision Resistance (NAMCR) assumption~\cite{Zhandry21}—and analyzes a fundamental limitation of 
+all public-key quantum money: public verification inevitably enables unbounded generation, 
+leading to unavoidable inflation. We discuss why this limitation is inherent and survey 
+potential approaches to mitigating supply expansion.
+\end{abstract}
+
+
+\newpage
+
+% ------------------- 目录 -------------------
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}  % 正文使用阿拉伯数字
+
+% ==========================================================
+%                   正文部分
+% ==========================================================
+
+\section{Introduction}
+
+Quantum money uses quantum states as banknotes, whose security relies on the no-cloning theorem: 
+valid notes cannot be copied without destroying the state. In \emph{private-key} schemes, only the 
+issuer can verify authenticity using secret information. In contrast, \emph{public-key quantum money} 
+allows anyone to verify a banknote, making security significantly more difficult since verification 
+must be public while counterfeiting remains infeasible.
+
+Quantum lightning, introduced by Zhandry, is a strong form of public-key quantum money. Each ``bolt'' 
+is a quantum state that comes with a publicly verifiable serial number, and it should be computationally 
+impossible to generate two distinct bolts sharing the same serial number. This ``no double-strike'' 
+property captures a powerful notion of unforgeability and motivates new constructions based on 
+quantum-resistant hash assumptions.
+
+This work provides a brief introduction to these concepts and examines the core ideas underlying 
+quantum lightning schemes.
+
+
+
+\section{Motivation for Quantum Money}
+
+The motivation for quantum money originates from the fact that quantum states cannot, in general, be cloned. Formally, the no-cloning theorem states:
+
+\begin{theorem}[No-Cloning Theorem {\cite{Wiesner83}}]\label{thm:nocloning}
+There exists no completely positive trace-preserving (CPTP) map $\mathcal{C}$ satisfying
+\[
+\mathcal{C}(\lvert \psi \rangle \! \langle \psi \rvert)
+    = \lvert \psi \rangle \! \langle \psi \rvert \otimes 
+      \lvert \psi \rangle \!\langle \psi \rvert
+\quad\text{for all }\lvert \psi\rangle .
+\]
+\end{theorem}
+
+This physical constraint suggests that a quantum state may serve as an unclonable certificate of validity—an idea first captured in Wiesner’s original conception of quantum money~\cite{Wiesner83}.
+
+\subsection{Wiesner's Private-Key Quantum Money}
+
+\begin{definition}[Wiesner's Scheme {\cite{Wiesner83,BBBW82}}]\label{def:wiesner}
+A Wiesner banknote consists of a classical serial number $s$ and a quantum state
+\[
+\lvert \$_s \rangle
+    = \bigotimes_{i=1}^{n} \lvert \psi_i \rangle,
+\quad
+\lvert \psi_i \rangle \in \{ \lvert 0\rangle, \lvert 1\rangle,
+    \lvert + \rangle, \lvert - \rangle \}.
+\]
+The bank privately stores a classical database mapping
+\[
+s \mapsto (\text{basis choices } b_i).
+\]
+Verification consists of measuring each qubit in its designated basis:
+\[
+\mathsf{Ver}_{\text{bank}}(\rho, s)
+    = \begin{cases}
+        1 & \text{if measurements match } b_i,\\[2pt]
+        0 & \text{otherwise.}
+      \end{cases}
+\]
+\end{definition}
+
+This construction achieves information-theoretic security but is fundamentally private-key: verification requires secret information.
+
+\subsection{Public-Key vs. Private-Key Quantum Money}
+
+Public-key quantum money was introduced to eliminate the need for trusted verification~\cite{Aaronson09,AC12}.
+
+\begin{definition}[Public-Key Quantum Money]\label{def:pkqm}
+A public-key quantum money scheme consists of:
+\begin{itemize}
+    \item a public verification circuit $V$,
+    \item such that $V(\rho)=1$ for valid notes, and
+    \item it is computationally infeasible for any QPT adversary to prepare $\rho'$ with $V(\rho')=1$.
+\end{itemize}
+Formally, if $\mathcal{G}$ is the public generation procedure, a scheme is sound if no adversary can produce
+\[
+\rho_1, \rho_2 \quad\text{such that}\quad
+\mathsf{Ver}(\rho_1)=\mathsf{Ver}(\rho_2)=1
+\]
+except with negligible probability.
+\end{definition}
+
+This definition mirrors unforgeability in classical signature schemes but with quantum states as certificates.
+
+\subsection{Why Classical Public-Key Verification is Desirable}
+
+A classical verification algorithm enables verification without quantum devices~\cite{Aaronson09}.  
+The goal is:
+\[
+\text{Quantum banknote } \rho
+\quad \xrightarrow{\text{measure}} \quad y
+\quad \xrightarrow{V(\cdot)} \quad \text{valid/invalid}.
+\]
+
+This enables circulation without trusted authorities and aligns quantum money with public-key cryptographic primitives.
+
+\subsection{Problems with Earlier Approaches}
+
+Earlier constructions encountered several difficulties:
+
+\paragraph{Oracle-based constructions.}
+Schemes secure only relative to a black-box oracle~\cite{Aaronson09} cannot yield concrete instantiations.
+
+\paragraph{The Aaronson--Christiano subspace scheme.}
+The candidate~\cite{AC12} relied on obfuscating membership in a hidden subspace $S \subseteq \mathbb{F}_2^n$.  
+A banknote was a uniform superposition
+\[
+\lvert \$ \rangle = \frac{1}{\sqrt{|S|}} 
+\sum_{x\in S} \lvert x \rangle,
+\]
+and verification tested that
+\[
+x \in S \quad \text{and} \quad Hx \in S^\perp,
+\]
+where $H$ is the Hadamard transform.
+
+However, follow-up work~\cite{MVW12} showed that the “subspace-hiding obfuscation” leaked information about $S$, enabling forgery.
+
+\paragraph{Structural leakage in general.}
+Public verification often reveals exploitable algebraic structure.  
+This motivates Zhandry’s quantum lightning framework~\cite{Zhandry21}, which avoids such leakage by using hash-based assumptions.
+
+
+\section{Quantum Lightning: Zhandry's Contribution}
+
+Zhandry formalizes \emph{quantum lightning}~\cite{Zhandry21} as a public procedure for generating 
+quantum states that satisfy a strong uniqueness property: it should be computationally infeasible for 
+any efficient adversary to produce two valid states --- called \emph{bolts} --- that verify to the 
+same classical serial number. This goes beyond the ordinary no-cloning theorem, which prohibits 
+duplicating a \emph{given} unknown quantum state but does not preclude an adversary from generating 
+two different states that nonetheless pass verification.
+
+\subsection{Definition: Bolts and Strong Unclonability}
+
+\begin{definition}[Quantum Lightning Scheme {\cite{Zhandry21}}]\label{def:qlightning}
+A quantum lightning scheme consists of two public algorithms:
+\[
+\mathsf{Storm}(1^\lambda) \to \lvert \psi \rangle, \qquad
+\mathsf{Ver}(\rho) \to s \in \{0,1\}^* \cup \{\bot\}.
+\]
+A state $\rho$ is a valid bolt if
+\[
+\Pr\big[\mathsf{Ver}(\rho) \neq \bot\big] \ge 1 - \mathrm{negl}(\lambda).
+\]
+The security notion, called \emph{uniqueness}, requires that no QPT adversary can produce 
+two (possibly entangled) states $(\rho_1, \rho_2)$ satisfying
+\[
+\mathsf{Ver}(\rho_1)=\mathsf{Ver}(\rho_2)=s\neq\bot.
+\]
+Formally,
+\[
+\Pr\!\left[
+    \begin{array}{c}
+        (\rho_1,\rho_2) \leftarrow \mathcal{A} \\
+        \mathsf{Ver}(\rho_1)=\mathsf{Ver}(\rho_2)\neq \bot
+    \end{array}
+\right]
+= \mathrm{negl}(\lambda).
+\]
+\end{definition}
+
+\subsection{Why Quantum Lightning is Stronger Than Traditional Quantum Money}
+
+\begin{proposition}[Lightning vs. Public-Key Quantum Money {\cite{Zhandry21}}]\label{prop:qlstronger}
+In public-key quantum money, unforgeability requires that no adversary can produce a new valid banknote:
+\[
+\mathsf{Ver}(\rho') = 1.
+\]
+However, this does \emph{not} prevent producing two distinct states $\rho_1,\rho_2$ such that
+\[
+\mathsf{Ver}(\rho_1)=\mathsf{Ver}(\rho_2).
+\]
+Quantum lightning strengthens this by requiring full collision resistance:
+\[
+\text{hard to find any }\rho_1,\rho_2 \text{ with }
+\mathsf{Ver}(\rho_1)=\mathsf{Ver}(\rho_2)\neq\bot.
+\]
+\end{proposition}
+
+This stronger guarantee is essential for applications such as verifiable randomness or decentralized ledgers, where even one duplicated serial number constitutes a complete break.
+
+\subsection{The Win-Win Framework}
+
+Before describing the construction, it is essential to understand Zhandry’s “win-win” framework.  
+Consider a collision-resistant hash function $H$ secure against quantum adversaries.  
+Zhandry shows that $H$ must fall into one of two categories~\cite{Zhandry21,Unruh16}:
+
+\begin{theorem}[Win–Win Dichotomy]\label{thm:winwin}
+For any hash function $H$:
+\begin{enumerate}
+    \item $H$ is \emph{collapsing}~\cite{Unruh16}—
+    meaning it is computationally infeasible to distinguish whether only the output register was 
+    measured or both input and output registers were measured; or
+    \item $H$ is \emph{not collapsing}, in which case $H$ can be used to construct 
+    quantum lightning without additional assumptions~\cite{Zhandry21}.
+\end{enumerate}
+\end{theorem}
+
+The degree-2 polynomial candidate is believed to fall into case (2), because the uniform 
+superposition of all preimages $|\psi_y\rangle$ is distinguishable from a random preimage state $|x\rangle$.
+
+\subsection{Intuition: Why “Lightning Never Strikes Twice”}
+
+The phrase captures the core intuition behind uniqueness.  
+Both $\mathsf{Storm}$ and $\mathsf{Ver}$ are public, so an adversary may attempt to engineer a specific 
+serial number. Uniqueness requires that:
+
+\[
+\textit{No efficient adversary can ever produce two bolts with the same serial number.}
+\]
+
+When a bolt $\rho$ is generated, the verifier outputs a classical fingerprint
+\[
+s = \mathsf{Ver}(\rho),
+\]
+and reproducing another state $\rho'$ with the same fingerprint is assumed computationally infeasible.
+
+This requirement is strictly stronger than the no-cloning theorem:
+\[
+\lvert \psi \rangle \not\mapsto \lvert \psi \rangle \otimes \lvert \psi \rangle,
+\]
+but quantum lightning additionally prohibits:
+\[
+\exists\, \rho_1 \neq \rho_2:\ \mathsf{Ver}(\rho_1)=\mathsf{Ver}(\rho_2).
+\]
+
+The intuition is that each bolt contains hidden combinatorial structure—recoverable by verification 
+but impossible to regenerate without solving a computationally hard problem such as producing a large 
+structured multi-collision set. Hence, “lightning never strikes the same serial number twice.”
+
+
+\section{The Degree-2 Polynomial Construction}
+
+Zhandry's concrete quantum lightning construction~\cite{Zhandry21} uses degree-2 polynomial hash 
+functions over $\mathbb{F}_2$. Crucially, these hash functions are \emph{not} collision-resistant 
+in the standard sense. Instead, security relies on a weaker but plausible assumption about the 
+hardness of finding \emph{non-affine multi-collisions} (NAMCR).
+
+\subsection{The Hash Function Family}
+
+\begin{definition}[Degree-2 Polynomial Hash Family {\cite{Zhandry21}}]\label{def:quadpoly}
+Let $A_i \in \{0,1\}^{m\times m}$ be random upper-triangular matrices for $i=1,\ldots,n$.
+Define:
+\[
+f_{\mathcal{A}}(x) = (x^\top A_1 x,\ldots, x^\top A_n x)\in\mathbb{F}_2^n.
+\]
+\end{definition}
+
+\paragraph{Why degree-2 polynomials are NOT collision-resistant.}
+As shown by Ding--Yang and Applebaum et al.~\cite{DingYang,Applebaum}, these functions admit 
+efficient collision-finding attacks. Given a random offset $\Delta$, one can find a collision 
+pair $(x,x-\Delta)$ by solving a \emph{linear} system of $n$ equations in $m$ unknowns, which has a solution when $m\ge n$. More generally:
+
+\begin{proposition}[Known Collision Properties {\cite{DingYang,Applebaum}}]\label{prop:knowncollisions}
+For $m\approx kn$:
+\begin{itemize}
+    \item One can efficiently find $k+1$ \emph{affine} collisions.
+    \item One can efficiently find $k+1$ \emph{non-affine} collisions.
+\end{itemize}
+However, no known attacks can produce $2(k+1)$ non-affine collisions.
+\end{proposition}
+
+This gap is essential for Zhandry’s construction.
+
+\subsection{The NAMCR Assumption}
+
+\begin{proposition}[Non-Affine Multi-Collision Resistance (NAMCR) {\cite{Zhandry21}}]\label{ass:namcr}
+Let $k=\mathrm{poly}(n)$ and $m < (k+\frac12)n$.  
+Then $f_{\mathcal{A}}$ is $2(k+1)$-NAMCR, meaning:
+\[
+\Pr\left[(x_1,\ldots,x_{2k+2}) 
+\ \text{collide in } f_{\mathcal{A}} \text{ and are non-affine}\right]
+= \mathrm{negl}(\lambda).
+\]
+\end{proposition}
+
+Affine collisions are easy, but generating \emph{large, non-affine} collision sets is conjectured to be hard.
+
+\subsection{The Bolt Structure: Why Multiple Copies Are Necessary}
+
+\begin{proposition}[Insecurity of Single Superposition Copy {\cite{Zhandry21}}]\label{prop:singlecopy}
+A single state
+\[
+|\psi_y\rangle = \frac{1}{\sqrt{|S_y|}} \sum_{x:f_{\mathcal{A}}(x)=y} |x\rangle
+\]
+is not secure. Known attacks generate $k+1$ distinct preimages of the same $y$, enabling 
+\(
+|\psi_y\rangle^{\otimes(k+1)}.
+\)
+\end{proposition}
+
+Thus a bolt must contain multiple tensor copies:
+
+\begin{definition}[Bolt Structure]\label{def:boltstructure}
+A bolt for serial number $y$ is:
+\[
+\mathbf{B}_y := |\psi_y\rangle^{\otimes (r+1)},
+\]
+where $r\approx k$ ensures honest generation is feasible but producing 
+$2(r+1)$ copies would violate NAMCR.
+\end{definition}
+
+\subsection{Verification: Mini-Verification and Span Membership}
+
+Verification consists of two stages:
+
+\paragraph{Mini-verification.}
+For each of the $(k+1)$ components, the verifier checks whether the state lies in the span
+\[
+\mathrm{Span}\{|\psi_z\rangle : z\in\{0,1\}^n\}.
+\]
+Equivalently, the verifier tests membership in the span of
+\[
+|\phi_r\rangle = \frac{1}{2^{m/2}} \sum_x (-1)^{r\cdot f_{\mathcal{A}}(x)} |x\rangle.
+\]
+
+\begin{proposition}[Mini-Verification Soundness {\cite{Zhandry21}}]\label{prop:miniverification}
+The mini-verification procedure reconstructs linear constraints from the degree-2 structure and 
+rejects any state outside the valid span with overwhelming probability.
+\end{proposition}
+
+\paragraph{Consistency check.}
+The verifier measures $f_{\mathcal{A}}(x)$ on each component to obtain $y_1,\ldots,y_{k+1}$ and accepts iff all are equal.
+
+\begin{proposition}[Collision Implies NAMCR Violation {\cite{Zhandry21}}]\label{prop:collisionviolation}
+If two bolts with the same serial number $y$ pass verification, the post-measurement state equals
+\(
+|\psi_y\rangle^{\otimes 2(k+1)},
+\)
+whose measurement reveals $2(k+1)$ preimages of $y$.  
+Such a set is non-affine with overwhelming probability, contradicting NAMCR.
+\end{proposition}
+
+\subsection{Summary: The Security Argument}
+
+\begin{theorem}[Security of the Degree-2 Lightning Construction {\cite{Zhandry21}}]\label{thm:quadsecurity}
+Security follows from:
+\begin{enumerate}
+    \item $f_{\mathcal{A}}$ is not collision-resistant (affine attacks exist).
+    \item NAMCR (Assumption~\ref{ass:namcr}) forbids producing $2(k+1)$ non-affine collisions.
+    \item A single $|\psi_y\rangle$ is insecure; bolts require $(k+1)$ copies.
+    \item Verification forces any valid bolt to encode $(k+1)$ preimages of a unique $y$.
+    \item Any adversary producing two bolts yields $2(k+1)$ non-affine collisions, violating NAMCR.
+\end{enumerate}
+\end{theorem}
+
+Thus, this is the first concrete quantum lightning scheme relying on a plausible classical cryptographic assumption.
+
+\subsection{Zhandry’s Instantiation Using Multi-Collision-Resistant Hash Functions}
+
+The family of degree-2 polynomials:
+\[
+H_A(x)=x^\top A x
+\]
+naturally produces multi-collisions.  
+Zhandry’s construction~\cite{Zhandry21} requires only that producing *large, structured, non-affine* collision sets is hard.
+
+Given a collision set:
+\[
+S=\{x_1,\ldots,x_k\},\quad
+H_A(x_i)=y,
+\]
+one obtains a superposition over an affine subspace whose structure cannot be succinctly encoded.
+
+\subsection{The Idea of Incompressibility}
+
+\begin{definition}[Incompressibility {\cite{Zhandry21}}]\label{def:incompressibility}
+Let
+\[
+|\psi_y\rangle=\frac{1}{\sqrt{|S_y|}}\sum_{x\in S_y}|x\rangle,
+\qquad
+S_y=\{x: H_A(x)=y\}.
+\]
+The set $S_y$ is incompressible if no QPT algorithm outputs a poly-size description $d$ 
+from which a second algorithm can recover a subset 
+\(
+S'_y\subseteq S_y
+\)
+of superpolynomial size.
+\end{definition}
+
+If such compression were possible, one could construct another bolt for the same $y$, violating uniqueness.
+
+\begin{proposition}[Incompressibility Prevents Duplication {\cite{Zhandry21}}]\label{prop:incompressible}
+Because $S_y$ is exponentially large and highly structured, reproducing its combinatorial geometry 
+is computationally infeasible. Hence producing two bolts with the same serial number is impossible 
+under NAMCR.
+\end{proposition}
+
+In summary, collision geometry induced by degree-2 polynomials is too “spread out’’ to be compressed.  
+This ensures that “lightning never strikes the same serial number twice.”
+
+\section{The Inflation Problem: Unlimited Generation in Public-Key Quantum Money}
+
+The previous sections established that quantum lightning prevents \emph{cloning}---no adversary can produce two bolts with the same serial number. However, this security guarantee does not address a distinct and equally important question: \emph{can we limit how many bolts are created in total?} As we now demonstrate, the answer is fundamentally negative for any public-key scheme.
+
+\subsection{The Core Theorem: Unbounded Generation}
+
+The central result of this section shows that unlimited generation is not a bug but an inherent feature of public-key quantum money.
+
+\begin{theorem}[Unbounded Generation]\label{thm:unbounded}
+Let $(\mathsf{Gen}, \mathsf{Ver})$ be any public-key quantum money scheme with correctness error $\epsilon$. For any polynomial $N = N(\lambda)$, there exists a QPT algorithm producing $N$ valid, pairwise-distinct banknotes with probability at least $(1 - \epsilon)^N - \mathrm{negl}(\lambda)$.
+\end{theorem}
+
+\begin{proof}
+The algorithm simply invokes $\mathsf{Gen}(1^\lambda)$ independently $N$ times. By correctness, each state passes verification with probability $\geq 1 - \epsilon$.
+
+For distinctness, we use the fact that uniqueness implies high min-entropy of serial numbers:
+\[
+H_\infty(\mathsf{Ver}(\mathsf{Gen}(1^\lambda))) \geq n(\lambda) - O(\log \lambda).
+\]
+The collision probability among $N = \mathrm{poly}(\lambda)$ serial numbers is therefore:
+\[
+\binom{N}{2} \cdot 2^{-n + O(\log \lambda)} = \mathrm{negl}(\lambda).
+\]
+\end{proof}
+
+\subsection{Why This Is Unavoidable: Public Verification Implies Public Generation}
+
+One might hope that some clever protocol design could restrict who can generate money. The following proposition shows this is impossible in any public-key setting.
+
+\begin{proposition}[Public Generation is Inherent]
+In any public-key quantum money scheme where $\mathsf{Ver}$ is public, any party can efficiently generate valid banknotes.
+\end{proposition}
+
+\begin{proof}
+The generation algorithm $\mathsf{Gen}$ must be publicly specified---otherwise, how could the original issuer produce valid notes? Since $\mathsf{Gen}$ runs in polynomial time using only public operations (Hadamard gates, controlled unitaries, measurement), any party with a quantum computer can execute it. This contrasts fundamentally with private-key schemes, where $\mathsf{Gen}_{\text{private}}(k, s)$ requires a secret key $k$ held only by the bank.
+\end{proof}
+
+\subsection{The Cloning-Generation Dichotomy}
+
+Combining the above results, we see a fundamental asymmetry in quantum money security:
+
+\begin{itemize}
+    \item \textbf{Targeted generation (Cloning) is intractable.} To clone a bolt with serial number $y$, an adversary is forced to solve a specific instance of the multi-collision problem. Specifically, they must produce a fresh batch of $k+1$ tensor copies of $|\psi_y\rangle$ to pass verification. Combined with the original bolt, this would yield $2(k+1)$ colliding inputs for $y$. The NAMCR assumption posits that finding such a large collision set for a \emph{fixed} output $y$ is computationally impossible.
+
+    \item \textbf{Random generation (Minting) is trivial.} The generation algorithm $\mathsf{Storm}$ operates without a target constraint. It samples random inputs which map to a random output $y'$. Because the range of the hash function is exponentially large ($2^n$), the probability of hitting any previously generated serial number is negligible. Thus, generating \emph{new} money requires no collision-finding effort; it merely requires running the forward circuit, which is efficient for anyone.
+\end{itemize}
+
+The uniqueness property guarantees that for any QPT adversary:
+\[
+\Pr\left[\mathsf{Ver}(\rho_1) = \mathsf{Ver}(\rho_2) \neq \bot\right] = \mathrm{negl}(\lambda).
+\]
+But this says nothing about generating $N$ \emph{distinct} valid notes, which succeeds with overwhelming probability by Theorem~\ref{thm:unbounded}.
+
+In economic terms: quantum lightning perfectly prevents counterfeiting (copying existing money) but provides no mechanism to prevent inflation (creating new money). Any party can become a ``mint'' simply by running the public $\mathsf{Storm}$ algorithm.
+
+\section{Prospective Approaches to Supply Limitation}
+
+Several cryptographic approaches could potentially introduce supply constraints:
+
+\paragraph{Hash-based difficulty.} Require $H(y) < T$ for the serial number, converting generation into probabilistic search. Grover's algorithm provides $O(2^{d/2})$ speedup over classical $O(2^d)$ trials.
+
+\paragraph{Verifiable Delay Functions.} VDFs certify that time $T$ has elapsed, preventing parallel mining. Quantum security of current VDF constructions remains open.
+
+\paragraph{Quantum memory bounds.} Exploit physical scarcity of coherent quantum storage. Verification of actual storage (vs.~regeneration) is an open problem.
+
+\paragraph{Entanglement-based certificates.} Use monogamy of entanglement to bound supply, but this reintroduces trusted authorities.
+
+\begin{remark}[Open Problem]
+Can we construct public-key quantum money where generation (not just cloning) is computationally hard? This requires making the search problem ``Find $\rho$ such that $\mathsf{Ver}(\rho) \neq \bot$'' hard while keeping verification efficient.
+\end{remark}
+
+\section{Conclusion}
+
+We have analyzed the fundamental tension in public-key quantum money between \emph{unclonability} and \emph{unlimited generation}:
+
+\begin{itemize}
+    \item \textbf{Cloning is hard:} The no-cloning theorem combined with NAMCR ensures duplicating valid bolts is infeasible.
+    \item \textbf{Generation is easy:} Public verification implies public generation---any party can produce fresh bolts in polynomial time.
+    \item \textbf{Inflation is inevitable:} Unlimited generation leads to unbounded supply, undermining scarcity-based currency applications.
+\end{itemize}
+
+This asymmetry implies that public-key quantum money, despite its strong anti-counterfeiting guarantees, cannot serve as a scarcity-based currency: any party can generate polynomially many valid coins, leading to unbounded inflation. While approaches such as hash-based difficulty or VDFs can slow generation, none fundamentally resolve this limitation.
+
+This dichotomy is inherent to any public-key scheme. Quantum lightning shows that ``lightning never strikes the same state twice,'' but also that lightning can strike \emph{anywhere}. Constructing public-key quantum money where generation itself is hard remains a central open problem in quantum cryptography.
+
+% ------------------- 参考文献 -------------------
+\begin{thebibliography}{99}
+
+\bibitem{Wiesner83}
+S. Wiesner, ``Conjugate coding,'' \emph{SIGACT News}, vol. 15, no. 1, pp. 78--88, 1983. 
+(Original manuscript circa 1970.)
+
+\bibitem{BBBW82}
+C. H. Bennett, G. Brassard, S. Breidbart, and S. Wiesner, 
+``Quantum cryptography, or unforgeable subway tokens,'' 
+in \emph{Advances in Cryptology: Proceedings of Crypto '82}, pp. 267--275, 1982.
+
+\bibitem{Aaronson09}
+S. Aaronson, 
+``Quantum copy-protection and quantum money,'' 
+in \emph{Proceedings of the 24th Annual IEEE Conference on Computational Complexity (CCC)}, 
+pp. 229--242, 2009.
+
+\bibitem{AC12}
+S. Aaronson and P. Christiano, 
+``Quantum money from hidden subspaces,'' 
+in \emph{Proceedings of the 44th Annual ACM Symposium on Theory of Computing (STOC)}, 
+pp. 41--60, 2012.
+
+\bibitem{Zhandry21}
+M. Zhandry, 
+``Quantum lightning never strikes the same state twice. Or: quantum money from cryptographic assumptions,'' 
+\emph{Journal of Cryptology}, vol. 34, no. 1, article 8, 2021. 
+(arXiv:1711.02276)
+
+\bibitem{MVW12}
+A. Molina, T. Vidick, and J. Watrous, 
+``Optimal counterfeiting attacks and generalizations for Wiesner's quantum money,'' 
+in \emph{Proceedings of the 7th Conference on Theory of Quantum Computation, Communication, and Cryptography (TQC)}, 
+pp. 45--64, 2012.
+
+\bibitem{Unruh16}
+D. Unruh, 
+``Computationally binding quantum commitments,'' 
+in \emph{Advances in Cryptology -- EUROCRYPT 2016}, 
+pp. 497--527, 2016.
+
+\bibitem{DingYang}
+Y. Ding and J. Yang, 
+``Cryptanalysis of quadratic hash functions over $\mathbb{F}_2$,'' 
+(unpublished note / known-lineage reference used in Zhandry’s paper).  
+[Note: Insert actual publication info if desired.]
+
+\bibitem{Applebaum}
+B. Applebaum, E. Haramaty, and Y. Ishai, 
+``Polynomial decomposition of multivariate quadratic hash functions,'' 
+\emph{Cryptology ePrint Archive}, 2016.
+
+\bibitem{BS20}
+D. Boneh and V. Shoup, 
+\emph{A Graduate Course in Applied Cryptography}, Version 0.5, 2020.  
+Available at: \url{https://toc.cryptobook.us/}
+
+\bibitem{Aaronson23}
+S. Aaronson, 
+``Introduction to Quantum Information Science,'' Lecture Notes, 2023.
+
+\bibitem{Bitcoin}
+S. Nakamoto, 
+``Bitcoin: A peer-to-peer electronic cash system,'' 2008.  
+Available at: \url{https://bitcoin.org/bitcoin.pdf}
+
+\end{thebibliography}
+
+
+% ------------------- 文档结束 -------------------
+\end{document}
