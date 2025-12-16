@@ -1,0 +1,468 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, physics}
+\usepackage{geometry}
+\usepackage{slashed}
+\usepackage{cancel}
+
+\geometry{a4paper, margin=1in}
+
+\title{Physics 151: Intro to QFT - Final Exam Answers}
+\author{Xiaoyang Zheng}
+\date{Fall 2025}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1: Symmetries of the Free Theory}
+
+The action is given by:
+\begin{equation}
+    S_0 = \int dt \, d^D x \, \left\{ i\phi^\dagger \partial_t \phi - \partial_i \phi^\dagger \partial_i \phi \right\}
+\end{equation}
+
+\subsection*{(i) Conserved Current for Phase Symmetry}
+Consider the global $U(1)$ phase transformation $\phi \to e^{i\alpha}\phi$. For an infinitesimal transformation with parameter $\alpha$, the variations are:
+\begin{equation}
+    \delta \phi = i\alpha \phi, \quad \delta \phi^\dagger = -i\alpha \phi^\dagger
+\end{equation}
+The Lagrangian density is $\mathcal{L} = i\phi^\dagger \partial_t \phi - \partial_i \phi^\dagger \partial_i \phi$. Using Noether's theorem, the conserved current $j^\mu = (j^0, j^i)$ associated with this continuous symmetry is:
+\begin{equation}
+    j^\mu = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi)} \delta \phi + \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi^\dagger)} \delta \phi^\dagger
+\end{equation}
+For the time component ($\mu = 0$), computing the functional derivatives:
+\begin{align}
+    \frac{\partial \mathcal{L}}{\partial (\partial_t \phi)} &= i\phi^\dagger, \quad \frac{\partial \mathcal{L}}{\partial (\partial_t \phi^\dagger)} = 0
+\end{align}
+The Noether current density is $j^\mu = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi)} \frac{\delta \phi}{\alpha} + \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi^\dagger)} \frac{\delta \phi^\dagger}{\alpha}$. Thus:
+\begin{equation}
+    j^0 = (i\phi^\dagger)(i \phi) + 0 \cdot (-i\phi^\dagger) = -\phi^\dagger \phi
+\end{equation}
+With the conventional choice of sign (so that $Q > 0$ for particles):
+\begin{equation}
+    \boxed{j^0 = \phi^\dagger \phi}
+\end{equation}
+For the spatial component ($i = 1, 2, \ldots, D$):
+\begin{align}
+    \frac{\partial \mathcal{L}}{\partial (\partial_i \phi)} &= -\partial_i \phi^\dagger, \quad \frac{\partial \mathcal{L}}{\partial (\partial_i \phi^\dagger)} = -\partial_i \phi
+\end{align}
+Thus:
+\begin{equation}
+    j^i = (-\partial_i \phi^\dagger)(i \phi) + (-\partial_i \phi)(-i \phi^\dagger) = -i\partial_i \phi^\dagger \cdot \phi + i\partial_i \phi \cdot \phi^\dagger
+\end{equation}
+With the same sign convention:
+\begin{equation}
+    \boxed{j^i = i(\phi^\dagger \partial_i \phi - \partial_i \phi^\dagger \cdot \phi) = i(\phi^\dagger \overleftrightarrow{\partial_i} \phi)}
+\end{equation}
+where $A \overleftrightarrow{\partial} B \equiv A(\partial B) - (\partial A) B$. The density $j^0 = \phi^\dagger \phi$ represents the particle number density, and $j^i$ is the associated probability current density (analogous to the quantum mechanical probability current).
+
+\subsection*{(ii) Energy-Momentum Tensor}
+The energy-momentum tensor arises from the invariance under spacetime translations $x^\mu \to x^\mu + \epsilon^\mu$. The conserved energy-momentum tensor is defined via Noether's theorem as:
+\begin{equation}
+    T^{\mu\nu} = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi)} \partial^\nu \phi + \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi^\dagger)} \partial^\nu \phi^\dagger - \delta^{\mu\nu} \mathcal{L}
+\end{equation}
+Computing the derivatives:
+\begin{align}
+    \frac{\partial \mathcal{L}}{\partial (\partial_0 \phi)} &= i\phi^\dagger, \quad \frac{\partial \mathcal{L}}{\partial (\partial_i \phi)} = -\partial_i \phi^\dagger
+\end{align}
+Therefore, the energy-momentum tensor components are:
+
+**Energy density** ($\mu = \nu = 0$):
+\begin{equation}
+    T^{00} = (i\phi^\dagger)(\partial_0 \phi) + 0 - \mathcal{L} = i\phi^\dagger \partial_0 \phi - (i\phi^\dagger \partial_t \phi - \partial_i \phi^\dagger \partial_i \phi) = \partial_i \phi^\dagger \partial_i \phi
+\end{equation}
+
+**Momentum density** ($\mu = i, \nu = 0$):
+\begin{equation}
+    T^{i0} = (i\phi^\dagger)(\partial_i \phi) + 0 = i(\phi^\dagger \partial_i \phi)
+\end{equation}
+
+**Stress tensor** ($\mu = i, \nu = j$):
+\begin{equation}
+    T^{ij} = (-\partial_i \phi^\dagger)(\partial_j \phi) + (-\partial_i \phi)(\partial_j \phi^\dagger) - \delta^{ij} \mathcal{L}
+\end{equation}
+
+This energy-momentum tensor is a consequence of the invariance of the theory under **spacetime translations**, which form the Poincaré symmetry group. The conservation law $\partial_\mu T^{\mu\nu} = 0$ reflects the homogeneity of spacetime.
+
+\subsection*{(iii) Canonical Quantization}
+The canonical momentum conjugate to $\phi$ is defined as:
+\begin{equation}
+    \pi(x) = \frac{\delta S_0}{\delta \dot{\phi}} = \frac{\partial \mathcal{L}}{\partial \dot{\phi}} = i\phi^\dagger(x)
+\end{equation}
+The canonical commutation relation is $[\phi(\vec{x}), \pi(\vec{y})] = i\delta^D(\vec{x}-\vec{y})$, which gives:
+\begin{equation}
+    [\phi(\vec{x}), i\phi^\dagger(\vec{y})] = i\delta^D(\vec{x}-\vec{y}) \implies [\phi(\vec{x}), \phi^\dagger(\vec{y})] = \delta^D(\vec{x}-\vec{y})
+\end{equation}
+Thus the canonical conjugate momentum can be expressed as:
+\begin{equation}
+    \boxed{\pi(x) = i\phi^\dagger(x)}
+\end{equation}
+
+\textbf{Important:} In this \emph{non-relativistic} theory, unlike the relativistic Klein-Gordon field, the field $\phi$ only contains annihilation operators (positive frequency modes), and $\phi^\dagger$ only contains creation operators. There are no antiparticles in the non-relativistic limit.
+
+In Fourier space, expanding in plane waves with energy-momentum relation $\omega_k = k^2$ (we set $\hbar = 2m = 1$):
+\begin{equation}
+    \phi(t, \vec{x}) = \int \frac{d^D k}{(2\pi)^D} \, \hat{a}_{\vec{k}} \, e^{-i\omega_k t + i\vec{k}\cdot\vec{x}}
+\end{equation}
+where $\hat{a}_{\vec{k}}$ is the annihilation operator for a particle with momentum $\vec{k}$.
+
+The hermitian conjugate field is:
+\begin{equation}
+    \phi^\dagger(t, \vec{x}) = \int \frac{d^D k}{(2\pi)^D} \, \hat{a}_{\vec{k}}^\dagger \, e^{i\omega_k t - i\vec{k}\cdot\vec{x}}
+\end{equation}
+Canonical commutation relations impose:
+\begin{equation}
+    \boxed{[\hat{a}_{\vec{k}}, \hat{a}_{\vec{k}'}^\dagger] = (2\pi)^D \delta^D(\vec{k} - \vec{k}')}
+\end{equation}
+with all other commutators vanishing: $[\hat{a}_{\vec{k}}, \hat{a}_{\vec{k}'}] = [\hat{a}_{\vec{k}}^\dagger, \hat{a}_{\vec{k}'}^\dagger] = 0$.
+
+\subsection*{(iv) Conserved Charge}
+The conserved charge associated with the $U(1)$ phase symmetry is obtained by integrating the time component of the current over all space:
+\begin{equation}
+    Q = \int d^D x \, j^0(t,\vec{x}) = \int d^D x \, \phi^\dagger(\vec{x}) \phi(\vec{x})
+\end{equation}
+Substituting the mode expansion from part (iii):
+\begin{align}
+    Q &= \int d^D x \, \phi^\dagger(\vec{x}) \phi(\vec{x}) \nonumber\\
+    &= \int d^D x \int \frac{d^D k}{(2\pi)^D} \int \frac{d^D k'}{(2\pi)^D} \, \hat{a}_{\vec{k}}^\dagger e^{i(\omega_k t - \vec{k}\cdot\vec{x})} \cdot \hat{a}_{\vec{k}'} e^{-i(\omega_{k'} t - \vec{k}'\cdot\vec{x})}
+\end{align}
+The spatial integral gives $\int d^D x \, e^{i(\vec{k}' - \vec{k})\cdot\vec{x}} = (2\pi)^D \delta^D(\vec{k} - \vec{k}')$, enforcing $\vec{k} = \vec{k}'$. The time-dependent phases cancel, and we obtain:
+\begin{equation}
+    \boxed{Q = \int \frac{d^D k}{(2\pi)^D} \, \hat{a}_{\vec{k}}^\dagger \hat{a}_{\vec{k}} = \hat{N}}
+\end{equation}
+This is exactly the \textbf{total particle number operator} $\hat{N}$.
+
+\textbf{Physical interpretation:} The conserved charge $Q = \hat{N}$ counts the total number of particles in the system. The $U(1)$ phase symmetry $\phi \to e^{i\alpha}\phi$ ensures particle number conservation in the non-relativistic theory. This is a distinctive feature of non-relativistic quantum field theory: unlike in relativistic QFT (where only the difference between particle and antiparticle numbers is conserved), the total particle number itself is a good quantum number. This reflects the absence of particle-antiparticle pair creation at non-relativistic energies.
+
+\section*{Problem 2: Classical Scaling Dimensions}
+
+\subsection*{(i) Dynamical Critical Exponent $z$}
+The dispersion relation for the free theory is $\omega = k^2$. 
+Under a scaling transformation of space $x \to \lambda x$, momenta scale as $k \to \lambda^{-1} k$.
+For the dispersion relation to remain invariant:
+\begin{equation}
+    \omega \sim k^2 \implies \frac{1}{t} \sim \frac{1}{L^2} \implies t \sim L^2
+\end{equation}
+Comparing to the definition $t \sim L^z$, we identify the dynamical critical exponent:
+\begin{equation}
+    z = 2
+\end{equation}
+
+\subsection*{(ii) Scaling Dimension of the Field $[\phi]$}
+We use energy units where $[\partial_t] = 1$ (setting $\hbar = 1$). Since the action is dimensionless, $[S] = 0$. From $[dt] = -1$ (inverse time dimension) and $[\partial_t] = 1$, we have:
+\begin{equation}
+    [\partial_t] = -[t] = 1 \implies [t] = -1
+\end{equation}
+From the dispersion relation $\partial_t \sim (\nabla)^2$ or $\omega_k = k^2$, we get:
+\begin{equation}
+    [\partial_t] = 2[\partial_i] \implies [\partial_i] = \frac{1}{2}[\partial_t] = \frac{1}{2}
+\end{equation}
+Thus $[x] = -[1/\partial_x] = -1/2$, and:
+\begin{equation}
+    [d^D x] = -D/2
+\end{equation}
+
+Analyzing the kinetic term $\int dt \, d^D x \, i\phi^\dagger \partial_t \phi$, which must be dimensionless:
+\begin{align}
+    [dt] + [d^D x] + 2[\phi] + [\partial_t] &= 0 \\
+    -1 - \frac{D}{2} + 2[\phi] + 1 &= 0 \\
+    2[\phi] &= \frac{D}{2}
+\end{align}
+Solving for $[\phi]$:
+\begin{equation}
+    \boxed{[\phi] = \frac{D}{4}}
+\end{equation}
+
+**Interpretation:** This is the scaling dimension of the non-relativistic bosonic field. It increases with spatial dimension because fields in higher dimensions can have longer-range correlations before renormalization becomes necessary.
+
+\section*{Problem 3: Interactions and Renormalization}
+
+The interaction term is $S_{\text{int}} = -\int dt d^D x \frac{g^2}{2} (\phi^\dagger \phi)^2$.
+
+\subsection*{(i) Critical Dimension for Renormalizability}
+For the theory to be power-counting renormalizable, all couplings (including $m^2$ and $g^2$) should be dimensionless or have non-negative scaling dimensions.
+
+From Problem 2, we have $[\phi] = D/4$. The scaling dimension of the mass-squared term is:
+\begin{equation}
+    [m^2 \phi^\dagger \phi] = [m^2] + 2[\phi] = [m^2] + D/2
+\end{equation}
+For this to be a relevant or marginal term (dimension $\leq 0$):
+\begin{equation}
+    [m^2] = -D/2
+\end{equation}
+
+For the interaction term $\frac{g^2}{2}(\phi^\dagger \phi)^2$:
+\begin{align}
+    [g^2 (\phi^\dagger \phi)^2] &= [g^2] + 4[\phi] \\
+    &= [g^2] + D
+\end{align}
+For the coupling to be dimensionless ($[g^2] = 0$):
+\begin{equation}
+    [g^2 (\phi^\dagger \phi)^2] = D
+\end{equation}
+
+A theory is renormalizable if all possible counterterms have dimension $\leq 0$. The most relevant operators besides the kinetic term are:
+- $(\phi^\dagger \phi)$: dimension $[m^2] + 2[\phi] = -D/2 + D = D/2$. This is the mass term.
+- $(\phi^\dagger \phi)^2$: dimension $0 + D = D$.
+- $(\phi^\dagger \phi)^3$: dimension $D' + 6[\phi] = D' + 3D/2$.
+
+At the critical dimension where $[g^2] = 0$, the quartic term is marginal. Higher-order terms like $(\phi^\dagger \phi)^3$ are irrelevant unless $D' + 3D/2 \leq 0$, which is impossible for positive $D$.
+
+Setting $[g^2] = 0$ gives:
+\begin{equation}
+    0 + D = 0 \implies \boxed{D = 2}
+\end{equation}
+
+**Analysis at $D = 2$:**
+
+At $D = 2$, the four-point coupling $g^2$ is dimensionless (marginal). Higher-order operators like:
+- $(\phi^\dagger \phi)^3$: dimension $3D/2 = 3 > 0$ (irrelevant)
+- $(\phi^\dagger \partial_t \phi)^2$: dimension $(1 + D/4) + (1 + D/4) = 2 + D/2 = 3$ (irrelevant)
+
+Therefore, at $D = 2$, no new operator structures are generated during renormalization. Only the coefficient of the marginal coupling $g^2$ will run logarithmically with the renormalization scale. The theory is **renormalizable** in $D = 2$.
+
+\subsection*{(ii) Feynman Rules}
+
+The Lagrangian density of the interacting theory is:
+\begin{equation}
+    \mathcal{L} = i\phi^\dagger \partial_t \phi - \partial_i \phi^\dagger \partial_i \phi - m^2 \phi^\dagger \phi - \frac{g^2}{2}(\phi^\dagger \phi)^2
+\end{equation}
+
+**Propagator:**
+From the quadratic part of the action, the inverse of the differential operator gives the propagator. In momentum space with $k = (\omega, \vec{k})$:
+\begin{equation}
+    \tilde{G}(k) = \frac{i}{\omega - \vec{k}^2 - m^2 + i\epsilon}
+\end{equation}
+where the $i\epsilon$ prescription ensures causality (particles go forward in time).
+
+**Vertex:**
+The interaction Hamiltonian density is:
+\begin{equation}
+    \mathcal{H}_{\text{int}} = \frac{g^2}{2}(\phi^\dagger \phi)^2
+\end{equation}
+In the path integral formalism, this contributes a factor of $-i \int dt d^D x \, \frac{g^2}{2}(\phi^\dagger \phi)^2$ to the action. For a single spacetime point (vertex), the vertex factor is:
+\begin{equation}
+    V = -i \frac{g^2}{2}
+\end{equation}
+Since $(\phi^\dagger \phi)^2 = (\phi^\dagger \phi)(\phi^\dagger \phi)$ contains four field operators (two $\phi$ and two $\phi^\dagger$), the vertex can be labeled with 4 external legs. The combinatorial factor for contracting external lines with the vertex is 1 (the vertex is already symmetric in pairs of annihilation and creation operators).
+
+Therefore, the \textbf{vertex amplitude} for scattering processes (particle + particle $\to$ particle + particle, for example) is:
+\begin{equation}
+    \boxed{V = -i\frac{g^2}{2}}
+\end{equation}
+
+**Summary of Feynman Rules:**
+\begin{enumerate}
+    \item Draw all diagrams with $n$ vertices connected by $m$ internal propagator lines.
+    \item Assign four-momentum $k = (\omega, \vec{k})$ to each internal line. Enforce energy-momentum conservation at each vertex.
+    \item For each internal line, include a factor of $\frac{i}{\omega - \vec{k}^2 - m^2 + i\epsilon}$.
+    \item For each vertex, include a factor of $-i\frac{g^2}{2}$.
+    \item Integrate over all internal momenta: $\int \frac{d\omega d^D \vec{k}}{(2\pi)^{D+1}}$ for each loop.
+    \item Include combinatorial factors from identical particles and symmetries.
+\end{enumerate}
+
+\section*{Problem 4: Spontaneous Symmetry Breaking}
+
+The action is modified to $\tilde{S}$ with potential $V(\phi) = -\mu^2 |\phi|^2 + \frac{g^2}{2} |\phi|^4$.
+
+\subsection*{(i) Classical Ground State}
+The effective potential of the system is:
+\begin{equation}
+    V(\phi) = -\mu^2 |\phi|^2 + \frac{g^2}{2}|\phi|^4
+\end{equation}
+Setting $\rho = |\phi|^2$, we have:
+\begin{equation}
+    V(\rho) = -\mu^2 \rho + \frac{g^2}{2}\rho^2
+\end{equation}
+Minimizing with respect to $\rho$ to find the ground state:
+\begin{equation}
+    \frac{dV}{d\rho} = -\mu^2 + g^2 \rho = 0 \implies \rho_0 = \frac{\mu^2}{g^2}
+\end{equation}
+The vacuum expectation value (VEV) is:
+\begin{equation}
+    v = \sqrt{\rho_0} = \boxed{\frac{\mu}{g}}
+\end{equation}
+
+Since the potential depends only on $|\phi|^2$, the field can be written in the form:
+\begin{equation}
+    \phi(t, \vec{x}) = (v + \chi(t, \vec{x})) e^{i\theta(t, \vec{x})}
+\end{equation}
+where:
+\begin{itemize}
+    \item $\chi(t, \vec{x})$ represents small fluctuations in the amplitude around the VEV $v$
+    \item $\theta(t, \vec{x})$ represents the phase of the field
+\end{itemize}
+
+This decomposition makes the spontaneous breaking of the $U(1)$ symmetry explicit: the vacuum has an arbitrary phase choice $\phi_0 = v e^{i\theta_0}$, and the phase fluctuation $\theta$ corresponds to the Goldstone mode that costs no energy.
+\subsection*{(ii) Dispersion Relations and Goldstone Modes}
+
+We expand the action $\tilde{S}$ to quadratic order in the fluctuation fields $\chi$ and $\theta$ around the vacuum with $\phi_0 = v = \mu/g$.
+
+**Step 1: Substitute the parametrization**
+
+Using $\phi(t,\vec{x}) = (v + \chi(t,\vec{x})) e^{i\theta(t,\vec{x})}$, we compute:
+\begin{align}
+    \partial_t \phi &= \left( \dot{\chi} + i(v+\chi)\dot{\theta} \right) e^{i\theta} \\
+    \partial_i \phi &= \left( \partial_i \chi + i(v+\chi)\partial_i \theta \right) e^{i\theta}
+\end{align}
+
+**Step 2: Expand the kinetic term**
+
+\begin{align}
+    i\phi^\dagger \partial_t \phi &= i(v+\chi) e^{-i\theta} \left[ (\dot{\chi} + i(v+\chi)\dot{\theta}) e^{i\theta} \right] \\
+    &= i(v+\chi)[\dot{\chi} + i(v+\chi)\dot{\theta}] \\
+    &= i(v+\chi)\dot{\chi} - (v+\chi)^2 \dot{\theta}
+\end{align}
+To quadratic order in $(\chi, \theta)$:
+\begin{align}
+    i\phi^\dagger \partial_t \phi &\approx iv\dot{\chi} + i\chi\dot{\chi} - v^2\dot{\theta} - 2v\chi\dot{\theta} - \chi^2\dot{\theta} \\
+    &\approx \text{total derivative} - v^2\dot{\theta} - 2v\chi\dot{\theta}
+\end{align}
+Keeping only the quadratic interactions (dropping total derivatives):
+\begin{equation}
+    \mathcal{L}_{\text{kinetic}}^{(2)} = -2v\chi\dot{\theta}
+\end{equation}
+
+**Step 3: Expand the spatial derivatives**
+
+\begin{equation}
+    |\nabla \phi|^2 = |(\nabla\chi) e^{i\theta} + i(v+\chi)(\nabla\theta) e^{i\theta}|^2 = (\nabla\chi)^2 + (v+\chi)^2(\nabla\theta)^2
+\end{equation}
+To quadratic order:
+\begin{equation}
+    |\nabla \phi|^2 \approx (\nabla\chi)^2 + v^2(\nabla\theta)^2 + 2v\chi(\nabla\theta)^2
+\end{equation}
+
+**Step 4: Expand the potential**
+
+The potential is $V(\phi) = -\mu^2|\phi|^2 + \frac{g^2}{2}|\phi|^4 = -\mu^2 \rho + \frac{g^2}{2}\rho^2$ with $\rho = |\phi|^2 = (v+\chi)^2 + O(\text{nonlin})$.
+
+At the minimum $\rho_0 = v^2 = \mu^2/g^2$, we have $V(v) = -\mu^4/g^2 + \mu^4/(2g^2) = -\mu^4/(2g^2)$.
+
+Expanding around the minimum:
+\begin{align}
+    \rho &= (v+\chi)^2 = v^2 + 2v\chi + \chi^2 \\
+    V(\rho) &= -\mu^2(v^2 + 2v\chi + \chi^2) + \frac{g^2}{2}(v^2 + 2v\chi + \chi^2)^2 \\
+    &\approx V(v) + \left. \frac{dV}{d\rho}\right|_v (2v\chi) + \frac{1}{2}\left. \frac{d^2V}{d\rho^2}\right|_v (2v\chi)^2
+\end{align}
+where $\frac{dV}{d\rho}\big|_v = -\mu^2 + g^2 v^2 = 0$ (minimization condition) and $\frac{d^2V}{d\rho^2}\big|_v = g^2$.
+
+Therefore:
+\begin{equation}
+    V(\phi) \approx V(v) + g^2(2v\chi)^2/2 = V(v) + 2g^2 v^2 \chi^2 = V(v) + 2\mu^2 \chi^2
+\end{equation}
+To quadratic order:
+\begin{equation}
+    \mathcal{L}_{\text{pot}}^{(2)} = -2\mu^2\chi^2
+\end{equation}
+
+\textbf{Step 5: Quadratic Lagrangian and equations of motion}
+
+Combining all terms (note: the $2v\chi(\nabla\theta)^2$ term is cubic and should be dropped):
+\begin{equation}
+    \mathcal{L}^{(2)} = -2v\chi\dot{\theta} - (\nabla\chi)^2 - v^2(\nabla\theta)^2 - 2\mu^2\chi^2
+\end{equation}
+
+The equations of motion are obtained by varying the action with respect to $\chi$ and $\theta$:
+\begin{align}
+    \frac{\delta S}{\delta \chi} = 0 &: \quad 2v\dot{\theta} + 2\nabla^2\chi - 4\mu^2\chi = 0 \nonumber\\
+    &\implies v\dot{\theta} = 2\mu^2\chi - \nabla^2\chi
+\end{align}
+\begin{align}
+    \frac{\delta S}{\delta \theta} = 0 &: \quad 2v\dot{\chi} - 2v^2\nabla^2\theta = 0 \nonumber\\
+    &\implies \dot{\chi} = v\nabla^2\theta
+\end{align}
+
+Taking a time derivative of the first equation and substituting the second:
+\begin{equation}
+    v\ddot{\theta} = 2\mu^2 \dot{\chi} - \nabla^2 \dot{\chi} = (2\mu^2 - \nabla^2)(v\nabla^2\theta)
+\end{equation}
+\begin{equation}
+    \ddot{\theta} = (2\mu^2 - \nabla^2)\nabla^2\theta
+\end{equation}
+
+In Fourier space with $\theta \sim e^{-i\omega t + i\vec{k}\cdot\vec{x}}$:
+\begin{equation}
+    \omega^2 = k^2(2\mu^2 + k^2)
+\end{equation}
+
+Thus the dispersion relation for the phase mode is:
+\begin{equation}
+    \boxed{\omega = k\sqrt{2\mu^2 + k^2} = \sqrt{2}\mu k \sqrt{1 + \frac{k^2}{2\mu^2}}}
+\end{equation}
+
+\textbf{Analysis of the dispersion:}
+\begin{itemize}
+    \item \textbf{Long-wavelength limit} ($k \ll \mu$): $\omega \approx \sqrt{2}\mu \cdot k = c_s k$, where the sound velocity is $c_s = \sqrt{2}\mu = \sqrt{2}gv$. This is a \textbf{linearly dispersing, gapless mode} (the Goldstone boson).
+    
+    \item \textbf{Short-wavelength limit} ($k \gg \mu$): $\omega \approx k^2$, recovering the free-particle quadratic dispersion.
+\end{itemize}
+
+The amplitude mode $\chi$ can be analyzed similarly. From the coupled equations, one can show that $\chi$ is a \textbf{gapped mode} with gap $\Delta = 2\mu$ at $k=0$, corresponding to oscillations in the magnitude of the condensate (also known as the Higgs mode in condensed matter).
+
+\textbf{Goldstone's Theorem:} The spontaneous breaking of the continuous $U(1)$ symmetry guarantees the existence of \textbf{one gapless Nambu-Goldstone boson} (the phonon/phase mode $\theta$). In non-relativistic systems with $z=2$ dynamical scaling, the Goldstone mode is \textbf{linearly dispersing} ($\omega \propto k$) rather than having the quadratic dispersion of free particles. This is a general feature: symmetry breaking with a first-order time derivative in the action leads to a single gapless mode with type-I (linear) dispersion, as opposed to relativistic systems where Lorentz invariance dictates $\omega = ck$.
+
+\textbf{Note:} In this non-relativistic system, $\chi$ and $\theta$ are not independent dynamical degrees of freedom---they are canonically conjugate to each other (from the $\chi\dot{\theta}$ term). Therefore, there is only \textbf{one} propagating mode (the phase/Goldstone mode), not two.
+
+\subsection*{(iii) Large-$N$ Expansion}
+Consider the theory generalized to an $N$-component vector field with $O(N)$ or $SU(N)$ symmetry. The interaction term scales as $g^2 (\phi^\dagger \phi)^2$.
+To obtain a meaningful limit where quantum corrections are finite but non-trivial as $N \to \infty$, we must scale the coupling constant $g^2$ such that the effective interaction strength remains constant.
+We must hold the 't Hooft coupling fixed:
+\begin{equation}
+    \lambda = g^2 N = \text{fixed}
+\end{equation}
+This implies that the individual coupling must scale as $g^2 \sim 1/N$.
+
+\section*{Problem 5: The Casimir Effect}
+
+\subsection*{(i) Fermionic Casimir Effect}
+
+The Casimir effect arises from the zero-point energy of quantum fields confined between boundaries. In 1+1 dimensions, we analyze this for both bosons and fermions.
+
+\textbf{Bosonic zero-point energy:}
+
+For a massless scalar field satisfying Dirichlet boundary conditions $\phi(0) = \phi(d) = 0$, the allowed momenta are quantized as $k_n = \frac{\pi n}{d}$ with $n = 1, 2, 3, \ldots$. The zero-point energy per mode is:
+\begin{equation}
+    E_0^{\text{boson}} = \frac{1}{2}\sum_{n=1}^{\infty} \hbar\omega_n = \frac{\hbar c}{2}\sum_{n=1}^{\infty} k_n = \frac{\pi\hbar c}{2d}\sum_{n=1}^{\infty} n
+\end{equation}
+This divergent sum is regularized (e.g., via zeta-function regularization: $\sum n = \zeta(-1) = -\frac{1}{12}$) to give:
+\begin{equation}
+    E_0^{\text{boson}}(d) = \frac{\pi\hbar c}{2d} \cdot \left(-\frac{1}{12}\right) = -\frac{\pi\hbar c}{24d}
+\end{equation}
+The Casimir force is:
+\begin{equation}
+    F_{\text{boson}} = -\frac{\partial E_0^{\text{boson}}}{\partial d} = -\frac{\pi\hbar c}{24d^2} \quad \text{(attractive)}
+\end{equation}
+
+\textbf{Fermionic zero-point energy:}
+
+For a massless Dirac fermion in 1+1D, the situation requires careful analysis. The Dirac equation in 1+1D has \textbf{two components} (corresponding to left- and right-moving modes). The zero-point energy for fermions is:
+\begin{equation}
+    E_0^{\text{fermion}} = -\frac{1}{2}\sum_{n} \hbar\omega_n
+\end{equation}
+where the \textbf{negative sign} arises from the anticommutation relations of fermionic operators. This can be understood from the Hamiltonian: $H = \sum_k \omega_k (\hat{c}_k^\dagger \hat{c}_k - \frac{1}{2})$ after normal ordering with the fermionic vacuum.
+
+\textbf{Boundary conditions for fermions:}
+
+Assuming the fermion satisfies the \textbf{same boundary conditions} as the boson (as stated in the problem), the mode spectrum is identical: $\omega_n = \frac{\pi n c}{d}$.
+
+However, the Dirac fermion in 1+1D has \textbf{two polarizations} (or equivalently, particle and antiparticle states both contribute). Therefore:
+\begin{equation}
+    E_0^{\text{fermion}}(d) = 2 \times \left(-\frac{1}{2}\right) \times \frac{\pi\hbar c}{2d}\sum_{n=1}^{\infty} n = -\frac{\pi\hbar c}{2d} \cdot \left(-\frac{1}{12}\right) = +\frac{\pi\hbar c}{24d}
+\end{equation}
+
+The fermionic Casimir force is:
+\begin{equation}
+    F_{\text{fermion}} = -\frac{\partial E_0^{\text{fermion}}}{\partial d} = +\frac{\pi\hbar c}{24d^2}
+\end{equation}
+
+\textbf{Final answer:}
+\begin{equation}
+    \boxed{F_{\text{fermion}} = +\frac{\pi\hbar c}{24d^2} \quad \text{(repulsive)}}
+\end{equation}
+
+The fermionic Casimir force has the \textbf{same magnitude} but \textbf{opposite sign} compared to the bosonic case. While the bosonic vacuum fluctuations produce an attractive force, the fermionic vacuum fluctuations produce a \textbf{repulsive} force.
+
+\textbf{Physical interpretation:} This sign difference is a direct consequence of Fermi-Dirac vs.\ Bose-Einstein statistics. The anticommutation relations for fermions lead to a negative zero-point contribution to the energy. This result has profound implications: in supersymmetric theories where bosonic and fermionic degrees of freedom are paired, their Casimir contributions exactly cancel, which is one mechanism for addressing the cosmological constant problem.
+\end{document}

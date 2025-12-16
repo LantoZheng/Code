@@ -1,0 +1,103 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+
+% 页面设置
+\geometry{a4paper, margin=1in}
+
+\title{Physics 151: Intro to QFT \\ FALL 2025 FINAL TAKE-HOME EXAM}
+\author{Petr Hořava}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1.}
+
+Consider the theory of a non-relativistic complex scalar field $\phi(t,x^{i})$ in $D+1$ spacetime dimensions, first without turning on any interactions, and described by the following action:
+\[
+S_{0}=\int dt~d^{D}x\{i\phi^{\dagger}\partial_{t}\phi-\partial_{i}\phi^{\dagger}\partial_{i}\phi\}
+\]
+Later on, we will add self-interaction terms to this action, but let's first study some symmetries of this free theory.
+
+\begin{enumerate}[label=(\roman*)]
+    \item Using Noether's theorem, determine the components of the conserved current $j^{0}(t,x^{i})$ and $j^{i}(t,x^{k})$ associated with the phase shift symmetry:
+    \[
+    \phi \rightarrow e^{i\alpha}\phi
+    \]
+    where $\alpha$ is a real constant.
+
+    \item Using Noether's theorem, derive all components of the energy-momentum tensor of this theory. Which symmetry is this conserved energy-momentum tensor a consequence of?
+
+    \item Using the methods of canonical quantization, determine the canonical momentum $\pi(t,x^{i})$ conjugate to $\phi(t,x^{i})$, and write $\phi(t,x^{i})$ and $\pi(t,x^{i})$ in terms of creation and annihilation operators.
+
+    \item Express the conserved charge
+    \[
+    Q=\int d^{D}x~j^{0}(t,x^{j})
+    \]
+    associated with the symmetry you studied in Problem 1(i) in terms of the creation and annihilation operators from Problem 1(iii). What is the physical interpretation of this conserved quantity?
+\end{enumerate}
+
+\section*{Problem 2.}
+
+Continuing with the same free theory described by the action $S_{0}$, let's determine some classical scaling dimensions.
+
+\begin{enumerate}[label=(\roman*)]
+    \item What is the value of the dynamical critical exponent $z$ in this theory? [As we discussed in lectures, the "dynamical critical exponent" is a measure of the anisotropy between time and space.]
+
+    \item Using the units of energy to measure scaling dimensions (i.e., setting $[\partial_{t}]\equiv1$, just as in a similar problem in the midterm), determine the classical scaling dimension of the field.
+\end{enumerate}
+
+\section*{Problem 3.}
+
+Now we will turn on some self-interactions. Consider first the theory given by
+\[
+S=\int dt~d^{D}x\left\{i\phi^{\dagger}\partial_{t}\phi-\partial_{i}\phi^{\dagger}\partial_{i}\phi-m^{2}\phi^{\dagger}\phi-\frac{g^{2}}{2}(\phi^{\dagger}\phi)^{2}\right\}
+\]
+with $m^{2}$ and $g^{2}$ both real and positive.
+
+\begin{enumerate}[label=(\roman*)]
+    \item Determine the dimension $D$ for which this theory is (power-counting) renormalizable. Do you expect any other terms in the action to be generated during the renormalization process in this dimension?
+
+    \item Derive the Feynman rules for the perturbation expansion of this theory in the powers of $g$.
+\end{enumerate}
+
+\section*{Problem 4.}
+
+Now, we will change our theory one more time, by changing the sign of the $m^{2}$ term. The action is now
+\[
+\tilde{S}=\int dt~d^{D}x\left\{i\phi^{\dagger}\partial_{t}\phi-\partial_{i}\phi^{\dagger}\partial_{i}\phi+\mu^{2}\phi^{\dagger}\phi-\frac{g^{2}}{2}(\phi^{\dagger}\phi)^{2}\right\}
+\]
+This theory is sometimes called the Gross-Pitaevskii theory, and it is physically very interesting, for example playing a central role in the description of Bose-Einstein condensation in weakly interacting Bose systems, or in the theory of superfluids.
+
+\begin{enumerate}[label=(\roman*)]
+    \item At the classical level, determine the value $v$ of the field $\phi(t,x^{i})$ at the minimum of its potential, and rewrite the theory around the correct ground state using the new variables $\chi(t,x^{i})$ and $\theta(t,x^{i})$ defined by
+    \[
+    \phi(t,x^{i})=(v+\chi(t,x^{i}))e^{i\theta(t,x^{i})}
+    \]
+
+    \item By studying the quadratic part of the action around $\phi(t,x^{i})=v$, find the dispersion relations of all the independent degrees of freedom in this ground state with spontaneous symmetry breaking. How many gapless modes are guaranteed to exist by the Goldstone theorem, and are they linearly or quadratically dispersing?
+
+    \item Now imagine that the system is not described by a complex field (with two real components), but instead by an $N$-dimensional vector field (with $N$ complex components, and $SU(N)$ global symmetry). In the large-$N$ limit, which combination of $N$ and the couplings and $g$ would you hold fixed, to obtain a meaningful $1/N$ expansion of this theory?
+\end{enumerate}
+
+\section*{Problem 5.}
+
+Finally, a problem unrelated to our nonrelativistic bosonic theory.
+
+\begin{enumerate}[label=(\roman*)]
+    \item Consider the Casimir effect in $1+1$ relativistic dimensions, due to a free massless scalar field: Due to its vacuum fluctuations, this field causes an attractive force
+    \[
+    F=-\frac{\pi\hbar c}{24d^{2}}
+    \]
+    between two plates separated by distance $d$. How would this result change if we considered a massless relativistic fermion instead of the massless boson? Assume that the fermion satisfies the same boundary conditions at the plates as the boson.
+\end{enumerate}
+
+\vspace{1cm}
+\noindent \textit{This concludes the exam. Just as in the mid-term exam, each individual subproblem labeled by (i), (ii) or (iii) is worth 5 points, for the total of 60 points maximum.}
+
+\end{document}
