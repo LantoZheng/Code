@@ -104,11 +104,11 @@ Despite 70% compression:
 
 ## Files Generated
 
-1. **`Final Project proposal Ding_compressed.tex`** (175 lines)
+1. **`Final_Project_proposal_Ding_compressed.tex`** (175 lines)
    - Main compressed proposal
    - Ready for submission
 
-2. **`Final Project proposal Ding_compressed.pdf`** (3 pages)
+2. **`Final_Project_proposal_Ding_compressed.pdf`** (3 pages)
    - Compiled output
    - Verified page count
 
@@ -121,7 +121,7 @@ Despite 70% compression:
 ## Usage Recommendation
 
 ### For Submission:
-→ Use **`Final Project proposal Ding_compressed.pdf`**
+→ Use **`Final_Project_proposal_Ding_compressed.pdf`**
 
 ### For Implementation:
 → Reference **`Technical_Details_Analysis.md`** for:
@@ -131,7 +131,7 @@ Despite 70% compression:
 - Implementation roadmap
 
 ### Original Version:
-→ **`Final Project proposal Ding.tex`** (577 lines) preserved as backup
+→ **`Final_Project_proposal_Ding.tex`** (577 lines) preserved as backup
 
 ---
 
@@ -154,7 +154,7 @@ Despite 70% compression:
 
 1. **Review the compressed PDF** with your team
 2. **Verify all technical details** are accurately represented
-3. **Submit** `Final Project proposal Ding_compressed.pdf`
+3. **Submit** `Final_Project_proposal_Ding_compressed.pdf`
 4. **Keep** `Technical_Details_Analysis.md` for implementation phase
 5. **Begin** Week 1 tasks (baseline simulation) per timeline
 
